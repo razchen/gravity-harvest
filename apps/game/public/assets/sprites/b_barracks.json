@@ -1,0 +1,56 @@
+{
+ "frames": {
+  "b_barracks_00": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 565,
+    "h": 338
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 565,
+    "h": 338
+   },
+   "sourceSize": {
+    "w": 565,
+    "h": 338
+   }
+  }
+ },
+ "meta": {
+  "anchor": {
+   "x": 186.8,
+   "y": 239.6
+  },
+  "fps": 12,
+  "loop": false,
+  "lights": [
+   {
+    "x": 246.8,
+    "y": 111.9
+   },
+   {
+    "x": 272.8,
+    "y": 132.5
+   },
+   {
+    "x": 265.6,
+    "y": 121.0
+   }
+  ],
+  "image": "b_barracks.png",
+  "size": {
+   "w": 565,
+   "h": 338
+  },
+  "scale": "1",
+  "frames": 1,
+  "footprint_tiles": 3,
+  "tile_px": 128,
+  "shadow": "split: see b_barracks_shadow.png"
+ }
+}

@@ -1,0 +1,3166 @@
+{
+ "frames": {
+  "b_lance_battery_build_stage_1": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_stage_2": {
+   "frame": {
+    "x": 465,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_stage_3": {
+   "frame": {
+    "x": 930,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_stage_4": {
+   "frame": {
+    "x": 1395,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_stage_5": {
+   "frame": {
+    "x": 1860,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_new_1": {
+   "frame": {
+    "x": 0,
+    "y": 240,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_new_2": {
+   "frame": {
+    "x": 465,
+    "y": 240,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_new_3": {
+   "frame": {
+    "x": 930,
+    "y": 240,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_new_4": {
+   "frame": {
+    "x": 1395,
+    "y": 240,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_new_5": {
+   "frame": {
+    "x": 1860,
+    "y": 240,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_shadow_1": {
+   "frame": {
+    "x": 0,
+    "y": 480,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_shadow_2": {
+   "frame": {
+    "x": 465,
+    "y": 480,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_shadow_3": {
+   "frame": {
+    "x": 930,
+    "y": 480,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_shadow_4": {
+   "frame": {
+    "x": 1395,
+    "y": 480,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_shadow_5": {
+   "frame": {
+    "x": 1860,
+    "y": 480,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_0": {
+   "frame": {
+    "x": 0,
+    "y": 720,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_1": {
+   "frame": {
+    "x": 465,
+    "y": 720,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_2": {
+   "frame": {
+    "x": 930,
+    "y": 720,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_3": {
+   "frame": {
+    "x": 1395,
+    "y": 720,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_4": {
+   "frame": {
+    "x": 1860,
+    "y": 720,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_5": {
+   "frame": {
+    "x": 0,
+    "y": 960,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_6": {
+   "frame": {
+    "x": 465,
+    "y": 960,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_7": {
+   "frame": {
+    "x": 930,
+    "y": 960,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_8": {
+   "frame": {
+    "x": 1395,
+    "y": 960,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_9": {
+   "frame": {
+    "x": 1860,
+    "y": 960,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_10": {
+   "frame": {
+    "x": 0,
+    "y": 1200,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_11": {
+   "frame": {
+    "x": 465,
+    "y": 1200,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_12": {
+   "frame": {
+    "x": 930,
+    "y": 1200,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_13": {
+   "frame": {
+    "x": 1395,
+    "y": 1200,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_14": {
+   "frame": {
+    "x": 1860,
+    "y": 1200,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_15": {
+   "frame": {
+    "x": 0,
+    "y": 1440,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_16": {
+   "frame": {
+    "x": 465,
+    "y": 1440,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_17": {
+   "frame": {
+    "x": 930,
+    "y": 1440,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_18": {
+   "frame": {
+    "x": 1395,
+    "y": 1440,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_19": {
+   "frame": {
+    "x": 1860,
+    "y": 1440,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_20": {
+   "frame": {
+    "x": 0,
+    "y": 1680,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_21": {
+   "frame": {
+    "x": 465,
+    "y": 1680,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_22": {
+   "frame": {
+    "x": 930,
+    "y": 1680,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_23": {
+   "frame": {
+    "x": 1395,
+    "y": 1680,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_24": {
+   "frame": {
+    "x": 1860,
+    "y": 1680,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_25": {
+   "frame": {
+    "x": 0,
+    "y": 1920,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_26": {
+   "frame": {
+    "x": 465,
+    "y": 1920,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_27": {
+   "frame": {
+    "x": 930,
+    "y": 1920,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_28": {
+   "frame": {
+    "x": 1395,
+    "y": 1920,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_29": {
+   "frame": {
+    "x": 1860,
+    "y": 1920,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_30": {
+   "frame": {
+    "x": 0,
+    "y": 2160,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turn_31": {
+   "frame": {
+    "x": 465,
+    "y": 2160,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_0": {
+   "frame": {
+    "x": 930,
+    "y": 2160,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_1": {
+   "frame": {
+    "x": 1395,
+    "y": 2160,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_2": {
+   "frame": {
+    "x": 1860,
+    "y": 2160,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_3": {
+   "frame": {
+    "x": 0,
+    "y": 2400,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_4": {
+   "frame": {
+    "x": 465,
+    "y": 2400,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_5": {
+   "frame": {
+    "x": 930,
+    "y": 2400,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_6": {
+   "frame": {
+    "x": 1395,
+    "y": 2400,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_7": {
+   "frame": {
+    "x": 1860,
+    "y": 2400,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_8": {
+   "frame": {
+    "x": 0,
+    "y": 2640,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_9": {
+   "frame": {
+    "x": 465,
+    "y": 2640,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_10": {
+   "frame": {
+    "x": 930,
+    "y": 2640,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_11": {
+   "frame": {
+    "x": 1395,
+    "y": 2640,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_12": {
+   "frame": {
+    "x": 1860,
+    "y": 2640,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_13": {
+   "frame": {
+    "x": 0,
+    "y": 2880,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_14": {
+   "frame": {
+    "x": 465,
+    "y": 2880,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_15": {
+   "frame": {
+    "x": 930,
+    "y": 2880,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_16": {
+   "frame": {
+    "x": 1395,
+    "y": 2880,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_17": {
+   "frame": {
+    "x": 1860,
+    "y": 2880,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_18": {
+   "frame": {
+    "x": 0,
+    "y": 3120,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_19": {
+   "frame": {
+    "x": 465,
+    "y": 3120,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_20": {
+   "frame": {
+    "x": 930,
+    "y": 3120,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_21": {
+   "frame": {
+    "x": 1395,
+    "y": 3120,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_22": {
+   "frame": {
+    "x": 1860,
+    "y": 3120,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_23": {
+   "frame": {
+    "x": 0,
+    "y": 3360,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_24": {
+   "frame": {
+    "x": 465,
+    "y": 3360,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_25": {
+   "frame": {
+    "x": 930,
+    "y": 3360,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_26": {
+   "frame": {
+    "x": 1395,
+    "y": 3360,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_27": {
+   "frame": {
+    "x": 1860,
+    "y": 3360,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_28": {
+   "frame": {
+    "x": 0,
+    "y": 3600,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_29": {
+   "frame": {
+    "x": 465,
+    "y": 3600,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_30": {
+   "frame": {
+    "x": 930,
+    "y": 3600,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  },
+  "b_lance_battery_build_turnshadow_31": {
+   "frame": {
+    "x": 1395,
+    "y": 3600,
+    "w": 465,
+    "h": 240
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 465,
+    "h": 240
+   },
+   "sourceSize": {
+    "w": 465,
+    "h": 240
+   }
+  }
+ },
+ "meta": {
+  "image": "b_lance_battery_build.png",
+  "size": {
+   "w": 2325,
+   "h": 3840
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 103.0,
+   "y": 172.0
+  },
+  "footprint_tiles": 2,
+  "tile_px": 128,
+  "shadow": "split: <atlas>_shadow_<n> per stage",
+  "construction": {
+   "stages": [
+    {
+     "name": "Foundation",
+     "welds": [
+      [
+       157,
+       175
+      ],
+      [
+       79,
+       163
+      ],
+      [
+       79,
+       168
+      ],
+      [
+       55,
+       171
+      ],
+      [
+       98,
+       158
+      ],
+      [
+       163,
+       161
+      ],
+      [
+       137,
+       202
+      ],
+      [
+       72,
+       144
+      ],
+      [
+       182,
+       172
+      ],
+      [
+       132,
+       136
+      ],
+      [
+       87,
+       136
+      ],
+      [
+       109,
+       198
+      ],
+      [
+       108,
+       152
+      ],
+      [
+       176,
+       153
+      ],
+      [
+       152,
+       172
+      ],
+      [
+       57,
+       149
+      ],
+      [
+       68,
+       146
+      ],
+      [
+       83,
+       185
+      ],
+      [
+       163,
+       160
+      ],
+      [
+       102,
+       131
+      ],
+      [
+       151,
+       196
+      ],
+      [
+       183,
+       171
+      ],
+      [
+       157,
+       139
+      ],
+      [
+       161,
+       141
+      ],
+      [
+       70,
+       144
+      ],
+      [
+       60,
+       174
+      ],
+      [
+       170,
+       179
+      ],
+      [
+       81,
+       138
+      ],
+      [
+       174,
+       152
+      ],
+      [
+       38,
+       163
+      ],
+      [
+       168,
+       162
+      ],
+      [
+       66,
+       176
+      ],
+      [
+       110,
+       126
+      ],
+      [
+       47,
+       167
+      ],
+      [
+       88,
+       164
+      ],
+      [
+       167,
+       179
+      ],
+      [
+       36,
+       160
+      ],
+      [
+       90,
+       188
+      ],
+      [
+       152,
+       179
+      ],
+      [
+       165,
+       142
+      ],
+      [
+       94,
+       132
+      ],
+      [
+       176,
+       167
+      ],
+      [
+       132,
+       206
+      ],
+      [
+       189,
+       168
+      ],
+      [
+       47,
+       152
+      ],
+      [
+       131,
+       206
+      ],
+      [
+       101,
+       131
+      ],
+      [
+       95,
+       160
+      ],
+      [
+       104,
+       150
+      ],
+      [
+       143,
+       177
+      ],
+      [
+       96,
+       154
+      ],
+      [
+       100,
+       132
+      ],
+      [
+       103,
+       191
+      ],
+      [
+       167,
+       143
+      ],
+      [
+       152,
+       171
+      ],
+      [
+       42,
+       154
+      ],
+      [
+       137,
+       179
+      ],
+      [
+       170,
+       150
+      ],
+      [
+       107,
+       188
+      ],
+      [
+       110,
+       198
+      ]
+     ],
+     "dust": [
+      [
+       32,
+       160
+      ],
+      [
+       43,
+       166
+      ],
+      [
+       54,
+       171
+      ],
+      [
+       65,
+       176
+      ],
+      [
+       76,
+       182
+      ],
+      [
+       87,
+       187
+      ],
+      [
+       98,
+       193
+      ],
+      [
+       109,
+       198
+      ],
+      [
+       120,
+       205
+      ],
+      [
+       131,
+       206
+      ],
+      [
+       142,
+       201
+      ],
+      [
+       153,
+       195
+      ],
+      [
+       164,
+       182
+      ],
+      [
+       175,
+       176
+      ],
+      [
+       186,
+       171
+      ]
+     ]
+    },
+    {
+     "name": "Lower structure",
+     "welds": [
+      [
+       115,
+       115
+      ],
+      [
+       182,
+       161
+      ],
+      [
+       175,
+       165
+      ],
+      [
+       134,
+       186
+      ],
+      [
+       163,
+       163
+      ],
+      [
+       97,
+       182
+      ],
+      [
+       157,
+       142
+      ],
+      [
+       124,
+       194
+      ],
+      [
+       143,
+       153
+      ],
+      [
+       163,
+       160
+      ],
+      [
+       94,
+       172
+      ],
+      [
+       93,
+       148
+      ],
+      [
+       135,
+       188
+      ],
+      [
+       133,
+       164
+      ],
+      [
+       130,
+       193
+      ],
+      [
+       149,
+       173
+      ],
+      [
+       149,
+       136
+      ],
+      [
+       104,
+       155
+      ],
+      [
+       107,
+       190
+      ],
+      [
+       74,
+       153
+      ],
+      [
+       183,
+       151
+      ],
+      [
+       92,
+       124
+      ],
+      [
+       65,
+       165
+      ],
+      [
+       90,
+       177
+      ],
+      [
+       133,
+       194
+      ],
+      [
+       127,
+       191
+      ],
+      [
+       67,
+       172
+      ],
+      [
+       162,
+       161
+      ],
+      [
+       162,
+       171
+      ],
+      [
+       160,
+       143
+      ],
+      [
+       166,
+       161
+      ],
+      [
+       79,
+       144
+      ],
+      [
+       167,
+       141
+      ],
+      [
+       144,
+       176
+      ],
+      [
+       115,
+       195
+      ],
+      [
+       113,
+       193
+      ],
+      [
+       45,
+       145
+      ],
+      [
+       123,
+       192
+      ],
+      [
+       64,
+       150
+      ],
+      [
+       162,
+       142
+      ],
+      [
+       182,
+       157
+      ],
+      [
+       131,
+       174
+      ],
+      [
+       72,
+       177
+      ],
+      [
+       80,
+       145
+      ],
+      [
+       159,
+       120
+      ],
+      [
+       96,
+       152
+      ],
+      [
+       76,
+       181
+      ],
+      [
+       173,
+       165
+      ],
+      [
+       144,
+       179
+      ],
+      [
+       101,
+       120
+      ],
+      [
+       79,
+       183
+      ],
+      [
+       71,
+       128
+      ],
+      [
+       115,
+       173
+      ],
+      [
+       58,
+       163
+      ],
+      [
+       66,
+       164
+      ],
+      [
+       129,
+       166
+      ],
+      [
+       130,
+       202
+      ],
+      [
+       59,
+       167
+      ],
+      [
+       108,
+       184
+      ],
+      [
+       153,
+       117
+      ]
+     ],
+     "dust": [
+      [
+       33,
+       157
+      ],
+      [
+       44,
+       163
+      ],
+      [
+       55,
+       165
+      ],
+      [
+       66,
+       169
+      ],
+      [
+       77,
+       181
+      ],
+      [
+       88,
+       186
+      ],
+      [
+       99,
+       188
+      ],
+      [
+       110,
+       193
+      ],
+      [
+       121,
+       204
+      ],
+      [
+       132,
+       205
+      ],
+      [
+       143,
+       188
+      ],
+      [
+       154,
+       141
+      ],
+      [
+       165,
+       169
+      ],
+      [
+       176,
+       165
+      ],
+      [
+       189,
+       162
+      ]
+     ]
+    },
+    {
+     "name": "Main bodies",
+     "welds": [
+      [
+       75,
+       102
+      ],
+      [
+       164,
+       136
+      ],
+      [
+       118,
+       97
+      ],
+      [
+       108,
+       148
+      ],
+      [
+       140,
+       121
+      ],
+      [
+       80,
+       145
+      ],
+      [
+       175,
+       123
+      ],
+      [
+       39,
+       115
+      ],
+      [
+       73,
+       144
+      ],
+      [
+       141,
+       140
+      ],
+      [
+       106,
+       132
+      ],
+      [
+       145,
+       105
+      ],
+      [
+       48,
+       100
+      ],
+      [
+       61,
+       97
+      ],
+      [
+       108,
+       174
+      ],
+      [
+       165,
+       113
+      ],
+      [
+       99,
+       89
+      ],
+      [
+       119,
+       154
+      ],
+      [
+       174,
+       121
+      ],
+      [
+       103,
+       126
+      ],
+      [
+       131,
+       146
+      ],
+      [
+       102,
+       126
+      ],
+      [
+       132,
+       100
+      ],
+      [
+       36,
+       106
+      ],
+      [
+       64,
+       125
+      ],
+      [
+       132,
+       153
+      ],
+      [
+       84,
+       137
+      ],
+      [
+       134,
+       95
+      ],
+      [
+       154,
+       138
+      ],
+      [
+       70,
+       102
+      ],
+      [
+       40,
+       120
+      ],
+      [
+       106,
+       146
+      ],
+      [
+       131,
+       156
+      ],
+      [
+       127,
+       147
+      ],
+      [
+       161,
+       132
+      ],
+      [
+       97,
+       129
+      ],
+      [
+       84,
+       148
+      ],
+      [
+       128,
+       99
+      ],
+      [
+       173,
+       119
+      ],
+      [
+       107,
+       171
+      ],
+      [
+       130,
+       130
+      ],
+      [
+       47,
+       102
+      ],
+      [
+       145,
+       128
+      ],
+      [
+       62,
+       121
+      ],
+      [
+       100,
+       162
+      ],
+      [
+       93,
+       138
+      ],
+      [
+       87,
+       158
+      ],
+      [
+       123,
+       80
+      ],
+      [
+       115,
+       170
+      ],
+      [
+       164,
+       121
+      ],
+      [
+       59,
+       138
+      ],
+      [
+       154,
+       134
+      ],
+      [
+       130,
+       155
+      ],
+      [
+       96,
+       159
+      ],
+      [
+       141,
+       171
+      ],
+      [
+       65,
+       117
+      ],
+      [
+       160,
+       140
+      ],
+      [
+       108,
+       160
+      ],
+      [
+       64,
+       114
+      ],
+      [
+       92,
+       160
+      ]
+     ],
+     "dust": [
+      [
+       29,
+       110
+      ],
+      [
+       39,
+       125
+      ],
+      [
+       49,
+       134
+      ],
+      [
+       59,
+       139
+      ],
+      [
+       69,
+       142
+      ],
+      [
+       79,
+       155
+      ],
+      [
+       89,
+       160
+      ],
+      [
+       99,
+       162
+      ],
+      [
+       109,
+       175
+      ],
+      [
+       119,
+       189
+      ],
+      [
+       129,
+       147
+      ],
+      [
+       139,
+       184
+      ],
+      [
+       149,
+       147
+      ],
+      [
+       159,
+       140
+      ],
+      [
+       169,
+       126
+      ]
+     ]
+    },
+    {
+     "name": "Upper",
+     "welds": [
+      [
+       113,
+       126
+      ],
+      [
+       102,
+       86
+      ],
+      [
+       86,
+       113
+      ],
+      [
+       154,
+       100
+      ],
+      [
+       121,
+       94
+      ],
+      [
+       74,
+       113
+      ],
+      [
+       56,
+       101
+      ],
+      [
+       172,
+       112
+      ],
+      [
+       140,
+       97
+      ],
+      [
+       53,
+       114
+      ],
+      [
+       171,
+       106
+      ],
+      [
+       43,
+       119
+      ],
+      [
+       163,
+       67
+      ],
+      [
+       121,
+       123
+      ],
+      [
+       52,
+       120
+      ],
+      [
+       139,
+       97
+      ],
+      [
+       151,
+       94
+      ],
+      [
+       49,
+       107
+      ],
+      [
+       131,
+       70
+      ],
+      [
+       62,
+       114
+      ],
+      [
+       39,
+       107
+      ],
+      [
+       147,
+       60
+      ],
+      [
+       50,
+       100
+      ],
+      [
+       50,
+       121
+      ],
+      [
+       132,
+       59
+      ],
+      [
+       33,
+       103
+      ],
+      [
+       88,
+       106
+      ],
+      [
+       145,
+       86
+      ],
+      [
+       118,
+       90
+      ],
+      [
+       130,
+       85
+      ],
+      [
+       148,
+       70
+      ],
+      [
+       108,
+       101
+      ],
+      [
+       96,
+       101
+      ],
+      [
+       90,
+       110
+      ],
+      [
+       74,
+       112
+      ],
+      [
+       145,
+       77
+      ],
+      [
+       123,
+       127
+      ],
+      [
+       127,
+       139
+      ],
+      [
+       97,
+       95
+      ],
+      [
+       112,
+       126
+      ],
+      [
+       79,
+       104
+      ],
+      [
+       51,
+       112
+      ],
+      [
+       71,
+       102
+      ],
+      [
+       67,
+       104
+      ],
+      [
+       139,
+       44
+      ],
+      [
+       40,
+       106
+      ],
+      [
+       144,
+       74
+      ],
+      [
+       130,
+       72
+      ],
+      [
+       109,
+       118
+      ],
+      [
+       133,
+       44
+      ],
+      [
+       42,
+       106
+      ],
+      [
+       127,
+       108
+      ],
+      [
+       138,
+       46
+      ],
+      [
+       108,
+       102
+      ],
+      [
+       136,
+       30
+      ],
+      [
+       62,
+       104
+      ],
+      [
+       147,
+       93
+      ],
+      [
+       113,
+       80
+      ],
+      [
+       132,
+       94
+      ],
+      [
+       123,
+       141
+      ]
+     ],
+     "dust": [
+      [
+       30,
+       118
+      ],
+      [
+       40,
+       124
+      ],
+      [
+       50,
+       122
+      ],
+      [
+       60,
+       118
+      ],
+      [
+       70,
+       116
+      ],
+      [
+       80,
+       113
+      ],
+      [
+       90,
+       139
+      ],
+      [
+       100,
+       141
+      ],
+      [
+       110,
+       143
+      ],
+      [
+       120,
+       157
+      ],
+      [
+       130,
+       140
+      ],
+      [
+       140,
+       130
+      ],
+      [
+       150,
+       125
+      ],
+      [
+       160,
+       119
+      ],
+      [
+       170,
+       114
+      ]
+     ]
+    },
+    {
+     "name": "Finished",
+     "welds": [
+      [
+       32,
+       109
+      ],
+      [
+       121,
+       83
+      ],
+      [
+       110,
+       91
+      ],
+      [
+       126,
+       92
+      ],
+      [
+       134,
+       101
+      ],
+      [
+       118,
+       80
+      ],
+      [
+       141,
+       96
+      ],
+      [
+       134,
+       100
+      ],
+      [
+       120,
+       88
+      ],
+      [
+       123,
+       83
+      ],
+      [
+       113,
+       85
+      ],
+      [
+       114,
+       82
+      ],
+      [
+       130,
+       87
+      ],
+      [
+       33,
+       111
+      ],
+      [
+       34,
+       110
+      ],
+      [
+       124,
+       91
+      ],
+      [
+       122,
+       82
+      ],
+      [
+       135,
+       101
+      ],
+      [
+       112,
+       83
+      ],
+      [
+       91,
+       126
+      ],
+      [
+       122,
+       90
+      ],
+      [
+       110,
+       92
+      ],
+      [
+       123,
+       90
+      ],
+      [
+       123,
+       85
+      ],
+      [
+       125,
+       91
+      ],
+      [
+       138,
+       91
+      ],
+      [
+       119,
+       89
+      ],
+      [
+       89,
+       126
+      ],
+      [
+       116,
+       90
+      ],
+      [
+       136,
+       97
+      ],
+      [
+       135,
+       89
+      ],
+      [
+       126,
+       83
+      ],
+      [
+       129,
+       86
+      ],
+      [
+       116,
+       89
+      ],
+      [
+       113,
+       81
+      ],
+      [
+       111,
+       92
+      ],
+      [
+       113,
+       89
+      ],
+      [
+       140,
+       95
+      ],
+      [
+       134,
+       102
+      ],
+      [
+       90,
+       127
+      ],
+      [
+       42,
+       116
+      ],
+      [
+       129,
+       94
+      ],
+      [
+       136,
+       90
+      ],
+      [
+       136,
+       89
+      ],
+      [
+       125,
+       90
+      ],
+      [
+       137,
+       89
+      ],
+      [
+       112,
+       87
+      ],
+      [
+       131,
+       101
+      ],
+      [
+       127,
+       93
+      ],
+      [
+       110,
+       82
+      ],
+      [
+       135,
+       100
+      ],
+      [
+       125,
+       84
+      ],
+      [
+       112,
+       88
+      ],
+      [
+       119,
+       80
+      ],
+      [
+       113,
+       84
+      ],
+      [
+       132,
+       102
+      ],
+      [
+       128,
+       84
+      ],
+      [
+       122,
+       89
+      ],
+      [
+       120,
+       84
+      ],
+      [
+       128,
+       94
+      ]
+     ],
+     "dust": [
+      [
+       31,
+       111
+      ],
+      [
+       34,
+       111
+      ],
+      [
+       41,
+       117
+      ],
+      [
+       89,
+       126
+      ],
+      [
+       92,
+       125
+      ],
+      [
+       95,
+       106
+      ],
+      [
+       110,
+       93
+      ],
+      [
+       113,
+       91
+      ],
+      [
+       116,
+       90
+      ],
+      [
+       119,
+       89
+      ],
+      [
+       122,
+       90
+      ],
+      [
+       125,
+       91
+      ],
+      [
+       128,
+       95
+      ],
+      [
+       131,
+       102
+      ],
+      [
+       134,
+       102
+      ],
+      [
+       137,
+       97
+      ],
+      [
+       140,
+       96
+      ]
+     ]
+    }
+   ]
+  },
+  "damage": {
+   "spots": [
+    [
+     117,
+     169
+    ],
+    [
+     142,
+     110
+    ],
+    [
+     154,
+     82
+    ]
+   ]
+  },
+  "turret": {
+   "directions": 32,
+   "rest": 23
+  }
+ }
+}

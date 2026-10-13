@@ -1,0 +1,30 @@
+{
+  "name": "@gravity-harvest/game",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && node scripts/check-bundle.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@gravity-harvest/rules": "*",
+    "@gravity-harvest/shared": "*",
+    "@gravity-harvest/sim": "*",
+    "phaser": "3.90.0"
+  },
+  "devDependencies": {
+    "@google/model-viewer": "4.0.0",
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^22.20.5",
+    "typescript": "6.0.3",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.3"
+  },
+  "description": "The browser game: Phaser 3 + TypeScript + Vite. Draws matches the server runs."
+}

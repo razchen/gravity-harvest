@@ -1,0 +1,238 @@
+/* Industrial RTS HUD: gunmetal panels, chamfered corners, hazard-yellow accents. */
+:root {
+  --panel-top: #26282a;
+  --panel-bottom: #141516;
+  --edge: #3d4043;
+  --edge-light: #575b5f;
+  --text: #e9e4d6;
+  --muted: #9a968c;
+  --yellow: #f5b301;
+  --yellow-deep: #c98e00;
+  --red: #e0533d;
+  --chamfer: 10px;
+  --font: 'Rajdhani', 'Arial Narrow', system-ui, sans-serif;
+}
+
+html, body { margin: 0; height: 100%; background: #1d1f1c; overflow: hidden; }
+body { font-family: var(--font); color: var(--text); user-select: none; -webkit-user-select: none; }
+canvas { display: block; }
+
+.panel {
+  position: fixed;
+  z-index: 10;
+  background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+  box-shadow: inset 0 0 0 1px var(--edge), inset 0 1px 0 1px rgba(255, 255, 255, 0.04), 0 6px 18px rgba(0, 0, 0, 0.55);
+  clip-path: polygon(var(--chamfer) 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% calc(100% - var(--chamfer)),
+                     calc(100% - var(--chamfer)) 100%, var(--chamfer) 100%, 0 calc(100% - var(--chamfer)), 0 var(--chamfer));
+}
+
+button { font-family: var(--font); cursor: pointer; }
+svg { width: 22px; height: 22px; fill: currentColor; }
+svg .gold { fill: var(--yellow); }
+svg .gold.dim { fill: var(--yellow-deep); }
+svg .light { fill: #d9d4c7; }
+
+/* --- Resource bar ------------------------------------------------------------------- */
+#topbar {
+  top: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; height: 40px;
+  --chamfer: 14px;
+  padding: 0 18px;
+}
+#topbar .res {
+  display: flex; align-items: center; gap: 8px; padding: 0 20px;
+  font-size: 19px; font-weight: 600; letter-spacing: 0.3px; font-variant-numeric: tabular-nums;
+}
+#topbar .res + .res { box-shadow: -1px 0 0 var(--edge); }
+#credits { min-width: 64px; color: #fff4d0; }
+#credits.flash { animation: flash 0.6s ease-out; }
+@keyframes flash { from { color: var(--yellow); text-shadow: 0 0 10px rgba(245, 179, 1, 0.7); } to { color: #fff4d0; } }
+
+/* --- Square buttons (system + categories) ------------------------------------------- */
+.sq {
+  position: static; width: 44px; height: 44px; border: 0; padding: 0;
+  display: grid; place-items: center; color: #d9d4c7; --chamfer: 6px;
+}
+.sq:hover { filter: brightness(1.25); }
+.sq.active { background: linear-gradient(180deg, #ffc61a, var(--yellow-deep)); color: #1a1406; }
+#sysbtns { position: fixed; top: 10px; right: 12px; z-index: 10; display: flex; gap: 6px; }
+#cats { position: fixed; top: 64px; left: 12px; z-index: 10; display: flex; flex-direction: column; gap: 5px; }
+
+/* --- Minimap ------------------------------------------------------------------------ */
+#minimap-frame { left: 12px; bottom: 12px; padding: 9px; --chamfer: 12px; }
+#minimap { display: block; cursor: crosshair; background: #0d0e0e; }
+
+/* --- Build panel -------------------------------------------------------------------- */
+#build {
+  top: 64px; right: 12px; width: 286px; padding: 10px; --chamfer: 12px;
+  max-height: calc(100vh - 90px); display: flex; flex-direction: column;
+}
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 10px; }
+.tabs button {
+  height: 32px; border: 0; color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; background: #1b1c1d; box-shadow: inset 0 0 0 1px var(--edge);
+}
+.tabs button.active { background: linear-gradient(180deg, #ffc61a, var(--yellow-deep)); color: #1a1406; box-shadow: none; }
+#cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; overflow-y: auto; }
+
+.card {
+  position: relative; border: 0; padding: 6px 6px 8px; text-align: center; color: var(--text);
+  background: linear-gradient(180deg, #202224, #121314);
+  box-shadow: inset 0 0 0 1px var(--edge);
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%, 0 8px);
+  transition: filter 0.12s;
+}
+.card:focus { outline: none; }
+.card:focus-visible { box-shadow: inset 0 0 0 1px var(--yellow); }
+.card:hover:not(.locked) { filter: brightness(1.18); box-shadow: inset 0 0 0 1px var(--yellow); }
+.card img { display: block; width: 100%; height: 92px; object-fit: contain; }
+.card .name { margin-top: 4px; font-size: 14px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
+.card .price { font-size: 17px; font-weight: 700; color: var(--yellow); font-variant-numeric: tabular-nums; }
+.card.poor .price { color: var(--red); }
+.card.locked img { filter: grayscale(0.6) brightness(0.6); }
+.card .badge {
+  position: absolute; top: 8px; right: 8px; padding: 1px 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  color: #1a1406; background: #8d8a82;
+}
+.card .queue-count:not(:empty) {
+  position: absolute; top: 8px; right: 8px; min-width: 20px; padding: 1px 6px; font-size: 13px; font-weight: 700;
+  color: #1a1406; background: var(--yellow);
+}
+.card .queue-bar { position: absolute; left: 0; bottom: 0; height: 4px; width: 0; background: var(--yellow); }
+.card.locked .name, .card.locked .price { opacity: 0.55; }
+/* sell / repair mode buttons, over the tabs */
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
+.modes button {
+  display: flex; align-items: center; justify-content: center; gap: 6px; height: 30px; border: 0; color: var(--text);
+  font-size: 14px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; background: #1b1c1d;
+  box-shadow: inset 0 0 0 1px var(--edge); cursor: pointer;
+}
+.modes button svg { width: 18px; height: 18px; }
+.modes button:hover { filter: brightness(1.2); }
+.modes button.active { background: linear-gradient(180deg, #ffc61a, var(--yellow-deep)); color: #1a1406; box-shadow: none; }
+.modes button.active svg .gold { fill: #1a1406; }
+.modes button.active svg path[fill="#1a1406"] { fill: #ffc61a; }
+/* the × on a unit card with some queued: cancel one */
+.card .cancel {
+  position: absolute; top: 34px; right: 8px; width: 20px; height: 20px; display: none; place-items: center;
+  font-size: 16px; font-weight: 700; line-height: 1; color: #fff; background: #a3302a; cursor: pointer;
+}
+.card.queued .cancel { display: grid; }
+.card .cancel:hover { background: #d23d33; }
+
+/* the i in a card's corner: opens its info card */
+.card .info {
+  position: absolute; top: 7px; left: 7px; width: 20px; height: 20px; display: grid; place-items: center;
+  border-radius: 50%; font: italic 700 13px/1 Georgia, 'Times New Roman', serif; color: var(--text);
+  background: rgba(10, 11, 12, 0.75); box-shadow: inset 0 0 0 1px var(--edge); cursor: help; opacity: 0.8;
+}
+.card .info:hover, .card.showing-info .info { opacity: 1; color: #1a1406; background: var(--yellow); box-shadow: none; }
+.card.showing-info { box-shadow: inset 0 0 0 1px var(--yellow); }
+#info-card {
+  top: 64px; right: 310px; width: 300px; padding: 14px 16px 16px; --chamfer: 12px; z-index: 12;
+  max-height: calc(100vh - 90px); overflow-y: auto;
+}
+#info-card .close {
+  position: absolute; top: 8px; right: 10px; width: 26px; height: 26px; border: 0; padding: 0;
+  font-size: 20px; line-height: 1; color: var(--muted); background: none; cursor: pointer;
+}
+#info-card .close:hover { color: var(--text); }
+#info-card .head { display: flex; gap: 12px; align-items: center; margin-right: 22px; }
+#info-card .head img { width: 72px; height: 72px; object-fit: contain; flex: none; }
+#info-card h3 { margin: 0; font-size: 19px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
+#info-card .role { margin-top: 2px; color: var(--yellow); font-size: 14px; font-weight: 600; }
+#info-card p { margin: 10px 0 12px; font-size: 15px; line-height: 1.35; }
+#info-card .rows { display: grid; gap: 4px; font-size: 14px; }
+#info-card .row { display: flex; justify-content: space-between; gap: 12px; padding-top: 4px; border-top: 1px solid rgba(255, 255, 255, 0.07); }
+#info-card .row span { color: var(--muted); }
+#info-card .row b { text-align: right; font-weight: 600; }
+
+.empty { grid-column: 1 / -1; padding: 30px 10px; text-align: center; color: var(--muted); font-size: 15px; }
+
+/* --- Perf readout, toasts, help ----------------------------------------------------- */
+#perf {
+  left: 50%; transform: translateX(-50%); bottom: 12px; padding: 6px 14px; --chamfer: 6px;
+  font: 12px/1.4 ui-monospace, Menlo, monospace; color: #b9f59c; pointer-events: none;
+}
+#toast {
+  position: fixed; z-index: 20; left: 50%; top: 64px; transform: translate(-50%, -8px);
+  padding: 8px 16px; font-size: 16px; font-weight: 600; letter-spacing: 0.4px;
+  background: rgba(12, 12, 12, 0.88); box-shadow: inset 0 0 0 1px var(--yellow); color: #fff4d0;
+  opacity: 0; transition: opacity 0.2s, transform 0.2s; pointer-events: none;
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+#help {
+  z-index: 30; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(460px, calc(100vw - 32px));
+  padding: 18px 22px 20px; --chamfer: 16px; font-size: 16px; line-height: 1.45;
+}
+#help h2 { margin: 0 0 8px; font-size: 22px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--yellow); }
+#help p { margin: 6px 0; }
+#help b { color: #fff4d0; }
+.primary {
+  margin-top: 10px; height: 36px; padding: 0 22px; border: 0; font-size: 16px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: #1a1406;
+  background: linear-gradient(180deg, #ffc61a, var(--yellow-deep));
+}
+
+/* Small screens: shrink the side panels so the map stays visible */
+@media (max-width: 760px) {
+  #build { width: 200px; }
+  .card img { height: 60px; }
+  #minimap-frame { transform: scale(0.75); transform-origin: bottom left; }
+  #topbar .res { padding: 0 10px; font-size: 16px; }
+}
+
+/* --- Placement and power states ---------------------------------------------- */
+.card .sub { font-size: 12px; color: var(--muted); letter-spacing: 0.4px; }
+.card.placing { box-shadow: inset 0 0 0 2px var(--yellow); filter: brightness(1.15); }
+#topbar .res.low { color: var(--red); animation: lowpower 1s steps(2) infinite; }
+#topbar .res.low svg .gold { fill: var(--red); }
+@keyframes lowpower { 50% { opacity: 0.45; } }
+
+/* --- Save / load dialog --------------------------------------------------------------- */
+#saves {
+  z-index: 30; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(520px, calc(100vw - 32px));
+  max-height: calc(100vh - 80px); padding: 18px 22px 20px; --chamfer: 16px; display: flex; flex-direction: column; gap: 12px;
+}
+#saves[hidden] { display: none; }
+#saves h2 { margin: 0; font-size: 22px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--yellow); }
+#save-form { display: flex; gap: 8px; }
+#save-name {
+  flex: 1; height: 36px; padding: 0 10px; border: 0; font: 600 16px var(--font); color: var(--text);
+  background: #121314; box-shadow: inset 0 0 0 1px var(--edge);
+}
+#save-name:focus { outline: none; box-shadow: inset 0 0 0 1px var(--yellow); }
+#save-list { overflow-y: auto; display: flex; flex-direction: column; gap: 6px; min-height: 80px; }
+.save-row { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #18191a; box-shadow: inset 0 0 0 1px var(--edge); }
+.save-info { flex: 1; min-width: 0; }
+.save-name { font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.save-meta { font-size: 13px; color: var(--muted); }
+.primary.small, .ghost.small { margin: 0; height: 30px; padding: 0 14px; font-size: 14px; }
+.ghost { border: 0; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
+  background: transparent; box-shadow: inset 0 0 0 1px var(--edge); }
+.ghost:hover { color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
+#saves .row-end { display: flex; justify-content: flex-end; }
+
+/* --- Debug and shortcuts panel (` / gear) ---------------------------------------------- */
+#debug-menu {
+  position: fixed; z-index: 15; top: 64px; left: 72px; width: 280px; padding: 10px 10px 8px; --chamfer: 8px;
+}
+#debug-menu .debug-title { margin: 0 4px 6px; font-size: 13px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--yellow); }
+#debug-menu .debug-row {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 6px; border: 0; background: none;
+  color: var(--text); font: inherit; font-size: 14px; text-align: left; cursor: pointer;
+}
+#debug-menu .debug-row:hover:not(:disabled) { background: rgba(245, 179, 1, 0.12); }
+#debug-menu .debug-row:disabled { opacity: 0.4; cursor: default; }
+#debug-menu .debug-keys { display: flex; gap: 3px; min-width: 34px; }
+#debug-menu kbd {
+  min-width: 22px; padding: 1px 5px; border-radius: 3px; text-align: center; font: 700 12px/1.5 ui-monospace, Menlo, monospace;
+  color: #1a1406; background: #c9c2b0;
+}
+#debug-menu .debug-label { flex: 1; }
+#debug-menu .debug-state { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* --- Loading screen and wordmark ------------------------------------------------------- */
+/* the game's name, small, top left of the HUD (hidden where it would crowd the resource bar) */
+#hud-wordmark { position: fixed; top: 12px; left: 14px; z-index: 9; width: 170px; height: auto; pointer-events: none; user-select: none; opacity: 0.92; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8)); }
+@media (max-width: 1100px) { #hud-wordmark { display: none; } }

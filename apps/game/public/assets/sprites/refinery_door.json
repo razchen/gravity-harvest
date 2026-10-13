@@ -1,0 +1,341 @@
+{
+ "frames": {
+  "door_00": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_01": {
+   "frame": {
+    "x": 786,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_02": {
+   "frame": {
+    "x": 1572,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_03": {
+   "frame": {
+    "x": 2358,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_04": {
+   "frame": {
+    "x": 0,
+    "y": 467,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_05": {
+   "frame": {
+    "x": 786,
+    "y": 467,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_06": {
+   "frame": {
+    "x": 1572,
+    "y": 467,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_07": {
+   "frame": {
+    "x": 2358,
+    "y": 467,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_08": {
+   "frame": {
+    "x": 0,
+    "y": 934,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_09": {
+   "frame": {
+    "x": 786,
+    "y": 934,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_10": {
+   "frame": {
+    "x": 1572,
+    "y": 934,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_11": {
+   "frame": {
+    "x": 2358,
+    "y": 934,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_12": {
+   "frame": {
+    "x": 0,
+    "y": 1401,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_13": {
+   "frame": {
+    "x": 786,
+    "y": 1401,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_14": {
+   "frame": {
+    "x": 1572,
+    "y": 1401,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  },
+  "door_15": {
+   "frame": {
+    "x": 2358,
+    "y": 1401,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  }
+ },
+ "meta": {
+  "image": "refinery_door.png",
+  "size": {
+   "w": 3144,
+   "h": 1868
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 258.9,
+   "y": 332.6
+  },
+  "fps": 12,
+  "loop": false,
+  "tile_px": 128,
+  "footprint_tiles": 4,
+  "shadow": "split: see refinery_door_shadow.png"
+ }
+}

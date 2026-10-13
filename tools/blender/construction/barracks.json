@@ -1,0 +1,59 @@
+{
+  "model": "art/models/tripo/barracks.glb",
+  "atlas": "b_barracks_build",
+  "footprint": 3,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "effects": [
+    {
+      "kind": "light",
+      "part": 57,
+      "at": "top"
+    },
+    {
+      "kind": "steam",
+      "part": 1,
+      "at": "top",
+      "color": "#8cc0ff"
+    },
+    {
+      "kind": "steam",
+      "part": 37,
+      "at": "top",
+      "color": "#8cc0ff"
+    }
+  ],
+  "door": {
+    "make": {
+      "rect": {
+        "x": [
+          -0.146,
+          0.147
+        ],
+        "z": [
+          0.034,
+          0.174
+        ],
+        "y": -0.238
+      },
+      "slats": 7
+    },
+    "video": true
+  }
+}

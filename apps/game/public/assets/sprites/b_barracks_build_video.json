@@ -1,0 +1,482 @@
+{
+ "frames": {
+  "b_barracks_build_door_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_1": {
+   "frame": {
+    "x": 126,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_2": {
+   "frame": {
+    "x": 252,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_3": {
+   "frame": {
+    "x": 378,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_4": {
+   "frame": {
+    "x": 504,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_5": {
+   "frame": {
+    "x": 630,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_6": {
+   "frame": {
+    "x": 756,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_7": {
+   "frame": {
+    "x": 882,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_8": {
+   "frame": {
+    "x": 1008,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_9": {
+   "frame": {
+    "x": 1134,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_10": {
+   "frame": {
+    "x": 1260,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_11": {
+   "frame": {
+    "x": 1386,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_12": {
+   "frame": {
+    "x": 1512,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_13": {
+   "frame": {
+    "x": 1638,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_14": {
+   "frame": {
+    "x": 1764,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_15": {
+   "frame": {
+    "x": 1890,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_16": {
+   "frame": {
+    "x": 2016,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_17": {
+   "frame": {
+    "x": 2142,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_18": {
+   "frame": {
+    "x": 2268,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_19": {
+   "frame": {
+    "x": 2394,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_20": {
+   "frame": {
+    "x": 2520,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_21": {
+   "frame": {
+    "x": 2646,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  },
+  "b_barracks_build_door_22": {
+   "frame": {
+    "x": 2772,
+    "y": 0,
+    "w": 124,
+    "h": 143
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 64,
+    "y": 60,
+    "w": 124,
+    "h": 143
+   },
+   "sourceSize": {
+    "w": 533,
+    "h": 252
+   }
+  }
+ },
+ "meta": {
+  "image": "b_barracks_build_video.png",
+  "size": {
+   "w": 4096,
+   "h": 256
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 155.4,
+   "y": 168.3
+  },
+  "video": {
+   "fps": 12,
+   "door": {
+    "frames": 23
+   }
+  }
+ }
+}

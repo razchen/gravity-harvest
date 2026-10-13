@@ -1,0 +1,48 @@
+{
+ "frames": {
+  "b_power_00": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 538,
+    "h": 318
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 538,
+    "h": 318
+   },
+   "sourceSize": {
+    "w": 538,
+    "h": 318
+   }
+  }
+ },
+ "meta": {
+  "anchor": {
+   "x": 186.7,
+   "y": 219.7
+  },
+  "fps": 12,
+  "loop": false,
+  "lights": [
+   {
+    "x": 195.4,
+    "y": 97.1
+   }
+  ],
+  "image": "b_power.png",
+  "size": {
+   "w": 538,
+   "h": 318
+  },
+  "scale": "1",
+  "frames": 1,
+  "footprint_tiles": 3,
+  "tile_px": 128,
+  "shadow": "split: see b_power_shadow.png"
+ }
+}

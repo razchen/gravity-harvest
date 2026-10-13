@@ -1,0 +1,208 @@
+{
+ "frames": {
+  "ore_01": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 70
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 70
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 70
+   }
+  },
+  "ore_02": {
+   "frame": {
+    "x": 114,
+    "y": 0,
+    "w": 105,
+    "h": 65
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 105,
+    "h": 65
+   },
+   "sourceSize": {
+    "w": 105,
+    "h": 65
+   }
+  },
+  "ore_03": {
+   "frame": {
+    "x": 221,
+    "y": 0,
+    "w": 112,
+    "h": 77
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 77
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 77
+   }
+  },
+  "ore_04": {
+   "frame": {
+    "x": 335,
+    "y": 0,
+    "w": 105,
+    "h": 63
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 105,
+    "h": 63
+   },
+   "sourceSize": {
+    "w": 105,
+    "h": 63
+   }
+  },
+  "ore_05": {
+   "frame": {
+    "x": 442,
+    "y": 0,
+    "w": 114,
+    "h": 73
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 114,
+    "h": 73
+   },
+   "sourceSize": {
+    "w": 114,
+    "h": 73
+   }
+  },
+  "ore_06": {
+   "frame": {
+    "x": 558,
+    "y": 0,
+    "w": 76,
+    "h": 50
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 76,
+    "h": 50
+   },
+   "sourceSize": {
+    "w": 76,
+    "h": 50
+   }
+  },
+  "ore_07": {
+   "frame": {
+    "x": 636,
+    "y": 0,
+    "w": 112,
+    "h": 75
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 75
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 75
+   }
+  },
+  "ore_08": {
+   "frame": {
+    "x": 750,
+    "y": 0,
+    "w": 115,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 115,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 115,
+    "h": 72
+   }
+  }
+ },
+ "meta": {
+  "image": "ore.png",
+  "size": {
+   "w": 867,
+   "h": 77
+  },
+  "scale": "1",
+  "anchors": {
+   "ore_01": {
+    "x": 39.6,
+    "y": 47.5
+   },
+   "ore_02": {
+    "x": 35.2,
+    "y": 43.4
+   },
+   "ore_03": {
+    "x": 25.8,
+    "y": 61.4
+   },
+   "ore_04": {
+    "x": 42.5,
+    "y": 39.3
+   },
+   "ore_05": {
+    "x": 37.2,
+    "y": 53.5
+   },
+   "ore_06": {
+    "x": 24.0,
+    "y": 35.0
+   },
+   "ore_07": {
+    "x": 31.3,
+    "y": 55.9
+   },
+   "ore_08": {
+    "x": 43.7,
+    "y": 50.4
+   }
+  },
+  "tile_px": 128,
+  "shadow": "baked, lightened to 18%"
+ }
+}

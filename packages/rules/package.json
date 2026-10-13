@@ -1,0 +1,38 @@
+{
+  "name": "@gravity-harvest/rules",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Game rules and economy, generated from design/balance.xlsx, plus pure calculation and dependency helpers. Server-side only; the browser may import ./deps (code, no data).",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./public": {
+      "types": "./dist/public.d.ts",
+      "default": "./dist/public.js"
+    },
+    "./deps": {
+      "types": "./dist/deps.d.ts",
+      "default": "./dist/deps.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "import": "node scripts/import-balance.mjs",
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/import-balance.mjs --check && vitest run"
+  },
+  "devDependencies": {
+    "fflate": "^0.8.3",
+    "typescript": "6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

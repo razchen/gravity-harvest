@@ -1,0 +1,26 @@
+node_modules
+dist
+.DS_Store
+*.log
+.vite
+# Original art (3D models, concept sheets, source textures) lives in art/ but is too big for git:
+# only its README is tracked. Back the folder up separately (see art/README.md).
+art/*
+!art/README.md
+
+# Blender files anywhere else, backups and raw render frames
+*.blend
+*.blend1
+tools/blender/frames
+
+# Blender caches (smoke / steam simulations)
+*_cache*
+
+# Monorepo / test output
+.turbo
+test-results
+playwright-report
+
+# Private notes for Claude (never committed)
+CLAUDE.md
+.playwright-mcp

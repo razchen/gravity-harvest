@@ -1,0 +1,322 @@
+{
+ "frames": {
+  "b_motor_works_build_door_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_1": {
+   "frame": {
+    "x": 66,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_2": {
+   "frame": {
+    "x": 132,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_3": {
+   "frame": {
+    "x": 198,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_4": {
+   "frame": {
+    "x": 264,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_5": {
+   "frame": {
+    "x": 330,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_6": {
+   "frame": {
+    "x": 396,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_7": {
+   "frame": {
+    "x": 462,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_8": {
+   "frame": {
+    "x": 528,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_9": {
+   "frame": {
+    "x": 594,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_10": {
+   "frame": {
+    "x": 660,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_11": {
+   "frame": {
+    "x": 726,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_12": {
+   "frame": {
+    "x": 792,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_13": {
+   "frame": {
+    "x": 858,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  },
+  "b_motor_works_build_door_14": {
+   "frame": {
+    "x": 924,
+    "y": 0,
+    "w": 64,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 49,
+    "y": 135,
+    "w": 64,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 458,
+    "h": 249
+   }
+  }
+ },
+ "meta": {
+  "image": "b_motor_works_build_video.png",
+  "size": {
+   "w": 1024,
+   "h": 128
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 141.4,
+   "y": 174.3
+  },
+  "video": {
+   "fps": 12,
+   "door": {
+    "frames": 15
+   }
+  }
+ }
+}

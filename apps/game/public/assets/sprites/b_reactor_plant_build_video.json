@@ -1,0 +1,1920 @@
+{
+ "frames": {
+  "b_reactor_plant_build_video_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_1": {
+   "frame": {
+    "x": 241,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_2": {
+   "frame": {
+    "x": 482,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_3": {
+   "frame": {
+    "x": 723,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_4": {
+   "frame": {
+    "x": 964,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_5": {
+   "frame": {
+    "x": 1205,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_6": {
+   "frame": {
+    "x": 1446,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_7": {
+   "frame": {
+    "x": 1687,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_8": {
+   "frame": {
+    "x": 1928,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_9": {
+   "frame": {
+    "x": 2169,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_10": {
+   "frame": {
+    "x": 2410,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_11": {
+   "frame": {
+    "x": 2651,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_12": {
+   "frame": {
+    "x": 2892,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_13": {
+   "frame": {
+    "x": 3133,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_14": {
+   "frame": {
+    "x": 3374,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_15": {
+   "frame": {
+    "x": 3615,
+    "y": 0,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_16": {
+   "frame": {
+    "x": 0,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_17": {
+   "frame": {
+    "x": 241,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_18": {
+   "frame": {
+    "x": 482,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_19": {
+   "frame": {
+    "x": 723,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_20": {
+   "frame": {
+    "x": 964,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_21": {
+   "frame": {
+    "x": 1205,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_22": {
+   "frame": {
+    "x": 1446,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_23": {
+   "frame": {
+    "x": 1687,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_24": {
+   "frame": {
+    "x": 1928,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_25": {
+   "frame": {
+    "x": 2169,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_26": {
+   "frame": {
+    "x": 2410,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_27": {
+   "frame": {
+    "x": 2651,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_28": {
+   "frame": {
+    "x": 2892,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_29": {
+   "frame": {
+    "x": 3133,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_30": {
+   "frame": {
+    "x": 3374,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_31": {
+   "frame": {
+    "x": 3615,
+    "y": 221,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_32": {
+   "frame": {
+    "x": 0,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_33": {
+   "frame": {
+    "x": 241,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_34": {
+   "frame": {
+    "x": 482,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_35": {
+   "frame": {
+    "x": 723,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_36": {
+   "frame": {
+    "x": 964,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_37": {
+   "frame": {
+    "x": 1205,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_38": {
+   "frame": {
+    "x": 1446,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_39": {
+   "frame": {
+    "x": 1687,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_40": {
+   "frame": {
+    "x": 1928,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_41": {
+   "frame": {
+    "x": 2169,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_42": {
+   "frame": {
+    "x": 2410,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_43": {
+   "frame": {
+    "x": 2651,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_44": {
+   "frame": {
+    "x": 2892,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_45": {
+   "frame": {
+    "x": 3133,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_46": {
+   "frame": {
+    "x": 3374,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_47": {
+   "frame": {
+    "x": 3615,
+    "y": 442,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_48": {
+   "frame": {
+    "x": 0,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_49": {
+   "frame": {
+    "x": 241,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_50": {
+   "frame": {
+    "x": 482,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_51": {
+   "frame": {
+    "x": 723,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_52": {
+   "frame": {
+    "x": 964,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_53": {
+   "frame": {
+    "x": 1205,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_54": {
+   "frame": {
+    "x": 1446,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_55": {
+   "frame": {
+    "x": 1687,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_56": {
+   "frame": {
+    "x": 1928,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_57": {
+   "frame": {
+    "x": 2169,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_58": {
+   "frame": {
+    "x": 2410,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_59": {
+   "frame": {
+    "x": 2651,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_60": {
+   "frame": {
+    "x": 2892,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_61": {
+   "frame": {
+    "x": 3133,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_62": {
+   "frame": {
+    "x": 3374,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_63": {
+   "frame": {
+    "x": 3615,
+    "y": 663,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_64": {
+   "frame": {
+    "x": 0,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_65": {
+   "frame": {
+    "x": 241,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_66": {
+   "frame": {
+    "x": 482,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_67": {
+   "frame": {
+    "x": 723,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_68": {
+   "frame": {
+    "x": 964,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_69": {
+   "frame": {
+    "x": 1205,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_70": {
+   "frame": {
+    "x": 1446,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_71": {
+   "frame": {
+    "x": 1687,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_72": {
+   "frame": {
+    "x": 1928,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_73": {
+   "frame": {
+    "x": 2169,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_74": {
+   "frame": {
+    "x": 2410,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_75": {
+   "frame": {
+    "x": 2651,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_76": {
+   "frame": {
+    "x": 2892,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_77": {
+   "frame": {
+    "x": 3133,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_78": {
+   "frame": {
+    "x": 3374,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_79": {
+   "frame": {
+    "x": 3615,
+    "y": 884,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_80": {
+   "frame": {
+    "x": 0,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_81": {
+   "frame": {
+    "x": 241,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_82": {
+   "frame": {
+    "x": 482,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_83": {
+   "frame": {
+    "x": 723,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_84": {
+   "frame": {
+    "x": 964,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_85": {
+   "frame": {
+    "x": 1205,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_86": {
+   "frame": {
+    "x": 1446,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_87": {
+   "frame": {
+    "x": 1687,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_88": {
+   "frame": {
+    "x": 1928,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_89": {
+   "frame": {
+    "x": 2169,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_90": {
+   "frame": {
+    "x": 2410,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_91": {
+   "frame": {
+    "x": 2651,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_92": {
+   "frame": {
+    "x": 2892,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_93": {
+   "frame": {
+    "x": 3133,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  },
+  "b_reactor_plant_build_video_94": {
+   "frame": {
+    "x": 3374,
+    "y": 1105,
+    "w": 239,
+    "h": 219
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 27,
+    "w": 239,
+    "h": 219
+   },
+   "sourceSize": {
+    "w": 534,
+    "h": 265
+   }
+  }
+ },
+ "meta": {
+  "image": "b_reactor_plant_build_video.png",
+  "size": {
+   "w": 4096,
+   "h": 2048
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 144.5,
+   "y": 185.1
+  },
+  "video": {
+   "frames": 95,
+   "fps": 12
+  }
+ }
+}

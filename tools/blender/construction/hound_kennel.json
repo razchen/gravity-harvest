@@ -1,0 +1,50 @@
+{
+  "model": "art/models/tripo/hound_kennel.glb",
+  "atlas": "b_hound_kennel_build",
+  "footprint": 2,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "door": {
+    "parts": [
+      130,
+      34
+    ],
+    "slide": {
+      "axis": "z",
+      "distance": 0.075
+    }
+  },
+  "effects": [
+    {
+      "kind": "light",
+      "part": 39,
+      "at": "top"
+    },
+    {
+      "kind": "light",
+      "part": 17,
+      "at": "top"
+    },
+    {
+      "kind": "steam",
+      "part": 8,
+      "at": "top"
+    }
+  ]
+}

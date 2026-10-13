@@ -1,0 +1,32 @@
+{
+  "model": "art/models/tripo/anchor.glb",
+  "atlas": "b_anchor_build",
+  "footprint": 2,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "turret": {
+    "cut": 0.35,
+    "directions": 32,
+    "ring_part": 20,
+    "radius": 0.28,
+    "include": [
+      9
+    ]
+  }
+}

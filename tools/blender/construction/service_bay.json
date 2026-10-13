@@ -1,0 +1,60 @@
+{
+  "model": "art/models/tripo/service_bay.glb",
+  "atlas": "b_service_bay_build",
+  "footprint": 3,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "anims": [
+    {
+      "name": "arm",
+      "when": "working",
+      "frames": 48,
+      "fps": 10,
+      "groups": [
+        {
+          "parts": [
+            2
+          ],
+          "axis": "x",
+          "pivot": {
+            "part": 26,
+            "at": "top",
+            "xy": [
+              0.163,
+              0.03
+            ]
+          },
+          "swing": 12
+        }
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "kind": "sparks",
+      "part": 2,
+      "at": "bottom"
+    },
+    {
+      "kind": "light",
+      "part": 25,
+      "at": "top"
+    }
+  ]
+}

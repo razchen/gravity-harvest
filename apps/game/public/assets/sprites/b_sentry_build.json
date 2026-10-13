@@ -1,0 +1,3190 @@
+{
+ "frames": {
+  "b_sentry_build_stage_1": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_stage_2": {
+   "frame": {
+    "x": 207,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_stage_3": {
+   "frame": {
+    "x": 414,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_stage_4": {
+   "frame": {
+    "x": 621,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_stage_5": {
+   "frame": {
+    "x": 828,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_new_1": {
+   "frame": {
+    "x": 0,
+    "y": 118,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_new_2": {
+   "frame": {
+    "x": 207,
+    "y": 118,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_new_3": {
+   "frame": {
+    "x": 414,
+    "y": 118,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_new_4": {
+   "frame": {
+    "x": 621,
+    "y": 118,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_new_5": {
+   "frame": {
+    "x": 828,
+    "y": 118,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_shadow_1": {
+   "frame": {
+    "x": 0,
+    "y": 236,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_shadow_2": {
+   "frame": {
+    "x": 207,
+    "y": 236,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_shadow_3": {
+   "frame": {
+    "x": 414,
+    "y": 236,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_shadow_4": {
+   "frame": {
+    "x": 621,
+    "y": 236,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_shadow_5": {
+   "frame": {
+    "x": 828,
+    "y": 236,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_0": {
+   "frame": {
+    "x": 0,
+    "y": 354,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_1": {
+   "frame": {
+    "x": 207,
+    "y": 354,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_2": {
+   "frame": {
+    "x": 414,
+    "y": 354,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_3": {
+   "frame": {
+    "x": 621,
+    "y": 354,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_4": {
+   "frame": {
+    "x": 828,
+    "y": 354,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_5": {
+   "frame": {
+    "x": 0,
+    "y": 472,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_6": {
+   "frame": {
+    "x": 207,
+    "y": 472,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_7": {
+   "frame": {
+    "x": 414,
+    "y": 472,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_8": {
+   "frame": {
+    "x": 621,
+    "y": 472,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_9": {
+   "frame": {
+    "x": 828,
+    "y": 472,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_10": {
+   "frame": {
+    "x": 0,
+    "y": 590,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_11": {
+   "frame": {
+    "x": 207,
+    "y": 590,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_12": {
+   "frame": {
+    "x": 414,
+    "y": 590,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_13": {
+   "frame": {
+    "x": 621,
+    "y": 590,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_14": {
+   "frame": {
+    "x": 828,
+    "y": 590,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_15": {
+   "frame": {
+    "x": 0,
+    "y": 708,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_16": {
+   "frame": {
+    "x": 207,
+    "y": 708,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_17": {
+   "frame": {
+    "x": 414,
+    "y": 708,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_18": {
+   "frame": {
+    "x": 621,
+    "y": 708,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_19": {
+   "frame": {
+    "x": 828,
+    "y": 708,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_20": {
+   "frame": {
+    "x": 0,
+    "y": 826,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_21": {
+   "frame": {
+    "x": 207,
+    "y": 826,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_22": {
+   "frame": {
+    "x": 414,
+    "y": 826,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_23": {
+   "frame": {
+    "x": 621,
+    "y": 826,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_24": {
+   "frame": {
+    "x": 828,
+    "y": 826,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_25": {
+   "frame": {
+    "x": 0,
+    "y": 944,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_26": {
+   "frame": {
+    "x": 207,
+    "y": 944,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_27": {
+   "frame": {
+    "x": 414,
+    "y": 944,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_28": {
+   "frame": {
+    "x": 621,
+    "y": 944,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_29": {
+   "frame": {
+    "x": 828,
+    "y": 944,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_30": {
+   "frame": {
+    "x": 0,
+    "y": 1062,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turn_31": {
+   "frame": {
+    "x": 207,
+    "y": 1062,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_0": {
+   "frame": {
+    "x": 414,
+    "y": 1062,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_1": {
+   "frame": {
+    "x": 621,
+    "y": 1062,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_2": {
+   "frame": {
+    "x": 828,
+    "y": 1062,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_3": {
+   "frame": {
+    "x": 0,
+    "y": 1180,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_4": {
+   "frame": {
+    "x": 207,
+    "y": 1180,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_5": {
+   "frame": {
+    "x": 414,
+    "y": 1180,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_6": {
+   "frame": {
+    "x": 621,
+    "y": 1180,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_7": {
+   "frame": {
+    "x": 828,
+    "y": 1180,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_8": {
+   "frame": {
+    "x": 0,
+    "y": 1298,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_9": {
+   "frame": {
+    "x": 207,
+    "y": 1298,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_10": {
+   "frame": {
+    "x": 414,
+    "y": 1298,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_11": {
+   "frame": {
+    "x": 621,
+    "y": 1298,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_12": {
+   "frame": {
+    "x": 828,
+    "y": 1298,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_13": {
+   "frame": {
+    "x": 0,
+    "y": 1416,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_14": {
+   "frame": {
+    "x": 207,
+    "y": 1416,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_15": {
+   "frame": {
+    "x": 414,
+    "y": 1416,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_16": {
+   "frame": {
+    "x": 621,
+    "y": 1416,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_17": {
+   "frame": {
+    "x": 828,
+    "y": 1416,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_18": {
+   "frame": {
+    "x": 0,
+    "y": 1534,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_19": {
+   "frame": {
+    "x": 207,
+    "y": 1534,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_20": {
+   "frame": {
+    "x": 414,
+    "y": 1534,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_21": {
+   "frame": {
+    "x": 621,
+    "y": 1534,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_22": {
+   "frame": {
+    "x": 828,
+    "y": 1534,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_23": {
+   "frame": {
+    "x": 0,
+    "y": 1652,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_24": {
+   "frame": {
+    "x": 207,
+    "y": 1652,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_25": {
+   "frame": {
+    "x": 414,
+    "y": 1652,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_26": {
+   "frame": {
+    "x": 621,
+    "y": 1652,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_27": {
+   "frame": {
+    "x": 828,
+    "y": 1652,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_28": {
+   "frame": {
+    "x": 0,
+    "y": 1770,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_29": {
+   "frame": {
+    "x": 207,
+    "y": 1770,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_30": {
+   "frame": {
+    "x": 414,
+    "y": 1770,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  },
+  "b_sentry_build_turnshadow_31": {
+   "frame": {
+    "x": 621,
+    "y": 1770,
+    "w": 207,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 207,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 207,
+    "h": 118
+   }
+  }
+ },
+ "meta": {
+  "image": "b_sentry_build.png",
+  "size": {
+   "w": 1035,
+   "h": 1888
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 56.1,
+   "y": 80.6
+  },
+  "footprint_tiles": 1,
+  "tile_px": 128,
+  "shadow": "split: <atlas>_shadow_<n> per stage",
+  "construction": {
+   "stages": [
+    {
+     "name": "Foundation",
+     "welds": [
+      [
+       45,
+       88
+      ],
+      [
+       23,
+       73
+      ],
+      [
+       96,
+       82
+      ],
+      [
+       96,
+       85
+      ],
+      [
+       40,
+       68
+      ],
+      [
+       62,
+       69
+      ],
+      [
+       58,
+       98
+      ],
+      [
+       77,
+       62
+      ],
+      [
+       24,
+       86
+      ],
+      [
+       65,
+       58
+      ],
+      [
+       62,
+       99
+      ],
+      [
+       45,
+       97
+      ],
+      [
+       83,
+       66
+      ],
+      [
+       39,
+       67
+      ],
+      [
+       93,
+       87
+      ],
+      [
+       60,
+       64
+      ],
+      [
+       79,
+       63
+      ],
+      [
+       84,
+       92
+      ],
+      [
+       27,
+       69
+      ],
+      [
+       53,
+       56
+      ],
+      [
+       76,
+       96
+      ],
+      [
+       21,
+       86
+      ],
+      [
+       46,
+       60
+      ],
+      [
+       76,
+       61
+      ],
+      [
+       76,
+       62
+      ],
+      [
+       44,
+       88
+      ],
+      [
+       69,
+       100
+      ],
+      [
+       47,
+       59
+      ],
+      [
+       28,
+       67
+      ],
+      [
+       96,
+       72
+      ],
+      [
+       26,
+       70
+      ],
+      [
+       46,
+       89
+      ],
+      [
+       56,
+       54
+      ],
+      [
+       95,
+       77
+      ],
+      [
+       98,
+       73
+      ],
+      [
+       39,
+       90
+      ],
+      [
+       58,
+       97
+      ],
+      [
+       48,
+       95
+      ],
+      [
+       45,
+       91
+      ],
+      [
+       61,
+       62
+      ],
+      [
+       55,
+       56
+      ],
+      [
+       18,
+       80
+      ],
+      [
+       67,
+       101
+      ],
+      [
+       16,
+       81
+      ],
+      [
+       46,
+       66
+      ],
+      [
+       34,
+       66
+      ],
+      [
+       65,
+       101
+      ],
+      [
+       89,
+       68
+      ],
+      [
+       65,
+       65
+      ],
+      [
+       40,
+       90
+      ],
+      [
+       31,
+       67
+      ],
+      [
+       62,
+       56
+      ],
+      [
+       48,
+       96
+      ],
+      [
+       78,
+       62
+      ],
+      [
+       70,
+       98
+      ],
+      [
+       37,
+       67
+      ],
+      [
+       51,
+       96
+      ],
+      [
+       58,
+       65
+      ],
+      [
+       80,
+       94
+      ],
+      [
+       75,
+       96
+      ]
+     ],
+     "dust": [
+      [
+       15,
+       82
+      ],
+      [
+       21,
+       86
+      ],
+      [
+       27,
+       89
+      ],
+      [
+       33,
+       93
+      ],
+      [
+       39,
+       96
+      ],
+      [
+       45,
+       97
+      ],
+      [
+       51,
+       96
+      ],
+      [
+       57,
+       97
+      ],
+      [
+       63,
+       100
+      ],
+      [
+       69,
+       100
+      ],
+      [
+       75,
+       97
+      ],
+      [
+       81,
+       94
+      ],
+      [
+       87,
+       92
+      ],
+      [
+       93,
+       87
+      ],
+      [
+       99,
+       75
+      ]
+     ]
+    },
+    {
+     "name": "Lower structure",
+     "welds": [
+      [
+       52,
+       53
+      ],
+      [
+       23,
+       76
+      ],
+      [
+       25,
+       81
+      ],
+      [
+       51,
+       91
+      ],
+      [
+       95,
+       79
+      ],
+      [
+       83,
+       90
+      ],
+      [
+       82,
+       62
+      ],
+      [
+       58,
+       94
+      ],
+      [
+       90,
+       71
+      ],
+      [
+       31,
+       75
+      ],
+      [
+       61,
+       85
+      ],
+      [
+       24,
+       68
+      ],
+      [
+       86,
+       91
+      ],
+      [
+       87,
+       80
+      ],
+      [
+       56,
+       97
+      ],
+      [
+       60,
+       85
+      ],
+      [
+       40,
+       59
+      ],
+      [
+       88,
+       72
+      ],
+      [
+       78,
+       94
+      ],
+      [
+       32,
+       71
+      ],
+      [
+       84,
+       70
+      ],
+      [
+       46,
+       56
+      ],
+      [
+       24,
+       80
+      ],
+      [
+       61,
+       87
+      ],
+      [
+       58,
+       95
+      ],
+      [
+       55,
+       97
+      ],
+      [
+       94,
+       85
+      ],
+      [
+       36,
+       76
+      ],
+      [
+       27,
+       86
+      ],
+      [
+       86,
+       63
+      ],
+      [
+       34,
+       76
+      ],
+      [
+       88,
+       64
+      ],
+      [
+       82,
+       61
+      ],
+      [
+       46,
+       87
+      ],
+      [
+       61,
+       97
+      ],
+      [
+       35,
+       94
+      ],
+      [
+       32,
+       66
+      ],
+      [
+       60,
+       93
+      ],
+      [
+       26,
+       69
+      ],
+      [
+       83,
+       62
+      ],
+      [
+       31,
+       74
+      ],
+      [
+       45,
+       87
+      ],
+      [
+       60,
+       86
+      ],
+      [
+       90,
+       66
+      ],
+      [
+       47,
+       55
+      ],
+      [
+       22,
+       71
+      ],
+      [
+       46,
+       89
+      ],
+      [
+       45,
+       81
+      ],
+      [
+       48,
+       90
+      ],
+      [
+       46,
+       55
+      ],
+      [
+       82,
+       90
+      ],
+      [
+       43,
+       57
+      ],
+      [
+       49,
+       85
+      ],
+      [
+       37,
+       77
+      ],
+      [
+       24,
+       78
+      ],
+      [
+       91,
+       81
+      ],
+      [
+       84,
+       64
+      ],
+      [
+       90,
+       82
+      ],
+      [
+       52,
+       90
+      ],
+      [
+       50,
+       54
+      ]
+     ],
+     "dust": [
+      [
+       21,
+       75
+      ],
+      [
+       26,
+       85
+      ],
+      [
+       31,
+       90
+      ],
+      [
+       36,
+       94
+      ],
+      [
+       41,
+       93
+      ],
+      [
+       46,
+       90
+      ],
+      [
+       51,
+       91
+      ],
+      [
+       56,
+       98
+      ],
+      [
+       61,
+       98
+      ],
+      [
+       66,
+       98
+      ],
+      [
+       71,
+       98
+      ],
+      [
+       76,
+       95
+      ],
+      [
+       81,
+       92
+      ],
+      [
+       86,
+       92
+      ],
+      [
+       91,
+       88
+      ],
+      [
+       96,
+       85
+      ]
+     ]
+    },
+    {
+     "name": "Main bodies",
+     "welds": [
+      [
+       41,
+       49
+      ],
+      [
+       88,
+       67
+      ],
+      [
+       68,
+       45
+      ],
+      [
+       49,
+       73
+      ],
+      [
+       29,
+       59
+      ],
+      [
+       38,
+       72
+      ],
+      [
+       49,
+       61
+      ],
+      [
+       68,
+       55
+      ],
+      [
+       41,
+       72
+      ],
+      [
+       65,
+       70
+      ],
+      [
+       53,
+       65
+      ],
+      [
+       37,
+       52
+      ],
+      [
+       81,
+       47
+      ],
+      [
+       50,
+       45
+      ],
+      [
+       71,
+       79
+      ],
+      [
+       61,
+       55
+      ],
+      [
+       62,
+       40
+      ],
+      [
+       90,
+       75
+      ],
+      [
+       64,
+       59
+      ],
+      [
+       63,
+       62
+      ],
+      [
+       37,
+       73
+      ],
+      [
+       69,
+       62
+      ],
+      [
+       46,
+       48
+      ],
+      [
+       38,
+       52
+      ],
+      [
+       78,
+       61
+      ],
+      [
+       74,
+       75
+      ],
+      [
+       76,
+       67
+      ],
+      [
+       71,
+       43
+      ],
+      [
+       63,
+       69
+      ],
+      [
+       82,
+       48
+      ],
+      [
+       52,
+       58
+      ],
+      [
+       85,
+       72
+      ],
+      [
+       61,
+       76
+      ],
+      [
+       79,
+       72
+      ],
+      [
+       64,
+       65
+      ],
+      [
+       26,
+       64
+      ],
+      [
+       38,
+       73
+      ],
+      [
+       47,
+       47
+      ],
+      [
+       54,
+       58
+      ],
+      [
+       90,
+       78
+      ],
+      [
+       73,
+       64
+      ],
+      [
+       78,
+       48
+      ],
+      [
+       27,
+       64
+      ],
+      [
+       49,
+       59
+      ],
+      [
+       73,
+       78
+      ],
+      [
+       62,
+       69
+      ],
+      [
+       74,
+       77
+      ],
+      [
+       73,
+       36
+      ],
+      [
+       72,
+       79
+      ],
+      [
+       53,
+       59
+      ],
+      [
+       74,
+       68
+      ],
+      [
+       75,
+       66
+      ],
+      [
+       37,
+       76
+      ],
+      [
+       91,
+       77
+      ],
+      [
+       33,
+       81
+      ],
+      [
+       55,
+       57
+      ],
+      [
+       70,
+       70
+      ],
+      [
+       30,
+       78
+      ],
+      [
+       32,
+       55
+      ],
+      [
+       65,
+       77
+      ]
+     ],
+     "dust": [
+      [
+       25,
+       68
+      ],
+      [
+       29,
+       79
+      ],
+      [
+       33,
+       81
+      ],
+      [
+       37,
+       79
+      ],
+      [
+       41,
+       73
+      ],
+      [
+       45,
+       78
+      ],
+      [
+       49,
+       85
+      ],
+      [
+       53,
+       86
+      ],
+      [
+       57,
+       88
+      ],
+      [
+       61,
+       79
+      ],
+      [
+       65,
+       79
+      ],
+      [
+       69,
+       78
+      ],
+      [
+       73,
+       79
+      ],
+      [
+       77,
+       77
+      ],
+      [
+       81,
+       71
+      ],
+      [
+       85,
+       73
+      ],
+      [
+       89,
+       79
+      ]
+     ]
+    },
+    {
+     "name": "Upper",
+     "welds": [
+      [
+       77,
+       58
+      ],
+      [
+       69,
+       38
+      ],
+      [
+       44,
+       54
+      ],
+      [
+       48,
+       48
+      ],
+      [
+       37,
+       61
+      ],
+      [
+       79,
+       53
+      ],
+      [
+       50,
+       48
+      ],
+      [
+       57,
+       53
+      ],
+      [
+       58,
+       46
+      ],
+      [
+       45,
+       54
+      ],
+      [
+       32,
+       51
+      ],
+      [
+       74,
+       55
+      ],
+      [
+       50,
+       33
+      ],
+      [
+       60,
+       57
+      ],
+      [
+       34,
+       57
+      ],
+      [
+       55,
+       46
+      ],
+      [
+       43,
+       44
+      ],
+      [
+       47,
+       51
+      ],
+      [
+       50,
+       34
+      ],
+      [
+       28,
+       54
+      ],
+      [
+       74,
+       50
+      ],
+      [
+       50,
+       31
+      ],
+      [
+       39,
+       47
+      ],
+      [
+       32,
+       57
+      ],
+      [
+       31,
+       64
+      ],
+      [
+       68,
+       48
+      ],
+      [
+       75,
+       50
+      ],
+      [
+       64,
+       39
+      ],
+      [
+       67,
+       40
+      ],
+      [
+       79,
+       38
+      ],
+      [
+       47,
+       34
+      ],
+      [
+       55,
+       48
+      ],
+      [
+       69,
+       48
+      ],
+      [
+       71,
+       52
+      ],
+      [
+       29,
+       64
+      ],
+      [
+       52,
+       36
+      ],
+      [
+       58,
+       58
+      ],
+      [
+       30,
+       60
+      ],
+      [
+       79,
+       44
+      ],
+      [
+       74,
+       57
+      ],
+      [
+       36,
+       50
+      ],
+      [
+       71,
+       53
+      ],
+      [
+       35,
+       63
+      ],
+      [
+       44,
+       50
+      ],
+      [
+       68,
+       27
+      ],
+      [
+       34,
+       63
+      ],
+      [
+       47,
+       36
+      ],
+      [
+       68,
+       34
+      ],
+      [
+       31,
+       56
+      ],
+      [
+       32,
+       63
+      ],
+      [
+       49,
+       50
+      ],
+      [
+       46,
+       52
+      ],
+      [
+       56,
+       28
+      ],
+      [
+       30,
+       63
+      ],
+      [
+       71,
+       24
+      ],
+      [
+       56,
+       49
+      ],
+      [
+       61,
+       43
+      ],
+      [
+       47,
+       37
+      ],
+      [
+       67,
+       43
+      ],
+      [
+       74,
+       60
+      ]
+     ],
+     "dust": [
+      [
+       26,
+       60
+      ],
+      [
+       29,
+       64
+      ],
+      [
+       32,
+       64
+      ],
+      [
+       35,
+       63
+      ],
+      [
+       38,
+       62
+      ],
+      [
+       41,
+       60
+      ],
+      [
+       44,
+       59
+      ],
+      [
+       47,
+       57
+      ],
+      [
+       50,
+       57
+      ],
+      [
+       53,
+       56
+      ],
+      [
+       56,
+       58
+      ],
+      [
+       59,
+       61
+      ],
+      [
+       62,
+       60
+      ],
+      [
+       65,
+       59
+      ],
+      [
+       68,
+       64
+      ],
+      [
+       71,
+       62
+      ],
+      [
+       74,
+       61
+      ],
+      [
+       77,
+       59
+      ],
+      [
+       80,
+       52
+      ]
+     ]
+    },
+    {
+     "name": "Finished",
+     "welds": [
+      [
+       54,
+       60
+      ],
+      [
+       64,
+       42
+      ],
+      [
+       39,
+       55
+      ],
+      [
+       36,
+       57
+      ],
+      [
+       48,
+       50
+      ],
+      [
+       68,
+       36
+      ],
+      [
+       35,
+       58
+      ],
+      [
+       29,
+       60
+      ],
+      [
+       46,
+       51
+      ],
+      [
+       64,
+       43
+      ],
+      [
+       51,
+       48
+      ],
+      [
+       50,
+       41
+      ],
+      [
+       53,
+       49
+      ],
+      [
+       69,
+       61
+      ],
+      [
+       49,
+       50
+      ],
+      [
+       37,
+       56
+      ],
+      [
+       52,
+       61
+      ],
+      [
+       53,
+       60
+      ],
+      [
+       49,
+       42
+      ],
+      [
+       54,
+       64
+      ],
+      [
+       47,
+       54
+      ],
+      [
+       40,
+       56
+      ],
+      [
+       40,
+       55
+      ],
+      [
+       48,
+       49
+      ],
+      [
+       68,
+       59
+      ],
+      [
+       47,
+       55
+      ],
+      [
+       56,
+       62
+      ],
+      [
+       55,
+       63
+      ],
+      [
+       48,
+       53
+      ],
+      [
+       51,
+       59
+      ],
+      [
+       42,
+       53
+      ],
+      [
+       65,
+       43
+      ],
+      [
+       51,
+       49
+      ],
+      [
+       44,
+       52
+      ],
+      [
+       67,
+       38
+      ],
+      [
+       42,
+       57
+      ],
+      [
+       46,
+       52
+      ],
+      [
+       43,
+       57
+      ],
+      [
+       39,
+       60
+      ],
+      [
+       55,
+       64
+      ],
+      [
+       52,
+       62
+      ],
+      [
+       44,
+       57
+      ],
+      [
+       43,
+       54
+      ],
+      [
+       51,
+       52
+      ],
+      [
+       48,
+       54
+      ],
+      [
+       50,
+       53
+      ],
+      [
+       47,
+       50
+      ],
+      [
+       54,
+       59
+      ],
+      [
+       41,
+       57
+      ],
+      [
+       67,
+       40
+      ],
+      [
+       30,
+       60
+      ],
+      [
+       66,
+       44
+      ],
+      [
+       47,
+       51
+      ],
+      [
+       67,
+       37
+      ],
+      [
+       65,
+       44
+      ],
+      [
+       37,
+       60
+      ],
+      [
+       53,
+       47
+      ],
+      [
+       44,
+       53
+      ],
+      [
+       68,
+       62
+      ],
+      [
+       40,
+       58
+      ]
+     ],
+     "dust": [
+      [
+       28,
+       60
+      ],
+      [
+       30,
+       60
+      ],
+      [
+       36,
+       59
+      ],
+      [
+       38,
+       60
+      ],
+      [
+       40,
+       59
+      ],
+      [
+       42,
+       58
+      ],
+      [
+       44,
+       57
+      ],
+      [
+       46,
+       55
+      ],
+      [
+       48,
+       54
+      ],
+      [
+       50,
+       53
+      ],
+      [
+       52,
+       63
+      ],
+      [
+       54,
+       64
+      ],
+      [
+       56,
+       63
+      ],
+      [
+       65,
+       45
+      ],
+      [
+       67,
+       61
+      ],
+      [
+       69,
+       62
+      ]
+     ]
+    }
+   ]
+  },
+  "damage": {
+   "spots": [
+    [
+     36,
+     58
+    ],
+    [
+     43,
+     53
+    ],
+    [
+     69,
+     85
+    ]
+   ]
+  },
+  "turret": {
+   "directions": 32,
+   "rest": 25
+  }
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "frames": {
+  "b_radar_shadow": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 559,
+    "h": 338
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 559,
+    "h": 338
+   },
+   "sourceSize": {
+    "w": 559,
+    "h": 338
+   }
+  }
+ },
+ "meta": {
+  "image": "b_radar_shadow.png",
+  "size": {
+   "w": 559,
+   "h": 338
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 177.4,
+   "y": 244.3
+  },
+  "shadow": "mask (full strength; the game shows the shared layer at 18%)"
+ }
+}

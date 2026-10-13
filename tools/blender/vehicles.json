@@ -1,0 +1,11 @@
+{
+  "skimmer": { "length_tiles": 1.05 },
+  "jackal": { "length_tiles": 1.2, "rig": "jackal.blend" },
+  "ram": { "length_tiles": 1.3 },
+  "spire": { "length_tiles": 1.4 },
+  "carrier": { "length_tiles": 1.35 },
+  "watcher": { "length_tiles": 1.1 },
+  "shroud": { "length_tiles": 1.1 },
+  "seeder": { "length_tiles": 1.3 },
+  "assembler": { "length_tiles": 1.7 }
+}

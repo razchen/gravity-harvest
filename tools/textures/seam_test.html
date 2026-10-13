@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seam Test</title>
+  <style>
+    :root { --bg: #161718; --panel: #222426; --text: #e9e4d6; --muted: #9a968c; --accent: #f5b301; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, sans-serif; }
+    header { position: fixed; inset: 0 0 auto 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+             padding: 10px 16px; background: var(--panel); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
+    header b { color: var(--accent); }
+    label { display: flex; gap: 6px; align-items: center; color: var(--muted); }
+    select, input { font: inherit; }
+    #view { position: absolute; inset: 52px 0 0 0; overflow: auto; }
+    #grid { image-rendering: auto; }
+    .note { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <b>Seam test</b>
+    <label>Texture
+      <select id="tex">
+        <option value="../../art/textures/dry_earth.png">Dry Earth (art/textures)</option>
+        <option value="../../art/textures/rocky_dirt.png">Rocky Dirt (art/textures)</option>
+      </select>
+    </label>
+    <label>Grid <input id="n" type="number" min="2" max="16" value="8" style="width: 52px"></label>
+    <label>Tile px <input id="px" type="range" min="64" max="1254" value="320"></label>
+    <label><input id="lines" type="checkbox"> Outline tile edges</label>
+    <span class="note">Seams show as straight lines or brightness jumps on the tile edges.</span>
+  </header>
+  <div id="view"><canvas id="grid"></canvas></div>
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const img = new Image();
+    function draw() {
+      const n = +$('#n').value, px = +$('#px').value, c = $('#grid'), g = c.getContext('2d');
+      c.width = c.height = n * px;
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) g.drawImage(img, x * px, y * px, px, px);
+      if ($('#lines').checked) {
+        g.strokeStyle = 'rgba(255, 60, 40, 0.8)';
+        g.lineWidth = 1;
+        for (let i = 1; i < n; i++) {
+          g.beginPath(); g.moveTo(i * px + 0.5, 0); g.lineTo(i * px + 0.5, n * px); g.stroke();
+          g.beginPath(); g.moveTo(0, i * px + 0.5); g.lineTo(n * px, i * px + 0.5); g.stroke();
+        }
+      }
+    }
+    function load() { img.onload = draw; img.src = $('#tex').value; }
+    for (const id of ['#n', '#px', '#lines']) $(id).addEventListener('input', draw);
+    $('#tex').addEventListener('change', load);
+    load();
+  </script>
+</body>
+</html>

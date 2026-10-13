@@ -1,0 +1,47 @@
+{
+  "model": "art/models/tripo/gravity_forge.glb",
+  "atlas": "b_gravity_forge_build",
+  "footprint": 3,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "effects": [
+    {
+      "kind": "glow",
+      "part": 8,
+      "at": "top",
+      "color": "#ff8a2a"
+    },
+    {
+      "kind": "glow",
+      "part": 17,
+      "at": "centre",
+      "color": "#ff8a2a"
+    },
+    {
+      "kind": "steam",
+      "part": 41,
+      "at": "top"
+    },
+    {
+      "kind": "light",
+      "part": 28,
+      "at": "top"
+    }
+  ]
+}

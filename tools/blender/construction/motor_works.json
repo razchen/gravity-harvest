@@ -1,0 +1,51 @@
+{
+ "model": "art/models/tripo/motor_works.glb",
+ "atlas": "b_motor_works_build",
+ "footprint": 3,
+ "deck_min_area": 0.01,
+ "stages": [
+  {
+   "name": "Foundation"
+  },
+  {
+   "name": "Lower structure"
+  },
+  {
+   "name": "Main bodies"
+  },
+  {
+   "name": "Upper"
+  },
+  {
+   "name": "Finished"
+  }
+ ],
+ "effects": [
+  {
+   "kind": "steam",
+   "part": 67,
+   "at": "top",
+   "color": "#8cc0ff"
+  },
+  {
+   "kind": "steam",
+   "part": 65,
+   "at": "top",
+   "color": "#8cc0ff"
+  },
+  {
+   "kind": "steam",
+   "part": 98,
+   "at": "top",
+   "color": "#8cc0ff"
+  },
+  {
+   "kind": "light",
+   "part": 7,
+   "at": "top"
+  }
+ ],
+ "hide": [
+  4
+ ]
+}

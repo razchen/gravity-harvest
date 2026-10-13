@@ -1,0 +1,3166 @@
+{
+ "frames": {
+  "b_anchor_build_stage_1": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_stage_2": {
+   "frame": {
+    "x": 352,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_stage_3": {
+   "frame": {
+    "x": 704,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_stage_4": {
+   "frame": {
+    "x": 1056,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_stage_5": {
+   "frame": {
+    "x": 1408,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_new_1": {
+   "frame": {
+    "x": 0,
+    "y": 203,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_new_2": {
+   "frame": {
+    "x": 352,
+    "y": 203,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_new_3": {
+   "frame": {
+    "x": 704,
+    "y": 203,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_new_4": {
+   "frame": {
+    "x": 1056,
+    "y": 203,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_new_5": {
+   "frame": {
+    "x": 1408,
+    "y": 203,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_shadow_1": {
+   "frame": {
+    "x": 0,
+    "y": 406,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_shadow_2": {
+   "frame": {
+    "x": 352,
+    "y": 406,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_shadow_3": {
+   "frame": {
+    "x": 704,
+    "y": 406,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_shadow_4": {
+   "frame": {
+    "x": 1056,
+    "y": 406,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_shadow_5": {
+   "frame": {
+    "x": 1408,
+    "y": 406,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_0": {
+   "frame": {
+    "x": 0,
+    "y": 609,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_1": {
+   "frame": {
+    "x": 352,
+    "y": 609,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_2": {
+   "frame": {
+    "x": 704,
+    "y": 609,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_3": {
+   "frame": {
+    "x": 1056,
+    "y": 609,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_4": {
+   "frame": {
+    "x": 1408,
+    "y": 609,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_5": {
+   "frame": {
+    "x": 0,
+    "y": 812,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_6": {
+   "frame": {
+    "x": 352,
+    "y": 812,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_7": {
+   "frame": {
+    "x": 704,
+    "y": 812,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_8": {
+   "frame": {
+    "x": 1056,
+    "y": 812,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_9": {
+   "frame": {
+    "x": 1408,
+    "y": 812,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_10": {
+   "frame": {
+    "x": 0,
+    "y": 1015,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_11": {
+   "frame": {
+    "x": 352,
+    "y": 1015,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_12": {
+   "frame": {
+    "x": 704,
+    "y": 1015,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_13": {
+   "frame": {
+    "x": 1056,
+    "y": 1015,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_14": {
+   "frame": {
+    "x": 1408,
+    "y": 1015,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_15": {
+   "frame": {
+    "x": 0,
+    "y": 1218,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_16": {
+   "frame": {
+    "x": 352,
+    "y": 1218,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_17": {
+   "frame": {
+    "x": 704,
+    "y": 1218,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_18": {
+   "frame": {
+    "x": 1056,
+    "y": 1218,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_19": {
+   "frame": {
+    "x": 1408,
+    "y": 1218,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_20": {
+   "frame": {
+    "x": 0,
+    "y": 1421,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_21": {
+   "frame": {
+    "x": 352,
+    "y": 1421,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_22": {
+   "frame": {
+    "x": 704,
+    "y": 1421,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_23": {
+   "frame": {
+    "x": 1056,
+    "y": 1421,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_24": {
+   "frame": {
+    "x": 1408,
+    "y": 1421,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_25": {
+   "frame": {
+    "x": 0,
+    "y": 1624,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_26": {
+   "frame": {
+    "x": 352,
+    "y": 1624,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_27": {
+   "frame": {
+    "x": 704,
+    "y": 1624,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_28": {
+   "frame": {
+    "x": 1056,
+    "y": 1624,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_29": {
+   "frame": {
+    "x": 1408,
+    "y": 1624,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_30": {
+   "frame": {
+    "x": 0,
+    "y": 1827,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turn_31": {
+   "frame": {
+    "x": 352,
+    "y": 1827,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_0": {
+   "frame": {
+    "x": 704,
+    "y": 1827,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_1": {
+   "frame": {
+    "x": 1056,
+    "y": 1827,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_2": {
+   "frame": {
+    "x": 1408,
+    "y": 1827,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_3": {
+   "frame": {
+    "x": 0,
+    "y": 2030,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_4": {
+   "frame": {
+    "x": 352,
+    "y": 2030,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_5": {
+   "frame": {
+    "x": 704,
+    "y": 2030,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_6": {
+   "frame": {
+    "x": 1056,
+    "y": 2030,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_7": {
+   "frame": {
+    "x": 1408,
+    "y": 2030,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_8": {
+   "frame": {
+    "x": 0,
+    "y": 2233,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_9": {
+   "frame": {
+    "x": 352,
+    "y": 2233,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_10": {
+   "frame": {
+    "x": 704,
+    "y": 2233,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_11": {
+   "frame": {
+    "x": 1056,
+    "y": 2233,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_12": {
+   "frame": {
+    "x": 1408,
+    "y": 2233,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_13": {
+   "frame": {
+    "x": 0,
+    "y": 2436,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_14": {
+   "frame": {
+    "x": 352,
+    "y": 2436,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_15": {
+   "frame": {
+    "x": 704,
+    "y": 2436,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_16": {
+   "frame": {
+    "x": 1056,
+    "y": 2436,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_17": {
+   "frame": {
+    "x": 1408,
+    "y": 2436,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_18": {
+   "frame": {
+    "x": 0,
+    "y": 2639,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_19": {
+   "frame": {
+    "x": 352,
+    "y": 2639,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_20": {
+   "frame": {
+    "x": 704,
+    "y": 2639,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_21": {
+   "frame": {
+    "x": 1056,
+    "y": 2639,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_22": {
+   "frame": {
+    "x": 1408,
+    "y": 2639,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_23": {
+   "frame": {
+    "x": 0,
+    "y": 2842,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_24": {
+   "frame": {
+    "x": 352,
+    "y": 2842,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_25": {
+   "frame": {
+    "x": 704,
+    "y": 2842,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_26": {
+   "frame": {
+    "x": 1056,
+    "y": 2842,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_27": {
+   "frame": {
+    "x": 1408,
+    "y": 2842,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_28": {
+   "frame": {
+    "x": 0,
+    "y": 3045,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_29": {
+   "frame": {
+    "x": 352,
+    "y": 3045,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_30": {
+   "frame": {
+    "x": 704,
+    "y": 3045,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  },
+  "b_anchor_build_turnshadow_31": {
+   "frame": {
+    "x": 1056,
+    "y": 3045,
+    "w": 352,
+    "h": 203
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 203
+   },
+   "sourceSize": {
+    "w": 352,
+    "h": 203
+   }
+  }
+ },
+ "meta": {
+  "image": "b_anchor_build.png",
+  "size": {
+   "w": 1760,
+   "h": 3248
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 105.8,
+   "y": 133.4
+  },
+  "footprint_tiles": 2,
+  "tile_px": 128,
+  "shadow": "split: <atlas>_shadow_<n> per stage",
+  "construction": {
+   "stages": [
+    {
+     "name": "Foundation",
+     "welds": [
+      [
+       162,
+       159
+      ],
+      [
+       172,
+       136
+      ],
+      [
+       21,
+       145
+      ],
+      [
+       183,
+       152
+      ],
+      [
+       187,
+       124
+      ],
+      [
+       171,
+       130
+      ],
+      [
+       96,
+       186
+      ],
+      [
+       93,
+       98
+      ],
+      [
+       170,
+       155
+      ],
+      [
+       80,
+       93
+      ],
+      [
+       141,
+       92
+      ],
+      [
+       88,
+       182
+      ],
+      [
+       184,
+       113
+      ],
+      [
+       192,
+       116
+      ],
+      [
+       181,
+       154
+      ],
+      [
+       40,
+       105
+      ],
+      [
+       157,
+       99
+      ],
+      [
+       62,
+       169
+      ],
+      [
+       180,
+       127
+      ],
+      [
+       118,
+       88
+      ],
+      [
+       132,
+       180
+      ],
+      [
+       37,
+       154
+      ],
+      [
+       106,
+       94
+      ],
+      [
+       59,
+       96
+      ],
+      [
+       91,
+       98
+      ],
+      [
+       43,
+       157
+      ],
+      [
+       155,
+       164
+      ],
+      [
+       140,
+       93
+      ],
+      [
+       186,
+       114
+      ],
+      [
+       19,
+       136
+      ],
+      [
+       26,
+       134
+      ],
+      [
+       50,
+       160
+      ],
+      [
+       124,
+       84
+      ],
+      [
+       165,
+       142
+      ],
+      [
+       153,
+       139
+      ],
+      [
+       153,
+       164
+      ],
+      [
+       184,
+       126
+      ],
+      [
+       68,
+       171
+      ],
+      [
+       55,
+       164
+      ],
+      [
+       58,
+       97
+      ],
+      [
+       114,
+       89
+      ],
+      [
+       166,
+       143
+      ],
+      [
+       108,
+       192
+      ],
+      [
+       26,
+       147
+      ],
+      [
+       27,
+       112
+      ],
+      [
+       110,
+       191
+      ],
+      [
+       116,
+       88
+      ],
+      [
+       177,
+       127
+      ],
+      [
+       38,
+       107
+      ],
+      [
+       164,
+       161
+      ],
+      [
+       194,
+       117
+      ],
+      [
+       138,
+       89
+      ],
+      [
+       77,
+       175
+      ],
+      [
+       56,
+       98
+      ],
+      [
+       36,
+       153
+      ],
+      [
+       34,
+       117
+      ],
+      [
+       163,
+       163
+      ],
+      [
+       176,
+       108
+      ],
+      [
+       150,
+       171
+      ],
+      [
+       90,
+       182
+      ]
+     ],
+     "dust": [
+      [
+       12,
+       141
+      ],
+      [
+       25,
+       148
+      ],
+      [
+       38,
+       154
+      ],
+      [
+       51,
+       161
+      ],
+      [
+       64,
+       170
+      ],
+      [
+       77,
+       176
+      ],
+      [
+       90,
+       183
+      ],
+      [
+       103,
+       189
+      ],
+      [
+       116,
+       188
+      ],
+      [
+       129,
+       181
+      ],
+      [
+       142,
+       175
+      ],
+      [
+       155,
+       168
+      ],
+      [
+       168,
+       162
+      ],
+      [
+       181,
+       155
+      ],
+      [
+       194,
+       122
+      ]
+     ]
+    },
+    {
+     "name": "Lower structure",
+     "welds": [
+      [
+       66,
+       91
+      ],
+      [
+       171,
+       130
+      ],
+      [
+       153,
+       138
+      ],
+      [
+       137,
+       163
+      ],
+      [
+       86,
+       134
+      ],
+      [
+       82,
+       159
+      ],
+      [
+       169,
+       104
+      ],
+      [
+       88,
+       170
+      ],
+      [
+       185,
+       118
+      ],
+      [
+       52,
+       129
+      ],
+      [
+       116,
+       148
+      ],
+      [
+       42,
+       112
+      ],
+      [
+       91,
+       165
+      ],
+      [
+       42,
+       136
+      ],
+      [
+       137,
+       169
+      ],
+      [
+       109,
+       150
+      ],
+      [
+       164,
+       97
+      ],
+      [
+       66,
+       122
+      ],
+      [
+       98,
+       166
+      ],
+      [
+       191,
+       117
+      ],
+      [
+       163,
+       115
+      ],
+      [
+       151,
+       93
+      ],
+      [
+       45,
+       137
+      ],
+      [
+       105,
+       153
+      ],
+      [
+       122,
+       170
+      ],
+      [
+       117,
+       167
+      ],
+      [
+       90,
+       148
+      ],
+      [
+       152,
+       130
+      ],
+      [
+       81,
+       148
+      ],
+      [
+       109,
+       106
+      ],
+      [
+       159,
+       130
+      ],
+      [
+       116,
+       107
+      ],
+      [
+       118,
+       103
+      ],
+      [
+       82,
+       153
+      ],
+      [
+       90,
+       170
+      ],
+      [
+       73,
+       169
+      ],
+      [
+       117,
+       108
+      ],
+      [
+       106,
+       168
+      ],
+      [
+       128,
+       113
+      ],
+      [
+       174,
+       104
+      ],
+      [
+       144,
+       125
+      ],
+      [
+       86,
+       151
+      ],
+      [
+       102,
+       153
+      ],
+      [
+       183,
+       108
+      ],
+      [
+       70,
+       93
+      ],
+      [
+       68,
+       116
+      ],
+      [
+       82,
+       158
+      ],
+      [
+       135,
+       138
+      ],
+      [
+       151,
+       156
+      ],
+      [
+       57,
+       93
+      ],
+      [
+       115,
+       159
+      ],
+      [
+       50,
+       95
+      ],
+      [
+       81,
+       150
+      ],
+      [
+       97,
+       133
+      ],
+      [
+       78,
+       135
+      ],
+      [
+       33,
+       140
+      ],
+      [
+       108,
+       106
+      ],
+      [
+       146,
+       140
+      ],
+      [
+       92,
+       161
+      ],
+      [
+       83,
+       92
+      ]
+     ],
+     "dust": [
+      [
+       28,
+       137
+      ],
+      [
+       40,
+       145
+      ],
+      [
+       52,
+       144
+      ],
+      [
+       64,
+       154
+      ],
+      [
+       76,
+       175
+      ],
+      [
+       88,
+       171
+      ],
+      [
+       100,
+       168
+      ],
+      [
+       112,
+       164
+      ],
+      [
+       124,
+       171
+      ],
+      [
+       136,
+       176
+      ],
+      [
+       148,
+       159
+      ],
+      [
+       160,
+       153
+      ],
+      [
+       172,
+       152
+      ],
+      [
+       184,
+       150
+      ],
+      [
+       196,
+       119
+      ]
+     ]
+    },
+    {
+     "name": "Main bodies",
+     "welds": [
+      [
+       70,
+       91
+      ],
+      [
+       94,
+       122
+      ],
+      [
+       117,
+       85
+      ],
+      [
+       90,
+       135
+      ],
+      [
+       127,
+       107
+      ],
+      [
+       147,
+       131
+      ],
+      [
+       151,
+       109
+      ],
+      [
+       166,
+       101
+      ],
+      [
+       156,
+       130
+      ],
+      [
+       152,
+       127
+      ],
+      [
+       178,
+       117
+      ],
+      [
+       146,
+       94
+      ],
+      [
+       122,
+       88
+      ],
+      [
+       156,
+       84
+      ],
+      [
+       166,
+       153
+      ],
+      [
+       142,
+       100
+      ],
+      [
+       90,
+       75
+      ],
+      [
+       162,
+       141
+      ],
+      [
+       158,
+       107
+      ],
+      [
+       110,
+       112
+      ],
+      [
+       162,
+       132
+      ],
+      [
+       137,
+       162
+      ],
+      [
+       117,
+       89
+      ],
+      [
+       175,
+       94
+      ],
+      [
+       178,
+       110
+      ],
+      [
+       85,
+       141
+      ],
+      [
+       138,
+       122
+      ],
+      [
+       152,
+       82
+      ],
+      [
+       148,
+       124
+      ],
+      [
+       64,
+       91
+      ],
+      [
+       102,
+       106
+      ],
+      [
+       145,
+       132
+      ],
+      [
+       102,
+       143
+      ],
+      [
+       150,
+       133
+      ],
+      [
+       77,
+       118
+      ],
+      [
+       135,
+       115
+      ],
+      [
+       161,
+       134
+      ],
+      [
+       69,
+       88
+      ],
+      [
+       100,
+       106
+      ],
+      [
+       138,
+       152
+      ],
+      [
+       142,
+       116
+      ],
+      [
+       63,
+       91
+      ],
+      [
+       177,
+       114
+      ],
+      [
+       104,
+       107
+      ],
+      [
+       158,
+       147
+      ],
+      [
+       45,
+       124
+      ],
+      [
+       176,
+       143
+      ],
+      [
+       107,
+       64
+      ],
+      [
+       122,
+       152
+      ],
+      [
+       148,
+       107
+      ],
+      [
+       155,
+       123
+      ],
+      [
+       46,
+       120
+      ],
+      [
+       150,
+       142
+      ],
+      [
+       159,
+       144
+      ],
+      [
+       169,
+       152
+      ],
+      [
+       116,
+       103
+      ],
+      [
+       170,
+       127
+      ],
+      [
+       84,
+       146
+      ],
+      [
+       50,
+       101
+      ],
+      [
+       117,
+       145
+      ]
+     ],
+     "dust": [
+      [
+       43,
+       109
+      ],
+      [
+       52,
+       130
+      ],
+      [
+       61,
+       119
+      ],
+      [
+       70,
+       120
+      ],
+      [
+       79,
+       132
+      ],
+      [
+       88,
+       160
+      ],
+      [
+       97,
+       147
+      ],
+      [
+       106,
+       134
+      ],
+      [
+       115,
+       149
+      ],
+      [
+       124,
+       154
+      ],
+      [
+       133,
+       162
+      ],
+      [
+       142,
+       161
+      ],
+      [
+       151,
+       160
+      ],
+      [
+       160,
+       156
+      ],
+      [
+       169,
+       152
+      ],
+      [
+       178,
+       142
+      ]
+     ]
+    },
+    {
+     "name": "Upper",
+     "welds": [
+      [
+       93,
+       112
+      ],
+      [
+       96,
+       76
+      ],
+      [
+       116,
+       98
+      ],
+      [
+       59,
+       89
+      ],
+      [
+       162,
+       82
+      ],
+      [
+       84,
+       98
+      ],
+      [
+       80,
+       89
+      ],
+      [
+       57,
+       98
+      ],
+      [
+       109,
+       86
+      ],
+      [
+       161,
+       98
+      ],
+      [
+       140,
+       129
+      ],
+      [
+       141,
+       104
+      ],
+      [
+       116,
+       68
+      ],
+      [
+       159,
+       108
+      ],
+      [
+       141,
+       105
+      ],
+      [
+       108,
+       86
+      ],
+      [
+       102,
+       83
+      ],
+      [
+       137,
+       93
+      ],
+      [
+       112,
+       69
+      ],
+      [
+       160,
+       98
+      ],
+      [
+       112,
+       93
+      ],
+      [
+       125,
+       66
+      ],
+      [
+       79,
+       88
+      ],
+      [
+       139,
+       106
+      ],
+      [
+       113,
+       66
+      ],
+      [
+       100,
+       90
+      ],
+      [
+       76,
+       93
+      ],
+      [
+       113,
+       76
+      ],
+      [
+       109,
+       78
+      ],
+      [
+       93,
+       76
+      ],
+      [
+       120,
+       69
+      ],
+      [
+       118,
+       89
+      ],
+      [
+       117,
+       89
+      ],
+      [
+       53,
+       96
+      ],
+      [
+       132,
+       97
+      ],
+      [
+       134,
+       73
+      ],
+      [
+       72,
+       113
+      ],
+      [
+       135,
+       124
+      ],
+      [
+       161,
+       83
+      ],
+      [
+       137,
+       111
+      ],
+      [
+       110,
+       91
+      ],
+      [
+       102,
+       97
+      ],
+      [
+       71,
+       90
+      ],
+      [
+       101,
+       91
+      ],
+      [
+       123,
+       60
+      ],
+      [
+       159,
+       92
+      ],
+      [
+       142,
+       72
+      ],
+      [
+       120,
+       70
+      ],
+      [
+       106,
+       104
+      ],
+      [
+       119,
+       60
+      ],
+      [
+       113,
+       92
+      ],
+      [
+       68,
+       95
+      ],
+      [
+       122,
+       61
+      ],
+      [
+       81,
+       90
+      ],
+      [
+       116,
+       56
+      ],
+      [
+       77,
+       91
+      ],
+      [
+       75,
+       82
+      ],
+      [
+       118,
+       74
+      ],
+      [
+       78,
+       83
+      ],
+      [
+       75,
+       127
+      ]
+     ],
+     "dust": [
+      [
+       50,
+       94
+      ],
+      [
+       58,
+       99
+      ],
+      [
+       66,
+       97
+      ],
+      [
+       74,
+       128
+      ],
+      [
+       82,
+       130
+      ],
+      [
+       90,
+       126
+      ],
+      [
+       98,
+       113
+      ],
+      [
+       106,
+       113
+      ],
+      [
+       114,
+       106
+      ],
+      [
+       122,
+       97
+      ],
+      [
+       130,
+       96
+      ],
+      [
+       138,
+       128
+      ],
+      [
+       146,
+       130
+      ],
+      [
+       154,
+       120
+      ],
+      [
+       162,
+       116
+      ]
+     ]
+    },
+    {
+     "name": "Finished",
+     "welds": [
+      [
+       129,
+       83
+      ],
+      [
+       133,
+       76
+      ],
+      [
+       149,
+       128
+      ],
+      [
+       95,
+       109
+      ],
+      [
+       110,
+       85
+      ],
+      [
+       140,
+       61
+      ],
+      [
+       119,
+       125
+      ],
+      [
+       97,
+       122
+      ],
+      [
+       106,
+       87
+      ],
+      [
+       85,
+       75
+      ],
+      [
+       103,
+       80
+      ],
+      [
+       90,
+       73
+      ],
+      [
+       67,
+       86
+      ],
+      [
+       147,
+       129
+      ],
+      [
+       64,
+       84
+      ],
+      [
+       63,
+       98
+      ],
+      [
+       92,
+       73
+      ],
+      [
+       136,
+       120
+      ],
+      [
+       81,
+       76
+      ],
+      [
+       90,
+       96
+      ],
+      [
+       63,
+       93
+      ],
+      [
+       142,
+       113
+      ],
+      [
+       54,
+       90
+      ],
+      [
+       113,
+       80
+      ],
+      [
+       59,
+       99
+      ],
+      [
+       138,
+       111
+      ],
+      [
+       54,
+       87
+      ],
+      [
+       142,
+       131
+      ],
+      [
+       62,
+       96
+      ],
+      [
+       141,
+       115
+      ],
+      [
+       97,
+       93
+      ],
+      [
+       101,
+       75
+      ],
+      [
+       76,
+       84
+      ],
+      [
+       151,
+       89
+      ],
+      [
+       107,
+       64
+      ],
+      [
+       92,
+       96
+      ],
+      [
+       75,
+       87
+      ],
+      [
+       139,
+       122
+      ],
+      [
+       100,
+       126
+      ],
+      [
+       120,
+       77
+      ],
+      [
+       82,
+       79
+      ],
+      [
+       140,
+       116
+      ],
+      [
+       61,
+       97
+      ],
+      [
+       145,
+       94
+      ],
+      [
+       108,
+       94
+      ],
+      [
+       134,
+       90
+      ],
+      [
+       130,
+       84
+      ],
+      [
+       146,
+       127
+      ],
+      [
+       135,
+       114
+      ],
+      [
+       118,
+       71
+      ],
+      [
+       142,
+       121
+      ],
+      [
+       84,
+       80
+      ],
+      [
+       72,
+       85
+      ],
+      [
+       100,
+       62
+      ],
+      [
+       131,
+       130
+      ],
+      [
+       152,
+       125
+      ],
+      [
+       83,
+       80
+      ],
+      [
+       69,
+       89
+      ],
+      [
+       120,
+       76
+      ],
+      [
+       65,
+       100
+      ]
+     ],
+     "dust": [
+      [
+       53,
+       91
+      ],
+      [
+       60,
+       102
+      ],
+      [
+       67,
+       101
+      ],
+      [
+       74,
+       87
+      ],
+      [
+       81,
+       92
+      ],
+      [
+       88,
+       74
+      ],
+      [
+       95,
+       125
+      ],
+      [
+       102,
+       117
+      ],
+      [
+       109,
+       119
+      ],
+      [
+       116,
+       126
+      ],
+      [
+       123,
+       130
+      ],
+      [
+       130,
+       130
+      ],
+      [
+       137,
+       121
+      ],
+      [
+       144,
+       131
+      ],
+      [
+       151,
+       127
+      ]
+     ]
+    }
+   ]
+  },
+  "damage": {
+   "spots": [
+    [
+     74,
+     113
+    ],
+    [
+     81,
+     103
+    ],
+    [
+     89,
+     140
+    ],
+    [
+     126,
+     135
+    ]
+   ]
+  },
+  "turret": {
+   "directions": 32,
+   "rest": 25
+  }
+ }
+}

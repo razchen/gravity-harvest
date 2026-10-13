@@ -1,0 +1,38 @@
+{
+ "cloud02": {
+  "file": "cloud02.png",
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "frames": 64
+ },
+ "explosion01": {
+  "file": "explosion01.png",
+  "frameWidth": 205,
+  "frameHeight": 205,
+  "frames": 25
+ },
+ "explosion02": {
+  "file": "explosion02.png",
+  "frameWidth": 205,
+  "frameHeight": 205,
+  "frames": 25
+ },
+ "flame02": {
+  "file": "flame02.png",
+  "frameWidth": 128,
+  "frameHeight": 256,
+  "frames": 64
+ },
+ "flame03": {
+  "file": "flame03.png",
+  "frameWidth": 64,
+  "frameHeight": 128,
+  "frames": 64
+ },
+ "wispysmoke01": {
+  "file": "wispysmoke01.png",
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "frames": 64
+ }
+}

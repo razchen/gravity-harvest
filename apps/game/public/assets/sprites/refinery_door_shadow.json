@@ -1,0 +1,37 @@
+{
+ "frames": {
+  "door_shadow": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 786,
+    "h": 467
+   },
+   "sourceSize": {
+    "w": 786,
+    "h": 467
+   }
+  }
+ },
+ "meta": {
+  "image": "refinery_door_shadow.png",
+  "size": {
+   "w": 786,
+   "h": 467
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 258.9,
+   "y": 332.6
+  },
+  "shadow": "mask (full strength; the game shows the shared layer at 18%)"
+ }
+}

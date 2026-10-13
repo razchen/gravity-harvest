@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <title>Fire and Smoke Tests</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./dev.css">
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; }
+    #view { position: relative; flex: 1; min-height: 320px; margin: 0 16px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    #view canvas { display: block; }
+    .labels { position: absolute; inset: 0; pointer-events: none; }
+    .label { position: absolute; transform: translate(-50%, 0); padding: 2px 8px; border-radius: 4px; background: rgba(18, 19, 21, 0.78); font-weight: 600; white-space: nowrap; text-align: center; }
+    .label small { display: block; color: var(--muted); font-weight: 500; }
+    .row-title { position: absolute; left: 12px; transform: translateY(-50%); padding: 2px 10px; border-radius: 4px; background: var(--gold); color: #1a1406; font-weight: 700; }
+    footer { padding: 10px 16px 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+    footer p { margin: 0; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fire and smoke tests</h1>
+    <p>A Jackal shelling a different building in each impact look (top row), and the Unity Labs flipbooks (CC0) against the current particles on the refinery. Each row loops.</p>
+  </header>
+  <div id="view"><div class="labels" id="labels"></div></div>
+  <footer>
+    <button class="primary" id="play">Pause</button>
+    <label>Zoom <select id="zoom"><option value="0.6">far</option><option value="1">game default</option><option value="1.4" selected>close</option><option value="2.2">closest</option></select></label>
+    <p>Drag to pan.</p>
+  </footer>
+  <script type="module" src="/src/dev/nav.ts"></script>
+</body>
+</html>
