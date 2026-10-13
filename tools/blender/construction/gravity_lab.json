@@ -1,0 +1,95 @@
+{
+  "model": "art/models/tripo/gravity_lab.glb",
+  "atlas": "b_gravity_lab_build",
+  "footprint": 3,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "anims": [
+    {
+      "name": "gyro",
+      "when": "always",
+      "frames": 24,
+      "fps": 10,
+      "groups": [
+        {
+          "parts": [
+            3,
+            13,
+            17,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            31,
+            34
+          ],
+          "axis": "z",
+          "turns": 1,
+          "pivot": {
+            "part": 36,
+            "at": "centre"
+          }
+        },
+        {
+          "parts": [
+            28
+          ],
+          "axis": "x",
+          "turns": 2,
+          "pivot": {
+            "part": 36,
+            "at": "centre"
+          }
+        },
+        {
+          "parts": [
+            27
+          ],
+          "axis": "y",
+          "turns": -2,
+          "pivot": {
+            "part": 36,
+            "at": "centre"
+          }
+        },
+        {
+          "parts": [
+            19
+          ],
+          "axis": "z",
+          "turns": -1,
+          "pivot": {
+            "part": 36,
+            "at": "centre"
+          }
+        }
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "kind": "glow",
+      "part": 36,
+      "at": "centre",
+      "color": "#a46bff"
+    }
+  ]
+}

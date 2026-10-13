@@ -1,0 +1,28 @@
+{
+  "name": "@gravity-harvest/sim",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The match simulation: deterministic, fixed tick, no rendering. Runs on the server; the browser may only import ./layout.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./layout": { "types": "./dist/layout.d.ts", "default": "./dist/layout.js" }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@gravity-harvest/rules": "*",
+    "@gravity-harvest/shared": "*"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

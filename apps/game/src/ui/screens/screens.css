@@ -1,0 +1,116 @@
+/* Menu screens: title, new game, load, save, pause, settings, victory / defeat.
+   Uses the HUD's variables and .panel look (hud.css). */
+
+.screen-root {
+  position: fixed; inset: 0; z-index: 25; display: flex; align-items: center; justify-content: center;
+  padding: 24px 16px; overflow-y: auto;
+  background:
+    radial-gradient(ellipse at center, rgba(10, 10, 9, 0.25) 0%, rgba(8, 8, 7, 0.78) 75%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55));
+}
+.screen-root[hidden] { display: none; }
+.screen-root.over-game { background: rgba(6, 6, 6, 0.62); backdrop-filter: blur(2px); }
+#help { z-index: 40; }
+
+/* Generic screen panel */
+.screen {
+  position: static; width: min(640px, 100%); max-height: calc(100vh - 48px); padding: 22px 26px 22px;
+  --chamfer: 18px; display: flex; flex-direction: column; gap: 14px;
+}
+.screen-title { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--yellow); }
+.screen-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.screen .empty { padding: 26px 10px; }
+
+/* Buttons */
+.menu-btn {
+  height: 44px; padding: 0 22px; border: 0; font: 700 17px var(--font); letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--text); background: linear-gradient(180deg, #2a2c2e, #1a1b1c); box-shadow: inset 0 0 0 1px var(--edge);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: filter 0.12s, box-shadow 0.12s;
+}
+.menu-btn:hover:not(:disabled) { filter: brightness(1.2); box-shadow: inset 0 0 0 1px var(--yellow); }
+.menu-btn:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--yellow); }
+.menu-btn.primary { margin: 0; height: 44px; color: #1a1406; background: linear-gradient(180deg, #ffc61a, var(--yellow-deep)); box-shadow: none; }
+.menu-btn.ghost { color: var(--muted); background: transparent; }
+.menu-btn.ghost:hover:not(:disabled) { color: var(--text); }
+.menu-btn:disabled { opacity: 0.4; cursor: default; }
+.menu-btn.small, .menu-btn.primary.small { height: 32px; padding: 0 14px; font-size: 14px; letter-spacing: 1px; }
+
+/* Title screen */
+.title-screen { display: flex; flex-direction: column; align-items: center; gap: 26px; width: min(520px, 100%); }
+.title-screen .menu-col { width: min(420px, 100%); }
+.logo { display: block; width: min(520px, 92vw); height: auto; filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.75)); user-select: none; }
+.menu-col { position: static; display: flex; flex-direction: column; gap: 10px; width: 100%; padding: 18px; --chamfer: 14px; }
+.screen .menu-col { padding: 0; background: none; box-shadow: none; clip-path: none; }
+.menu-col .menu-btn { width: 100%; }
+.menu-pair { display: flex; flex-direction: column; gap: 4px; }
+.menu-sub { font-size: 13px; color: var(--muted); text-align: center; min-height: 16px; }
+.menu-hint { font-size: 13px; color: var(--muted); text-align: center; }
+
+/* New game */
+.scenario-list { display: flex; flex-direction: column; gap: 10px; }
+.faction-label { margin-top: 4px; color: var(--muted); font-size: 13px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+.faction-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.faction-card {
+  --side: #8f6bff; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 0; text-align: left;
+  color: var(--text); background: #18191a; box-shadow: inset 0 0 0 1px var(--edge); cursor: pointer; opacity: 0.7;
+  transition: opacity 0.12s, box-shadow 0.12s;
+}
+.faction-card.sable { --side: #ff8a2a; }
+.faction-card:hover { opacity: 1; }
+.faction-card.on { opacity: 1; box-shadow: inset 0 0 0 2px var(--side), 0 0 18px -6px var(--side); background: #1d1e20; }
+.faction-card img { width: 56px; height: 56px; object-fit: contain; flex: none; }
+.faction-name { font-size: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--side); }
+.faction-tagline { margin-top: 2px; font-size: 13px; line-height: 1.3; color: var(--muted); }
+.scenario-card { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: #18191a; box-shadow: inset 0 0 0 1px var(--edge); }
+.scenario-info { flex: 1; min-width: 0; }
+.scenario-name { font-size: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.scenario-desc { font-size: 15px; color: var(--text); opacity: 0.85; margin: 4px 0 6px; line-height: 1.35; }
+.scenario-meta { font-size: 13px; color: var(--muted); }
+
+/* Save / load lists */
+.save-list { overflow-y: auto; display: flex; flex-direction: column; gap: 6px; min-height: 90px; max-height: 52vh; padding-right: 2px; }
+.save-row { display: flex; align-items: center; gap: 12px; padding: 8px 10px; background: #18191a; box-shadow: inset 0 0 0 1px var(--edge); }
+.save-thumb { width: 96px; height: 54px; object-fit: cover; flex: none; background: #0f1010; box-shadow: inset 0 0 0 1px var(--edge); }
+.empty-thumb { background: repeating-linear-gradient(45deg, #141515 0 6px, #1a1b1c 6px 12px); }
+.save-info { flex: 1; min-width: 0; }
+.save-name { font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 8px; }
+.save-meta { font-size: 13px; color: var(--muted); }
+.save-actions { display: flex; gap: 6px; flex: none; }
+.badge-auto { flex: none; padding: 1px 6px; font-size: 11px; letter-spacing: 1px; color: #1a1406; background: var(--yellow); }
+.save-form { display: flex; gap: 8px; }
+#save-name {
+  flex: 1; min-width: 0; height: 44px; padding: 0 12px; border: 0; font: 600 16px var(--font); color: var(--text);
+  background: #121314; box-shadow: inset 0 0 0 1px var(--edge);
+}
+#save-name:focus { outline: none; box-shadow: inset 0 0 0 1px var(--yellow); }
+.save-status { min-height: 18px; font-size: 14px; color: var(--yellow); }
+
+/* Settings */
+.settings-grid { display: grid; grid-template-columns: max-content 1fr; gap: 14px 18px; align-items: center; font-size: 16px; }
+.setting-label { font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.settings-grid input[type='checkbox'] { width: 22px; height: 22px; accent-color: var(--yellow); justify-self: start; }
+.settings-grid select {
+  height: 38px; padding: 0 10px; border: 0; font: 600 15px var(--font); color: var(--text);
+  background: #121314; box-shadow: inset 0 0 0 1px var(--edge); justify-self: start;
+}
+.setting-note { grid-column: 1 / -1; font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+/* Victory / defeat */
+.gameover { display: flex; flex-direction: column; align-items: center; gap: 18px; width: min(720px, 100%); text-align: center; }
+.gameover-title { font-size: clamp(64px, 12vw, 128px); font-weight: 700; letter-spacing: 12px; line-height: 0.9; filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.8)); }
+.gameover.victory .gameover-title { color: var(--yellow); }
+.gameover.defeat .gameover-title { color: var(--red); }
+.gameover-sub { font-size: 18px; color: var(--text); opacity: 0.85; }
+.stats { position: static; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 2px; width: 100%; padding: 14px; --chamfer: 14px; }
+.stat { padding: 10px 6px; }
+.stat-value { font-size: 28px; font-weight: 700; color: #fff4d0; font-variant-numeric: tabular-nums; }
+.stat-label { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+.gameover-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.gameover-actions .menu-btn { min-width: 170px; }
+
+@media (max-width: 560px) {
+  .save-thumb { display: none; }
+  .scenario-card { flex-direction: column; align-items: stretch; }
+  .faction-pick { grid-template-columns: 1fr; }
+}

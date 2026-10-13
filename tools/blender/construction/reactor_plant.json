@@ -1,0 +1,36 @@
+{
+  "model": "art/models/tripo/reactor_plant.glb",
+  "atlas": "b_reactor_plant_build",
+  "footprint": 3,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "effects": [
+    {
+      "kind": "steam",
+      "part": 0,
+      "at": "top",
+      "color": "#8cc0ff"
+    },
+    {
+      "kind": "glow",
+      "part": 1,
+      "at": "top"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <title>Fire Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./dev.css">
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; }
+    main { flex: 1; display: flex; gap: 12px; min-height: 0; padding: 0 16px 14px; }
+    #view { position: relative; flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    #view canvas { display: block; }
+    aside { width: 320px; flex: none; overflow-y: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+    aside h2 { margin: 12px 0 6px; font-size: 16px; color: var(--gold); }
+    aside h2:first-child { margin-top: 0; }
+    .ctl { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0 8px; margin: 6px 0; }
+    .ctl span { color: var(--muted); }
+    .ctl output { font-variant-numeric: tabular-nums; min-width: 44px; text-align: right; }
+    .ctl input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--gold); }
+    .ctl select, .ctl input[type=color] { grid-column: 2; }
+    .buttons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    #copied { color: var(--muted); font-size: 13px; }
+    @media (max-width: 760px) { main { flex-direction: column; } aside { width: auto; max-height: 45vh; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fire playground</h1>
+    <p>Change the fire and smoke on the refinery's three burning spots. Settings are kept in this browser.</p>
+  </header>
+  <main>
+    <div id="view"></div>
+    <aside id="panel"></aside>
+  </main>
+  <script type="module" src="/src/dev/nav.ts"></script>
+</body>
+</html>

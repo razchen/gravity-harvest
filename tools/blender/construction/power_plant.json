@@ -1,0 +1,54 @@
+{
+  "model": "art/models/tripo/power_plant.glb",
+  "atlas": "b_power_plant_build",
+  "footprint": 3,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "effects": [
+    {
+      "kind": "light",
+      "part": 16,
+      "at": "top"
+    },
+    {
+      "kind": "steam",
+      "part": 2,
+      "at": "top",
+      "color": "#8cc0ff"
+    },
+    {
+      "kind": "steam",
+      "part": 3,
+      "at": "top",
+      "color": "#8cc0ff"
+    },
+    {
+      "kind": "steam",
+      "part": 1,
+      "at": "top",
+      "color": "#8cc0ff"
+    },
+    {
+      "kind": "steam",
+      "part": 11,
+      "at": "top",
+      "color": "#8cc0ff"
+    }
+  ]
+}

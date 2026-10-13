@@ -1,0 +1,76 @@
+{
+  "model": "art/models/tripo/assembly_yard.glb",
+  "atlas": "b_assembly_build",
+  "footprint": 4,
+  "deck_min_area": 0.01,
+  "stages": [
+    {
+      "name": "Foundation"
+    },
+    {
+      "name": "Lower structure"
+    },
+    {
+      "name": "Main bodies"
+    },
+    {
+      "name": "Upper"
+    },
+    {
+      "name": "Finished"
+    }
+  ],
+  "anims": [
+    {
+      "name": "cranes",
+      "when": "working",
+      "frames": 48,
+      "fps": 10,
+      "groups": [
+        {
+          "parts": [
+            1,
+            5
+          ],
+          "axis": "z",
+          "pivot": {
+            "part": 12,
+            "at": "centre",
+            "xy": [
+              -0.225,
+              0.105
+            ]
+          },
+          "swing": 35,
+          "cycles": 1,
+          "phase": 0
+        },
+        {
+          "parts": [
+            0
+          ],
+          "axis": "z",
+          "pivot": {
+            "part": 48,
+            "at": "centre"
+          },
+          "swing": 30,
+          "cycles": 2,
+          "phase": 0.35
+        }
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "kind": "sparks",
+      "part": 1,
+      "at": "bottom"
+    },
+    {
+      "kind": "light",
+      "part": 86,
+      "at": "top"
+    }
+  ]
+}
