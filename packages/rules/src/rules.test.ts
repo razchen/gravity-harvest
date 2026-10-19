@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
-  ABILITIES, BUILDINGS, CATALOG, CRATES, DAMAGE_MATRIX, ECONOMY, ENGINE_RULES, UNITS, WEAPONS, buildOrder, canBuild, creditsFor, damageMultiplier, dependentsOf, directlyUnlocks,
+  ABILITIES, BUILDINGS, CAPABILITIES, CATALOG, CRATES, DAMAGE_MATRIX, ECONOMY, ENGINE_RULES, UNITS, WEAPONS, buildOrder, canBuild, creditsFor, damageMultiplier, dependentsOf, directlyUnlocks,
   effectiveDps, fullLoadCredits, hitDamage, isOperational, loadoutDps, missingRequirements, powerBalance, prerequisiteClosure,
-  producersOf, productionOf, rawDps, refundFor, repairCost, speedToTilesPerSec, timeToKillSec, validateCatalog, validateCombat,
+  producersOf, productionOf, rawDps, refundFor, repairCost, speedToTilesPerSec, timeToKillSec, validateCatalog, validateCombat, weapon, withCapability,
 } from './index.js';
 import { PUBLIC_BUILDINGS, PUBLIC_CATALOG, PUBLIC_UNITS } from './public.js';
 
@@ -138,5 +138,30 @@ describe('public subset', () => {
     for (const e of [...Object.values(PUBLIC_BUILDINGS), ...Object.values(PUBLIC_UNITS)]) {
       for (const secret of ['hp', 'armor', 'weapons', 'sight', 'speed', 'notes']) expect(e).not.toHaveProperty(secret);
     }
+  });
+});
+
+describe('capabilities', () => {
+  const units = new Set(Object.keys(UNITS));
+  const buildings = new Set(Object.keys(BUILDINGS));
+
+  it('name real entities, units and buildings each with the capabilities that fit them', () => {
+    for (const [id, c] of Object.entries(CAPABILITIES)) {
+      const isUnit = units.has(id);
+      expect(isUnit || buildings.has(id), id).toBe(true);
+      for (const cap of ['harvester', 'deploysInto', 'turret', 'hover', 'heals', 'fixes'] as const) if (c[cap]) expect(isUnit, `${id}: ${cap}`).toBe(true);
+      for (const cap of ['refinery', 'repairsVehicles', 'constructs', 'radar'] as const) if (c[cap]) expect(isUnit, `${id}: ${cap}`).toBe(false);
+      if (c.deploysInto) expect(buildings.has(c.deploysInto), `${id} deploys into ${c.deploysInto}`).toBe(true);
+      if (c.refinery) expect(CAPABILITIES[c.refinery.grants]?.harvester, `${id} grants ${c.refinery.grants}`).toBe(true);
+    }
+  });
+
+  it('give a heal to exactly the units whose weapons mend', () => {
+    const mend = Object.values(UNITS).filter((u) => u.weapons.some((w) => weapon(w).damage < 0)).map((u) => u.id);
+    expect(withCapability('heals').sort()).toEqual(mend.sort());
+  });
+
+  it('have one entity for each role the computer player looks up (ENGINE_IDS in packages/ai)', () => {
+    for (const cap of ['harvester', 'refinery', 'repairsVehicles', 'constructs', 'radar', 'deploysInto'] as const) expect(withCapability(cap), cap).toHaveLength(1);
   });
 });

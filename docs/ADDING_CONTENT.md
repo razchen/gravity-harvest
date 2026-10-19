@@ -78,12 +78,15 @@ sim if it hovers, aims a turret or repairs, a shot look if it fires something ne
    (`clips`, like the carrier's `door`) or other renders (`variants`). The atlases the game loads (`v_<id>`, its clips),
    its card and the art tables are all derived from this, and so is its dev page.
 3. **Turn it on:** add `lancer` to `ROSTER.units` in `packages/sim/src/layout.ts`.
-4. *If it applies,* in the same file: `HOVER_UNITS` if it hovers (a test checks this against its art), `TURRET_UNITS`
-   if its turret should aim on its own (it needs a turret layer), `FIXERS` if it repairs buildings. A new `fire` look
-   needs an entry in `apps/game/src/data/shots.ts` (a test says which).
+4. *If it applies,* its capabilities in `packages/rules/src/capabilities.ts`: `hover` if it hovers (a test checks this
+   against its art), `turret` if its turret should aim on its own (it needs a turret layer), `fixes` if it repairs
+   buildings, `heals` if it has a heal, and so on (the file lists them all). A new `fire` look needs an entry in
+   `apps/game/src/data/shots.ts` (a test says which).
 5. *Optional:* a line about it in `NOTES` in `apps/game/src/dev/unitData.ts`, with its rig clips' frames and speed so
    its page can play them, or `turret: true` to show its turret turning.
-6. If it needs a behaviour the sim doesn't have yet (see below), add it in `packages/sim/src/sim.ts` with tests.
+6. If it needs a behaviour the sim doesn't have yet (see below), add it to the system it belongs with in
+   `packages/sim/src/systems/` (or a new one) with tests, and give it to the units that have it by a capability, not
+   by ID.
 7. `npm run check`, then `npm run assets:push` and commit `apps/game/assets.json`.
 
 What already works for any unit from the sheet: movement (speed), sight, HP and armor, its weapons (damage, burst,

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { FIXERS, FOOTPRINT, HOVER_UNITS, ROSTER, TURRET_UNITS, footprint } from './layout.js';
+import { CAPABILITIES } from '@gravity-harvest/rules/public';
+import { FOOTPRINT, ROSTER, footprint } from './layout.js';
 
 describe('layout', () => {
   it('every roster building has a footprint, and only roster buildings do', () => {
@@ -11,8 +12,8 @@ describe('layout', () => {
     expect(() => footprint('no_such_building')).toThrow(/no_such_building/);
   });
 
-  it('the units with turrets, hover bodies and repair work are all in the roster', () => {
-    const units = new Set<string>(ROSTER.units);
-    for (const id of [...TURRET_UNITS, ...HOVER_UNITS, ...FIXERS]) expect(units.has(id), id).toBe(true);
+  it('every entity with a capability is in the roster (the table is sent to the browser)', () => {
+    const roster = new Set<string>([...ROSTER.units, ...ROSTER.buildings]);
+    for (const id of Object.keys(CAPABILITIES)) expect(roster.has(id), id).toBe(true);
   });
 });
