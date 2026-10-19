@@ -3,7 +3,7 @@ import type { BuildingView, Difficulty, MatchStats, TeamId } from '@gravity-harv
 import type { Rock, Vent } from './ore.js';
 import { SCENARIOS, scenarioHash } from './scenarios.js';
 import type { Scenery } from './scenery.js';
-import type { Building, Fighter, Harvester, QueueItem } from './sim.js';
+import type { Building, Fighter, Harvester, QueueItem } from './entities.js';
 
 /**
  * Bump when the shape changes, and add the step from the version before to `MIGRATIONS` (migrations.ts). Version 1
