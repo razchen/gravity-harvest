@@ -203,7 +203,8 @@ otherwise undo by accident. Newest first within each section.
   a rig (a `.blend` of its model with a `wheel_<n>` empty per axle and a `turret` empty, `rig` in `vehicles.json`)
   gets its wheels spun about their real axles, and its turret as a layer of its own (32 directions) over a hull
   rendered without it: the sim aims it at what the vehicle shoots (the `turret` capability, sent as `aim`) and the hull keeps
-  its heading. The Jackal is the first. Units' sheets are trimmed and packed tightly (`tools/sprites/trim_pack.py`),
+  its heading. The Jackal, the Ram and the Spire have one (2026-10-19: every vehicle rendered with a turret layer
+  gets the capability, so it aims and fires on the move as drawn). Units' sheets are trimmed and packed tightly (`tools/sprites/trim_pack.py`),
   which keeps 16 directions in the memory 8 used to take. Units turn through the in-between directions rather than
   snapping. Abilities so far: combat vehicles fight with their rules weapons, and the Assembler deploys (E) into an
   Assembly Yard anywhere it fits, and the Carrier carries infantry (below); the Watcher's radar disruption, the

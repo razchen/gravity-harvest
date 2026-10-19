@@ -42,6 +42,8 @@ export const CAPABILITIES: Readonly<Record<string, Readonly<Capabilities>>> = {
   radar: { radar: true },
   assembler: { deploysInto: 'assembly_yard' },
   jackal: { turret: true },
+  ram: { turret: true },
+  spire: { turret: true },
   medic: { hover: true, heals: true },
   engineer: { hover: true, fixes: true },
   hound: { hover: true },
