@@ -5,6 +5,7 @@ import { Sounds, type LoopWanted } from '../audio/Sounds';
 import { DEPTH } from '../config/game';
 import { EventBus, emptyStats, type GameEvents, type MatchStats } from '../core/EventBus';
 import { TOAST_SOUNDS, type ToastCode } from '../data/toasts';
+import { factionOfTeam, isMine, setSeats } from '../data/teams';
 import { iso, toGrid, type GridPoint } from '../core/geometry';
 import { BuildingSprite } from '../entities/BuildingSprite';
 import { HarvesterSprite, InfantrySprite, canBoard, createUnitSprite, type UnitSprite } from '../entities/UnitSprite';
@@ -101,7 +102,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   /** The side you're playing (from the server). */
   get faction(): PlayableFaction | null {
-    return this.hello?.faction ?? null;
+    return this.hello ? factionOfTeam(this.hello.you) : null;
   }
 
   /** How well the computer opponent plays (from the server; a save keeps its own). */
@@ -139,6 +140,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
   private onHello(h: MatchHello): void {
     this.hello = h;
     setCatalog(h.catalog);
+    setSeats(h);
     this.map = new GameMap(h.map.width, h.map.height);
     this.ore = new OreLayer(this, this.map);
     this.ore.setTiles(h.ore.tiles);
@@ -152,7 +154,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
     const scorch = this.add.graphics().setDepth(DEPTH.scorch);
     this.effects = new Effects(this);
     this.sounds = new Sounds(this);
-    this.sounds.side = h.faction === 'sable' ? 'sable_' : '';
+    this.sounds.side = factionOfTeam(h.you) === 'sable' ? 'sable_' : '';
     this.effects.onImpact = (sound, at) => this.sounds.play(sound, at);
     this.orders = new Orders(this.net, this.effects, this.sounds);
     this.placement = new Placement(this);
@@ -181,13 +183,13 @@ export class GameScene extends Phaser.Scene implements HudBridge {
       seen.add(u.id);
       const s = this.units.get(u.id);
       // ours, hit in the base: under attack (it says so now and then, not every shot; a fight out in the field isn't)
-      if (s && u.team === 'player' && u.hp < s.hp && this.inBase(u.gx, u.gy)) this.sounds.announce('announce_base_attack', 'under_attack');
+      if (s && isMine(u.team) && u.hp < s.hp && this.inBase(u.gx, u.gy)) this.sounds.announce('announce_base_attack', 'under_attack');
       if (s) s.apply(u, now);
       else this.units.set(u.id, createUnitSprite(this, u, now));
     }
     for (const [id, s] of this.units) {
       if (seen.has(id)) continue;
-      if (s.team === 'player') this.presenter.ownGone.add(id);
+      if (isMine(s.team)) this.presenter.ownGone.add(id);
       this.dropUnit(s); // died, or went out of sight
     }
     this.presenter.present(v.events);
@@ -197,7 +199,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
   /** Within BASE_RADIUS tiles of one of our buildings. */
   private inBase(gx: number, gy: number): boolean {
     for (const b of this.buildings.values()) {
-      if (b.team !== 'player') continue;
+      if (!isMine(b.team)) continue;
       const dx = Math.max(b.tx - gx, 0, gx - (b.tx + b.size));
       const dy = Math.max(b.ty - gy, 0, gy - (b.ty + b.size));
       if (Math.hypot(dx, dy) <= BASE_RADIUS) return true;
@@ -212,12 +214,12 @@ export class GameScene extends Phaser.Scene implements HudBridge {
       const s = this.buildings.get(b.id);
       if (s) {
         // ours, hit: the base is under attack (it says so now and then, not every shot)
-        if (b.team === 'player' && b.hp < s.hp && this.view) this.sounds.announce('announce_base_attack', 'under_attack');
+        if (isMine(b.team) && b.hp < s.hp && this.view) this.sounds.announce('announce_base_attack', 'under_attack');
         s.apply(b);
       } else {
         const nb = new BuildingSprite(this, b);
         // ours, just placed: it starts going up
-        if (b.team === 'player' && !b.built && b.progress < 0.05 && this.view) this.sounds.play('building_place', iso(nb.gx, nb.gy));
+        if (isMine(b.team) && !b.built && b.progress < 0.05 && this.view) this.sounds.play('building_place', iso(nb.gx, nb.gy));
         this.buildings.set(b.id, nb);
         this.scenery.hideDecorIn(b.tx, b.ty, b.size);
         this.ore.resort(this.map.addOccluder(nb));
@@ -367,7 +369,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   population(): { units: number; cap: number } {
     // passengers count too (they're off the map, inside their transports)
-    const mine = [...this.units.values()].filter((u) => u.team === 'player');
+    const mine = [...this.units.values()].filter((u) => isMine(u.team));
     return { units: mine.reduce((n, u) => n + 1 + u.passengers, 0), cap: this.view?.unitCap ?? 0 };
   }
 
@@ -377,7 +379,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   /** Finished building types the human owns (for prerequisites). */
   ownedTypes(): string[] {
-    return [...this.buildings.values()].filter((b) => b.team === 'player' && b.built).map((b) => b.type);
+    return [...this.buildings.values()].filter((b) => isMine(b.team) && b.built).map((b) => b.type);
   }
 
   placingType(): string | null {
@@ -385,7 +387,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
   }
 
   startPlacement(type: string): 'ok' | 'poor' | { text: string; code: ToastCode } {
-    const blocked = buildBlocker(type, [...this.buildings.values()].filter((b) => b.team === 'player'));
+    const blocked = buildBlocker(type, [...this.buildings.values()].filter((b) => isMine(b.team)));
     if (blocked) return blocked;
     this.selection.clear();
     this.setMode(null);
@@ -411,7 +413,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   /** Sell mode: sell a finished building (half its price back) or cancel one under construction (all of it back). */
   sellOrCancel(b: BuildingSprite): void {
-    if (b.team !== 'player' || !b.alive) return;
+    if (!isMine(b.team) || !b.alive) return;
     this.orders.send(b.built ? { c: 'sell', building: b.id } : { c: 'cancelBuild', building: b.id });
   }
 
@@ -424,7 +426,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   /** Your transports in the selection with someone inside. */
   private loadedTransports(): UnitSprite[] {
-    return [...this.selection].filter((u) => u.team === 'player' && u.passengers > 0);
+    return [...this.selection].filter((u) => isMine(u.team) && u.passengers > 0);
   }
 
   /** A transport with passengers is selected (the HUD shows Unload). */
@@ -439,7 +441,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   /** The selected soldiers get into your transport `t` (those it has no room for stop by it). */
   boardSelected(t: UnitSprite): void {
-    const soldiers = [...this.selection].filter((u) => canBoard(u) && u.team === 'player');
+    const soldiers = [...this.selection].filter((u) => canBoard(u) && isMine(u.team));
     if (!soldiers.length) return;
     if (t.passengers >= t.seats) return void this.bus.emit('toast', { text: 'No room inside', code: 'noRoom' });
     this.orders.send({ c: 'board', units: soldiers.map((u) => u.id), transport: t.id });
@@ -448,7 +450,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   /** Repair mode: start repairing a damaged building, or stop. */
   toggleRepair(b: BuildingSprite): void {
-    if (b.team !== 'player' || !b.alive || !b.built) return;
+    if (!isMine(b.team) || !b.alive || !b.built) return;
     if (!b.repairing && b.hp >= b.maxHp) return void this.bus.emit('toast', { text: 'Not damaged', code: 'notDamaged' });
     this.orders.send({ c: 'repair', building: b.id, on: !b.repairing });
   }
@@ -489,7 +491,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   /** Group `n`'s units on the map now (not the dead, nor passengers inside a transport). */
   private groupUnits(n: number): UnitSprite[] {
-    return this.groups.ids(n).map((id) => this.units.get(id)).filter((u): u is UnitSprite => !!u && u.team === 'player' && !u.inside);
+    return this.groups.ids(n).map((id) => this.units.get(id)).filter((u): u is UnitSprite => !!u && isMine(u.team) && !u.inside);
   }
 
   /** Ctrl+number: the selection becomes group `n` (nothing selected empties it). */
@@ -543,7 +545,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   perfText(): string {
     const fps = this.game.loop.actualFps;
-    const enemies = [...this.units.values()].filter((u) => u.team !== 'player').length;
+    const enemies = [...this.units.values()].filter((u) => !isMine(u.team)).length;
     return `${fps.toFixed(0)} fps · tick ${this.view?.tick ?? 0} · ${this.children.length} objects · ${this.ore.totalRocks()} rocks · ${this.scenery.items.length} scenery · ` +
       `${this.population().units} units · ${enemies} enemies in sight · ${this.buildings.size} buildings`;
   }

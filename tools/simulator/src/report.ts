@@ -1,7 +1,7 @@
 // Turns simulated matches into answers: verdicts per question (time, fair, fun, progress, build speed, ore) and per
 // map, with the tables behind them. Thresholds are in targets.ts.
 import { BUILDINGS, STAGES, UNITS, type Stage } from '@gravity-harvest/rules';
-import type { TeamId } from '@gravity-harvest/shared';
+import { opponentOf, type TeamId } from '@gravity-harvest/shared';
 import { ROSTER, catalogFor } from '@gravity-harvest/sim';
 import { BIG_FIGHT_LOSS, PHASES, type Limit, type MatchResult, type SideResult } from './match.js';
 import { TARGETS } from './targets.js';
@@ -66,7 +66,7 @@ function table(header: string[], rows: (string | number)[][]): string {
 }
 
 const sideName = (s: SideResult) => `${s.faction}:${s.difficulty}`;
-const sidesOf = (rs: MatchResult[]) => rs.flatMap((r) => [r.sides.player, r.sides.enemy].map((s) => ({ r, s, other: r.sides[s.slot === 'player' ? 'enemy' : 'player'] })));
+const sidesOf = (rs: MatchResult[]) => rs.flatMap((r) => [r.sides.a, r.sides.b].map((s) => ({ r, s, other: r.sides[opponentOf(s.slot)] })));
 const sum = (recs: Record<string, number>[]) => {
   const out: Record<string, number> = {};
   for (const r of recs) for (const [k, v] of Object.entries(r)) out[k] = (out[k] ?? 0) + v;
@@ -127,8 +127,8 @@ export function buildReport(results: MatchResult[], opts: { realMs: number; work
   const order: string[] = [];
   for (const f of ['ordan', 'sable']) {
     for (const [hi, lo] of [['hard', 'normal'], ['normal', 'easy'], ['hard', 'easy']]) {
-      const rs = ok.filter((r) => [r.sides.player, r.sides.enemy].every((s) => s.faction === f) && new Set([r.sides.player.difficulty, r.sides.enemy.difficulty]).size === 2
-        && [r.sides.player.difficulty, r.sides.enemy.difficulty].includes(hi as never) && [r.sides.player.difficulty, r.sides.enemy.difficulty].includes(lo as never));
+      const rs = ok.filter((r) => [r.sides.a, r.sides.b].every((s) => s.faction === f) && new Set([r.sides.a.difficulty, r.sides.b.difficulty]).size === 2
+        && [r.sides.a.difficulty, r.sides.b.difficulty].includes(hi as never) && [r.sides.a.difficulty, r.sides.b.difficulty].includes(lo as never));
       if (!rs.length) continue;
       const w = rs.filter((r) => r.winner && r.sides[r.winner].difficulty === hi).length;
       const d = rs.filter((r) => !r.winner).length;
@@ -154,7 +154,7 @@ export function buildReport(results: MatchResult[], opts: { realMs: number; work
   if (!(fc <= T.firstContactMax * MIN)) timeReasons.push(`first contact at ${mins(fc)} min`);
   const fa = median(all.map((x) => x.s.firstAttackMs));
   if (!(fa >= T.firstAttackMin * MIN && fa <= T.firstAttackMax * MIN)) timeReasons.push(`first attack wave at ${mins(fa)} min, target ${T.firstAttackMin}–${T.firstAttackMax}`);
-  const fl = median(ok.map((r) => Math.min(r.sides.player.firstBuildingLostMs ?? Infinity, r.sides.enemy.firstBuildingLostMs ?? Infinity)).map((x) => (x === Infinity ? null : x)));
+  const fl = median(ok.map((r) => Math.min(r.sides.a.firstBuildingLostMs ?? Infinity, r.sides.b.firstBuildingLostMs ?? Infinity)).map((x) => (x === Infinity ? null : x)));
   if (!(fl <= T.firstBuildingLostMax * MIN)) timeReasons.push(`first building lost at ${mins(fl)} min`);
   verdict('time', timeReasons);
   out.push('PACING (median, interquartile range in brackets; minutes)');
@@ -164,7 +164,7 @@ export function buildReport(results: MatchResult[], opts: { realMs: number; work
     ...stageRows,
     ['first combat contact', spread(ok.map((r) => r.firstContactMs))],
     ['first attack wave', spread(all.map((x) => x.s.firstAttackMs))],
-    ['first building lost', spread(ok.map((r) => Math.min(r.sides.player.firstBuildingLostMs ?? Infinity, r.sides.enemy.firstBuildingLostMs ?? Infinity)).map((x) => (x === Infinity ? null : x)))],
+    ['first building lost', spread(ok.map((r) => Math.min(r.sides.a.firstBuildingLostMs ?? Infinity, r.sides.b.firstBuildingLostMs ?? Infinity)).map((x) => (x === Infinity ? null : x)))],
     ['match length (decided)', spread(decided.map((r) => r.lengthMs))],
   ]));
   out.push('');
@@ -174,28 +174,28 @@ export function buildReport(results: MatchResult[], opts: { realMs: number; work
   const fairReasons: string[] = [];
   const fairRows: (string | number)[][] = [];
   for (const d of ['easy', 'normal', 'hard']) {
-    const rs = decided.filter((r) => r.sides.player.difficulty === d && r.sides.enemy.difficulty === d && r.sides.player.faction !== r.sides.enemy.faction);
+    const rs = decided.filter((r) => r.sides.a.difficulty === d && r.sides.b.difficulty === d && r.sides.a.faction !== r.sides.b.faction);
     if (!rs.length) continue;
     const w = rs.filter((r) => r.sides[r.winner!].faction === 'ordan').length;
     const [lo, hi] = wilson(w, rs.length);
     fairRows.push([`ordan vs sable, both ${d}`, rs.length, `${pct(w / rs.length)} (${pct(lo)}–${pct(hi)})`]);
     if (w / rs.length < F.winRateLow || w / rs.length > F.winRateHigh) fairReasons.push(`ordan wins ${pct(w / rs.length)} against sable at ${d}`);
   }
-  const mirror = decided.filter((r) => sideName(r.sides.player) === sideName(r.sides.enemy));
-  const sameLevel = decided.filter((r) => r.sides.player.difficulty === r.sides.enemy.difficulty);
+  const mirror = decided.filter((r) => sideName(r.sides.a) === sideName(r.sides.b));
+  const sameLevel = decided.filter((r) => r.sides.a.difficulty === r.sides.b.difficulty);
   for (const [label, rs] of [['top slot, mirror matches', mirror], ['top slot, same difficulty', sameLevel]] as const) {
     if (!rs.length) continue;
-    const w = rs.filter((r) => r.winner === 'player').length;
+    const w = rs.filter((r) => r.winner === 'a').length;
     const [lo, hi] = wilson(w, rs.length);
     fairRows.push([label, rs.length, `${pct(w / rs.length)} (${pct(lo)}–${pct(hi)})`]);
     if (rs === mirror && (w / rs.length < F.winRateLow || w / rs.length > F.winRateHigh)) fairReasons.push(`the top slot wins ${pct(w / rs.length)} of mirror matches`);
   }
   const parity = ok.map((r) => {
-    const a = r.sides.player.income5Min, b = r.sides.enemy.income5Min;
+    const a = r.sides.a.income5Min, b = r.sides.b.income5Min;
     return Math.max(a, b) ? Math.min(a, b) / Math.max(a, b) : 1;
   });
   const slotIncome = (t: TeamId) => median(ok.map((r) => r.sides[t].income5Min));
-  fairRows.push(['income in 5 min, top / bottom slot', ok.length, `${money(slotIncome('player'))} / ${money(slotIncome('enemy'))}, parity ${pct(mean(parity))}`]);
+  fairRows.push(['income in 5 min, top / bottom slot', ok.length, `${money(slotIncome('a'))} / ${money(slotIncome('b'))}, parity ${pct(mean(parity))}`]);
   if (mean(parity) < F.incomeParity) fairReasons.push(`income parity in the first 5 minutes is ${pct(mean(parity))}`);
   verdict('fair', fairReasons);
   out.push('FAIRNESS (win rate with 95% CI)');
@@ -207,7 +207,7 @@ export function buildReport(results: MatchResult[], opts: { realMs: number; work
   const funReasons: string[] = [];
   // lead changes, comebacks and lock-in only mean something between equals: a level against the one below is
   // meant to be one-sided (those matches stay in the other tables)
-  const even = ok.filter((r) => r.sides.player.difficulty === r.sides.enemy.difficulty);
+  const even = ok.filter((r) => r.sides.a.difficulty === r.sides.b.difficulty);
   const evenDecided = even.filter((r) => r.winner);
   const leadChanges = mean(even.map((r) => r.leadChanges));
   const behind = evenDecided.filter((r) => r.leaderAfterBigFight);
@@ -337,8 +337,8 @@ export function buildReport(results: MatchResult[], opts: { realMs: number; work
   const stalls = all.filter((x) => x.s.homeFieldDryMs !== null && x.s.incomeByMinute.slice(-5).every((n) => n < O.stallIncomePerMin) && x.s.incomeByMinute.length > 8);
   if (stalls.length > all.length * 0.2) oreReasons.push(`${stalls.length} sides' economies stall (no income for 5 min after the ore ran out)`);
   const slot10 = (t: TeamId) => median(ok.map((r) => r.sides[t].income10Min));
-  const adv = Math.abs(slot10('player') - slot10('enemy')) / Math.max(1, Math.min(slot10('player'), slot10('enemy')));
-  if (adv > O.startAdvantage) oreReasons.push(`the ${slot10('player') > slot10('enemy') ? 'top' : 'bottom'} start earns ${pct(adv)} more in the first 10 minutes`);
+  const adv = Math.abs(slot10('a') - slot10('b')) / Math.max(1, Math.min(slot10('a'), slot10('b')));
+  if (adv > O.startAdvantage) oreReasons.push(`the ${slot10('a') > slot10('b') ? 'top' : 'bottom'} start earns ${pct(adv)} more in the first 10 minutes`);
   verdict('ore', oreReasons);
   out.push('ORE');
   const oreAt = (m: number) => median(ok.map((r) => r.ore.timeline.find(([ms]) => ms >= m * MIN)?.[1] ?? null));
@@ -349,8 +349,8 @@ export function buildReport(results: MatchResult[], opts: { realMs: number; work
     return [m, m ? oreAt(m) : Math.round(median(ok.map((r) => r.ore.start))), money(inc), h, money(inc / h), Number.isFinite(median(trips)) ? median(trips).toFixed(0) : '–'];
   })));
   out.push(`  start ${Math.round(median(ok.map((r) => r.ore.start)))} units; mined ${Math.round(median(ok.map((r) => r.ore.mined)))}, regrown ${Math.round(median(ok.map((r) => r.ore.regrown)))}, left ${pct(endShare)} (medians per match)`);
-  out.push(`  home field dry (under 15%): top slot ${spread(ok.map((r) => r.sides.player.homeFieldDryMs))}, bottom ${spread(ok.map((r) => r.sides.enemy.homeFieldDryMs))} min; never in ${all.filter((x) => x.s.homeFieldDryMs === null).length}/${all.length}`);
-  out.push(`  income in 10 min: top slot ${money(slot10('player'))}, bottom ${money(slot10('enemy'))}; harvesters at the end ${median(all.map((x) => x.s.harvestersEnd))} (peak ${median(all.map((x) => x.s.harvestersPeak))})`);
+  out.push(`  home field dry (under 15%): top slot ${spread(ok.map((r) => r.sides.a.homeFieldDryMs))}, bottom ${spread(ok.map((r) => r.sides.b.homeFieldDryMs))} min; never in ${all.filter((x) => x.s.homeFieldDryMs === null).length}/${all.length}`);
+  out.push(`  income in 10 min: top slot ${money(slot10('a'))}, bottom ${money(slot10('b'))}; harvesters at the end ${median(all.map((x) => x.s.harvestersEnd))} (peak ${median(all.map((x) => x.s.harvestersPeak))})`);
   out.push('');
 
   // --- verdicts first ---
@@ -378,18 +378,18 @@ function mapVerdicts(results: MatchResult[]): MapVerdict[] {
     if (ok.some((r) => r.setup.blockedStarts)) reasons.push(`bad setup: starting units on blocked tiles`);
     if (ok.some((r) => !r.setup.reachable)) reasons.push(`unreachable sides: no ground path between the bases in ${ok.filter((r) => !r.setup.reachable).length} matches`);
     if (ok.some((r) => r.setup.unreachableFields)) reasons.push(`ore: ${Math.max(...ok.map((r) => r.setup.unreachableFields))} fields no refinery can reach`);
-    const stuck = mean(ok.map((r) => r.sides.player.stuck + r.sides.enemy.stuck));
+    const stuck = mean(ok.map((r) => r.sides.a.stuck + r.sides.b.stuck));
     if (stuck > M.stuckMax) reasons.push(`stuck units: ${stuck.toFixed(1)} a match (on a move order, not moving for 30 s)`);
-    const failed = mean(ok.map((r) => r.sides.player.failedOrders + r.sides.enemy.failedOrders));
+    const failed = mean(ok.map((r) => r.sides.a.failedOrders + r.sides.b.failedOrders));
     if (failed > M.failedOrdersMax) reasons.push(`orders refused: ${failed.toFixed(1)} a match`);
-    const idleH = mean(ok.flatMap((r) => [r.sides.player.idleHarvesterShare, r.sides.enemy.idleHarvesterShare]));
+    const idleH = mean(ok.flatMap((r) => [r.sides.a.idleHarvesterShare, r.sides.b.idleHarvesterShare]));
     if (idleH > 0.25) reasons.push(`harvesters idle ${pct(idleH)} of the time (can't reach ore or a refinery)`);
     const never = ok.filter((r) => r.firstContactMs === null).length;
     if (never) reasons.push(`never fought: ${never} matches without contact`);
     const decided = ok.filter((r) => r.winner);
-    for (const slot of ['player', 'enemy'] as const) {
+    for (const slot of ['a', 'b'] as const) {
       const w = decided.filter((r) => r.winner === slot).length;
-      if (decided.length >= 10 && w / decided.length < M.oneSidedMin) reasons.push(`one-sided: the ${slot === 'player' ? 'top' : 'bottom'} slot wins ${pct(w / decided.length)}`);
+      if (decided.length >= 10 && w / decided.length < M.oneSidedMin) reasons.push(`one-sided: the ${slot === 'a' ? 'top' : 'bottom'} slot wins ${pct(w / decided.length)}`);
     }
     const draws = (ok.length - decided.length) / Math.max(1, ok.length);
     if (draws > TARGETS.fun.stalemateMax) reasons.push(`endless: ${pct(draws)} of matches time out`);

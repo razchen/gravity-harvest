@@ -44,7 +44,7 @@ export class ComputerPlayer {
   private readonly scouting: Scouting;
 
   constructor(opts: ComputerOptions) {
-    this.team = opts.hello.team;
+    this.team = opts.hello.you;
     this.difficulty = opts.difficulty;
     this.profile = { ...PROFILES[opts.difficulty], ...opts.profile };
     this.ai = new Brain(opts.hello, this.profile, opts.seed);

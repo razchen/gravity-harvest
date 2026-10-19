@@ -98,7 +98,7 @@ export class TripRun {
     while (powerBalance([site.type, ...helpers]).low) helpers.push('power_plant');
     let x = 1;
     const row = helpers.map((type) => {
-      const b = { type, team: 'player' as const, tx: x, ty: 1 };
+      const b = { type, team: 'a' as const, tx: x, ty: 1 };
       x += footprint(type) + 1;
       return b;
     });
@@ -109,17 +109,17 @@ export class TripRun {
       description: 'Dev building page: one unit coming out of a building or coming to it.',
       map: { width: mapSize, height: mapSize },
       players: {
-        player: { credits: CREDITS, human: true, faction },
-        enemy: { credits: 0, human: false, faction: faction === 'ordan' ? 'sable' : 'ordan' },
+        a: { credits: CREDITS, human: true, faction },
+        b: { credits: 0, human: false, faction: faction === 'ordan' ? 'sable' : 'ordan' },
       },
       oreFields: [],
       buildings: [
-        { type: site.type, team: 'player', tx, ty },
+        { type: site.type, team: 'a', tx, ty },
         ...row,
-        { type: 'power_plant', team: 'enemy', tx: mapSize - 4, ty: mapSize - 4 },
+        { type: 'power_plant', team: 'b', tx: mapSize - 4, ty: mapSize - 4 },
       ],
-      units: trip.kind === 'out' ? [] : [{ type: trip.unit, team: 'player', ...from }],
-      camera: { gx: tx, gy: ty },
+      units: trip.kind === 'out' ? [] : [{ type: trip.unit, team: 'a', ...from }],
+      camera: { a: { gx: tx, gy: ty }, b: { gx: mapSize - 2, gy: mapSize - 2 } },
     };
     this.sim = Sim.create(scenario);
     for (const s of this.sim.scenery) {
@@ -131,8 +131,8 @@ export class TripRun {
 
     if (trip.kind === 'out') {
       // queued and finished at once: it comes out on the next tick
-      this.sim.command('player', { c: 'train', unit: trip.unit, near: { gx: tx + size / 2, gy: ty + size / 2 } });
-      this.sim.debug('player', { d: 'finishBuilds' });
+      this.sim.command('a', { c: 'train', unit: trip.unit, near: { gx: tx + size / 2, gy: ty + size / 2 } });
+      this.sim.debug('a', { d: 'finishBuilds' });
       return;
     }
     const u = [...this.sim.units.values()][0];
@@ -142,14 +142,14 @@ export class TripRun {
       u.cargo = ECONOMY.harvesterCapacity;
     } else {
       u.hp = Math.round(u.maxHp * ARRIVE_HEALTH);
-      this.sim.command('player', { c: 'service', units: [u.id], bay: this.building });
+      this.sim.command('a', { c: 'service', units: [u.id], bay: this.building });
     }
   }
 
   /** One tick of the match; what the player's side sees after it (the building's state and the events). */
   step(): TeamView {
     this.sim.step();
-    const view = this.sim.view('player');
+    const view = this.sim.view('a');
     if (this.unit === null) {
       const out = view.events.find((e) => e.e === 'unitOut' && e.building === this.building);
       if (out?.e === 'unitOut') this.unit = out.unit;
@@ -157,7 +157,7 @@ export class TripRun {
     const u = this.unit !== null ? this.sim.units.get(this.unit) : undefined;
     if (u && this.stage !== 'done' && this.settled()) {
       if (this.stage === 'visit' && this.trip.kind !== 'out') {
-        this.sim.command('player', { c: 'move', orders: [{ id: u.id, ...this.away }] });
+        this.sim.command('a', { c: 'move', orders: [{ id: u.id, ...this.away }] });
         this.stage = 'away';
       } else this.stage = 'done';
     }

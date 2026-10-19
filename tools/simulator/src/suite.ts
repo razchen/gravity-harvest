@@ -33,9 +33,9 @@ export function specs(opts: { pairings: [string, string][]; scenarios: string[];
     for (const [a, b] of opts.pairings) {
       for (let i = 0; i < opts.matches; i++) {
         // A and B swap start positions every other match
-        const aSlot: TeamId = i % 2 === 0 ? 'player' : 'enemy';
-        const [top, bottom] = aSlot === 'player' ? [a, b] : [b, a];
-        out.push({ scenario, seed: opts.seed + i, maxMinutes: opts.maxMinutes, player: parseSide(top), enemy: parseSide(bottom), pairing: `${a} vs ${b}`, aSlot });
+        const aSlot: TeamId = i % 2 === 0 ? 'a' : 'b';
+        const [top, bottom] = aSlot === 'a' ? [a, b] : [b, a];
+        out.push({ scenario, seed: opts.seed + i, maxMinutes: opts.maxMinutes, a: parseSide(top), b: parseSide(bottom), pairing: `${a} vs ${b}`, aSlot });
       }
     }
   }

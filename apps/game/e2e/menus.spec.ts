@@ -129,7 +129,7 @@ test.describe('menus, saving and match end', () => {
   test('victory leads to the end screen with stats; Play Again starts a fresh match', async ({ page }) => {
     await openGame(page);
     await page.evaluate(() => (window as any).flow.autosave()); // the finished match's autosave gets cleared
-    await debug(page, { d: 'destroyTeam', team: 'enemy', units: false, buildings: true });
+    await debug(page, { d: 'destroyTeam', team: 'b', units: false, buildings: true });
     await expect(page.locator('.gameover-title')).toHaveText('VICTORY', { timeout: 10_000 });
     await expect(page.locator('.stat').filter({ hasText: 'Structures destroyed' }).locator('.stat-value')).toHaveText('5');
     expect(await listSaves(page, '?kind=auto')).toHaveLength(0);
@@ -141,7 +141,7 @@ test.describe('menus, saving and match end', () => {
 
   test('defeat leads to the end screen; Main Menu goes back to the title', async ({ page }) => {
     await openGame(page);
-    await debug(page, { d: 'destroyTeam', team: 'player', units: true, buildings: true });
+    await debug(page, { d: 'destroyTeam', team: 'a', units: true, buildings: true });
     await expect(page.locator('.gameover-title')).toHaveText('DEFEAT', { timeout: 10_000 });
     await page.getByRole('button', { name: 'Main Menu' }).click();
     await expect(page.locator('.title-screen')).toBeVisible();

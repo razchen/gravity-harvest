@@ -7,12 +7,12 @@ describe('simulator', () => {
   const list = specs({ pairings: [['ordan:hard', 'sable:easy']], scenarios: ['skirmish'], matches: 2, seed: 3, maxMinutes: 6 });
 
   it('plays headless matches between two computer players and measures them', () => {
-    expect(list.map((s) => s.aSlot)).toEqual(['player', 'enemy']); // they swap start positions
+    expect(list.map((s) => s.aSlot)).toEqual(['a', 'b']); // they swap start positions
     const r = runMatch(list[0]);
     expect(r.error).toBeUndefined();
     expect(r.lengthMs).toBeGreaterThan(0);
     expect(r.setup).toEqual({ blockedStarts: 0, reachable: true, unreachableFields: 0 });
-    for (const s of [r.sides.player, r.sides.enemy]) {
+    for (const s of [r.sides.a, r.sides.b]) {
       expect(s.firstUnloadMs).not.toBeNull();
       expect(Object.values(s.unitsBuilt).reduce((a, b) => a + b, 0)).toBeGreaterThan(3);
       expect(s.timeline.length).toBeGreaterThan(5);

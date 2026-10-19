@@ -5,7 +5,7 @@ import {
   speedToTilesPerSec, volleyDamage, weapon, weaponFor, layerOf, canHit, type Armor, type Faction, type PowerBalance,
 } from '@gravity-harvest/rules';
 import {
-  DEFAULT_DIFFICULTY, emptyStats, type BuildingView, type Difficulty, type Command, type DebugCommand, type GridPoint, type HarvesterActivity, type MatchEvent, type ToastCode,
+  DEFAULT_DIFFICULTY, TEAMS, emptyStats, opponentOf, perTeam, type BuildingView, type Difficulty, type Command, type DebugCommand, type GridPoint, type HarvesterActivity, type MatchEvent, type ToastCode,
   type MatchCatalog, type MatchHello, type MatchStats, type TeamId, type TeamView, type UnitView,
 } from '@gravity-harvest/shared';
 import { Fog, type Viewer } from './fog.js';
@@ -18,12 +18,9 @@ import {
 import { Ore, type OreChange, type OreTile } from './ore.js';
 import { findPath } from './pathfinder.js';
 import { Rng } from './rng.js';
-import { SCENARIOS, type ScenarioDef } from './scenarios.js';
-import { OLDEST_LOADABLE_VERSION, SNAPSHOT_VERSION, type SimSnapshot } from './snapshot.js';
+import { SCENARIOS, humanSeat, type ScenarioDef } from './scenarios.js';
+import { OLDEST_LOADABLE_VERSION, SNAPSHOT_VERSION, migrateSnapshot, type SimSnapshot } from './snapshot.js';
 import { growScenery, type Scenery } from './scenery.js';
-
-export const TEAMS: readonly TeamId[] = ['player', 'enemy'];
-export const opponent = (t: TeamId): TeamId => (t === 'player' ? 'enemy' : 'player');
 
 /** The full catalog limited to the roster, with stand-ins (see layout.ts). */
 export const MATCH_CATALOG = matchCatalog(CATALOG);
@@ -202,10 +199,12 @@ export interface PlayerState {
 
 /** Options for a new match. */
 export interface CreateOptions {
+  /** The seat the human plays (the computer takes the other). Default: the scenario's human seat. */
+  seat?: TeamId;
   /** How well the computer plays (each computer side). */
   difficulty?: Difficulty;
   /** The other side's faction, if not the opposite of the human's (mirror matches in simulations). */
-  enemyFaction?: Faction;
+  otherFaction?: Faction;
   /** Both sides played by the computer (AI against AI, headless simulations). */
   computerOnly?: boolean;
 }
@@ -261,7 +260,7 @@ export class Sim {
   readonly fog: Record<TeamId, Fog>;
   readonly players: Record<TeamId, PlayerState>;
   /** Debug fast mode: each team's speed-up for building, production and movement (1 = normal; not saved). */
-  private readonly fast: Record<TeamId, number> = { player: 1, enemy: 1 };
+  private readonly fast: Record<TeamId, number> = perTeam(() => 1);
   readonly buildings = new Map<number, Building>();
   readonly units = new Map<number, Unit>();
   /** Trees, rocks (they block their tiles), bushes and logs. */
@@ -272,13 +271,13 @@ export class Sim {
   rng: Rng;
   /** Set when the match ends. */
   winner: TeamId | null = null;
-  private readonly pending: Record<TeamId, MatchEvent[]> = { player: [], enemy: [] };
-  private readonly lastFog: Record<TeamId, string> = { player: '', enemy: '' };
+  private readonly pending: Record<TeamId, MatchEvent[]> = perTeam(() => []);
+  private readonly lastFog: Record<TeamId, string> = perTeam(() => '');
   /**
    * Each side's picture of the enemy buildings it has discovered, as they were when last in its sight. Out of sight it
    * is sent this instead of the real thing, and one destroyed or sold out of sight stays until the spot is seen again.
    */
-  private readonly ghosts: Record<TeamId, Map<number, BuildingView>> = { player: new Map(), enemy: new Map() };
+  private readonly ghosts: Record<TeamId, Map<number, BuildingView>> = perTeam(() => new Map());
   private power: Record<TeamId, PowerBalance>;
   private fogTimer = 0;
   private growTimer = 0;
@@ -286,29 +285,32 @@ export class Sim {
   private constructor(readonly scenario: ScenarioDef, seed: number) {
     this.map = new Grid(scenario.map.width, scenario.map.height);
     this.ore = new Ore(this.map);
-    this.fog = { player: new Fog(this.map), enemy: new Fog(this.map) };
+    this.fog = perTeam(() => new Fog(this.map));
     const credits = (c: number | 'rules') => (c === 'rules' ? ECONOMY.startingCredits : c);
-    this.players = {
-      player: { team: 'player', credits: credits(scenario.players.player.credits), human: scenario.players.player.human, faction: scenario.players.player.faction, queue: [], stats: emptyStats(), difficulty: DEFAULT_DIFFICULTY },
-      enemy: { team: 'enemy', credits: credits(scenario.players.enemy.credits), human: scenario.players.enemy.human, faction: scenario.players.enemy.faction, queue: [], stats: emptyStats(), difficulty: DEFAULT_DIFFICULTY },
-    };
+    this.players = perTeam((team) => {
+      const sp = scenario.players[team];
+      return { team, credits: credits(sp.credits), human: sp.human, faction: sp.faction, queue: [], stats: emptyStats(), difficulty: DEFAULT_DIFFICULTY };
+    });
     this.rng = new Rng(seed);
-    this.power = { player: powerBalance([]), enemy: powerBalance([]) };
+    this.power = perTeam(() => powerBalance([]));
   }
 
   /**
-   * A new match. `faction`: the side the human plays (the computer takes the other); default the scenario's. A scenario
-   * that isn't in SCENARIOS can be passed as it is (a dev page's own little map); such a match can't be restored.
+   * A new match. `faction`: the faction of the human's seat (`opts.seat`, default the scenario's human seat); the computer
+   * takes the other seat and the other faction. Both default to the scenario's. A scenario that isn't in SCENARIOS can be passed as it is
+   * (a dev page's own little map); such a match can't be restored.
    */
   static create(scenarioId: string | ScenarioDef, seed = 1, faction?: Faction, opts: CreateOptions = {}): Sim {
     const sc = typeof scenarioId === 'string' ? SCENARIOS[scenarioId] : scenarioId;
     if (!sc) throw new Error(`Unknown scenario "${scenarioId}"`);
     const sim = new Sim(sc, seed);
+    const seat = opts.seat ?? humanSeat(sc.players);
+    if (opts.seat) for (const t of TEAMS) sim.players[t].human = t === seat;
     if (faction) {
-      sim.players.player.faction = faction;
-      sim.players.enemy.faction = faction === 'ordan' ? 'sable' : 'ordan';
+      sim.players[seat].faction = faction;
+      sim.players[opponentOf(seat)].faction = faction === 'ordan' ? 'sable' : 'ordan';
     }
-    if (opts.enemyFaction) sim.players.enemy.faction = opts.enemyFaction;
+    if (opts.otherFaction) sim.players[opponentOf(seat)].faction = opts.otherFaction;
     for (const t of TEAMS) {
       if (opts.difficulty) sim.players[t].difficulty = opts.difficulty;
       if (opts.computerOnly) sim.players[t].human = false;
@@ -346,9 +348,10 @@ export class Sim {
   }
 
   /** Resume a saved match. */
-  static restore(raw: SimSnapshot): Sim {
-    if (raw.version > SNAPSHOT_VERSION) throw new Error('Save is from a newer version');
-    if (raw.version < OLDEST_LOADABLE_VERSION) throw new Error('Save is from an older version and can no longer be loaded');
+  static restore(saved: SimSnapshot): Sim {
+    if (saved.version > SNAPSHOT_VERSION) throw new Error('Save is from a newer version');
+    if (saved.version < OLDEST_LOADABLE_VERSION) throw new Error('Save is from an older version and can no longer be loaded');
+    const raw = migrateSnapshot(saved);
     const sc = SCENARIOS[raw.scenario];
     if (!sc) throw new Error(`Unknown scenario "${raw.scenario}"`);
     const sim = new Sim(sc, raw.rng);
@@ -356,7 +359,10 @@ export class Sim {
     sim.timeMs = raw.timeMs;
     for (const team of TEAMS) {
       const p = raw.players[team];
-      Object.assign(sim.players[team], { credits: p.credits, queue: p.queue.map((q) => ({ ...q })), stats: { ...p.stats }, ...(p.faction && { faction: p.faction }), ...(p.difficulty && { difficulty: p.difficulty }) });
+      Object.assign(sim.players[team], {
+        credits: p.credits, queue: p.queue.map((q) => ({ ...q })), stats: { ...p.stats }, ...(p.human !== undefined && { human: p.human }),
+        ...(p.faction && { faction: p.faction }), ...(p.difficulty && { difficulty: p.difficulty }),
+      });
       sim.fog[team].restoreExplored(raw.explored[team]);
     }
     for (const b of raw.buildings) {
@@ -420,10 +426,10 @@ export class Sim {
       timeMs: this.timeMs,
       nextId: this.nextId,
       rng: this.rng.state,
-      players: {
-        player: { credits: this.players.player.credits, queue: this.players.player.queue.map((q) => ({ ...q })), stats: { ...this.players.player.stats }, faction: this.players.player.faction, difficulty: this.players.player.difficulty },
-        enemy: { credits: this.players.enemy.credits, queue: this.players.enemy.queue.map((q) => ({ ...q })), stats: { ...this.players.enemy.stats }, faction: this.players.enemy.faction, difficulty: this.players.enemy.difficulty },
-      },
+      players: perTeam((t) => {
+        const p = this.players[t];
+        return { credits: p.credits, queue: p.queue.map((q) => ({ ...q })), stats: { ...p.stats }, human: p.human, faction: p.faction, difficulty: p.difficulty };
+      }),
       buildings: [...this.buildings.values()].map((b) => ({
         id: b.id, type: b.type, team: b.team, tx: b.tx, ty: b.ty, hp: b.hp, progress: b.progress, constructed: b.constructed, seenBy: [...b.seenBy],
         ...(b.repairing && { repairing: true }),
@@ -437,7 +443,7 @@ export class Sim {
       ore: [...this.ore.tiles.values()].map((t) => ({ tx: t.tx, ty: t.ty, field: t.field, richness: t.richness, rocks: t.rocks.map((r) => ({ ...r })) })),
       vents: this.ore.vents.map((v) => ({ ...v })),
       scenery: this.scenery.map((t) => ({ ...t })),
-      explored: { player: this.fog.player.serializeExplored(), enemy: this.fog.enemy.serializeExplored() },
+      explored: perTeam((t) => this.fog[t].serializeExplored()),
     };
   }
 
@@ -954,7 +960,7 @@ export class Sim {
     for (const t of TEAMS) {
       const out = !this.teamBuildings(t, false).length && !this.teamUnits(t).length;
       if (out) {
-        this.winner = opponent(t);
+        this.winner = opponentOf(t);
         return;
       }
     }
@@ -1703,7 +1709,7 @@ export class Sim {
     if (!target && u.mission !== null) {
       let m = this.entity(u.mission);
       if (!m?.alive) {
-        m = this.nearestBuilding(u.gx, u.gy, opponent(u.team), u.team) ?? undefined;
+        m = this.nearestBuilding(u.gx, u.gy, opponentOf(u.team), u.team) ?? undefined;
         u.mission = m?.id ?? null;
       }
       target = m;
@@ -2173,7 +2179,7 @@ export class Sim {
     const lost = 1 + (u.kind === 'fighter' ? u.passengers.length : 0);
     if (u.kind === 'fighter') for (const p of u.passengers.splice(0)) p.alive = false;
     this.players[u.team].stats.unitsLost += lost;
-    this.players[opponent(u.team)].stats.unitsKilled += lost;
+    this.players[opponentOf(u.team)].stats.unitsKilled += lost;
     this.emitSeen({ e: 'unitDied', id: u.id, gx: u.gx, gy: u.gy, type: u.type }, u, u.team);
   }
 
@@ -2185,7 +2191,7 @@ export class Sim {
     const name = BUILDINGS[b.type].name;
     if (!sold) {
       this.players[b.team].stats.buildingsLost++;
-      this.players[opponent(b.team)].stats.buildingsDestroyed++;
+      this.players[opponentOf(b.team)].stats.buildingsDestroyed++;
     }
     for (const t of TEAMS) {
       // out of sight, the other side still sees it standing (its ghost) until it looks again
@@ -2203,15 +2209,15 @@ export class Sim {
   hello(team: TeamId): MatchHello {
     return {
       scenario: this.scenario.id,
-      team,
+      you: team,
       map: { ...this.scenario.map },
-      camera: { ...this.scenario.camera },
+      camera: { ...this.scenario.camera[team] },
       viewMs: TICK_MS * VIEW_EVERY_TICKS,
       ore: this.ore.views(),
       scenery: this.scenery.map((t) => ({ ...t })),
       catalog: catalogFor(this.players[team].faction),
-      faction: this.players[team].faction,
-      difficulty: this.players[opponent(team)].difficulty,
+      factions: perTeam((t) => this.players[t].faction),
+      difficulty: this.players[opponentOf(team)].difficulty,
       debug: false,
     };
   }

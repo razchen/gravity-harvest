@@ -1,7 +1,8 @@
 import type Phaser from 'phaser';
 import type { MatchEvent, TeamId } from '@gravity-harvest/shared';
 import { meta } from '../assets/manifest';
-import { BUILDING_ART, SIDE_GLOW, UNIT_ART, factionOf } from '../data/art';
+import { BUILDING_ART, SIDE_GLOW, UNIT_ART } from '../data/art';
+import { factionOfTeam, isMine } from '../data/teams';
 import { shotOf } from '../data/shots';
 import { diamond, iso, type GridPoint } from '../core/geometry';
 import { BuildingSprite } from '../entities/BuildingSprite';
@@ -67,7 +68,7 @@ export class EventPresenter {
         // sold (a building still going up was cancelled: its money back, no sale to hear), or destroyed
         const cancelled = e.sold && this.gone.get(e.id)?.built === false;
         if (!cancelled) s.sounds.play(e.sold ? 'building_sold' : 'building_explode', iso(e.tx + e.size / 2, e.ty + e.size / 2));
-        if (!e.sold && e.team === 'player') s.sounds.announce('announce_building_lost');
+        if (!e.sold && isMine(e.team)) s.sounds.announce('announce_building_lost');
         if (e.sold) return;
         // it blows up (render/Destruction.ts); one we never saw gets a plain explosion
         const b = this.gone.get(e.id);
@@ -157,7 +158,7 @@ export class EventPresenter {
     const p = (!isBuilding(from) && UNIT_ART[from.type]?.fire) || e.p;
     const def = shotOf(p);
     // in its side's colour (a heal in its own green); energy balls and lasers from each of its guns at once
-    const glow = isBuilding(from) || def.ownColour ? undefined : SIDE_GLOW[factionOf(from.team, s.faction)];
+    const glow = isBuilding(from) || def.ownColour ? undefined : SIDE_GLOW[factionOfTeam(from.team)];
     // an Engineer welds where its arm meets the building: most of the way from it to the building, off the ground
     if (def.weld && to) {
       const c = isBuilding(to) ? { x: to.sprite.x, y: to.sprite.y } : iso(to.gx, to.gy);

@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer } from '@gravity-harvest/ai';
-import { DEFAULT_DIFFICULTY, type ClientMessage, type SaveKind, type ServerMessage, type StartMatch } from '@gravity-harvest/shared';
-import { SNAPSHOT_VERSION, Sim, TEAMS, TICK_MS, VIEW_EVERY_TICKS, type SimSnapshot } from '@gravity-harvest/sim';
+import { DEFAULT_DIFFICULTY, TEAMS, type ClientMessage, type SaveKind, type ServerMessage, type StartMatch, type TeamId } from '@gravity-harvest/shared';
+import { SNAPSHOT_VERSION, Sim, TICK_MS, VIEW_EVERY_TICKS, humanSeat, type SimSnapshot } from '@gravity-harvest/sim';
 import { randomInt } from 'node:crypto';
 import type { WebSocket } from 'ws';
 import type { SavesService } from '../saves/saves.service.js';
@@ -12,14 +12,16 @@ const AUTOSAVE_NAME = 'Autosave';
 const MAX_CATCH_UP = 10;
 
 /**
- * One browser connection: at most one match at a time, run at a fixed tick. The human is always 'player';
- * each computer side (`human: false` in the scenario) gets a ComputerPlayer that sees only its own view and gives
- * orders through the same Sim.command a human's go through. Sends the player a view every few ticks with only what
- * it may see.
+ * One browser connection: at most one match at a time, run at a fixed tick. The connection plays one seat (`seat`:
+ * the human's, chosen at start or kept in the save); each computer side (`human: false`) gets a ComputerPlayer that
+ * sees only its own view and gives orders through the same Sim.command a human's go through. Sends the connection a
+ * view of its seat every few ticks with only what that side may see.
  */
 export class MatchSession {
   private readonly log = new Logger('Match');
   private sim: Sim | null = null;
+  /** The side this connection plays. */
+  private seat: TeamId = 'a';
   private computers: ComputerPlayer[] = [];
   private timer: NodeJS.Timeout | null = null;
   private paused = false;
@@ -57,7 +59,7 @@ export class MatchSession {
       case 'start':
         return this.start(m);
       case 'cmd':
-        if (this.sim && !this.paused) this.sim.command('player', m.cmd);
+        if (this.sim && !this.paused) this.sim.command(this.seat, m.cmd);
         return;
       case 'pause':
         this.paused = true;
@@ -77,7 +79,7 @@ export class MatchSession {
         return;
       case 'debug':
         if (!this.debugCommands) throw new Error('Debug commands are disabled');
-        this.sim?.debug('player', m.cmd);
+        this.sim?.debug(this.seat, m.cmd);
         this.sendView();
         return;
     }
@@ -90,16 +92,17 @@ export class MatchSession {
       this.sim = Sim.restore(state as SimSnapshot);
     } else {
       // a fresh forest, ore and spread every match
-      this.sim = Sim.create(m.scenario!, randomInt(2 ** 31), m.faction, { difficulty: m.difficulty ?? DEFAULT_DIFFICULTY });
+      this.sim = Sim.create(m.scenario!, randomInt(2 ** 31), m.faction, { seat: m.seat, difficulty: m.difficulty ?? DEFAULT_DIFFICULTY });
     }
     const sim = this.sim;
+    this.seat = humanSeat(sim.players);
     this.computers = TEAMS.filter((t) => !sim.players[t].human)
       .map((t) => new ComputerPlayer({ hello: sim.hello(t), difficulty: sim.players[t].difficulty, seed: randomInt(2 ** 31) }));
     this.autosaveOnLeave = m.autosaveOnLeave;
     this.paused = false;
     this.ended = false;
-    this.send({ t: 'hello', ...this.sim.hello('player'), debug: this.debugCommands });
-    this.sim.resendFog('player');
+    this.send({ t: 'hello', ...this.sim.hello(this.seat), debug: this.debugCommands });
+    this.sim.resendFog(this.seat);
     this.sendView();
     this.lastStep = performance.now();
     this.timer = setInterval(() => this.tick(), TICK_MS);
@@ -126,14 +129,15 @@ export class MatchSession {
   }
 
   private sendView(): void {
-    if (this.sim) this.send({ t: 'view', ...this.sim.view('player', this.paused) });
+    if (this.sim) this.send({ t: 'view', ...this.sim.view(this.seat, this.paused) });
   }
 
   private async finish(sim: Sim): Promise<void> {
     this.ended = true;
     this.stop(false);
     this.sendView();
-    this.send({ t: 'gameOver', result: sim.winner === 'player' ? 'victory' : 'defeat', stats: { ...sim.players.player.stats, creditsEarned: Math.floor(sim.players.player.stats.creditsEarned) } });
+    const stats = sim.players[this.seat].stats;
+    this.send({ t: 'gameOver', result: sim.winner === this.seat ? 'victory' : 'defeat', stats: { ...stats, creditsEarned: Math.floor(stats.creditsEarned) } });
     // a finished match can't be continued
     const autos = await this.saves.list(this.owner, { scenario: sim.scenario.id, kind: 'auto' });
     await Promise.all(autos.map((a) => this.saves.remove(this.owner, a.id)));

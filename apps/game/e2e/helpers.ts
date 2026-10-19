@@ -67,7 +67,7 @@ export async function debug(page: Page, cmd: Record<string, unknown>): Promise<v
 /** IDs of the human's units of a type, as currently drawn. */
 export function myUnits(page: Page, type: string): Promise<number[]> {
   return page.evaluate((t) => [...(window as any).game.scene.getScene('game').units.values()]
-    .filter((u: any) => u.team === 'player' && u.type === t).map((u: any) => u.id as number), type);
+    .filter((u: any) => u.team === 'a' && u.type === t).map((u: any) => u.id as number), type);
 }
 
 /**

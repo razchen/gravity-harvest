@@ -74,16 +74,16 @@ describe.each(Object.values(SCENARIOS))('scenario $id', (sc) => {
       expect(sc.mirrorX).toBe(true);
       const mirror = (b: { type: string; tx: number; ty: number }) => ({ type: b.type, tx: W - b.tx - footprint(b.type), ty: b.ty });
       const of = (team: string) => sc.buildings.filter((b) => b.team === team).map(({ type, tx, ty }) => ({ type, tx, ty }));
-      expect(of('player').map(mirror)).toEqual(of('enemy'));
+      expect(of('a').map(mirror)).toEqual(of('b'));
       // a refinery's dock is within 0.2 tiles of its mirror image's
       const dock = (team: string) => {
         const r = sc.buildings.find((b) => b.team === team && b.type === 'refinery')!;
         return refineryDock(r.tx, r.ty).dock;
       };
-      expect(Math.abs(W - dock('player').gx - dock('enemy').gx)).toBeLessThanOrEqual(0.2 + 1e-9);
-      expect(dock('enemy').gy).toBe(dock('player').gy);
+      expect(Math.abs(W - dock('a').gx - dock('b').gx)).toBeLessThanOrEqual(0.2 + 1e-9);
+      expect(dock('b').gy).toBe(dock('a').gy);
       const units = (team: string) => sc.units.filter((u) => u.team === team).map((u) => ({ type: u.type, gx: +u.gx.toFixed(3), gy: u.gy }));
-      expect(units('player').map((u) => ({ ...u, gx: +(W - u.gx).toFixed(3) }))).toEqual(units('enemy'));
+      expect(units('a').map((u) => ({ ...u, gx: +(W - u.gx).toFixed(3) }))).toEqual(units('b'));
       const fields = sc.oreFields;
       expect(fields[1].mirrorOf).toBe(0);
       expect(fields[1].centre).toEqual({ tx: W - 1 - fields[0].centre.tx, ty: fields[0].centre.ty });
@@ -94,6 +94,6 @@ describe.each(Object.values(SCENARIOS))('scenario $id', (sc) => {
 
   it('ore fields and the camera are on the map', () => {
     for (const f of sc.oreFields) expect(map.inBounds(f.centre.tx, f.centre.ty)).toBe(true);
-    expect(map.inBounds(Math.floor(sc.camera.gx), Math.floor(sc.camera.gy))).toBe(true);
+    for (const c of Object.values(sc.camera)) expect(map.inBounds(Math.floor(c.gx), Math.floor(c.gy))).toBe(true);
   });
 });

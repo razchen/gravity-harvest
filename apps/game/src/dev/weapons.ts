@@ -8,7 +8,7 @@ import { CAMERA, DEPTH, DPR, HOVER, TILE_W } from '../config/game';
 import { alongBarrel, facing, iso, type Point } from '../core/geometry';
 import { SIDE_GLOW, UNIT_ART, unitArt } from '../data/art';
 import { shotOf } from '../data/shots';
-import { TEAMS } from '../data/teams';
+import { SIDES } from '../data/teams';
 import { Effects } from '../render/Effects';
 import { FX, loadFxSheets } from '../render/fxTextures';
 import { TERRAIN_COPY_PX } from '../world/Terrain';
@@ -126,7 +126,7 @@ export function mountWeaponView(host: HTMLElement, opts: WeaponViewOptions): voi
       }
       this.effects = new Effects(this);
       const tm = sprites[TARGET];
-      const tint = TEAMS.enemy.tint!;
+      const tint = SIDES.theirs.tint!;
       this.target = {
         hull: this.add.sprite(0, 0, TARGET).setOrigin(...anchorOrigin(tm)).setScale(1 / (tm.res ?? 1)).setTint(tint),
         turret: tm.turret_layer ? this.add.sprite(0, 0, TARGET).setOrigin(...anchorOrigin(tm)).setScale(1 / (tm.res ?? 1)).setTint(tint) : null,

@@ -8,7 +8,7 @@ import { anchorOrigin, meta } from '../assets/manifest';
 import { HARVESTER_DOCK_FACING, HARVESTER_UNLOAD_MS, INFANTRY_TURN_MS_PER_STEP, RUN_CYCLE_TILES } from '../config/game';
 import { iso } from '../core/geometry';
 import { BUILDING_ART, UNIT_ART } from '../data/art';
-import { TEAMS } from '../data/teams';
+import { SIDES } from '../data/teams';
 import { DOOR_OPEN_MS, inFrontOf } from '../entities/BuildingSprite';
 import { WHEEL_TURN_TILES, turnToward } from '../entities/UnitSprite';
 import type { ConstructionView } from '../render/Construction';
@@ -55,7 +55,7 @@ class UnitLook {
     const art = UNIT_ART[type];
     this.kind = art.kind;
     this.key = art.sprite;
-    const tint = TEAMS.player.tint;
+    const tint = SIDES.mine.tint;
     const m = this.meta();
     this.shown = dir % (m.directions ?? 16);
     const first = this.kind === 'infantry' ? `inf_${this.shown}_idle` : `${this.key}_${this.shown}`;

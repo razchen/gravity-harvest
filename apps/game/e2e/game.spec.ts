@@ -9,8 +9,8 @@ test.describe('skirmish', () => {
     await expect(page.locator('#credits')).toHaveText('15,000');
     await expect(page.locator('#power')).toHaveText('150 / 500');
     const start = await scene(page, (s) => ({
-      mine: [...s.buildings.values()].filter((b: any) => b.team === 'player').map((b: any) => b.type).sort(),
-      riflemen: [...s.units.values()].filter((u: any) => u.type === 'rifleman' && u.team === 'player').length,
+      mine: [...s.buildings.values()].filter((b: any) => b.team === 'a').map((b: any) => b.type).sort(),
+      riflemen: [...s.units.values()].filter((u: any) => u.type === 'rifleman' && u.team === 'a').length,
     }));
     expect(start).toEqual({ mine: ['power_plant', 'refinery'], riflemen: 2 });
     await expect(page.locator('.card[data-id]')).toHaveCount(4); // only the roster with art
@@ -20,16 +20,16 @@ test.describe('skirmish', () => {
   test('fog of war: the enemy is not even sent until scouted', async ({ page }) => {
     await openGame(page);
     const hidden = await scene(page, (s) => ({
-      enemyUnits: [...s.units.values()].filter((u: any) => u.team === 'enemy').length,
-      enemyBuildings: [...s.buildings.values()].filter((b: any) => b.team === 'enemy').length,
+      enemyUnits: [...s.units.values()].filter((u: any) => u.team === 'b').length,
+      enemyBuildings: [...s.buildings.values()].filter((b: any) => b.team === 'b').length,
       enemyCorner: s.fog.at(84, 3), // the enemy's yard
       homeCorner: s.fog.at(7, 7),
     }));
     expect(hidden).toEqual({ enemyUnits: 0, enemyBuildings: 0, enemyCorner: 0, homeCorner: 2 });
 
     await debug(page, { d: 'teleport', units: await myUnits(page, 'rifleman'), gx: 77, gy: 12 });
-    await expect.poll(() => scene(page, (s) => [...s.buildings.values()].filter((b: any) => b.team === 'enemy').length)).toBeGreaterThan(0);
-    await expect.poll(() => scene(page, (s) => [...s.units.values()].filter((u: any) => u.team === 'enemy').length)).toBeGreaterThan(0);
+    await expect.poll(() => scene(page, (s) => [...s.buildings.values()].filter((b: any) => b.team === 'b').length)).toBeGreaterThan(0);
+    await expect.poll(() => scene(page, (s) => [...s.units.values()].filter((u: any) => u.team === 'b').length)).toBeGreaterThan(0);
   });
 
   test('the harvester mines ore and a full load pays 1,050', async ({ page }) => {
@@ -51,7 +51,7 @@ test.describe('skirmish', () => {
     await expect.poll(() => scene(page, (s) => s.placement.problem)).toBeNull();
     await page.mouse.click(ok.x, ok.y);
     await expect(page.locator('#credits')).toHaveText('14,550');
-    await expect.poll(() => scene(page, (s) => [...s.buildings.values()].filter((b: any) => b.type === 'power_plant' && b.team === 'player').length)).toBe(2);
+    await expect.poll(() => scene(page, (s) => [...s.buildings.values()].filter((b: any) => b.type === 'power_plant' && b.team === 'a').length)).toBe(2);
     await debug(page, { d: 'finishBuilds' });
     await expect(page.locator('#power')).toHaveText('150 / 1000');
   });
@@ -82,7 +82,7 @@ test.describe('skirmish', () => {
       const r = [...s.units.values()].find((u: any) => u.type === 'rifleman');
       return { gx: r.gx + 2.5, gy: r.gy };
     });
-    await debug(page, { d: 'spawn', unit: 'rifleman', team: 'enemy', ...pos });
+    await debug(page, { d: 'spawn', unit: 'rifleman', team: 'b', ...pos });
     await expect.poll(() => scene(page, (s) => s.view.stats.unitsKilled), { timeout: 20_000 }).toBe(1);
   });
 });
@@ -173,26 +173,26 @@ test.describe('controls', () => {
     await openGame(page);
     await debug(page, { d: 'reveal', on: true });
     const radar = await scene(page, (s) => {
-      const r = [...s.buildings.values()].find((b: any) => b.type === 'refinery' && b.team === 'enemy');
+      const r = [...s.buildings.values()].find((b: any) => b.type === 'refinery' && b.team === 'b');
       return r && { tx: r.tx as number, ty: r.ty as number };
     });
     expect(radar).toBeTruthy();
     // an enemy soldier just behind the refinery, where the building's sprite is drawn over it
     const at = { gx: radar.tx + 1.5, gy: radar.ty - 0.4 };
-    await debug(page, { d: 'spawn', unit: 'rifleman', team: 'enemy', ...at });
+    await debug(page, { d: 'spawn', unit: 'rifleman', team: 'b', ...at });
     const mine = await myUnits(page, 'rifleman');
     await debug(page, { d: 'teleport', units: mine, gx: radar.tx - 12, gy: radar.ty });
-    await expect.poll(() => scene(page, (s) => [...s.units.values()].filter((u: any) => u.team === 'enemy' && u.type === 'rifleman').length)).toBeGreaterThan(0);
+    await expect.poll(() => scene(page, (s) => [...s.units.values()].filter((u: any) => u.team === 'b' && u.type === 'rifleman').length)).toBeGreaterThan(0);
     const enemy = await scene(page, (s) => {
-      const r = [...s.buildings.values()].find((b: any) => b.type === 'refinery' && b.team === 'enemy');
-      const u = [...s.units.values()].filter((x: any) => x.team === 'enemy').sort((a: any, b: any) =>
+      const r = [...s.buildings.values()].find((b: any) => b.type === 'refinery' && b.team === 'b');
+      const u = [...s.units.values()].filter((x: any) => x.team === 'b').sort((a: any, b: any) =>
         Math.hypot(a.gx - (r.tx + 1.5), a.gy - (r.ty - 0.4)) - Math.hypot(b.gx - (r.tx + 1.5), b.gy - (r.ty - 0.4)))[0];
       s.cameras.main.centerOn((u.gx - u.gy) * 64, (u.gx + u.gy) * 32);
       // record the orders the browser sends
       (window as any).sent = [];
       const send = s.net.command.bind(s.net);
       s.net.command = (c: any) => { (window as any).sent.push(c); send(c); };
-      s.selection.set([...s.units.values()].filter((x: any) => x.team === 'player' && x.type === 'rifleman'));
+      s.selection.set([...s.units.values()].filter((x: any) => x.team === 'a' && x.type === 'rifleman'));
       return { id: u.id, gx: u.gx, gy: u.gy };
     });
     const p = await screenAt(page, enemy.gx, enemy.gy);
