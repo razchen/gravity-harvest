@@ -31,6 +31,7 @@ migrations (see Storage notes) before serving.
 | `CORS_ORIGIN`    | `http://localhost:5173`         | Comma-separated list allowed                           |
 | `BODY_LIMIT`     | `10mb`                          | Max JSON body size                                     |
 | `DEBUG_COMMANDS` | on unless `NODE_ENV=production` | Accept debug commands on the match socket (dev, tests) |
+| `RECONNECT_GRACE_MS` | `60000` | How long a match waits, paused, for a dropped player to rejoin before it is closed |
 | `DB_SYNCHRONIZE` | on unless `NODE_ENV=production` | Also sync the schema to the entities after migrations (dev, tests). Never in production |
 | `DB_LOGGING`     | `false`                         | Log SQL                                                |
 
@@ -58,7 +59,9 @@ src/
     migrations/           schema migrations, listed in migrations/index.ts
   health/                 GET /api/health
   saves/                  saves: list / read / delete over HTTP (written only by matches), per player; entity, DTOs
-  match/                  the match WebSocket (gateway, one MatchSession per connection), message checks, GET /api/scenarios
+  match/                  the match WebSocket: gateway, one SeatConnection per socket attached to a MatchRoom
+                          (one per match: sim, tick, computer players, command log, autosave), message checks,
+                          GET /api/scenarios
 test/                     e2e tests
 ```
 

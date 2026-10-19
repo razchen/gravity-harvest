@@ -5,24 +5,31 @@ import type { IncomingMessage, Server } from 'node:http';
 import { WebSocketServer } from 'ws';
 import { APP_CONFIG, type AppConfig } from '../config/index.js';
 import { SavesService } from '../saves/saves.service.js';
-import { MatchSession } from './match-session.js';
+import { MatchRooms } from './match-room.js';
+import { SeatConnection } from './seat-connection.js';
 
-/** The match WebSocket (MATCH_PATH) on the same HTTP server as the API. One MatchSession per connection. */
+/**
+ * The match WebSocket (MATCH_PATH) on the same HTTP server as the API. Each connection is a SeatConnection; the
+ * matches themselves are MatchRooms, kept here so a player whose connection dropped can rejoin theirs.
+ */
 @Injectable()
 export class MatchGateway implements OnApplicationBootstrap, OnApplicationShutdown {
   private readonly log = new Logger('MatchGateway');
   private wss: WebSocketServer | null = null;
+  private readonly rooms: MatchRooms;
 
   constructor(
     private readonly adapterHost: HttpAdapterHost,
     private readonly saves: SavesService,
     @Inject(APP_CONFIG) private readonly config: AppConfig,
-  ) {}
+  ) {
+    this.rooms = new MatchRooms({ saves, debugCommands: config.debugCommands, graceMs: config.reconnectGraceMs });
+  }
 
   onApplicationBootstrap(): void {
     const server = this.adapterHost.httpAdapter.getHttpServer() as Server;
     this.wss = new WebSocketServer({ server, path: MATCH_PATH, maxPayload: 1024 * 1024, verifyClient: (info, done) => this.verify(info.req, done) });
-    this.wss.on('connection', (ws, req) => new MatchSession(ws, this.saves, playerId(req)!, this.config.debugCommands));
+    this.wss.on('connection', (ws, req) => new SeatConnection(ws, this.rooms, playerId(req)!));
     if (this.config.debugCommands) this.log.warn('Debug commands are enabled (set NODE_ENV=production or DEBUG_COMMANDS=false to disable)');
   }
 
@@ -40,6 +47,7 @@ export class MatchGateway implements OnApplicationBootstrap, OnApplicationShutdo
   onApplicationShutdown(): void {
     for (const c of this.wss?.clients ?? []) c.terminate();
     this.wss?.close();
+    this.rooms.closeAll();
   }
 }
 

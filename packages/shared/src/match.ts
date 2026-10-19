@@ -103,6 +103,11 @@ export interface StartMatch {
 
 export type ClientMessage =
   | ({ t: 'start' } & StartMatch)
+  /**
+   * Back into this player's match after the connection dropped: the server keeps it, paused, for a while. Answered
+   * with a hello and a full view, as at the start, or an error when there's no match to go back to.
+   */
+  | { t: 'rejoin' }
   | { t: 'cmd'; cmd: Command }
   | { t: 'pause' }
   | { t: 'resume' }

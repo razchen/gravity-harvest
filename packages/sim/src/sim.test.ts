@@ -1,5 +1,5 @@
 import { BUILDINGS, ECONOMY, UNITS, hitDamage } from '@gravity-harvest/rules';
-import type { MatchEvent, TeamView } from '@gravity-harvest/shared';
+import type { MatchEvent, TeamId, TeamView } from '@gravity-harvest/shared';
 import { describe, expect, it } from 'vitest';
 import { DOCK_FACING, ENGINE, TICK_MS, checkPlacement, refineryDock, serviceBayPad } from './layout.js';
 import { facing } from './geometry.js';
@@ -12,6 +12,8 @@ const run = (sim: Sim, ms: number) => {
 };
 const mine = (sim: Sim, type: string) => [...sim.units.values()].filter((u) => u.team === 'a' && u.type === type);
 const events = (v: TeamView, e: MatchEvent['e']) => v.events.filter((x) => x.e === e);
+/** What a side sees now, with the events it was told of since the last look (the one viewer of each side). */
+const look = (sim: Sim, team: TeamId, paused = false): TeamView => ({ ...sim.view(team, paused), events: sim.takeEvents(team) });
 /** A snapshot as a save from before seats (version 8 or older) holds it: the sides named `player` and `enemy`, no `human`. */
 const asOldSave = (snap: SimSnapshot, version: number): any => {
   const s = JSON.parse(JSON.stringify(snap));
@@ -55,7 +57,7 @@ const placeFor = (sim: Sim, team: 'a' | 'b', type: string): Building => {
 describe('starting a match', () => {
   it('lays out the scenario with the spreadsheet economy', () => {
     const sim = Sim.create('skirmish');
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(v.credits).toBe(ECONOMY.startingCredits);
     expect(v.buildings.filter((b) => b.team === 'a').map((b) => b.type).sort()).toEqual(['assembly_yard', 'power_plant', 'refinery']);
     expect(v.power).toEqual({ made: 500, used: 150, low: false });
@@ -84,13 +86,13 @@ describe('starting a match', () => {
     const control = Sim.create('skirmish', 7); // the same match, never revealed
     sim.debug('a', { d: 'reveal', on: true });
     run(sim, 500);
-    expect(sim.view('a').fog).toMatch(/^2+$/);
+    expect(look(sim, 'a').fog).toMatch(/^2+$/);
     sim.debug('a', { d: 'reveal', on: false });
     run(sim, 500);
-    const after = sim.view('a').fog!;
+    const after = look(sim, 'a').fog!;
     expect(after[3 * sim.map.width + 84]).toBe('0'); // the enemy base is unexplored again
     run(control, 1000);
-    expect(after).toBe(control.view('a').fog);
+    expect(after).toBe(look(control, 'a').fog);
   });
 
   it('each side is only told about its own faction\'s buildings and the shared ones', () => {
@@ -129,7 +131,7 @@ describe('starting a match', () => {
     expect(hello.camera).toEqual(SCENARIOS.skirmish.camera.b);
     expect(hello.catalog.buildings.anchor).toBeDefined();
     // their own units, and none of the other side's (under fog)
-    const v = sim.view('b');
+    const v = look(sim, 'b');
     expect(v.units.length).toBeGreaterThan(0);
     expect(v.units.every((u) => u.team === 'b')).toBe(true);
     // orders move their units, and not the other side's
@@ -143,8 +145,8 @@ describe('starting a match', () => {
     // its toasts go to the human's seat now, not to the computer's
     sim.command('b', { c: 'place', building: 'anchor', tx: 0, ty: 0 });
     sim.command('a', { c: 'place', building: 'sentry', tx: 0, ty: 0 });
-    expect(events(sim.view('b'), 'toast').length).toBeGreaterThan(0);
-    expect(events(sim.view('a'), 'toast')).toEqual([]);
+    expect(events(look(sim, 'b'), 'toast').length).toBeGreaterThan(0);
+    expect(events(look(sim, 'a'), 'toast')).toEqual([]);
     // and a save remembers who plays which seat
     const back = Sim.restore(JSON.parse(JSON.stringify(sim.snapshot())));
     expect(back.players.b.human).toBe(true);
@@ -154,7 +156,7 @@ describe('starting a match', () => {
   it('both sides start alike, and the difficulty is kept in saves', () => {
     const sim = Sim.create('skirmish', 3, 'ordan', { difficulty: 'hard' });
     for (const team of ['a', 'b'] as const) {
-      const v = sim.view(team);
+      const v = look(sim, team);
       expect(v.credits).toBe(ECONOMY.startingCredits);
       expect(v.buildings.filter((b) => b.team === team).map((b) => b.type).sort()).toEqual(['assembly_yard', 'power_plant', 'refinery']);
       expect(v.units.filter((u) => u.team === team).map((u) => u.type).sort()).toEqual(['harvester', 'rifleman', 'rifleman']);
@@ -172,16 +174,15 @@ describe('starting a match', () => {
 
   it('fog hides the enemy base until scouted', () => {
     const sim = Sim.create('skirmish');
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(v.units.filter((u) => u.team === 'b')).toEqual([]);
     expect(v.buildings.filter((b) => b.team === 'b')).toEqual([]);
     const W = sim.map.width;
     expect(v.fog![3 * W + 84]).toBe('0'); // the enemy's yard (fog is indexed ty * width + tx)
     expect(v.fog![7 * W + 7]).toBe('2');
-    expect(sim.view('a').fog).toBeUndefined(); // unchanged: not resent
 
     sim.debug('a', { d: 'teleport', units: mine(sim, 'rifleman').map((u) => u.id), gx: 77, gy: 12 });
-    const after = sim.view('a');
+    const after = look(sim, 'a');
     expect(after.buildings.some((b) => b.team === 'b')).toBe(true);
     expect(after.units.some((u) => u.team === 'b')).toBe(true);
   });
@@ -189,7 +190,7 @@ describe('starting a match', () => {
   it('never tells a player the other side\'s credits or harvester cargo', () => {
     const sim = Sim.create('skirmish');
     sim.debug('a', { d: 'reveal', on: true });
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     const enemyHarvester = v.units.find((u) => u.team === 'b' && u.type === 'harvester');
     expect(enemyHarvester?.cargo).toBeUndefined();
     expect(JSON.stringify(v)).not.toContain('"faction"');
@@ -202,7 +203,7 @@ describe('economy', () => {
     sim.debug('a', { d: 'credits', amount: 0 });
     const rocks = sim.ore.totalRocks();
     run(sim, 60_000);
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(sim.ore.totalRocks()).toBeLessThan(rocks);
     const unloads = events(v, 'unloaded') as Extract<MatchEvent, { e: 'unloaded' }>[];
     expect(unloads.length).toBeGreaterThan(0);
@@ -215,10 +216,10 @@ describe('economy', () => {
   it('places a building: prerequisites, placement rules, cost and build time from the rules', () => {
     const sim = Sim.create('skirmish');
     sim.command('a', { c: 'place', building: 'power_plant', tx: 6, ty: 6 }); // on the refinery
-    expect(sim.view('a').events).toContainEqual({ e: 'toast', text: 'Blocked', code: 'cantPlace' });
+    expect(look(sim, 'a').events).toContainEqual({ e: 'toast', text: 'Blocked', code: 'cantPlace' });
 
     sim.command('a', { c: 'place', building: 'power_plant', tx: 1, ty: 10 });
-    let v = sim.view('a');
+    let v = look(sim, 'a');
     expect(v.credits).toBe(ECONOMY.startingCredits - BUILDINGS.power_plant.cost);
     const site = v.buildings.find((b) => b.tx === 1 && b.ty === 10)!;
     expect(site).toMatchObject({ type: 'power_plant', built: false });
@@ -226,7 +227,7 @@ describe('economy', () => {
     run(sim, BUILDINGS.power_plant.buildTimeSec * 1000 - 500);
     expect(sim.buildings.get(site.id)!.built).toBe(false);
     run(sim, 600);
-    v = sim.view('a');
+    v = look(sim, 'a');
     expect(v.buildings.find((b) => b.id === site.id)!.built).toBe(true);
     expect(v.power.made).toBe(1000);
   });
@@ -280,12 +281,12 @@ describe('economy', () => {
       sim.command('a', { c: 'place', building: 'barracks', tx: 1, ty: 10 });
       sim.debug('a', { d: 'finishBuilds' });
       run(sim, 100);
-      sim.view('a');
+      look(sim, 'a');
       sim.command('a', { c: 'train', unit: 'rifleman' });
       let out: Extract<MatchEvent, { e: 'unitOut' }> | undefined;
       for (let t = 0; t < 60_000 && !out; t += TICK_MS) {
         sim.step();
-        out = sim.view('a').events.find((e): e is Extract<MatchEvent, { e: 'unitOut' }> => e.e === 'unitOut');
+        out = look(sim, 'a').events.find((e): e is Extract<MatchEvent, { e: 'unitOut' }> => e.e === 'unitOut');
       }
       const u = sim.units.get(out!.unit)!;
       const start = { gx: 2.5, gy: 13.5 }; // the tile out from the middle of its lower-left face
@@ -300,7 +301,7 @@ describe('economy', () => {
   it('a finished refinery grants a harvester', () => {
     const sim = Sim.create('skirmish');
     sim.command('a', { c: 'place', building: 'refinery', tx: 0, ty: 10 });
-    expect(sim.view('a').credits).toBe(ECONOMY.startingCredits - BUILDINGS.refinery.cost);
+    expect(look(sim, 'a').credits).toBe(ECONOMY.startingCredits - BUILDINGS.refinery.cost);
     sim.debug('a', { d: 'finishBuilds' });
     run(sim, 200);
     expect(mine(sim, 'harvester')).toHaveLength(2);
@@ -309,31 +310,31 @@ describe('economy', () => {
   it('trains units through the queue, at the right building, and refunds cancels', () => {
     const sim = Sim.create('skirmish');
     sim.command('a', { c: 'train', unit: 'rifleman' });
-    expect(sim.view('a').events).toContainEqual({ e: 'toast', text: 'Build a Barracks first', code: 'needPrerequisite' });
+    expect(look(sim, 'a').events).toContainEqual({ e: 'toast', text: 'Build a Barracks first', code: 'needPrerequisite' });
 
     sim.command('a', { c: 'place', building: 'barracks', tx: 1, ty: 10 });
     sim.debug('a', { d: 'finishBuilds' });
     run(sim, 100);
-    const credits = sim.view('a').credits;
+    const credits = look(sim, 'a').credits;
     sim.command('a', { c: 'train', unit: 'rifleman' });
     sim.command('a', { c: 'train', unit: 'rifleman' });
-    expect(sim.view('a').queue).toHaveLength(2);
+    expect(look(sim, 'a').queue).toHaveLength(2);
     sim.command('a', { c: 'cancelTrain', unit: 'rifleman' });
-    expect(sim.view('a').credits).toBe(credits - UNITS.rifleman.cost); // the cancelled one fully refunded
+    expect(look(sim, 'a').credits).toBe(credits - UNITS.rifleman.cost); // the cancelled one fully refunded
     run(sim, UNITS.rifleman.buildTimeSec * 1000 + 100);
     expect(mine(sim, 'rifleman')).toHaveLength(3);
-    expect(sim.view('a').queue).toHaveLength(0);
+    expect(look(sim, 'a').queue).toHaveLength(0);
   });
 
   it('harvesters come from the motor works', () => {
     const sim = Sim.create('skirmish');
     sim.command('a', { c: 'train', unit: 'harvester' });
-    expect(sim.view('a').queue).toEqual([]);
+    expect(look(sim, 'a').queue).toEqual([]);
     sim.command('a', { c: 'place', building: 'motor_works', tx: 1, ty: 10 });
     sim.debug('a', { d: 'finishBuilds' });
     run(sim, 100);
     sim.command('a', { c: 'train', unit: 'harvester' });
-    expect(sim.view('a').queue).toEqual([{ unit: 'harvester', progress: 0 }]);
+    expect(look(sim, 'a').queue).toEqual([{ unit: 'harvester', progress: 0 }]);
   });
 
   it('a harvester built at the Motor Works comes out of it, then works for the nearest refinery', () => {
@@ -341,14 +342,14 @@ describe('economy', () => {
     sim.command('a', { c: 'place', building: 'motor_works', tx: 1, ty: 10 });
     sim.debug('a', { d: 'finishBuilds' });
     run(sim, 100);
-    sim.view('a');
+    look(sim, 'a');
     sim.command('a', { c: 'train', unit: 'harvester' });
-    expect(sim.view('a').buildings.find((b) => b.type === 'motor_works')?.working).toBe(true);
+    expect(look(sim, 'a').buildings.find((b) => b.type === 'motor_works')?.working).toBe(true);
     sim.debug('a', { d: 'fast', factor: 20 });
     let out = false;
     for (let i = 0; i < 60 && !out; i++) {
       run(sim, 500);
-      out = sim.view('a').events.some((e) => e.e === 'unitOut');
+      out = look(sim, 'a').events.some((e) => e.e === 'unitOut');
     }
     expect(out).toBe(true);
     const fresh = mine(sim, 'harvester').at(-1)! as { home: number | null };
@@ -372,7 +373,7 @@ describe('economy', () => {
     for (const u of [h, tank, rifleman]) u.hp = u.maxHp / 2;
     run(sim, 2000);
     for (const u of [h, tank, rifleman]) expect(u.hp).toBe(u.maxHp / 2);
-    expect(sim.view('a').buildings.find((b) => b.type === 'service_bay')?.working).toBeUndefined();
+    expect(look(sim, 'a').buildings.find((b) => b.type === 'service_bay')?.working).toBeUndefined();
   });
 
   it('low power slows construction', () => {
@@ -383,7 +384,7 @@ describe('economy', () => {
       sim.debug('a', { d: 'finishBuilds' });
       run(sim, 100);
     }
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(v.power.low).toBe(true);
     expect(v.radar).toBe('offline');
   });
@@ -392,7 +393,7 @@ describe('economy', () => {
     const sim = Sim.create('skirmish');
     const plant = [...sim.buildings.values()].find((b) => b.team === 'a' && b.type === 'power_plant')!;
     sim.command('a', { c: 'sell', building: plant.id });
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(v.credits).toBe(ECONOMY.startingCredits + Math.floor(BUILDINGS.power_plant.cost * ECONOMY.refundFraction));
     expect(v.buildings.some((b) => b.id === plant.id)).toBe(false);
   });
@@ -444,7 +445,7 @@ describe('service bay', () => {
   it('a vehicle backs onto the pad nose out, is repaired to full, then drives off and frees it', () => {
     const { sim, bay, d, vehicle } = withBay();
     const u = vehicle(0);
-    const working = () => !!sim.view('a').buildings.find((b) => b.id === bay.id)?.working;
+    const working = () => !!look(sim, 'a').buildings.find((b) => b.id === bay.id)?.working;
     sim.command('a', { c: 'service', units: [u.id], bay: bay.id });
     expect(bay.occupant).toBe(u.id);
     run(sim, TICK_MS);
@@ -563,13 +564,13 @@ describe('combat', () => {
     const r = mine(sim, 'rifleman')[0];
     sim.debug('a', { d: 'spawn', unit: 'rifleman', team: 'b', gx: r.gx + 2.5, gy: r.gy });
     run(sim, 200);
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(events(v, 'shot').length).toBeGreaterThan(0);
     // 2 riflemen vs 1: 200 HP at 60 per shot
     expect(hitDamage('service_rifle', 'unarmored')).toBe(60);
     run(sim, 6000);
     expect([...sim.units.values()].filter((u) => u.team === 'b' && u.type === 'rifleman')).toHaveLength(2);
-    expect(sim.view('a').stats.unitsKilled).toBe(1);
+    expect(look(sim, 'a').stats.unitsKilled).toBe(1);
   });
 
   it('a medic never heals the enemy', () => {
@@ -626,7 +627,7 @@ describe('combat', () => {
     a.target = e.id;
     e.weapons = [];
     run(sim, 100);
-    const shots = events(sim.view('b'), 'shot').filter((x) => x.e === 'shot' && x.from === a.id);
+    const shots = events(look(sim, 'b'), 'shot').filter((x) => x.e === 'shot' && x.from === a.id);
     expect(shots).toHaveLength(2);
   });
 
@@ -656,7 +657,7 @@ describe('combat', () => {
     const win = Sim.create('skirmish');
     win.debug('a', { d: 'destroyTeam', team: 'b', units: false, buildings: true });
     expect(win.winner).toBeNull(); // the computer loses as the human does: units left, not yet
-    expect(win.view('a').stats.buildingsDestroyed).toBe(3);
+    expect(look(win, 'a').stats.buildingsDestroyed).toBe(3);
     win.debug('a', { d: 'destroyTeam', team: 'b', units: true, buildings: false });
     expect(win.winner).toBe('a');
 
@@ -706,7 +707,7 @@ describe('selling, cancelling and repairs', () => {
     for (const h of mine(sim, 'harvester')) sim.killUnit(h); // no income meanwhile
     pp.hp = pp.maxHp / 2;
     sim.command('a', { c: 'repair', building: pp.id, on: true });
-    expect(sim.view('a').buildings.find((b) => b.id === pp.id)?.repairing).toBe(true);
+    expect(look(sim, 'a').buildings.find((b) => b.id === pp.id)?.repairing).toBe(true);
     const before = sim.players.a.credits;
     run(sim, ENGINE.repairSecondsForFull * 1000);
     expect(pp.hp).toBe(pp.maxHp);
@@ -766,7 +767,7 @@ describe('vehicles', () => {
     const hull = jackal.dir;
     const hp = target.hp;
     run(sim, 400);
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(v.units.find((u) => u.id === jackal.id)?.aim).toBe(facing(0, 3, 32));
     expect(events(v, 'shot').some((e) => e.e === 'shot' && e.from === jackal.id && e.p === 'shell')).toBe(true); // its light cannon fires shells
     run(sim, 2000);
@@ -786,7 +787,7 @@ describe('vehicles', () => {
     const shotWhileMoving = { fired: false };
     for (let ms = 0; ms < 4000 && !shotWhileMoving.fired; ms += TICK_MS) {
       run(sim, TICK_MS);
-      if (events(sim.view('a'), 'shot').some((e) => e.e === 'shot' && e.from === jackal.id) && jackal.moving) shotWhileMoving.fired = true;
+      if (events(look(sim, 'a'), 'shot').some((e) => e.e === 'shot' && e.from === jackal.id) && jackal.moving) shotWhileMoving.fired = true;
     }
     expect(shotWhileMoving.fired).toBe(true);
     expect(target.hp < hp || !target.alive).toBe(true);
@@ -820,12 +821,12 @@ describe('transports', () => {
 
   it('infantry walk to it and get in one by one until it is full; the rest stop next to it', () => {
     const { sim, carrier, soldiers } = withCarrier(7);
-    sim.view('a');
+    look(sim, 'a');
     sim.command('a', { c: 'board', units: soldiers.map((u) => u.id), transport: carrier.id });
     const seen: MatchEvent[] = [];
     for (let t = 0; t < 15_000; t += 100) {
       run(sim, 100);
-      seen.push(...sim.view('a').events);
+      seen.push(...look(sim, 'a').events);
     }
     expect(UNITS.carrier.passengers).toBe(5);
     expect(carrier.passengers).toHaveLength(5);
@@ -858,8 +859,8 @@ describe('transports', () => {
     sim.command('b', { c: 'attack', units: [enemy.id], target: ids[0] });
     expect(enemy.target).toBeNull();
     sim.debug('b', { d: 'reveal', on: true });
-    const mineView = sim.view('a');
-    const theirs = sim.view('b');
+    const mineView = look(sim, 'a');
+    const theirs = look(sim, 'b');
     for (const v of [mineView, theirs]) expect(v.units.some((u) => ids.includes(u.id))).toBe(false);
     expect(mineView.units.find((u) => u.id === carrier.id)).toMatchObject({ passengers: 3, seats: 5 });
     expect(theirs.units.find((u) => u.id === carrier.id)?.passengers).toBeUndefined();
@@ -871,12 +872,12 @@ describe('transports', () => {
     const { sim, carrier, soldiers } = withCarrier(5);
     board(sim, carrier, soldiers);
     expect(carrier.passengers).toHaveLength(5);
-    sim.view('a');
+    look(sim, 'a');
     sim.command('a', { c: 'unload', transport: carrier.id });
     const seen: MatchEvent[] = [];
     for (let t = 0; t < 6000; t += 100) {
       run(sim, 100);
-      seen.push(...sim.view('a').events);
+      seen.push(...look(sim, 'a').events);
     }
     expect(carrier.passengers).toHaveLength(0);
     expect(seen.filter((e) => e.e === 'disembarked')).toHaveLength(5);
@@ -926,7 +927,7 @@ describe('defences', () => {
     sim.debug('a', { d: 'teleport', units: [intruder.id], gx: turret.tx + 3.5, gy: turret.ty + 0.5 });
     const hp = intruder.hp;
     run(sim, 200);
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(events(v, 'shot').some((e) => e.e === 'shot' && e.from === turret.id && e.to === intruder.id && e.p === 'fireball')).toBe(true);
     expect(intruder.hp).toBeLessThan(hp);
     expect(turret.dir).toBe(0); // straight down +gx
@@ -942,7 +943,7 @@ describe('defences', () => {
     sim.debug('a', { d: 'teleport', units: [intruder.id], gx: anchorAt.tx + 4, gy: anchorAt.ty + 1 });
     run(sim, 500);
     expect(sim.powerOf('b').low).toBe(true);
-    expect(events(sim.view('a'), 'shot').some((e) => e.e === 'shot' && e.p === 'instant discharge')).toBe(false);
+    expect(events(look(sim, 'a'), 'shot').some((e) => e.e === 'shot' && e.p === 'instant discharge')).toBe(false);
   });
 });
 
@@ -961,15 +962,15 @@ describe('saves and determinism', () => {
     sim.debug('a', { d: 'credits', amount: 1234 });
     const snap = JSON.parse(JSON.stringify(sim.snapshot()));
     const back = Sim.restore(snap);
-    const a = sim.view('a');
-    const b = back.view('a');
+    const a = look(sim, 'a');
+    const b = look(back, 'a');
     expect(b.credits).toBe(1234);
     expect(b.timeMs).toBe(a.timeMs);
     expect(b.buildings.map((x) => x.id)).toEqual(a.buildings.map((x) => x.id));
     expect(back.ore.totalRocks()).toBe(sim.ore.totalRocks());
     expect(b.fog!.replace(/2/g, '1')).toBe(a.fog!.replace(/2/g, '1'));
     run(back, 30_000); // keeps running: the harvester goes back to work
-    expect(back.view('a').credits).toBeGreaterThan(1234);
+    expect(look(back, 'a').credits).toBeGreaterThan(1234);
   });
 
   it('a save from before seats (sides named player and enemy) loads with the human in the first seat', () => {
@@ -977,14 +978,14 @@ describe('saves and determinism', () => {
     run(sim, 20_000);
     sim.debug('a', { d: 'credits', amount: 777 });
     sim.debug('b', { d: 'credits', amount: 555 });
-    const old = asOldSave(sim.snapshot(), SNAPSHOT_VERSION - 1);
+    const old = asOldSave(sim.snapshot(), 8);
     expect(Object.keys(old.players).sort()).toEqual(['enemy', 'player']);
     const back = Sim.restore(old);
     expect(back.players.a).toMatchObject({ human: true, faction: 'sable', credits: 777 });
     expect(back.players.b).toMatchObject({ human: false, faction: 'ordan', credits: 555, difficulty: 'hard' });
     const team = (s: Sim) => [...s.units.values(), ...s.buildings.values()].map((e) => `${e.id}:${e.team}`).sort();
     expect(team(back)).toEqual(team(sim));
-    expect(back.view('a').fog!.replace(/2/g, '1')).toBe(sim.view('a').fog!.replace(/2/g, '1'));
+    expect(look(back, 'a').fog!.replace(/2/g, '1')).toBe(look(sim, 'a').fog!.replace(/2/g, '1'));
     expect(back.snapshot().version).toBe(SNAPSHOT_VERSION);
   });
 
@@ -1009,7 +1010,7 @@ describe('saves and determinism', () => {
     run(sim, 100);
     for (let i = 0; i < ENGINE.unitCap; i++) sim.debug('a', { d: 'spawn', unit: 'rifleman', team: 'a', gx: 2 + (i % 8), gy: 14 + Math.floor(i / 8) });
     sim.command('a', { c: 'train', unit: 'harvester' });
-    expect(sim.view('a').events).toContainEqual({ e: 'toast', text: 'Unit cap reached', code: 'unitCap' });
+    expect(look(sim, 'a').events).toContainEqual({ e: 'toast', text: 'Unit cap reached', code: 'unitCap' });
   });
 });
 
@@ -1023,7 +1024,7 @@ describe('medics and engineers', () => {
     let worked = false;
     for (let t = 0; t < 6000; t += TICK_MS) {
       sim.step();
-      worked ||= !!sim.view('a').units.find((u) => u.type === 'medic')?.work;
+      worked ||= !!look(sim, 'a').units.find((u) => u.type === 'medic')?.work;
     }
     expect(hound.hp).toBeGreaterThan(hound.maxHp / 2);
     expect(worked).toBe(true);
@@ -1062,7 +1063,7 @@ describe('construction and production rules', () => {
     sim.command('a', { c: 'place', building: 'radar', tx: 1, ty: 14 });
     const types = () => [...sim.buildings.values()].filter((b) => b.team === 'a' && !b.built).map((b) => b.type);
     expect(types()).toEqual(['barracks']);
-    expect(events(sim.view('a'), 'toast').some((e) => e.e === 'toast' && e.text === 'Already building a Barracks' && e.code === 'alreadyBuilding')).toBe(true);
+    expect(events(look(sim, 'a'), 'toast').some((e) => e.e === 'toast' && e.text === 'Already building a Barracks' && e.code === 'alreadyBuilding')).toBe(true);
     sim.debug('a', { d: 'finishBuilds' });
     run(sim, 100);
     sim.command('a', { c: 'place', building: 'radar', tx: 1, ty: 14 });
@@ -1135,7 +1136,7 @@ describe('enemy buildings in the fog', () => {
     run(sim, 300);
     const away = () => sim.debug('a', { d: 'teleport', units: [scout.id], gx: 20, gy: 30 });
     const back = () => sim.debug('a', { d: 'teleport', units: [scout.id], gx: ref.tx - 1.5, gy: ref.ty + 1 });
-    const seen = () => sim.view('a').buildings.find((b) => b.id === ref.id);
+    const seen = () => look(sim, 'a').buildings.find((b) => b.id === ref.id);
     return { sim, ref, away, back, seen };
   };
 
@@ -1146,7 +1147,7 @@ describe('enemy buildings in the fog', () => {
     ref.hp -= 500;
     run(sim, 300);
     expect(seen()?.hp).toBe(hp);
-    expect(sim.view('b').buildings.find((b) => b.id === ref.id)?.hp).toBe(hp - 500);
+    expect(look(sim, 'b').buildings.find((b) => b.id === ref.id)?.hp).toBe(hp - 500);
     back();
     expect(seen()?.hp).toBe(hp - 500);
   });
@@ -1154,9 +1155,9 @@ describe('enemy buildings in the fog', () => {
   it('one destroyed out of sight stays until its spot is seen again', () => {
     const { sim, ref, away, back, seen } = scouted();
     away();
-    sim.view('a');
+    look(sim, 'a');
     sim.destroyBuilding(ref);
-    const v = sim.view('a');
+    const v = look(sim, 'a');
     expect(events(v, 'buildingDestroyed')).toHaveLength(0);
     expect(v.buildings.some((b) => b.id === ref.id)).toBe(true);
     back();

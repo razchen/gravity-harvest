@@ -7,3 +7,6 @@ export { Ore, ROCK_SHAPES } from './ore.js';
 export { Grid } from './grid.js';
 export { findPath } from './pathfinder.js';
 export { growScenery, type Scenery } from './scenery.js';
+export { TeamFeed } from './feed.js';
+export { CommandQueue, type LoggedCommand } from './commands.js';
+export { replay, recordMatch, startMatch, type MatchRecord, type MatchStart } from './replay.js';

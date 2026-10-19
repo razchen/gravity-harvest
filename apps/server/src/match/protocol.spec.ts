@@ -128,5 +128,6 @@ describe('parseClientMessage', () => {
     expect(ok({ t: 'debug', cmd: { d: 'fast', factor: 50 } })).toBe(false);
     expect(ok({ t: 'debug', cmd: { d: 'hasOwnProperty' } })).toBe(false);
     expect(ok({ t: 'pause' })).toBe(true);
+    expect(ok({ t: 'rejoin' })).toBe(true);
   });
 });

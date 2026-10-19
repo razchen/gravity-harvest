@@ -20,6 +20,8 @@ export interface AppConfig {
   dbLogging: boolean;
   /** Accept debug commands over the match socket (dev and tests; never in production). */
   debugCommands: boolean;
+  /** How long a match waits, paused, for a player whose connection dropped to rejoin before it is closed (ms). */
+  reconnectGraceMs: number;
 }
 
 export const APP_CONFIG = Symbol('APP_CONFIG');
@@ -32,6 +34,7 @@ export const DEFAULTS = {
   databasePath: 'data/gravity-harvest.sqlite',
   corsOrigin: 'http://localhost:5173',
   bodyLimit: '10mb',
+  reconnectGraceMs: 60_000,
 } as const;
 
 function parsePort(raw: string | undefined): number {
@@ -41,6 +44,13 @@ function parsePort(raw: string | undefined): number {
     throw new Error(`Invalid PORT "${raw}": expected an integer between 1 and 65535`);
   }
   return port;
+}
+
+function parseMs(raw: string | undefined, fallback: number, name: string): number {
+  if (raw === undefined || raw.trim() === '') return fallback;
+  const ms = Number(raw);
+  if (!Number.isInteger(ms) || ms < 0) throw new Error(`Invalid ${name} "${raw}": expected a whole number of milliseconds`);
+  return ms;
 }
 
 function parseBool(raw: string | undefined, fallback: boolean): boolean {
@@ -69,5 +79,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     dbSynchronize: parseBool(env.DB_SYNCHRONIZE, env.NODE_ENV !== 'production'),
     dbLogging: parseBool(env.DB_LOGGING, false),
     debugCommands: parseBool(env.DEBUG_COMMANDS, env.NODE_ENV !== 'production'),
+    reconnectGraceMs: parseMs(env.RECONNECT_GRACE_MS, DEFAULTS.reconnectGraceMs, 'RECONNECT_GRACE_MS'),
   };
 }

@@ -2,8 +2,8 @@
 // their views and give orders, as in a real match; this harness also reads the Sim's state directly to measure it.
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer, Tech } from '@gravity-harvest/ai';
 import { BUILDINGS, ECONOMY, STAGES, UNITS, layerOf, volleyDamage, weapon, weaponFor, type Faction, type Stage } from '@gravity-harvest/rules';
-import { TEAMS, opponentOf, type Command, type Difficulty, type MatchEvent, type TeamId } from '@gravity-harvest/shared';
-import { ENGINE, SCENARIOS, Sim, TICK_MS, findPath, refineryDock, type Harvester } from '@gravity-harvest/sim';
+import { TEAMS, opponentOf, perTeam, type Command, type Difficulty, type MatchEvent, type TeamId } from '@gravity-harvest/shared';
+import { ENGINE, SCENARIOS, Sim, TICK_MS, TeamFeed, findPath, refineryDock, type Harvester } from '@gravity-harvest/sim';
 
 export interface SideSpec {
   faction: Faction;
@@ -319,13 +319,15 @@ function play(spec: MatchSpec, result: MatchResult): void {
     sim.command(team, c);
   };
 
+  const feeds = perTeam((t) => new TeamFeed(t));
   remember();
   while (!sim.winner && sim.timeMs < maxMs) {
     sim.step();
     if (sim.tick % AI_VIEW_EVERY_TICKS !== 0) continue;
     remember();
     for (const team of TEAMS) {
-      const v = sim.view(team);
+      feeds[team].push(sim.takeEvents(team));
+      const v = feeds[team].view(sim);
       events(team, v.events);
       for (const c of ai[team].update(v)) give(team, c);
     }
