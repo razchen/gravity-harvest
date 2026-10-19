@@ -7,8 +7,8 @@ import type { MatchEvent } from '@gravity-harvest/shared';
 import { anchorOrigin, meta } from '../assets/manifest';
 import { RAMP_TILES_PER_SEC, RUN_CYCLE_TILES } from '../config/game';
 import { facing, iso, toGrid, type Point } from '../core/geometry';
-import { TEAMS, type TeamId } from '../data/teams';
-import { factionOf, unitArt } from '../data/art';
+import { colourOf, factionOfTeam, type TeamId } from '../data/teams';
+import { unitArt } from '../data/art';
 import type { VehicleSprite } from '../entities/UnitSprite';
 import type { GameScene } from '../scenes/GameScene';
 import { findRamps, framePixels, gridToPx, pxToGrid, type Ramp } from './ramps';
@@ -70,11 +70,11 @@ export class Boarding {
 
   /** A soldier went in (the sim has taken him off the map): draw him going up the ramp from where he stood. */
   board(e: Extract<MatchEvent, { e: 'boarded' }>, t: VehicleSprite, team: TeamId): void {
-    const key = unitArt(e.type, factionOf(team, this.world.faction))?.sprite ?? 'rifleman';
+    const key = unitArt(e.type, factionOfTeam(team))?.sprite ?? 'rifleman';
     const m = meta(key);
     const start = iso(e.gx, e.gy);
     const sprite = this.world.add.sprite(start.x, start.y, key, m.hover ? `${key}_0` : 'inf_0_idle').setOrigin(...anchorOrigin(m)).setScale(1 / (m.res ?? 1));
-    const tint = TEAMS[team].tint;
+    const tint = colourOf(team).tint;
     if (tint !== null) sprite.setTint(tint);
     this.riders.push({ sprite, key, transport: t, side: e.side, start, run: 0 });
   }

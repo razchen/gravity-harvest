@@ -183,7 +183,7 @@ export const artilleryShell: Look = (kit, s) => {
       shadow.setPosition(sp.x, sp.y).setDisplaySize(w, w * 0.5).setAlpha(lerp(a.shadowAlpha[0], a.shadowAlpha[1], low * low) * leaving);
       if (k < 1) return true;
       shadow.destroy();
-      kit.landed('shell', end);
+      kit.landed(end);
       blast(scene, end, s.hit?.depth !== undefined ? s.hit.depth + 0.01 : DEPTH.ui - 6, s.hit?.targets);
       return false;
     },

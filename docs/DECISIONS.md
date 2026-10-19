@@ -29,7 +29,8 @@ otherwise undo by accident. Newest first within each section.
   skipping the isometric warp keeps it as sharp as the source file. Blending two textures (with Rocky Dirt) was
   tried and dropped; very large copies (24 tiles) were too blurry when zoomed in.
 - **Smoke is white**, not black (refinery and power plant).
-- **Team colours:** enemy buildings and units are the same models tinted red for now.
+- **Team colours mean yours and theirs, not a seat:** your buildings and units keep their rendered colours, the other
+  side's are the same models tinted red (`SIDES` in `apps/game/src/data/teams.ts`), whichever seat you play.
 
 ## Gameplay
 
@@ -91,7 +92,7 @@ otherwise undo by accident. Newest first within each section.
 - **Rocks disappear quickly when mined** (kept fast on purpose for now, to see the loop working).
 
 - **No soldiers: small hovering units instead.** Every unit that was a soldier is a hovering craft (render_vehicle.py
-  `hover`; `HOVER_UNITS` in the sim). They keep the soldiers' rules and balance: they board transports, a Service Bay
+  `hover`; the `hover` capability). They keep the soldiers' rules and balance: they board transports, a Service Bay
   doesn't repair them, and their spreadsheet numbers are unchanged; only their bodies are bigger (`hoverRadius`). The
   units both sides share are built to each side's own design (`sides` in the game's art), buildings are not.
 - **Medics heal, Engineers repair.** A Medic heals its side's damaged soldiers and hovering units nearby (its heal is
@@ -101,7 +102,7 @@ otherwise undo by accident. Newest first within each section.
 ## Menus and saves
 
 - **Menus are DOM screens over a live backdrop scene,** styled like the HUD (same panels, fonts, yellow accents).
-- **Autosave:** one slot per map, overwritten, counted in game time so it doesn't fire while paused. Default every
+- **Autosave:** one slot per player and map, overwritten, counted in game time so it doesn't fire while paused. Default every
   2 minutes; configurable (1 / 2 / 5 / 10 min or off). Also saves on quit to menu and when the tab is hidden. The
   autosave of a finished match is deleted so Continue never resumes a game that's over.
 - **Saves are marked `manual` or `auto`** in the API (shared contract); manual saves can be overwritten from the Save screen.
@@ -125,14 +126,39 @@ otherwise undo by accident. Newest first within each section.
 
 ## Code and repo
 
-- **TypeScript + Vite, monorepo with npm workspaces + Turborepo:** `apps/game`, `apps/server`, `packages/shared`.
-  The save API contract is in `shared` so client and server can't drift.
+- **TypeScript + Vite, monorepo with npm workspaces + Turborepo:** `packages/shared` (contracts), `packages/rules`,
+  `packages/sim`, `packages/ai`, `apps/server`, `apps/game` and `tools/simulator`. The save API and match protocol
+  are in `shared` so client and server can't drift.
+- **Assets aren't in git (2026-10-18).** Sprites, sounds and music (about 200 MB, regenerated often) live in the
+  public S3 bucket `gravity-harvest-assets`, one immutable folder per version; `apps/game/assets.json` names the
+  version and is the only thing committed (`npm run assets:push` / `assets:pull` / `assets:status`). A build loads
+  from S3 and ships no assets; the dev server uses the local folder. *Why:* hundreds of megabytes of regenerated binaries
+  don't belong in git history, and a versioned folder never changes, so it can be cached forever.
+- **CI on every pull request and push to `main`** (`.github/workflows/check.yml`): `npm run check`, then the e2e
+  tests, after pulling the assets.
+- **The command validator is typed over every command** (`COMMANDS` in `apps/server/src/match/protocol.ts`, keyed by
+  `Command['c']`): a new command without a check is a compile error, not a hole.
+- **The Sim is a facade over systems (2026-10-18).** `sim.ts` only schedules; the state is one `SimState` and each
+  mechanic is a file of plain functions in `packages/sim/src/systems/`. A fighter's mechanics are separate parts
+  (interfaces) whose fields sit flat on the unit, so saves stay plain JSON. Units are looked up by cell and buildings
+  by team (`spatial.ts`), returning the same results in the same order as a full scan, so the match doesn't change.
+  *Why:* a 2,300-line class was hard to change safely, and the scans made a tick with about 100 units a side three
+  times slower (3.1 ms against 1.0 ms in a big fight).
+- **The computer player is a coordinator and managers** (`packages/ai`: economy, base, production, army, scouting)
+  sharing one `Brain` and one JSON-safe `AiState`, so it can be saved. `regression.test.ts` pins hashes of whole
+  matches' order streams: a refactor that changes how it plays fails it.
+- **One art registry per entity** (`apps/game/src/data/registry.ts`): the atlas list, the art tables and the dev pages
+  derive from it, with atlas and card names by convention. *Why:* adding a unit took about seven hand edits spread
+  over the manifest, the art tables and the dev pages, and a building with no footprint quietly became 3 × 3 (now
+  `footprint()` throws, and a test checks each footprint against its stage config).
 - **Everything on TypeScript 6** for now (the NestJS 12 toolchain doesn't support 7 yet).
 - **Backend: NestJS + SQLite** (better-sqlite3 via TypeORM) for saves; port **4310** (3001 is taken by an SSH
   tunnel on the dev machine). Vitest instead of Jest (Nest 12 is ESM-only, and Jest can't load it on Node 22).
 - **The HUD is plain DOM** talking to the game only through `HudBridge`; no UI framework yet.
 - **Tests:** Vitest for logic and content integrity, Playwright for the real game in a browser (against a
-  throwaway in-memory backend), Vitest + supertest for the API.
+  throwaway in-memory backend) and a smoke test of the dev pages, Vitest + supertest for the API.
+- **Dev pages import the full rules and sim.** That's fine only because they're never built (the build's one entry
+  is `index.html`); the game itself must not.
 
 ## Rules and protection
 
@@ -148,6 +174,12 @@ otherwise undo by accident. Newest first within each section.
 - **The browser gets no rules data at all.** With each match the server sends a catalog of the enabled roster
   (names, costs, build times, power, prerequisites: what the HUD shows anyway). The browser imports only code
   (`rules/deps`, `sim/layout`); a build check fails if rules data shows up in the bundle.
+- **Behaviours are capabilities, not IDs (2026-10-18).** What an entity does beyond its numbers (harvester,
+  refinery and what it `grants`, `repairsVehicles`, `constructs`, `radar`, `deploysInto`, `turret`, `hover`, `heals`,
+  `fixes`) is one hand-written table, `packages/rules/src/capabilities.ts` (browser-safe, also in `rules/public`). The
+  sim, placement, the AI (`ENGINE_IDS`) and the browser ask for a role; `TURRET_UNITS` and `HOVER_UNITS` are derived
+  from it. *Why:* a second refinery or a faction's own harvester should need a table row, not a hunt through `if
+  (type === ...)`. The spreadsheet holds numbers, not engine behaviour, so the table lives next to it.
 - **The full roster is data, not content:** only entities with art are enabled (`ROSTER` in `sim/layout.ts`), with
   explicit stand-ins (`STAND_INS`) for missing tech-tree links, now empty: every base starts with a real Assembly Yard
   and harvesters come from the Motor Works. The rest stay in the spreadsheet and are never sent to players.
@@ -170,7 +202,7 @@ otherwise undo by accident. Newest first within each section.
 - **Vehicles** are rendered whole in 16 directions (`render_vehicle.py`), so a tank turns its hull to aim. One with
   a rig (a `.blend` of its model with a `wheel_<n>` empty per axle and a `turret` empty, `rig` in `vehicles.json`)
   gets its wheels spun about their real axles, and its turret as a layer of its own (32 directions) over a hull
-  rendered without it: the sim aims it at what the vehicle shoots (`TURRET_UNITS`, sent as `aim`) and the hull keeps
+  rendered without it: the sim aims it at what the vehicle shoots (the `turret` capability, sent as `aim`) and the hull keeps
   its heading. The Jackal is the first. Units' sheets are trimmed and packed tightly (`tools/sprites/trim_pack.py`),
   which keeps 16 directions in the memory 8 used to take. Units turn through the in-between directions rather than
   snapping. Abilities so far: combat vehicles fight with their rules weapons, and the Assembler deploys (E) into an
@@ -213,7 +245,7 @@ otherwise undo by accident. Newest first within each section.
   drive to the bay. The spreadsheet says the bay doesn't need power to work (`requiresPower` is false) but it draws
   150, so on low power it repairs at half speed, as other buildings slow down. Harvesters can't be sent onto the pad yet, so
   they aren't repaired. The pad needs open ground in front.
-- **Units keep apart and move in groups.** Units sent to one point get a tile each around it (`Sim.formation`): as
+- **Units keep apart and move in groups.** Units sent to one point get a tile each around it (`formation`, sim `systems/collisions.ts`): as
   compact as the ground allows, keeping their places in the group (a group spread wider than
   `ENGINE.formationSpread` × √size from its middle closes up), skipping blocked tiles, tiles cut off from the point and
   tiles others stand on or are heading to. The browser sends the clicked point for every unit; the server decides. A
@@ -225,7 +257,7 @@ otherwise undo by accident. Newest first within each section.
   their place; soldiers boarding a transport pass through others, as before (infantry is on its way out). A unit that
   makes no headway for `ENGINE.stuckMs` paths round whoever is in its way (`ENGINE.detours` times), then settles on the
   nearest free tile, so a crowd in a choke point waits its turn instead of shoving. All of it is transient (nothing
-  new in saves). There's no attack-move order yet; when there is, it should use the same formation.
+  new in saves). Attack-move uses the same formation (see Controls).
 - **The spreadsheet is committed** (private repo; the concern is players, not the repo). The reader is a small
   script on `fflate`, because the workbook's namespaced XML breaks common xlsx libraries.
 
@@ -234,20 +266,60 @@ otherwise undo by accident. Newest first within each section.
 - **Fixed 50 ms tick, views every 100 ms** over one WebSocket per match (`/api/match`, same server and port as the
   API). The browser glides units between views and shows order markers and the placement preview locally, so the
   round trip isn't felt. Fog is only resent when it changes.
+- **No lockstep: multiplayer is server-authoritative (2026-10-18).** The server runs the only real copy of a match;
+  each client sends commands and receives its own seat's fog-filtered view, as a single player does now. *Why:*
+  lockstep (every browser running the same sim from the same orders) would need bit-identical results on every
+  machine, and JavaScript doesn't guarantee identical floating-point results across browsers and engines; it would
+  also send every client the whole match state, fog and all, so anyone could read the enemy's positions and credits.
+  The server already has to run the match to protect the rules.
 - **Deterministic simulation:** a seeded RNG in the match state, no timers or `Math.random`, so the same start
-  and orders give the same match (tested). Needed for saves now; replays and lockstep later.
+  and orders give the same match (tested). Used for saves that play on exactly, replays and tests, all on one machine;
+  not for running a match in several browsers (above).
+- **One match, one room; connections come and go (2026-10-18).** A `MatchRoom` (`apps/server/src/match/match-room.ts`)
+  owns the Sim, the tick loop, the computer players, the command queue and autosaves; a `SeatConnection` per socket
+  attaches to a seat and detaches again. *Why:* tying the match to a socket ended it on every network blip, and a
+  second human seat needs the match to outlive any one connection.
+- **Every order waits for the next step (2026-10-18).** Human and computer orders go into one `CommandQueue` and are
+  applied at the start of the next step, sorted by arrival tick, then seat (`a` before `b`), then arrival, and logged
+  as `{ tick, team, cmd }`. Debug commands apply at once and are logged too. *Why:* an order applied the moment it
+  arrived landed mid-tick at a time that depended on the network, so the same orders didn't always give the same
+  match, and nothing could be replayed. The start plus the log is a `MatchRecord` that `replay()` plays back exactly.
+- **Looking never changes the match.** `Sim.view` is pure; events leave the sim only through `Sim.takeEvents(team)`,
+  called by the room after each step, and a `TeamFeed` per viewer adds the events since its last view and the fog when
+  it changed. *Why:* when building a view also emptied its events, how often a side was looked at decided who got
+  which events, and a view couldn't be built just to look.
+- **Seats, not player and enemy (2026-10-18).** The sides are `a` and `b`; the hello says which you play (`you`) and
+  each side's faction. *Why:* naming one side "player" hard-wired the human to the first base and made a second human
+  impossible. Older saves are migrated (`player` → `a`, `enemy` → `b`).
 - **Saves are written only by the server's match.** `POST`/`PUT /api/saves` are gone (a client that can upload a
   state can give itself any credits) and `GET /api/saves/:id` returns the summary, never the state. The client asks
   over the socket and adds a thumbnail. Old browser-format saves (version 1) can't be loaded.
-- **Autosave on disconnect:** closing the tab mid-match autosaves on the server. Leaving on purpose (quit, load, new
-  game) sends `end` first, so it doesn't; quitting saves explicitly.
+- **Autosave and reconnect on disconnect:** a dropped connection mid-match autosaves on the server (if autosave is
+  on), pauses the match and keeps it for `RECONNECT_GRACE_MS` (60 s by default); the same player id can `rejoin`, and
+  the client retries with backoff by itself. Leaving on purpose (quit, load, new game) sends `end` first, so it
+  doesn't; quitting saves explicitly.
+- **Saves carry on the match exactly (2026-10-18).** A save (snapshot version 11) holds everything the match is:
+  every unit's orders, path, timers and trip, the full fog, each side's memory of enemy buildings, power, the RNG,
+  plus each computer side's seed and memory. *Why:* a save used to keep only where things stood, and loading reset every
+  unit's behaviour (and, before version 10, the computer's memory), so a loaded game was a different match and a
+  replay from a save couldn't be trusted. Older formats load through a chain of migrations
+  (`MIGRATIONS[n]`: version `n` → `n + 1`, `packages/sim/src/migrations.ts`), each tested against a stored fixture.
+  A save made under other rules (`rulesHash`) or an earlier map (`scenarioHash`) loads with a warning rather than
+  being refused: an old save that plays slightly differently is better than a lost one.
+- **Saves belong to an anonymous player id (2026-10-18).** Each browser makes a random UUID once and sends it with
+  every request; saves are listed, read, loaded and overwritten only by that id, and saves from before owners existed
+  are hidden. *Why:* everyone on a server saw (and could delete) everyone's saves. It's not a login; accounts can
+  replace it later.
+- **The database schema is owned by migrations (2026-10-18)** (`apps/server/src/database/migrations`, run on every
+  start). `synchronize` is off in production. *Why:* `synchronize` was on even in production, where it changes tables
+  to fit the entities with no record and can lose data. The first migration uses `IF NOT EXISTS`, so databases made by
+  the old `synchronize` adopt it and keep their saves.
 - **Debug commands** (set credits, reveal, teleport, spawn, destroy a side, fast-forward, finish builds) exist for
   development and tests only: on unless `NODE_ENV=production`, forced with `DEBUG_COMMANDS`.
 - **Spreadsheet numbers in play:** $15,000 start, full loads worth 1,050, no storage cap (the Silo is gone), real
   build times, a production queue, 50% refunds on cancel / sell (a queued unit that hasn't started yet gives all
   its money back: nothing of it was built), low power slows building and unloading and turns the
-  radar off. The skirmish now starts with a Power Plant, since the Assembly Yard that would power the base has no art.
-  Riflemen see 4 tiles and fire 3 (was 6 and 4). The enemy's guards are riflemen (the spreadsheet's Raider is a
+  radar off. Riflemen see 4 tiles and fire 3 (was 6 and 4). The enemy's guards are riflemen (the spreadsheet's Raider is a
   different, unarmed infiltrator).
 - **Units pick their own fights**, but only with what their side can see (any of its units or buildings): idle units
   notice enemies within their weapon range + 3 tiles (or their sight, if larger; a rifleman reacts at 6, once
@@ -438,12 +510,13 @@ otherwise undo by accident. Newest first within each section.
 
 ## Each unit fires its own shot
 
-- Every armed unit's shot looks different, so a fight reads at a glance: a unit's UNIT_ART `fire` names its look
-  (`data/art.ts`), one file per look in `render/shots/` (the Skimmer's rapid tracers, the Carrier's heavy rounds, the
+- Every armed unit's shot looks different, so a fight reads at a glance: a unit's `fire` in its art registry entry
+  (`data/registry.ts`) names its shot, and `data/shots.ts` gives each shot its look (one file per look in
+  `render/shots/`), sounds and behaviour (the Skimmer's rapid tracers, the Carrier's heavy rounds, the
   Jackal's light shell, the Ram's battle shell, the Spire's heavy artillery, the Hound's twin plasma, the Operator's
   arc bolt, the Grenadier's frag grenade, the Breaker's column of light). The Lancer fires two homing missiles, one
   from each pod. Projectiles without a look of their own (the defences', the rules' other weapons) keep
-  `render/Effects.ts`'s older ones. Only the look: the rules' weapons, damage and balance are unchanged (the Skimmer
+  the older looks in `render/shots/classic.ts`. Only the look: the rules' weapons, damage and balance are unchanged (the Skimmer
   and the Carrier share one weapon in the rules but look different).
 - Energy weapons take their side's colour; guns and shells don't. Everything is drawn in code from the shared effect
   sheets, no new art. `/dev/weapons.html` and each armed unit's page show the shots as a match draws them.

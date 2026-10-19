@@ -1,4 +1,5 @@
 import type { EffectPoint } from '../render/BuildingFx';
+import { BUILDING_REGISTRY, UNIT_REGISTRY, buildingAtlases, unitAtlases } from '../data/registry';
 // Every sprite atlas the game loads. Atlases are rendered in Blender by tools/blender/*.py and
 // written to public/assets/sprites as <file>.png + <file>.json (Phaser "JSON Hash" + a `meta` block).
 
@@ -13,63 +14,9 @@ export interface AtlasEntry {
 
 export const ATLASES: AtlasEntry[] = [
   { key: 'scenery', file: 'scenery', firstFrame: 'olive' },
-  // the harvester (a vehicle rig, tools/blender/render_vehicle.py) and its drums turning while it scoops ore
-  { key: 'v_harvester', file: 'v_harvester', firstFrame: 'v_harvester_0' },
-  { key: 'v_harvester_harvest', file: 'v_harvester_harvest', firstFrame: 'v_harvester_harvest_0_0' },
-  // ... empty (no ore in its bed), and tipping its bed out at a refinery's dock (a generated video's frames, keyed out:
-  // tools/sprites/key_video.py vehicle; facing HARVESTER_DOCK_FACING only)
-  { key: 'v_harvester_empty', file: 'v_harvester_empty', firstFrame: 'v_harvester_empty_0' },
-  { key: 'v_harvester_unload', file: 'v_harvester_unload', firstFrame: 'v_harvester_unload_0' },
-  { key: 'rifleman', file: 'rifleman', firstFrame: 'inf_0_idle' },
-  { key: 'rifleman_death', file: 'rifleman_death', firstFrame: 'inf_0_die_0' },
-  // vehicles: 16 directions each (tools/blender/render_vehicle.py + tools/sprites/pack_vehicles.py)
-  { key: 'v_skimmer', file: 'v_skimmer', firstFrame: 'v_skimmer_0' },
-  { key: 'v_jackal', file: 'v_jackal', firstFrame: 'v_jackal_0' },
-  { key: 'v_ram', file: 'v_ram', firstFrame: 'v_ram_0' },
-  { key: 'v_spire', file: 'v_spire', firstFrame: 'v_spire_0' },
-  { key: 'v_carrier', file: 'v_carrier', firstFrame: 'v_carrier_0' },
-  { key: 'v_lancer_ordan', file: 'v_lancer_ordan', firstFrame: 'v_lancer_ordan_0' },
-  { key: 'v_lancer_sable', file: 'v_lancer_sable', firstFrame: 'v_lancer_sable_0' },
-  { key: 'v_operator_ordan', file: 'v_operator_ordan', firstFrame: 'v_operator_ordan_0' },
-  { key: 'v_operator_sable', file: 'v_operator_sable', firstFrame: 'v_operator_sable_0' },
-  { key: 'v_infiltrator', file: 'v_infiltrator', firstFrame: 'v_infiltrator_0' },
-  { key: 'v_grenadier', file: 'v_grenadier', firstFrame: 'v_grenadier_0' },
-  { key: 'v_breaker', file: 'v_breaker', firstFrame: 'v_breaker_0' },
-  { key: 'v_raider', file: 'v_raider', firstFrame: 'v_raider_0' },
-  { key: 'v_medic', file: 'v_medic', firstFrame: 'v_medic_0' },
-  { key: 'v_engineer_ordan', file: 'v_engineer_ordan', firstFrame: 'v_engineer_ordan_0' },
-  { key: 'v_engineer_sable', file: 'v_engineer_sable', firstFrame: 'v_engineer_sable_0' },
-  { key: 'v_hound', file: 'v_hound', firstFrame: 'v_hound_0' },
-  { key: 'v_medic_heal', file: 'v_medic_heal', firstFrame: 'v_medic_heal_0_0' },
-  { key: 'v_engineer_ordan_work', file: 'v_engineer_ordan_work', firstFrame: 'v_engineer_ordan_work_0_0' },
-  { key: 'v_engineer_sable_work', file: 'v_engineer_sable_work', firstFrame: 'v_engineer_sable_work_0_0' },
-  // ... its side doors dropping into ramps (a rig clip, closed → open; played backwards to shut), for its passengers
-  { key: 'v_carrier_door', file: 'v_carrier_door', firstFrame: 'v_carrier_door_0_0' },
-  { key: 'v_watcher', file: 'v_watcher', firstFrame: 'v_watcher_0' },
-  { key: 'v_shroud', file: 'v_shroud', firstFrame: 'v_shroud_0' },
-  { key: 'v_seeder', file: 'v_seeder', firstFrame: 'v_seeder_0' },
-  { key: 'v_assembler', file: 'v_assembler', firstFrame: 'v_assembler_0' },
-  // buildings: their construction stages (tools/blender/render_construction.py + tools/sprites/pack_construction.py);
-  // the last stage is the finished building, and each stage's shadow is a frame of the same atlas
-  { key: 'b_assembly_build', file: 'b_assembly_build', firstFrame: 'b_assembly_build_stage_1' },
-  { key: 'b_power_plant_build', file: 'b_power_plant_build', firstFrame: 'b_power_plant_build_stage_1' },
-  { key: 'b_reactor_plant_build', file: 'b_reactor_plant_build', firstFrame: 'b_reactor_plant_build_stage_1' },
-  // its running animation is a generated video's frames, keyed out (tools/sprites/key_video.py)
-  { key: 'b_reactor_plant_build_video', file: 'b_reactor_plant_build_video', firstFrame: 'b_reactor_plant_build_video_0' },
-  { key: 'b_refinery_build', file: 'b_refinery_build', firstFrame: 'b_refinery_build_stage_1' },
-  { key: 'b_barracks_build', file: 'b_barracks_build', firstFrame: 'b_barracks_build_stage_1' },
-  { key: 'b_barracks_build_video', file: 'b_barracks_build_video', firstFrame: 'b_barracks_build_door_0' },
-  { key: 'b_radar_build', file: 'b_radar_build', firstFrame: 'b_radar_build_stage_1' },
-  { key: 'b_motor_works_build', file: 'b_motor_works_build', firstFrame: 'b_motor_works_build_stage_1' },
-  { key: 'b_motor_works_build_video', file: 'b_motor_works_build_video', firstFrame: 'b_motor_works_build_door_0' },
-  { key: 'b_service_bay_build', file: 'b_service_bay_build', firstFrame: 'b_service_bay_build_stage_1' },
-  { key: 'b_gravity_lab_build', file: 'b_gravity_lab_build', firstFrame: 'b_gravity_lab_build_stage_1' },
-  { key: 'b_gravity_forge_build', file: 'b_gravity_forge_build', firstFrame: 'b_gravity_forge_build_stage_1' },
-  { key: 'b_sentry_build', file: 'b_sentry_build', firstFrame: 'b_sentry_build_stage_1' },
-  { key: 'b_lance_battery_build', file: 'b_lance_battery_build', firstFrame: 'b_lance_battery_build_stage_1' },
-  { key: 'b_incinerator_build', file: 'b_incinerator_build', firstFrame: 'b_incinerator_build_stage_1' },
-  { key: 'b_anchor_build', file: 'b_anchor_build', firstFrame: 'b_anchor_build_stage_1' },
-  { key: 'b_hound_kennel_build', file: 'b_hound_kennel_build', firstFrame: 'b_hound_kennel_build_stage_1' },
+  // every unit's and building's atlases, named after its registry entry (data/registry.ts)
+  ...[...Object.keys(UNIT_REGISTRY).flatMap(unitAtlases), ...Object.keys(BUILDING_REGISTRY).flatMap(buildingAtlases)]
+    .map((a) => ({ ...a, file: a.key })),
 ];
 
 /** A construction atlas's finished building: its last stage frame, and that stage's shadow mask. */

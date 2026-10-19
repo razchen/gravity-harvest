@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { EVENT_ONLY_SCENERY, SCENERY, SCENERY_KINDS, sceneryKind } from './layout.js';
 import { Sim } from './sim.js';
 import { SCENARIOS } from './scenarios.js';
+import type { SimSnapshot } from './snapshot.js';
 import { footprint } from './layout.js';
 
 const layout = (sim: Sim) => sim.scenery.map((t) => `${t.kind}@${t.tx},${t.ty}`).join(' ');
@@ -9,6 +10,16 @@ const { width: W, height: H } = SCENARIOS.skirmish.map;
 const inField = (t: { tx: number; ty: number }) => t.tx >= 0 && t.ty >= 0 && t.tx < W && t.ty < H;
 /** Scenery of a category inside the field (the landscape also carries on past the edge, as pure scenery). */
 const of = (sim: Sim, category: string) => sim.scenery.filter((t) => inField(t) && sceneryKind(t.kind).category === category);
+/** A snapshot as an older save holds it (sides named `player` and `enemy` until version 9). */
+const asOldSave = (s: SimSnapshot, version: number) => {
+  const old = (t: string) => (t === 'a' ? 'player' : 'enemy');
+  const byOld = (r: Record<string, unknown>) => ({ player: r.a, enemy: r.b });
+  return JSON.parse(JSON.stringify({
+    ...s, version, players: byOld(s.players), explored: byOld(s.explored),
+    buildings: s.buildings.map((b) => ({ ...b, team: old(b.team), seenBy: b.seenBy.map(old) })),
+    units: s.units.map((u) => ({ ...u, team: old(u.team) })),
+  }));
+};
 
 /** Tiles reachable from a start tile (8-way, no corner cutting, like the pathfinder). */
 function reachable(sim: Sim, from: { tx: number; ty: number }): Set<number> {
@@ -270,23 +281,23 @@ describe('scenery', () => {
       expect(back.map.isBlocked(t.tx, t.ty)).toBe(k.blocks);
     }
 
-    const v3 = { ...snap, version: 3, trees: of(sim, 'tree') };
+    const v3 = { ...asOldSave(snap, 3), trees: of(sim, 'tree') };
     delete v3.scenery;
     expect(Sim.restore(v3).scenery).toHaveLength(of(sim, 'tree').length);
-    const v2 = { ...snap, version: 2 };
+    const v2 = asOldSave(snap, 2);
     delete v2.scenery;
     expect(Sim.restore(v2).scenery).toEqual([]);
   });
 
   it('the hello tells the browser where the scenery is', () => {
     const sim = Sim.create('skirmish', 5);
-    expect(sim.hello('player').scenery).toEqual(sim.scenery);
+    expect(sim.hello('a').scenery).toEqual(sim.scenery);
   });
 
   it('you cannot build on a tree, but you can on a bush', () => {
     const sim = Sim.create('skirmish', 2024);
     const t = of(sim, 'tree')[0];
-    const check = sim.placementWorld('player');
+    const check = sim.placementWorld('a');
     expect(check.isBlocked(t.tx, t.ty)).toBe(true);
     const b = of(sim, 'bush')[0];
     expect(check.isBlocked(b.tx, b.ty)).toBe(false);

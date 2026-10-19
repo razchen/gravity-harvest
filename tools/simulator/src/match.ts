@@ -2,8 +2,8 @@
 // their views and give orders, as in a real match; this harness also reads the Sim's state directly to measure it.
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer, Tech } from '@gravity-harvest/ai';
 import { BUILDINGS, ECONOMY, STAGES, UNITS, layerOf, volleyDamage, weapon, weaponFor, type Faction, type Stage } from '@gravity-harvest/rules';
-import type { Command, Difficulty, MatchEvent, TeamId } from '@gravity-harvest/shared';
-import { ENGINE, SCENARIOS, Sim, TEAMS, TICK_MS, findPath, opponent, refineryDock, type Harvester } from '@gravity-harvest/sim';
+import { TEAMS, opponentOf, perTeam, type Command, type Difficulty, type MatchEvent, type TeamId } from '@gravity-harvest/shared';
+import { ENGINE, SCENARIOS, Sim, TICK_MS, TeamFeed, findPath, refineryDock, type Harvester } from '@gravity-harvest/sim';
 
 export interface SideSpec {
   faction: Faction;
@@ -14,9 +14,9 @@ export interface MatchSpec {
   scenario: string;
   seed: number;
   maxMinutes: number;
-  /** Who plays the top slot ('player') and the bottom one ('enemy'). */
-  player: SideSpec;
-  enemy: SideSpec;
+  /** Who plays seat `a` (the top start) and seat `b` (the bottom one). */
+  a: SideSpec;
+  b: SideSpec;
   /** Which pairing this match belongs to ("A vs B", for the report), and which slot A plays. */
   pairing: string;
   aSlot: TeamId;
@@ -153,7 +153,7 @@ function checkSetup(sim: Sim): MatchResult['setup'] {
     return sim.map.nearestFree(Math.floor(b.tx + b.size / 2), b.ty + b.size);
   };
   const blockedStarts = [...sim.units.values()].filter((u) => sim.map.isBlocked(Math.floor(u.gx), Math.floor(u.gy))).length;
-  const reachable = !!findPath(sim.map, exitOf('player'), exitOf('enemy'), 20_000);
+  const reachable = !!findPath(sim.map, exitOf('a'), exitOf('b'), 20_000);
   let unreachableFields = 0;
   const fields = new Map<number, { tx: number; ty: number }>();
   for (const t of sim.ore.tiles.values()) if (!fields.has(t.field) || t.richness > 0.5) fields.set(t.field, t);
@@ -170,7 +170,7 @@ function checkSetup(sim: Sim): MatchResult['setup'] {
 
 export function runMatch(spec: MatchSpec): MatchResult {
   const t0 = performance.now();
-  const sides = { player: emptySide(spec.player, 'player'), enemy: emptySide(spec.enemy, 'enemy') };
+  const sides = { a: emptySide(spec.a, 'a'), b: emptySide(spec.b, 'b') };
   const result: MatchResult = {
     ...spec, winner: null, lengthMs: 0, realMs: 0, sides, firstContactMs: null, engagements: 0, fightingShare: 0, longestQuietMs: 0, quietStretches: 0,
     leadChanges: 0, firstFightMs: null, bigFightMs: null, leaderAfterBigFight: null, lockedInMs: null, ore: { start: 0, end: 0, mined: 0, regrown: 0, timeline: [], fieldDryMs: [] },
@@ -186,14 +186,14 @@ export function runMatch(spec: MatchSpec): MatchResult {
 }
 
 function play(spec: MatchSpec, result: MatchResult): void {
-  const sim = Sim.create(spec.scenario, spec.seed, spec.player.faction, { enemyFaction: spec.enemy.faction, computerOnly: true, difficulty: spec.player.difficulty });
+  const sim = Sim.create(spec.scenario, spec.seed, spec.a.faction, { otherFaction: spec.b.faction, computerOnly: true, difficulty: spec.a.difficulty });
   const sides = result.sides;
   result.setup = checkSetup(sim);
   const ai = {
-    player: new ComputerPlayer({ hello: sim.hello('player'), difficulty: spec.player.difficulty, seed: spec.seed * 7919 + 1 }),
-    enemy: new ComputerPlayer({ hello: sim.hello('enemy'), difficulty: spec.enemy.difficulty, seed: spec.seed * 7919 + 2 }),
+    a: new ComputerPlayer({ hello: sim.hello('a'), difficulty: spec.a.difficulty, seed: spec.seed * 7919 + 1 }),
+    b: new ComputerPlayer({ hello: sim.hello('b'), difficulty: spec.b.difficulty, seed: spec.seed * 7919 + 2 }),
   };
-  const tech = { player: new Tech(sim.hello('player').catalog, spec.player.faction), enemy: new Tech(sim.hello('enemy').catalog, spec.enemy.faction) };
+  const tech = { a: new Tech(sim.hello('a').catalog, spec.a.faction), b: new Tech(sim.hello('b').catalog, spec.b.faction) };
   const nFields = SCENARIOS[spec.scenario].oreFields.length;
   const fieldStart = oreByField(sim, nFields);
   result.ore.start = fieldStart.reduce((a, b) => a + b, 0);
@@ -210,13 +210,13 @@ function play(spec: MatchSpec, result: MatchResult): void {
   const lossSec = new Float64Array(spec.maxMinutes * 60 + 2);
   const typeOf = new Map<number, { type: string; team: TeamId }>();
   const lastShooter = new Map<number, string>();
-  const trainedAt: Record<TeamId, Map<string, number[]>> = { player: new Map(), enemy: new Map() };
+  const trainedAt: Record<TeamId, Map<string, number[]>> = { a: new Map(), b: new Map() };
   const placedAt = new Map<number, number>();
-  const lastReady = { player: 0, enemy: 0 };
+  const lastReady = { a: 0, b: 0 };
   const stuck = new Map<number, { gx: number; gy: number; n: number }>();
   const tripFrom = new Map<number, number>();
-  const idleH = { player: 0, enemy: 0 }, allH = { player: 0, enemy: 0 };
-  let lastEarned = { player: 0, enemy: 0 };
+  const idleH = { a: 0, b: 0 }, allH = { a: 0, b: 0 };
+  let lastEarned = { a: 0, b: 0 };
   let lastOre = result.ore.start;
 
   const remember = () => {
@@ -261,7 +261,7 @@ function play(spec: MatchSpec, result: MatchResult): void {
           bump(side.unitsLost, e.type);
           lossSec[Math.min(lossSec.length - 1, Math.floor(now / 1000))] += UNITS[e.type]?.cost ?? 0;
           const killer = lastShooter.get(e.id);
-          if (killer) bump(sides[opponent(team)].kills, killer);
+          if (killer) bump(sides[opponentOf(team)].kills, killer);
           break;
         }
         case 'buildingDestroyed':
@@ -269,7 +269,7 @@ function play(spec: MatchSpec, result: MatchResult): void {
           bump(side.buildingsLost, e.type);
           side.firstBuildingLostMs ??= now;
           lossSec[Math.min(lossSec.length - 1, Math.floor(now / 1000))] += BUILDINGS[e.type]?.cost ?? 0;
-          if (lastShooter.get(e.id)) bump(sides[opponent(team)].kills, lastShooter.get(e.id)!);
+          if (lastShooter.get(e.id)) bump(sides[opponentOf(team)].kills, lastShooter.get(e.id)!);
           break;
         case 'unitReady': {
           bump(side.unitsBuilt, e.type);
@@ -319,13 +319,15 @@ function play(spec: MatchSpec, result: MatchResult): void {
     sim.command(team, c);
   };
 
+  const feeds = perTeam((t) => new TeamFeed(t));
   remember();
   while (!sim.winner && sim.timeMs < maxMs) {
     sim.step();
     if (sim.tick % AI_VIEW_EVERY_TICKS !== 0) continue;
     remember();
     for (const team of TEAMS) {
-      const v = sim.view(team);
+      feeds[team].push(sim.takeEvents(team));
+      const v = feeds[team].view(sim);
       events(team, v.events);
       for (const c of ai[team].update(v)) give(team, c);
     }
@@ -420,14 +422,14 @@ function play(spec: MatchSpec, result: MatchResult): void {
     result.firstFightMs = fights.find((f) => f.loss >= FIRST_FIGHT_LOSS)?.start ?? null;
     result.bigFightMs = fights.find((f) => f.loss >= BIG_FIGHT_LOSS)?.end ?? null;
     if (result.firstFightMs === null) return;
-    const P = sides.player.timeline, E = sides.enemy.timeline;
+    const P = sides.a.timeline, E = sides.b.timeline;
     let leader: TeamId | null = null;
     let since = 0;
     let judged = false;
     for (let i = 0; i < Math.min(P.length, E.length); i++) {
       if (P[i].ms < result.firstFightMs) continue;
       const a = P[i].army + P[i].defences, b = E[i].army + E[i].defences;
-      const lead: TeamId | null = Math.abs(a - b) > Math.max(LEAD_MIN, LEAD_SHARE * Math.max(a, b)) ? (a > b ? 'player' : 'enemy') : leader;
+      const lead: TeamId | null = Math.abs(a - b) > Math.max(LEAD_MIN, LEAD_SHARE * Math.max(a, b)) ? (a > b ? 'a' : 'b') : leader;
       if (lead !== leader) {
         if (leader !== null) result.leadChanges++;
         leader = lead;
@@ -493,6 +495,6 @@ function play(spec: MatchSpec, result: MatchResult): void {
 }
 
 function startCredits(scenario: string): number {
-  const c = SCENARIOS[scenario].players.player.credits;
+  const c = SCENARIOS[scenario].players.a.credits;
   return c === 'rules' ? ECONOMY.startingCredits : c;
 }

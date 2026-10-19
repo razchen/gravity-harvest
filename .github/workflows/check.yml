@@ -1,0 +1,33 @@
+# Typecheck, unit tests, build and the server's API e2e tests on every push and pull request. The game's browser
+# tests (Playwright, ~6 min) are left out for now: run them locally with `npm run test:e2e --workspace @gravity-harvest/game`.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # the content tests and the browser tests need the sprites (on S3, not in git)
+      - name: Cache assets
+        uses: actions/cache@v4
+        with:
+          path: apps/game/public/assets
+          key: assets-${{ hashFiles('apps/game/assets.json') }}
+      - run: npm run assets:pull
+      - run: npm run check
+      - run: npm run test:e2e --workspace @gravity-harvest/server

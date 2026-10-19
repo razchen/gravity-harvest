@@ -349,7 +349,7 @@ export const battleShell: Look = (kit, s) => {
       if (fade > 0) drawShell(g, u, len * k, head, fade);
       if (!landed && k >= 1) {
         landed = true;
-        kit.landed('shell', to);
+        kit.landed(to);
         blast(scene, to, depth, s.hit?.targets, s.ground);
       }
       return !landed || age < Math.max(c.flashMs, flight + c.trailFadeMs);

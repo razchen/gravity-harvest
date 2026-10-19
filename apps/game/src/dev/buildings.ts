@@ -3,7 +3,8 @@
 // aren't part of the game build, so reading the full rules here doesn't put them in the browser bundle
 // (scripts/check-bundle.mjs).
 import { BUILDINGS, UNITS, WEAPONS } from '@gravity-harvest/rules';
-import { footprint } from '@gravity-harvest/sim';
+import { FOOTPRINT } from '@gravity-harvest/sim';
+import { BUILDING_REGISTRY, buildingAtlas } from '../data/registry';
 
 export type FactionScope = 'both' | 'ordan' | 'sable';
 
@@ -39,8 +40,8 @@ export interface DevBuilding {
   role: string;
   /** Which release it's in (a building missing from MILESTONE_OF counts as the last). */
   milestone: Milestone;
-  /** Footprint in tiles (square). */
-  footprint: number;
+  /** Footprint in tiles (square); only the buildings in matches have one yet. */
+  footprint?: number;
   /** One line on what it does (design/balance.xlsx, Buildings: Description). */
   description: string;
   cost: number;
@@ -75,35 +76,54 @@ export interface DevBuilding {
   model?: string;
 }
 
-const tripo = (atlasId: string, parts: number, extra = '') => ({
-  picture: { file: `b_${atlasId}_build`, frame: `b_${atlasId}_build_stage_5` },
-  construction: `b_${atlasId}_build`,
-  preview: `/assets/previews/b_${atlasId}_build.webp`,
-  note: `Tripo parts model (${parts} parts, stages grouped automatically). In matches.${extra && ` ${extra}`}`,
-});
+/**
+ * What only the dev pages say about a building with art (its look itself comes from data/registry.ts): how many parts
+ * its Tripo model has, a line about it (or a whole `note` of its own), whether its head turns, and its model's file
+ * where it isn't `tripo/<id>.glb`.
+ */
+interface DevNote {
+  parts: number;
+  extra?: string;
+  note?: string;
+  turret?: boolean;
+  model?: string;
+}
 const TURNS = 'Its head turns to face what it shoots at.';
-
-/** Our art, by building id. */
-const ART: Record<string, Pick<DevBuilding, 'picture' | 'construction' | 'preview' | 'note' | 'turret' | 'idle' | 'video' | 'model'>> = {
-  assembly_yard: tripo('assembly', 130, 'Every base starts with one.'),
-  power_plant: tripo('power_plant', 133),
-  reactor_plant: { ...tripo('reactor_plant', 166), video: true },
-  refinery: {
-    ...tripo('refinery', 20),
-    note: 'Tripo parts model (20 parts, stages picked by hand). In matches; no door animation for now.',
-  },
-  barracks: { ...tripo('barracks', 160), video: true },
-  motor_works: { ...tripo('motor_works', 127, 'Harvesters come from here.'), video: true },
-  service_bay: { model: 'tripo/service_bay_v2.glb', ...tripo('service_bay', 193, 'Repairs vehicles next to it; right-click it with vehicles to send them onto its pad, where its roof arms (rigged in Blender) work on them.') },
-  radar: tripo('radar', 148, 'Its dish needs to spin.'),
-  gravity_lab: tripo('gravity_lab', 109, 'Its gyroscope turns and its core glows while it has power.'),
-  gravity_forge: tripo('gravity_forge', 123),
-  sentry: { ...tripo('sentry', 130, TURNS), turret: true },
-  lance_battery: { ...tripo('lance_battery', 112, TURNS), turret: true },
-  incinerator: tripo('incinerator', 83, 'No turning head: it fires fireballs from its bunker.'),
-  anchor: { ...tripo('anchor', 199, `${TURNS} Holds fire on low power.`), turret: true },
-  hound_kennel: tripo('hound_kennel', 189, 'It can be built; the Hound itself has no model yet.'),
+const NOTES: Record<string, DevNote> = {
+  assembly_yard: { parts: 130, extra: 'Every base starts with one.' },
+  power_plant: { parts: 133 },
+  reactor_plant: { parts: 166 },
+  refinery: { parts: 20, note: 'Tripo parts model (20 parts, stages picked by hand). In matches; no door animation for now.' },
+  barracks: { parts: 160 },
+  motor_works: { parts: 127, extra: 'Harvesters come from here.' },
+  service_bay: { parts: 193, model: 'tripo/service_bay_v2.glb', extra: 'Repairs vehicles next to it; right-click it with vehicles to send them onto its pad, where its roof arms (rigged in Blender) work on them.' },
+  radar: { parts: 148, extra: 'Its dish needs to spin.' },
+  gravity_lab: { parts: 109, extra: 'Its gyroscope turns and its core glows while it has power.' },
+  gravity_forge: { parts: 123 },
+  sentry: { parts: 130, extra: TURNS, turret: true },
+  lance_battery: { parts: 112, extra: TURNS, turret: true },
+  incinerator: { parts: 83, extra: 'No turning head: it fires fireballs from its bunker.' },
+  anchor: { parts: 199, extra: `${TURNS} Holds fire on low power.`, turret: true },
+  hound_kennel: { parts: 189, extra: 'It can be built; the Hound itself has no model yet.' },
 };
+
+/** Our art, by building id: every building in the registry, with its notes. */
+const ART: Record<string, Pick<DevBuilding, 'picture' | 'construction' | 'preview' | 'note' | 'turret' | 'idle' | 'video' | 'model'>> = Object.fromEntries(
+  Object.entries(BUILDING_REGISTRY).map(([id, e]) => {
+    const atlas = buildingAtlas(id);
+    const n = NOTES[id];
+    const parts = n ? `${n.parts} parts, ` : '';
+    return [id, {
+      picture: { file: atlas, frame: `${atlas}_stage_5` },
+      construction: atlas,
+      preview: `/assets/previews/${atlas}.webp`,
+      note: n?.note ?? `Tripo parts model (${parts}stages grouped automatically). In matches.${n?.extra ? ` ${n.extra}` : ''}`,
+      ...(n?.turret && { turret: true }),
+      ...(e.video && { video: true }),
+      ...(n?.model && { model: n.model }),
+    }];
+  }),
+);
 
 const ORDER: Record<FactionScope, number> = { both: 0, ordan: 1, sable: 2 };
 
@@ -126,7 +146,7 @@ export const DEV_BUILDINGS: DevBuilding[] = Object.values(BUILDINGS)
     makes: Object.values(UNITS).filter((u) => u.producedAt.includes(b.id) && sameSide(u.faction as FactionScope, b.faction as FactionScope)).map((u) => u.name),
     weapons: b.weapons.map((w) => WEAPONS[w]?.name ?? w),
     milestone: MILESTONE_OF[b.id] ?? 4,
-    footprint: footprint(b.id),
+    ...(FOOTPRINT[b.id] && { footprint: FOOTPRINT[b.id] }),
     ...(ART[b.id] ?? { note: 'No art yet.' }),
     ...(ART[b.id]?.construction && { model: ART[b.id].model ?? `tripo/${b.id}.glb`, idle: true }),
   }))

@@ -8,8 +8,9 @@ const THUMB_H = 180;
 
 /**
  * High-level saving. The server holds the match, so saving is a request over the match socket (the browser
- * only adds a thumbnail); listing, reading and deleting saves go over HTTP. One autosave slot per scenario
- * (the server keeps it to one, and clears it when a match ends).
+ * only adds a thumbnail); listing, reading and deleting saves go over HTTP. Saves belong to this browser's
+ * player id (net/playerId.ts). One autosave slot per scenario (the server keeps it to one, and clears it when a
+ * match ends).
  */
 export class SaveService {
   constructor(private readonly game: Phaser.Game) {}

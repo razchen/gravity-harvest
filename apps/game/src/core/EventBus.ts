@@ -20,10 +20,12 @@ export class EventBus<Events extends Record<string, unknown>> {
 }
 
 import type { MatchStats } from '@gravity-harvest/shared';
+import type { ToastMessage } from '../data/toasts';
 
 /** Everything the game announces to the outside (HUD, audio later, analytics later). */
 export interface GameEvents extends Record<string, unknown> {
-  toast: string;
+  /** A message for the HUD's toast (with a code, it also gets that code's sound: data/toasts.ts). */
+  toast: ToastMessage;
   /** The match ended. */
   gameOver: { result: 'victory' | 'defeat'; stats: MatchStats };
   /** The player asked for the in-game menu (Esc / menu button). */

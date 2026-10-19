@@ -1,4 +1,4 @@
-import type { GridPoint, TeamId } from '@gravity-harvest/shared';
+import { TEAMS, type GridPoint, type TeamId } from '@gravity-harvest/shared';
 import type { Faction } from '@gravity-harvest/rules';
 import type { Tile } from './geometry.js';
 
@@ -25,9 +25,12 @@ export interface ScenarioDef {
   vents?: (Tile & { seed: number })[];
   buildings: { type: string; team: TeamId; tx: number; ty: number }[];
   units: { type: string; team: TeamId; gx: number; gy: number; guard?: boolean }[];
-  /** Where the human's camera starts. */
-  camera: GridPoint;
+  /** Where each side's camera starts (over its own base). */
+  camera: Record<TeamId, GridPoint>;
 }
+
+/** The seat a human plays: the first marked `human` (seat `a` when none is, as in computer-only matches). */
+export const humanSeat = (players: Record<TeamId, { human: boolean }>): TeamId => TEAMS.find((t) => players[t].human) ?? 'a';
 
 /**
  * 1v1 skirmish on an 88 x 48 map: your base in the top corner, the computer's in the right-hand corner, along the same
@@ -54,8 +57,8 @@ export const SKIRMISH: ScenarioDef = {
   description: 'Your base in the north, the enemy in the east, both starting alike, with a gravity vent between them. Scout through the fog, build up, and destroy every enemy building.',
   map: { width: 88, height: 48 },
   players: {
-    player: { credits: 'rules', human: true, faction: 'ordan' },
-    enemy: { credits: 'rules', human: false, faction: 'sable' },
+    a: { credits: 'rules', human: true, faction: 'ordan' },
+    b: { credits: 'rules', human: false, faction: 'sable' },
   },
   oreFields: [
     { centre: { tx: 15, ty: 9 }, radius: 4.3, seed: 100 },
@@ -65,22 +68,36 @@ export const SKIRMISH: ScenarioDef = {
   // on the mirror line (tiles 43-44 across), between the bases
   vents: [{ tx: 43, ty: 10, seed: 102 }],
   buildings: [
-    { type: 'assembly_yard', team: 'player', tx: 1, ty: 1 },
-    { type: 'refinery', team: 'player', tx: 5, ty: 5 },
-    { type: 'power_plant', team: 'player', tx: 10, ty: 1 },
-    { type: 'assembly_yard', team: 'enemy', tx: 83, ty: 1 },
-    { type: 'refinery', team: 'enemy', tx: 79, ty: 5 },
-    { type: 'power_plant', team: 'enemy', tx: 75, ty: 1 },
+    { type: 'assembly_yard', team: 'a', tx: 1, ty: 1 },
+    { type: 'refinery', team: 'a', tx: 5, ty: 5 },
+    { type: 'power_plant', team: 'a', tx: 10, ty: 1 },
+    { type: 'assembly_yard', team: 'b', tx: 83, ty: 1 },
+    { type: 'refinery', team: 'b', tx: 79, ty: 5 },
+    { type: 'power_plant', team: 'b', tx: 75, ty: 1 },
   ],
   units: [
-    { type: 'harvester', team: 'player', gx: 7.2, gy: 11.6 },
-    { type: 'rifleman', team: 'player', gx: 9.2, gy: 12.2 },
-    { type: 'rifleman', team: 'player', gx: 10.0, gy: 12.8 },
-    { type: 'harvester', team: 'enemy', gx: 80.8, gy: 11.6 },
-    { type: 'rifleman', team: 'enemy', gx: 78.8, gy: 12.2 },
-    { type: 'rifleman', team: 'enemy', gx: 78.0, gy: 12.8 },
+    { type: 'harvester', team: 'a', gx: 7.2, gy: 11.6 },
+    { type: 'rifleman', team: 'a', gx: 9.2, gy: 12.2 },
+    { type: 'rifleman', team: 'a', gx: 10.0, gy: 12.8 },
+    { type: 'harvester', team: 'b', gx: 80.8, gy: 11.6 },
+    { type: 'rifleman', team: 'b', gx: 78.8, gy: 12.2 },
+    { type: 'rifleman', team: 'b', gx: 78.0, gy: 12.8 },
   ],
-  camera: { gx: 11, gy: 9 },
+  // mirrored like the bases (gx <-> 88 - gx)
+  camera: { a: { gx: 11, gy: 9 }, b: { gx: 77, gy: 9 } },
 };
 
 export const SCENARIOS: Readonly<Record<string, ScenarioDef>> = { [SKIRMISH.id]: SKIRMISH };
+
+/**
+ * A fingerprint of what a scenario puts on the field (map size, sides, ore fields, vents, starting buildings and units,
+ * cameras; not its name or description). Saves keep only the scenario's id and rebuild the map from code, so a save
+ * records this to tell when the map has changed under it since (FNV-1a over its JSON, as hex).
+ */
+export function scenarioHash(sc: ScenarioDef): string {
+  const { map, players, oreFields, mirrorX, vents, buildings, units, camera } = sc;
+  const s = JSON.stringify({ map, players, oreFields, mirrorX, vents, buildings, units, camera });
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193);
+  return (h >>> 0).toString(16).padStart(8, '0');
+}

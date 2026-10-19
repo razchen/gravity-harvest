@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 import type { HarvesterActivity, TeamId, UnitView } from '@gravity-harvest/shared';
+import { facing } from '@gravity-harvest/sim/layout';
 import { anchorOrigin, meta } from '../assets/manifest';
 import { HARVESTER_DOCK_FACING, HARVESTER_UNLOAD_MS, HOVER, INFANTRY_TURN_MS_PER_STEP, RAMP_TILES_PER_SEC, RUN_CYCLE_TILES, TILE_W, TURRET_TURN_MS_PER_STEP } from '../config/game';
 import { alongBarrel, iso, type Point } from '../core/geometry';
 import { FX, ensureFxTextures } from '../render/fxTextures';
-import { TEAMS } from '../data/teams';
-import { UNIT_ART, factionOf, unitArt } from '../data/art';
+import { colourOf, factionOfTeam } from '../data/teams';
+import { UNIT_ART, unitArt } from '../data/art';
 import { rampOf } from '../render/Boarding';
 import type { DoorExit } from '../render/DoorExit';
 import type { GameScene } from '../scenes/GameScene';
@@ -125,7 +126,7 @@ export abstract class UnitSprite {
     const p = iso(this.gx, this.gy);
     for (const s of this.parts()) {
       s.setPosition(r.from.x + (p.x - r.from.x) * k, r.from.y + (p.y - r.from.y) * k).setAlpha(k);
-      if (k < 1) s.setDepth(r.depth);
+      if (k < 1) depthTo(s, r.depth);
     }
     if (k < 1) return;
     this.ramp = null;
@@ -182,7 +183,7 @@ export abstract class UnitSprite {
       if (dist > 1e-4) {
         this.gx += (dgx / dist) * moved;
         this.gy += (dgy / dist) * moved;
-        this.dir = facing16(dgx, dgy);
+        this.dir = facing(dgx, dgy, 16);
       }
     }
     this.refresh(moved);
@@ -277,7 +278,7 @@ export class HarvesterSprite extends UnitSprite {
     }
     const p = iso(this.gx, this.gy);
     const depth = this.world.map.depthAt(this.gx, this.gy) + 0.5;
-    this.sprite.setPosition(p.x, p.y).setDepth(depth);
+    depthTo(this.sprite.setPosition(p.x, p.y), depth);
     // at the dock, facing out: its bed tips its load out, then stays empty until it drives off
     const unload = `${this.key}_unload`;
     if (this.activity === 'unload' && this.shown === HARVESTER_DOCK_FACING && this.world.textures.exists(unload)) {
@@ -304,7 +305,7 @@ export class HarvesterSprite extends UnitSprite {
     this.sprite.setTexture(body, `${body}_${this.shown}`);
     const frames = m.wheel_frames ?? 6;
     this.wheelPhase += (moved / WHEEL_TURN_TILES) * frames; // backwards while it reverses
-    this.wheels.setPosition(p.x, p.y).setDepth(depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
+    depthTo(this.wheels.setPosition(p.x, p.y), depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
     this.wheels.setFrame(`${this.key}_w${this.shown}_${cycle(this.wheelPhase, frames)}`);
   }
 }
@@ -321,14 +322,14 @@ export class InfantrySprite extends UnitSprite {
 
   constructor(world: GameScene, v: UnitView, now: number) {
     super(world, v, now);
-    this.key = unitArt(v.type, factionOf(v.team, world.faction))?.sprite ?? 'rifleman';
+    this.key = unitArt(v.type, factionOfTeam(v.team))?.sprite ?? 'rifleman';
     const m = meta(this.key);
     this.shown = v.dir;
     this.sprite = world.add.sprite(0, 0, this.key, `inf_${v.dir}_idle`)
       .setOrigin(...anchorOrigin(m))
       .setScale(1 / (m.res ?? 1))
       .setInteractive({ useHandCursor: true });
-    const tint = TEAMS[v.team].tint;
+    const tint = colourOf(v.team).tint;
     if (tint !== null) this.sprite.setTint(tint);
     this.sprite.setData('entity', this);
     this.refresh(0);
@@ -353,7 +354,7 @@ export class InfantrySprite extends UnitSprite {
       this.turnAt = now + INFANTRY_TURN_MS_PER_STEP;
     }
     const p = iso(this.gx, this.gy);
-    this.sprite.setPosition(p.x, p.y).setDepth(this.world.map.depthAt(this.gx, this.gy) + 0.4);
+    depthTo(this.sprite.setPosition(p.x, p.y), this.world.map.depthAt(this.gx, this.gy) + 0.4);
     this.sprite.setFrame(`inf_${this.shown}_${this.running ? Math.floor(this.runPhase) % frames : 'idle'}`);
   }
 
@@ -369,13 +370,11 @@ export class InfantrySprite extends UnitSprite {
 /** A vehicle's wheels make a whole turn every this many tiles driven (their sheets have a turn's frames). */
 export const WHEEL_TURN_TILES = 0.55;
 
+/** Set a sprite's depth only when it changes: every change has the scene re-sort its display list before drawing. */
+const depthTo = (s: Phaser.GameObjects.Sprite, depth: number) => (s.depth === depth ? s : s.setDepth(depth));
+
 /** Frame `f` of a cycle of `n` (counting backwards too). */
 const cycle = (f: number, n: number) => ((Math.floor(f) % n) + n) % n;
-
-/** Sprite direction (of 16) for a grid-space vector, as the sim's facing() works it out. */
-function facing16(dgx: number, dgy: number): number {
-  return ((Math.round(Math.atan2(-dgy, dgx) / (Math.PI / 8)) % 16) + 16) % 16;
-}
 
 /** Moving (dgx, dgy) while facing `dir` (of 16) is reversing. */
 function backing(dgx: number, dgy: number, dir: number): boolean {
@@ -424,7 +423,7 @@ export class VehicleSprite extends UnitSprite {
 
   constructor(world: GameScene, v: UnitView, now: number) {
     super(world, v, now);
-    const art = unitArt(v.type, factionOf(v.team, world.faction))!;
+    const art = unitArt(v.type, factionOfTeam(v.team))!;
     this.key = art.sprite;
     this.clipKey = art.clip && world.textures.exists(`${this.key}_${art.clip}`) ? `${this.key}_${art.clip}` : null;
     this.doorKey = world.textures.exists(`${this.key}_door`) ? `${this.key}_door` : null;
@@ -434,7 +433,7 @@ export class VehicleSprite extends UnitSprite {
       .setOrigin(...anchorOrigin(m))
       .setScale(1 / (m.res ?? 1))
       .setInteractive({ pixelPerfect: true, useHandCursor: true });
-    const tint = TEAMS[v.team].tint;
+    const tint = colourOf(v.team).tint;
     if (tint !== null) this.sprite.setTint(tint);
     this.sprite.setData('entity', this);
     this.wheels = m.wheel_frames
@@ -520,13 +519,13 @@ export class VehicleSprite extends UnitSprite {
     }
     const p = iso(this.gx, this.gy);
     const depth = this.world.map.depthAt(this.gx, this.gy) + 0.5;
-    this.sprite.setPosition(p.x, p.y).setDepth(depth);
+    depthTo(this.sprite.setPosition(p.x, p.y), depth);
     if (this.shadow && this.glow) {
       // hovering: it bobs over its shadow, and its lights pulse on the ground under it, brightest when it's lowest
       const s = Math.sin(((now + this.bobAt) / HOVER.periodMs) * Math.PI * 2);
       this.sprite.y -= (s + 1) * 0.5 * HOVER.bob;
-      this.shadow.setPosition(p.x, p.y).setDepth(depth - 0.002).setFrame(`${this.key}_s${this.shown}`);
-      this.glow.setPosition(p.x, p.y).setDepth(depth - 0.001).setAlpha(HOVER.glowMin + (HOVER.glowMax - HOVER.glowMin) * (1 - s) * 0.5);
+      depthTo(this.shadow.setPosition(p.x, p.y), depth - 0.002).setFrame(`${this.key}_s${this.shown}`);
+      depthTo(this.glow.setPosition(p.x, p.y), depth - 0.001).setAlpha(HOVER.glowMin + (HOVER.glowMax - HOVER.glowMin) * (1 - s) * 0.5);
     }
     const dk = this.doorKey;
     if (dk) {
@@ -546,7 +545,7 @@ export class VehicleSprite extends UnitSprite {
     if (this.wheels) {
       const frames = meta(this.key).wheel_frames ?? 6;
       this.wheelPhase += (moved / WHEEL_TURN_TILES) * frames; // backwards while it reverses
-      this.wheels.setPosition(p.x, p.y).setDepth(depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
+      depthTo(this.wheels.setPosition(p.x, p.y), depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
       this.wheels.setFrame(`${this.key}_w${this.shown}_${cycle(this.wheelPhase, frames)}`);
     }
     const tl = meta(this.key).turret_layer;
@@ -558,7 +557,7 @@ export class VehicleSprite extends UnitSprite {
         this.turretTurnAt = now + TURRET_TURN_MS_PER_STEP;
       }
       const at = this.turretAt();
-      this.turret.setPosition(at.x, at.y).setDepth(depth + 0.002).setFrame(`${this.key}_t${this.turretShown}`);
+      depthTo(this.turret.setPosition(at.x, at.y), depth + 0.002).setFrame(`${this.key}_t${this.turretShown}`);
     }
   }
 
@@ -634,7 +633,7 @@ export function fallDead(world: GameScene, type: string, gx: number, gy: number,
     .setOrigin(...anchorOrigin(m))
     .setScale(1 / (m.res ?? 1))
     .setDepth(world.map.depthAt(gx, gy) + 0.4);
-  const tint = TEAMS[team].tint;
+  const tint = colourOf(team).tint;
   if (tint !== null) body.setTint(tint);
   body.play(key);
   world.tweens.add({ targets: body, alpha: 0, delay: (n / (m.fps ?? 8)) * 1000 + BODY_MS, duration: 1000, onComplete: () => body.destroy() });

@@ -1,12 +1,14 @@
 import Phaser from 'phaser';
 import { DEPTH } from '../config/game';
 import { iso, toGrid } from '../core/geometry';
+import { isMine } from '../data/teams';
 import type { BuildingSprite } from '../entities/BuildingSprite';
 import { HarvesterSprite, VehicleSprite, canBoard, type UnitSprite } from '../entities/UnitSprite';
 import { isBuilding, isUnit, type Entity } from '../entities/types';
 import type { GameScene } from '../scenes/GameScene';
 import { $ } from '../ui/dom';
 import { typingInField } from './CameraController';
+import { leadType } from './Orders';
 import type { OreTileSprite } from '../world/OreLayer';
 
 /** The cursor over a building you can sell or repair: a coin or a wrench. */
@@ -41,15 +43,6 @@ const UNIT_PICK_RADIUS = 56;
 /** Keys for the game, not a field being typed in or a menu or screen over it. */
 export const inGame = () => !typingInField() && $('#screens').hidden;
 
-/** The unit type most of a selection is (the first of them on a tie): whose voice answers for the group. */
-export function leadType(units: Iterable<UnitSprite>): string {
-  const n = new Map<string, number>();
-  for (const u of units) n.set(u.type, (n.get(u.type) ?? 0) + 1);
-  let best = '';
-  for (const [type, c] of n) if (c > (n.get(best) ?? 0)) best = type;
-  return best;
-}
-
 /**
  * Mouse and keyboard for the human player, classic RTS controls:
  * left-click selects (shift adds), left-drag box-selects, left-click with a selection gives an order
@@ -58,7 +51,7 @@ export function leadType(units: Iterable<UnitSprite>): string {
  * soldiers selected or your Service Bay with damaged vehicles selected, gives that order too). Ctrl+click (right or left)
  * with a selection attack-moves to the ground there, or attacks the enemy there.
  * While placing a building, left-click places and right-click / Esc cancels (Esc is handled in GameFlow).
- * Orders are sent to the server; markers show up straight away so the round trip isn't felt.
+ * Orders go to the server through `world.orders` (input/Orders.ts), which marks them and has the units answer at once.
  */
 export class InputController {
   private boxStart: { x: number; y: number } | null = null;
@@ -163,7 +156,7 @@ export class InputController {
     if (w.mode) {
       const over = w.input.hitTestPointer(p).some((o) => {
         const e = o.getData('entity') as Entity | undefined;
-        return !!e && isBuilding(e) && e.team === 'player' && (w.mode === 'sell' || e.built);
+        return !!e && isBuilding(e) && isMine(e.team) && (w.mode === 'sell' || e.built);
       });
       w.game.canvas.style.cursor = over ? MODE_CURSOR[w.mode] : 'not-allowed';
       return;
@@ -181,7 +174,7 @@ export class InputController {
 
   /** The selected Medics that would heal `u`: it's yours, damaged, one they mend (not a vehicle), and not one of them. */
   private medicsFor(u: UnitSprite | null): UnitSprite[] {
-    if (!u || u.team !== 'player' || u.hp >= u.maxHp || !canBoard(u)) return [];
+    if (!u || !isMine(u.team) || u.hp >= u.maxHp || !canBoard(u)) return [];
     return [...this.world.selection].filter((s) => s.type === 'medic' && s !== u);
   }
 
@@ -194,18 +187,18 @@ export class InputController {
   /** Your finished, damaged building among `over`, if any. */
   private damagedBuilding(over: Phaser.GameObjects.GameObject[]): BuildingSprite | null {
     return over.map((o) => o.getData('entity') as Entity | undefined)
-      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.team === 'player' && e.hp < e.maxHp) ?? null;
+      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && isMine(e.team) && e.hp < e.maxHp) ?? null;
   }
 
   /** The selected vehicles that a Service Bay would repair: yours, and damaged. */
   private damagedVehicles(): UnitSprite[] {
-    return [...this.world.selection].filter((u) => u instanceof VehicleSprite && u.team === 'player' && u.hp < u.maxHp);
+    return [...this.world.selection].filter((u) => u instanceof VehicleSprite && isMine(u.team) && u.hp < u.maxHp);
   }
 
   /** Your finished Service Bay among `over`, if damaged vehicles are selected (a click on it sends them to be repaired). */
   private bayFor(over: Phaser.GameObjects.GameObject[]): BuildingSprite | null {
     const bay = over.map((o) => o.getData('entity') as Entity | undefined)
-      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.type === 'service_bay' && e.team === 'player');
+      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.type === 'service_bay' && isMine(e.team));
     return bay && this.damagedVehicles().length ? bay : null;
   }
 
@@ -213,13 +206,13 @@ export class InputController {
   private sendToBay(bay: BuildingSprite): void {
     const w = this.world;
     const vehicles = this.damagedVehicles();
-    w.net.command({ c: 'service', units: vehicles.map((u) => u.id), bay: bay.id });
-    w.sounds.answer([`ack_${leadType(vehicles)}_move`]);
+    w.orders.send({ c: 'service', units: vehicles.map((u) => u.id), bay: bay.id });
+    w.orders.answer(vehicles, 'move');
   }
 
   /** `u`, if it's your transport and soldiers are selected (a click on it sends them in). */
   private transportFor(u: UnitSprite | null): UnitSprite | null {
-    if (!u || u.team !== 'player' || !u.seats || u.selected) return null;
+    if (!u || !isMine(u.team) || !u.seats || u.selected) return null;
     return [...this.world.selection].some(canBoard) ? u : null;
   }
 
@@ -248,7 +241,7 @@ export class InputController {
     // sell / repair mode: a click on one of your buildings sells (or cancels) or repairs it; the mode stays on
     if (w.mode) {
       if (dragged) return;
-      const b = over.map((o) => o.getData('entity') as Entity | undefined).find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.team === 'player');
+      const b = over.map((o) => o.getData('entity') as Entity | undefined).find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && isMine(e.team));
       if (b) {
         if (w.mode === 'sell') w.sellOrCancel(b);
         else w.toggleRepair(b);
@@ -262,7 +255,7 @@ export class InputController {
     const shift = (p.event as MouseEvent | undefined)?.shiftKey ?? false;
     if (dragged && start) {
       const b = this.boxRect(p, start);
-      w.selection.set([...w.units.values()].filter((u) => u.team === 'player' && !u.inside && b.contains(u.sprite.x, u.sprite.y - 20)), shift);
+      w.selection.set([...w.units.values()].filter((u) => isMine(u.team) && !u.inside && b.contains(u.sprite.x, u.sprite.y - 20)), shift);
       if (w.selection.size) w.sounds.answer([`ack_${leadType(w.selection)}_select`]);
       return;
     }
@@ -275,11 +268,11 @@ export class InputController {
     // your damaged unit with Medics selected: they go and heal it (rather than selecting it)
     const medics = shift ? [] : this.medicsFor(hitUnit ?? null);
     if (medics.length && hitUnit) {
-      w.net.command({ c: 'support', units: medics.map((u) => u.id), target: hitUnit.id });
-      w.sounds.answer([`ack_${leadType(medics)}_move`]);
-      return w.effects.moveMarker(Math.floor(hitUnit.gx), Math.floor(hitUnit.gy));
+      w.orders.send({ c: 'support', units: medics.map((u) => u.id), target: hitUnit.id });
+      w.orders.answer(medics, 'move');
+      return w.orders.mark({ kind: 'move', tx: Math.floor(hitUnit.gx), ty: Math.floor(hitUnit.gy) });
     }
-    if (hitUnit?.team === 'player') {
+    if (hitUnit && isMine(hitUnit.team)) {
       w.selection.set([hitUnit], shift);
       w.sounds.answer([`ack_${leadType(w.selection)}_select`]);
       return;
@@ -287,15 +280,15 @@ export class InputController {
     if (!w.selection.size) return;
     const hitBuilding = hits.filter(isBuilding).find((b) => b.built);
     // (own units returned above, so any unit hit here is hostile)
-    const enemy: Entity | null = hitUnit ?? (hitBuilding && hitBuilding.team !== 'player' ? hitBuilding : null);
-    const ownRefinery = hitBuilding?.type === 'refinery' && hitBuilding.team === 'player' ? hitBuilding : null;
-    const ownBay = hitBuilding?.type === 'service_bay' && hitBuilding.team === 'player' ? hitBuilding : null;
+    const enemy: Entity | null = hitUnit ?? (hitBuilding && !isMine(hitBuilding.team) ? hitBuilding : null);
+    const ownRefinery = hitBuilding?.type === 'refinery' && isMine(hitBuilding.team) ? hitBuilding : null;
+    const ownBay = hitBuilding?.type === 'service_bay' && isMine(hitBuilding.team) ? hitBuilding : null;
     // your damaged building with Engineers selected: they go and repair it (the rest move there)
     const fixers = this.fixersFor(over);
     const broken = this.damagedBuilding(over);
     if (fixers.length && broken) {
-      w.net.command({ c: 'support', units: fixers.map((u) => u.id), target: broken.id });
-      w.sounds.answer([`ack_${leadType(fixers)}_move`]);
+      w.orders.send({ c: 'support', units: fixers.map((u) => u.id), target: broken.id });
+      w.orders.answer(fixers, 'move');
     }
     const ore = w.ore.under(p.worldX, p.worldY);
     this.issueOrders(enemy, ownRefinery, ownBay, ore, toGrid(p.worldX, p.worldY), new Set(fixers));
@@ -311,18 +304,18 @@ export class InputController {
     const toBay: UnitSprite[] = ownBay && !enemy ? this.damagedVehicles() : [];
     const others = [...w.selection].filter((u) => !(u instanceof HarvesterSprite) && !toBay.includes(u) && !busy.has(u));
     const movers = [...(ownRefinery || ore ? [] : harvesters.map((id) => w.units.get(id)!)), ...(enemy ? [] : others)];
-    if (ownBay && toBay.length) w.net.command({ c: 'service', units: toBay.map((u) => u.id), bay: ownBay.id });
-    if (ownRefinery && harvesters.length) w.net.command({ c: 'dock', units: harvesters, refinery: ownRefinery.id });
-    else if (ore && harvesters.length) w.net.command({ c: 'harvest', units: harvesters, tx: ore.tx, ty: ore.ty });
-    if (enemy && others.length) w.net.command({ c: 'attack', units: others.map((u) => u.id), target: enemy.id });
+    const orders = w.orders;
+    if (ownBay && toBay.length) orders.send({ c: 'service', units: toBay.map((u) => u.id), bay: ownBay.id });
+    if (ownRefinery && harvesters.length) orders.send({ c: 'dock', units: harvesters, refinery: ownRefinery.id });
+    else if (ore && harvesters.length) orders.send({ c: 'harvest', units: harvesters, tx: ore.tx, ty: ore.ty });
+    if (enemy && others.length) orders.send({ c: 'attack', units: others.map((u) => u.id), target: enemy.id });
     // all to the clicked point: the server gives each a tile of its own around it, in formation
-    if (movers.length) w.net.command({ c: 'move', orders: movers.map((u) => ({ id: u.id, gx: g.gx, gy: g.gy })) });
-    if (enemy) w.effects.targetMarker(enemy.gx, enemy.gy, isBuilding(enemy) ? enemy.size * 1.4 : 1);
-    else if (!ownRefinery && !ore && !toBay.length) w.effects.moveMarker(Math.floor(g.gx), Math.floor(g.gy));
+    if (movers.length) orders.send({ c: 'move', orders: movers.map((u) => ({ id: u.id, gx: g.gx, gy: g.gy })) });
+    if (enemy) orders.mark({ kind: 'target', gx: enemy.gx, gy: enemy.gy, scale: isBuilding(enemy) ? enemy.size * 1.4 : 1 });
+    else if (!ownRefinery && !ore && !toBay.length) orders.mark({ kind: 'move', tx: Math.floor(g.gx), ty: Math.floor(g.gy) });
     // the units answer, in the voice of the most of them (an unarmed one sent at an enemy says it's moving)
-    const lead = leadType(w.selection);
-    if (enemy && others.length) w.sounds.answer([`ack_${lead}_attack`, `ack_${lead}_move`]);
-    else if (w.selection.size) w.sounds.answer([`ack_${lead}_move`]);
+    if (enemy && others.length) orders.answer(w.selection, 'attack', 'move');
+    else if (w.selection.size) orders.answer(w.selection, 'move');
   }
 
   /**
@@ -334,16 +327,15 @@ export class InputController {
     this.ctrlClickAt = performance.now();
     const hits = over.map((o) => o.getData('entity') as Entity | undefined).filter((e): e is Entity => !!e && e.alive);
     const hitUnit = this.unitAt(p.worldX, p.worldY) ?? hits.find(isUnit);
-    const hitBuilding = hits.filter(isBuilding).find((b) => b.built && b.team !== 'player');
-    const enemy: Entity | null = hitUnit && hitUnit.team !== 'player' ? hitUnit : hitBuilding ?? null;
+    const hitBuilding = hits.filter(isBuilding).find((b) => b.built && !isMine(b.team));
+    const enemy: Entity | null = hitUnit && !isMine(hitUnit.team) ? hitUnit : hitBuilding ?? null;
     const g = toGrid(p.worldX, p.worldY);
     if (enemy) return this.issueOrders(enemy, null, null, null, g);
     // all to the clicked point, in the same formation as a move
-    w.net.command({ c: 'attackMove', orders: [...w.selection].map((u) => ({ id: u.id, gx: g.gx, gy: g.gy })) });
-    w.effects.attackMoveMarker(Math.floor(g.gx), Math.floor(g.gy));
+    w.orders.send({ c: 'attackMove', orders: [...w.selection].map((u) => ({ id: u.id, gx: g.gx, gy: g.gy })) });
+    w.orders.mark({ kind: 'attackMove', tx: Math.floor(g.gx), ty: Math.floor(g.gy) });
     // they answer as for an attack (an unarmed lead says it's moving)
-    const lead = leadType(w.selection);
-    w.sounds.answer([`ack_${lead}_attack`, `ack_${lead}_move`]);
+    w.orders.answer(w.selection, 'attack', 'move');
   }
 
   /** The unit whose body is under (or nearest to) a world point, within a small radius. */

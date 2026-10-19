@@ -26,13 +26,13 @@ export class Hud {
   }
 
   constructor(private readonly game: HudBridge) {
-    this.toast = new Toast((text) => game.toastSound(text));
+    this.toast = new Toast((code) => game.toastSound(code));
     this.bar = new ResourceBar(game);
     this.panel = new BuildPanel(game, this.toast);
     this.minimap = new Minimap(game);
     this.selection = new SelectionPanel(game);
     this.debugMenu = new DebugMenu(game, new DevInfo(game));
-    game.bus.on('toast', (msg) => this.toast.show(msg));
+    game.bus.on('toast', (msg) => (typeof msg === 'string' ? this.toast.show(msg) : this.toast.show(msg.text, msg.code)));
     game.bus.on('gameOver', ({ result }) => this.toast.show(result === 'victory' ? 'Victory: every enemy structure destroyed' : 'Defeat: your base has fallen'));
     $('#btn-pause').addEventListener('click', () => this.game.requestMenu());
     const unitCmds = $('#unit-cmds');

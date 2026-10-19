@@ -22,7 +22,7 @@ const apart = 2 * ENGINE.vehicleRadius;
  */
 function openGround(size = 14) {
   const sim = Sim.create('skirmish', 3);
-  const world = sim.placementWorld('player');
+  const world = sim.placementWorld('a');
   for (let ty = 16; ty < 40; ty++) for (let tx = 16; tx < 40; tx++) {
     let ok = true;
     for (let x = tx; x < tx + size && ok; x++) for (let y = ty; y < ty + size && ok; y++) if (world.hasOre(x, y) || world.unitOn(x, y)) ok = false;
@@ -31,7 +31,7 @@ function openGround(size = 14) {
     sim.map.setFootprint(tx, ty, size, false);
     const jackals: Unit[] = [];
     const spawn = (gx: number, gy: number) => {
-      sim.debug('player', { d: 'spawn', unit: 'jackal', team: 'player', gx: tx + gx, gy: ty + gy });
+      sim.debug('a', { d: 'spawn', unit: 'jackal', team: 'a', gx: tx + gx, gy: ty + gy });
       const u = [...sim.units.values()].at(-1)!;
       jackals.push(u);
       return u;
@@ -46,7 +46,7 @@ describe('moving in groups', () => {
     const { sim, tx, ty, spawn, jackals } = openGround();
     for (let i = 0; i < 6; i++) spawn(1.5 + (i % 3), 1.5 + Math.floor(i / 3));
     const to = { gx: tx + 9.5, gy: ty + 9.5 };
-    sim.command('player', { c: 'move', orders: jackals.map((u) => ({ id: u.id, ...to })) });
+    sim.command('a', { c: 'move', orders: jackals.map((u) => ({ id: u.id, ...to })) });
     const ends = jackals.map(dest);
     expect(new Set(ends.map(tile)).size).toBe(6);
     for (const e of ends) expect(Math.hypot(e.gx - to.gx, e.gy - to.gy)).toBeLessThan(2.3);
@@ -61,13 +61,13 @@ describe('moving in groups', () => {
   it('keeps their places relative to each other', () => {
     const { sim, tx, ty, spawn, jackals } = openGround();
     const left = spawn(1.5, 3.5), right = spawn(3.5, 3.5), back = spawn(2.5, 1.5);
-    sim.command('player', { c: 'move', orders: jackals.map((u) => ({ id: u.id, gx: tx + 9.5, gy: ty + 9.5 })) });
+    sim.command('a', { c: 'move', orders: jackals.map((u) => ({ id: u.id, gx: tx + 9.5, gy: ty + 9.5 })) });
     expect(dest(left).gx).toBeLessThan(dest(right).gx);
     expect(dest(back).gy).toBeLessThan(Math.max(dest(left).gy, dest(right).gy));
     // a group spread wide closes up
     const far = openGround();
     const a = far.spawn(0.5, 0.5), b = far.spawn(12.5, 12.5); // (the corners of the patch)
-    far.sim.command('player', { c: 'move', orders: [a, b].map((u) => ({ id: u.id, gx: far.tx + 6.5, gy: far.ty + 6.5 })) });
+    far.sim.command('a', { c: 'move', orders: [a, b].map((u) => ({ id: u.id, gx: far.tx + 6.5, gy: far.ty + 6.5 })) });
     expect(Math.hypot(dest(a).gx - dest(b).gx, dest(a).gy - dest(b).gy)).toBeLessThan(2);
     expect(dest(a).gx).toBeLessThan(dest(b).gx);
   });
@@ -78,7 +78,7 @@ describe('moving in groups', () => {
     const parked = spawn(9.5, 9.5);
     sim.map.setFootprint(tx + 10, ty + 9, 1, true);
     const group = [spawn(1.5, 1.5), spawn(2.5, 1.5), spawn(1.5, 2.5)];
-    sim.command('player', { c: 'move', orders: group.map((u) => ({ id: u.id, ...to })) });
+    sim.command('a', { c: 'move', orders: group.map((u) => ({ id: u.id, ...to })) });
     const ends = group.map((u) => tile(dest(u)));
     expect(ends).not.toContain(tile(parked));
     expect(ends).not.toContain(`${tx + 10},${ty + 9}`);
@@ -90,10 +90,10 @@ describe('moving in groups', () => {
   it('a unit driving through nudges an idle one aside, and they never pile up', () => {
     const { sim, tx, ty, spawn } = openGround();
     const idle = spawn(6.5, 4.5);
-    sim.command('player', { c: 'move', orders: [{ id: idle.id, gx: tx + 6.5, gy: ty + 5.5 }] });
+    sim.command('a', { c: 'move', orders: [{ id: idle.id, gx: tx + 6.5, gy: ty + 5.5 }] });
     run(sim, 2000); // it stopped there after a move
     const mover = spawn(1.5, 5.5);
-    sim.command('player', { c: 'move', orders: [{ id: mover.id, gx: tx + 11.5, gy: ty + 5.5 }] });
+    sim.command('a', { c: 'move', orders: [{ id: mover.id, gx: tx + 11.5, gy: ty + 5.5 }] });
     let min = Infinity;
     for (let t = 0; t < 12000; t += TICK_MS) {
       sim.step();
@@ -110,8 +110,8 @@ describe('moving in groups', () => {
   it('two units meeting head on pass each other', () => {
     const { sim, tx, ty, spawn } = openGround();
     const a = spawn(1.5, 5.5), b = spawn(11.5, 5.5);
-    sim.command('player', { c: 'move', orders: [{ id: a.id, gx: tx + 11.5, gy: ty + 5.5 }] });
-    sim.command('player', { c: 'move', orders: [{ id: b.id, gx: tx + 1.5, gy: ty + 5.5 }] });
+    sim.command('a', { c: 'move', orders: [{ id: a.id, gx: tx + 11.5, gy: ty + 5.5 }] });
+    sim.command('a', { c: 'move', orders: [{ id: b.id, gx: tx + 1.5, gy: ty + 5.5 }] });
     let min = Infinity;
     for (let t = 0; t < 15000; t += TICK_MS) {
       sim.step();
@@ -127,7 +127,7 @@ describe('moving in groups', () => {
     // a wall across the patch with a gap in the middle
     for (let y = ty; y < ty + 14; y++) if (y !== ty + 7) sim.map.setFootprint(tx + 6, y, 1, true);
     for (let i = 0; i < 6; i++) spawn(1.5 + (i % 2), 4.5 + Math.floor(i / 2) * 2);
-    sim.command('player', { c: 'move', orders: jackals.map((u) => ({ id: u.id, gx: tx + 11.5, gy: ty + 7.5 })) });
+    sim.command('a', { c: 'move', orders: jackals.map((u) => ({ id: u.id, gx: tx + 11.5, gy: ty + 7.5 })) });
     run(sim, 40000);
     const at = jackals.map((u) => ({ gx: u.gx, gy: u.gy }));
     run(sim, 2000);
@@ -144,7 +144,7 @@ describe('moving in groups', () => {
     // another unit is parked right on the spot: the newcomer nudges it or stops next to it, never on top of it
     const parked = spawn(9.5, 9.5);
     const mover = spawn(2.5, 2.5);
-    sim.command('player', { c: 'move', orders: [{ id: mover.id, gx: tx + 9.5, gy: ty + 9.5 }] });
+    sim.command('a', { c: 'move', orders: [{ id: mover.id, gx: tx + 9.5, gy: ty + 9.5 }] });
     run(sim, 15000);
     expect(mover.path).toHaveLength(0);
     expect(closest([parked, mover])).toBeGreaterThan(apart - 0.05);
@@ -153,8 +153,8 @@ describe('moving in groups', () => {
 
   it('applies to harvesters too, and the harvest loop still pays', () => {
     const sim = Sim.create('skirmish', 3);
-    const start = sim.players.player.credits;
+    const start = sim.players.a.credits;
     run(sim, 120_000);
-    expect(sim.players.player.credits).toBeGreaterThan(start);
+    expect(sim.players.a.credits).toBeGreaterThan(start);
   });
 });

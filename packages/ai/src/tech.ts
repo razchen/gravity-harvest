@@ -1,20 +1,23 @@
 // What the computer can build and what each thing is good for, worked out from the match catalog (what its side
 // may build) and the rules' numbers. No unit is named here: the army is chosen by role and stats, so it adapts
 // when the roster changes.
-import { ARMORS, BUILDINGS, UNITS, canBuild, canHit, effectiveDps, weapon, type Armor, type Catalog, type Faction } from '@gravity-harvest/rules';
+import { ARMORS, BUILDINGS, UNITS, canBuild, canHit, effectiveDps, weapon, withCapability, type Armor, type Capabilities, type Catalog, type Faction } from '@gravity-harvest/rules';
 import type { MatchCatalog } from '@gravity-harvest/shared';
 
+/** The one entity with a capability (packages/rules/src/capabilities.ts; a test there checks there is one). */
+const only = (cap: keyof Capabilities): string => withCapability(cap)[0];
+
 /**
- * Entities the sim gives a behaviour of their own by ID (see packages/sim): ore is unloaded at a refinery, by
- * harvesters; a Service Bay repairs vehicles; an Assembler deploys into an Assembly Yard. Everything else the AI
- * judges by its numbers.
+ * Entities the sim gives a behaviour of their own, found by their capabilities: ore is unloaded at a refinery, by
+ * harvesters; a Service Bay repairs vehicles; buildings go up from an Assembly Yard, which an Assembler deploys
+ * into. Everything else the AI judges by its numbers.
  */
 export const ENGINE_IDS = {
-  refinery: 'refinery',
-  harvester: 'harvester',
-  serviceBay: 'service_bay',
-  yard: 'assembly_yard',
-  assembler: 'assembler',
+  refinery: only('refinery'),
+  harvester: only('harvester'),
+  serviceBay: only('repairsVehicles'),
+  yard: only('constructs'),
+  assembler: only('deploysInto'),
 } as const;
 
 export const isAircraft = (type: string) => UNITS[type]?.category === 'Aircraft';

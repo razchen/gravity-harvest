@@ -183,20 +183,20 @@ export class BuildPanel {
   private place(id: string): void {
     const d = getCatalog().buildings[id];
     const needs = missingFor(id, this.game.ownedTypes());
-    if (needs) return this.toast.show(`Build a ${needs} first`);
+    if (needs) return this.toast.show(`Build a ${needs} first`, 'needPrerequisite');
     const r = this.game.startPlacement(id);
-    if (r === 'poor') this.toast.show(`Need $${(d.cost - this.game.credits()).toLocaleString()} more`);
-    else if (r !== 'ok') this.toast.show(r);
+    if (r === 'poor') this.toast.show(`Need $${(d.cost - this.game.credits()).toLocaleString()} more`, 'needCredits');
+    else if (r !== 'ok') this.toast.show(r.text, r.code);
     else this.toast.show(`Place the ${d.name}: left-click to build, right-click or Esc to cancel`);
   }
 
   private buy(id: string): void {
     const d = getCatalog().units[id];
     const r = this.game.buyUnit(id);
-    if (r === 'poor') this.toast.show(`Need $${(d.cost - this.game.credits()).toLocaleString()} more`);
-    else if (r === 'cap') this.toast.show('Unit cap reached');
-    else if (r === 'queue') this.toast.show('Production queue is full');
-    else if (typeof r === 'object') this.toast.show(`Build a ${r.needs} first`);
+    if (r === 'poor') this.toast.show(`Need $${(d.cost - this.game.credits()).toLocaleString()} more`, 'needCredits');
+    else if (r === 'cap') this.toast.show('Unit cap reached', 'unitCap');
+    else if (r === 'queue') this.toast.show('Production queue is full', 'queueFull');
+    else if (typeof r === 'object') this.toast.show(`Build a ${r.needs} first`, 'needPrerequisite');
     else this.toast.show(`${d.name} queued`);
   }
 

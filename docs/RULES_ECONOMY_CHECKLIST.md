@@ -10,7 +10,7 @@ and working has been removed. What is left is split into:
 3. **Missing**: not there at all.
 4. **Decided against**: left out on purpose (kept here so nobody re-adds it by accident).
 
-Paths are relative to the repo root. "sim" = `packages/sim/src/sim.ts`.
+Paths are relative to the repo root. "sim" = `packages/sim/src` (each mechanic is a module in `systems/`).
 
 ---
 

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { clearSaves, debug, openGame, openTitle, scene, trackErrors, waitForMatch } from './helpers';
+import { clearSaves, debug, listSaves, openGame, openTitle, scene, trackErrors, waitForMatch } from './helpers';
 
 test.describe('menus, saving and match end', () => {
   test.beforeEach(async ({ page }) => {
@@ -10,6 +10,7 @@ test.describe('menus, saving and match end', () => {
   test('title screen: Continue is disabled with no saves; New Game starts a match', async ({ page }) => {
     const errors = trackErrors(page);
     await page.reload();
+    await expect(page.locator('.title-screen')).toBeVisible({ timeout: 20_000 }); // the assets load again first
     await expect(page.getByRole('button', { name: 'Continue' })).toBeDisabled();
     await expect(page.locator('.menu-sub')).toHaveText('No saved games yet');
     await page.getByRole('button', { name: 'New Game' }).click();
@@ -101,7 +102,7 @@ test.describe('menus, saving and match end', () => {
     await expect(page.locator('#credits')).toHaveText('777');
     await page.evaluate(() => (window as any).flow.autosave());
     await page.evaluate(() => (window as any).flow.autosave()); // second write overwrites the same slot
-    const saves = await page.evaluate(async () => (await (await fetch('/api/saves')).json()) as { kind: string; name: string }[]);
+    const saves = await listSaves(page);
     expect(saves).toEqual([expect.objectContaining({ kind: 'auto', name: 'Autosave' })]);
     await expect(page.locator('#toast')).toHaveText('Game autosaved');
 
@@ -122,17 +123,17 @@ test.describe('menus, saving and match end', () => {
     await page.evaluate(() => localStorage.setItem('gravity-harvest:settings', JSON.stringify({ autosave: true, autosaveMinutes: 1 })));
     await openGame(page);
     await debug(page, { d: 'addTime', ms: 61_000 }); // fast-forward the match clock
-    await expect.poll(async () => (await page.evaluate(async () => (await (await fetch('/api/saves?kind=auto')).json()) as unknown[])).length,
+    await expect.poll(async () => (await listSaves(page, '?kind=auto')).length,
       { timeout: 15_000 }).toBe(1);
   });
 
   test('victory leads to the end screen with stats; Play Again starts a fresh match', async ({ page }) => {
     await openGame(page);
     await page.evaluate(() => (window as any).flow.autosave()); // the finished match's autosave gets cleared
-    await debug(page, { d: 'destroyTeam', team: 'enemy', units: false, buildings: true });
+    await debug(page, { d: 'destroyTeam', team: 'b', units: true, buildings: true }); // a side is out with nothing left
     await expect(page.locator('.gameover-title')).toHaveText('VICTORY', { timeout: 10_000 });
-    await expect(page.locator('.stat').filter({ hasText: 'Structures destroyed' }).locator('.stat-value')).toHaveText('5');
-    expect(await page.evaluate(async () => (await (await fetch('/api/saves?kind=auto')).json()).length)).toBe(0);
+    await expect(page.locator('.stat').filter({ hasText: 'Structures destroyed' }).locator('.stat-value')).toHaveText('3'); // its yard, power plant and refinery
+    expect(await listSaves(page, '?kind=auto')).toHaveLength(0);
     await page.getByRole('button', { name: 'Play Again' }).click();
     await waitForMatch(page);
     await expect(page.locator('#credits')).toHaveText('15,000');
@@ -141,7 +142,7 @@ test.describe('menus, saving and match end', () => {
 
   test('defeat leads to the end screen; Main Menu goes back to the title', async ({ page }) => {
     await openGame(page);
-    await debug(page, { d: 'destroyTeam', team: 'player', units: true, buildings: true });
+    await debug(page, { d: 'destroyTeam', team: 'a', units: true, buildings: true });
     await expect(page.locator('.gameover-title')).toHaveText('DEFEAT', { timeout: 10_000 });
     await page.getByRole('button', { name: 'Main Menu' }).click();
     await expect(page.locator('.title-screen')).toBeVisible();

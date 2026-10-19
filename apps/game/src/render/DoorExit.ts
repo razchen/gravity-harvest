@@ -12,7 +12,7 @@ export const OUT_DIR = 12;
 /** A unit starts this far back inside the doorway (tiles). */
 const INSIDE_TILES = 0.5;
 /**
- * It's out this far past the building's front (tiles): the sim's first waypoint for a new unit (sim.ts spawnFighter:
+ * It's out this far past the building's front (tiles): the sim's first waypoint for a new unit (systems/construction.ts spawnFighter:
  * it appears half a tile out, then drives a tile straight on).
  */
 const OUT_TILES = 1.5;

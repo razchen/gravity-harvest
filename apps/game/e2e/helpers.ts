@@ -67,13 +67,25 @@ export async function debug(page: Page, cmd: Record<string, unknown>): Promise<v
 /** IDs of the human's units of a type, as currently drawn. */
 export function myUnits(page: Page, type: string): Promise<number[]> {
   return page.evaluate((t) => [...(window as any).game.scene.getScene('game').units.values()]
-    .filter((u: any) => u.team === 'player' && u.type === t).map((u: any) => u.id as number), type);
+    .filter((u: any) => u.team === 'a' && u.type === t).map((u: any) => u.id as number), type);
 }
 
-/** Delete every save on the (throwaway) test server. */
+/**
+ * The page's saves (`query` e.g. '?kind=auto'), asked for the way the game does: as the player id this browser keeps
+ * (the server only shows a player their own saves). Empty before the page has made an id.
+ */
+export function listSaves(page: Page, query = ''): Promise<{ id: string; kind: string; name: string }[]> {
+  return page.evaluate(async (q) => {
+    const id = localStorage.getItem('gravity-harvest:player-id');
+    return id ? (await (await fetch(`/api/saves${q}`, { headers: { 'x-player-id': id } })).json()) : [];
+  }, query);
+}
+
+/** Delete every save of the page's player on the (throwaway) test server. */
 export async function clearSaves(page: Page): Promise<void> {
-  await page.evaluate(async () => {
-    const list = (await (await fetch('/api/saves')).json()) as { id: string }[];
-    await Promise.all(list.map((s) => fetch(`/api/saves/${s.id}`, { method: 'DELETE' })));
-  });
+  const list = await listSaves(page);
+  await page.evaluate(async (ids) => {
+    const headers = { 'x-player-id': localStorage.getItem('gravity-harvest:player-id')! };
+    await Promise.all(ids.map((id) => fetch(`/api/saves/${id}`, { method: 'DELETE', headers })));
+  }, list.map((s) => s.id));
 }

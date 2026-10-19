@@ -6,7 +6,7 @@ import { ATLASES, TERRAIN, sprites, type SpriteMeta } from '../assets/manifest';
 import { CAMERA, DEPTH, DPR, TILE_H } from '../config/game';
 import { ConstructionView } from '../render/Construction';
 import { BuildingDamage, DESTRUCTION } from '../render/Destruction';
-import { footprint } from '@gravity-harvest/sim/layout';
+import { facing, footprint } from '@gravity-harvest/sim/layout';
 import { alongBarrel, iso } from '../core/geometry';
 import { Effects } from '../render/Effects';
 import { IMPACT_STYLES, type ImpactStyle } from '../render/Impact';
@@ -49,8 +49,6 @@ export default function mount(): void {
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const view = $<HTMLDivElement>('view');
   const rand = (a: number, b: number) => a + Math.random() * (b - a);
-  /** Direction (of `steps`) of a grid vector, as the sim's facing(): 0 along +gx, counter-clockwise from above. */
-  const facing = (dgx: number, dgy: number, steps: number) => ((Math.round(Math.atan2(-dgy, dgx) / ((2 * Math.PI) / steps)) % steps) + steps) % steps;
 
   /** A burning-spot look: flames at a roof spot (or none for the particle baseline) and the smoke above it. */
   interface FireTest { title: string; note: string; make: (s: FxScene, x: number, y: number) => void }
@@ -281,11 +279,11 @@ export default function mount(): void {
             // falls short: straight from the barrel, dipping onto the ground under its line
             const p = alongBarrel(muzzle, aim, n, { x, y: y + rand(0.2, 0.4) * size * TILE_H });
             const g = { x: p.x, y: p.y + height };
-            fx.shot('shell', muzzle, { x: g.x, y: g.y - 4 }, g, true, { depth: 0.3 });
+            fx.fire('shell', muzzle, [], { x: g.x, y: g.y - 4 }, g, true, { depth: 0.3 });
           } else {
             // straight along the barrel, landing where that line crosses the building (nearer or deeper each time)
             const to = alongBarrel(muzzle, aim, n, { x, y: y - 40 * size + rand(-18, 18) });
-            fx.shot('shell', muzzle, to, undefined, true, { depth: v.base.depth, targets: [v.base] });
+            fx.fire('shell', muzzle, [], to, undefined, true, { depth: v.base.depth, targets: [v.base] });
           }
         };
         this.time.addEvent({ delay: SHELL_EVERY, startAt: i * 180, loop: true, callback: shoot });

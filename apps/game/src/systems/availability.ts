@@ -3,6 +3,7 @@
 // has the final say; this keeps the HUD honest and fast.
 import type { MatchCatalog } from '@gravity-harvest/shared';
 import { missingRequirements } from '@gravity-harvest/rules/deps';
+import type { ToastCode } from '../data/toasts';
 
 let catalog: MatchCatalog = { buildings: {}, units: {}, assumeOwned: [], names: {}, queueMax: 0 };
 let assumeOwned: ReadonlySet<string> = new Set();
@@ -40,9 +41,9 @@ export function trainResult(type: string, credits: number, owned: string[], pop:
  * Why a building can't be started now, besides money and prerequisites: buildings go up from an Assembly Yard, one at a
  * time, and one defence at a time beside it. `own`: the human's buildings (a yard still unpacking doesn't count).
  */
-export function buildBlocker(type: string, own: readonly { type: string; built: boolean }[]): string | null {
-  if (!assumeOwned.has('assembly_yard') && !own.some((b) => b.type === 'assembly_yard' && b.built)) return 'Needs an Assembly Yard';
+export function buildBlocker(type: string, own: readonly { type: string; built: boolean }[]): { text: string; code: ToastCode } | null {
+  if (!assumeOwned.has('assembly_yard') && !own.some((b) => b.type === 'assembly_yard' && b.built)) return { text: 'Needs an Assembly Yard', code: 'needAssemblyYard' };
   const defence = !!catalog.buildings[type]?.defense;
   const busy = own.find((b) => !b.built && b.type !== 'assembly_yard' && !!catalog.buildings[b.type]?.defense === defence);
-  return busy ? `Already building a ${name(busy.type)}` : null;
+  return busy ? { text: `Already building a ${name(busy.type)}`, code: 'alreadyBuilding' } : null;
 }

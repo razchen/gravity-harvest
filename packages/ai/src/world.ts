@@ -23,6 +23,22 @@ export interface Sighting {
   atMs: number;
 }
 
+/**
+ * What the World remembers between views, as plain data (for saving the computer's memory with a match). The rest
+ * (the map, its scenery and fields) comes from the hello again, and each view replaces what it says about now.
+ * Lists keep the order the World's maps had: that order decides ties, so a restored computer plays the same.
+ */
+export interface WorldMemory {
+  fog: string;
+  /** Ore tiles and the rocks on each, in the order they were first known. */
+  ore: { tx: number; ty: number; richness: number; rocks: number[] }[];
+  enemyUnits: Sighting[];
+  lastShot: [number, number][];
+  lastHit: [number, { atMs: number; from: number; gx: number; gy: number }][];
+  /** Events seen since the last think. */
+  events: MatchEvent[];
+}
+
 /** How long an enemy unit out of sight is still counted (ms). */
 const FORGET_UNITS_MS = 150_000;
 
@@ -57,7 +73,7 @@ export class World {
   constructor(hello: MatchHello) {
     this.width = hello.map.width;
     this.height = hello.map.height;
-    this.team = hello.team;
+    this.team = hello.you;
     for (const s of hello.scenery) {
       const k = sceneryKind(s.kind);
       if (k.category === 'vent') this.vents.push({ gx: s.tx + k.size / 2, gy: s.ty + k.size / 2 });
@@ -151,6 +167,37 @@ export class World {
       this.events.push(e);
     }
     for (const [id, s] of this.enemyUnits) if (v.timeMs - s.atMs > FORGET_UNITS_MS) this.enemyUnits.delete(id);
+  }
+
+  /** What it remembers, as plain data (see WorldMemory). */
+  memory(): WorldMemory {
+    return {
+      fog: this.fog,
+      ore: [...this.ore.values()].map((t) => ({ tx: t.tx, ty: t.ty, richness: t.richness, rocks: [...t.rocks] })),
+      enemyUnits: [...this.enemyUnits.values()].map((s) => ({ ...s })),
+      lastShot: [...this.lastShot],
+      lastHit: [...this.lastHit].map(([id, h]) => [id, { ...h }]),
+      events: JSON.parse(JSON.stringify(this.events)) as MatchEvent[],
+    };
+  }
+
+  /** Take back what a `memory()` held (on a World made from the same hello). */
+  remember(m: WorldMemory): void {
+    this.fog = m.fog;
+    this.ore.clear();
+    this.rockTile.clear();
+    for (const t of m.ore) {
+      const k = this.key(t.tx, t.ty);
+      this.ore.set(k, { tx: t.tx, ty: t.ty, richness: t.richness, rocks: new Set(t.rocks) });
+      for (const r of t.rocks) this.rockTile.set(r, k);
+    }
+    this.enemyUnits.clear();
+    for (const s of m.enemyUnits) this.enemyUnits.set(s.id, { ...s });
+    this.lastShot.clear();
+    for (const [id, ms] of m.lastShot) this.lastShot.set(id, ms);
+    this.lastHit.clear();
+    for (const [id, h] of m.lastHit) this.lastHit.set(id, { ...h });
+    this.events = JSON.parse(JSON.stringify(m.events)) as MatchEvent[];
   }
 
   isOwn(id: number): boolean {

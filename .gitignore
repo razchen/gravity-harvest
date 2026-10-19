@@ -35,3 +35,11 @@ CLAUDE.md
 # Game assets (sprites, previews, audio, music...): on S3, not in git. npm run assets:pull downloads them,
 # npm run assets:push uploads a new version (tools/assets/assets.mjs, apps/game/assets.json).
 apps/game/public/assets
+
+# Claude Code: agent worktrees and personal settings
+.claude/worktrees
+.claude/settings.local.json
+
+# Python bytecode
+__pycache__
+*.pyc

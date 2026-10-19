@@ -126,7 +126,7 @@ export const arcBolt: Look = (kit, s) => {
   let arcs: Point[][] = [];
   let nextCrackle = 0;
   let age = 0;
-  kit.landed('bullet', to);
+  kit.landed(to);
   hitFlash(kit.scene, s.hit?.targets, whiten(colour, A.hitWhiten));
 
   const live: Live = {

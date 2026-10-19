@@ -93,7 +93,7 @@ export const twinPlasma: Look = (kit, s) => {
     const to = { x: s.to.x + (-dy / len) * side, y: s.to.y + (dx / len) * side * 0.6 };
     kit.add(ball(kit.scene, s, gun, to, -i * TWIN_PLASMA.gapMs, () => {
       // one sound for the pair
-      if (!sounded) kit.landed('bullet', to);
+      if (!sounded) kit.landed(to);
       sounded = true;
     }));
   });

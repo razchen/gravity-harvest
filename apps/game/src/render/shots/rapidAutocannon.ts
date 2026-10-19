@@ -186,7 +186,7 @@ export const rapidAutocannon: Look = (kit, s) => {
           fx.dust.emitParticleAt(r.to.x, r.to.y, RAPID.dustPuffs);
           fx.grit.emitParticleAt(r.to.x, r.to.y, RAPID.grit);
         } else {
-          kit.landed('bullet', r.to);
+          kit.landed(r.to);
           fx.flash.setParticleTint(RAPID.sparkColours[0]).emitParticleAt(r.to.x, r.to.y, 1);
           for (let i = 0; i < RAPID.sparks; i++) fx.sparks.setParticleTint(pickOf(RAPID.sparkColours)).emitParticleAt(r.to.x, r.to.y, 1);
         }

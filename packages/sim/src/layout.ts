@@ -1,7 +1,11 @@
 // Match layout and engine constants that are not secret: what is enabled, footprints, placement rules.
-// No rules data is imported here (types only), so the browser can use this for placement previews and
-// build-panel availability without receiving the full rules.
+// No rules data is imported here (only types and the browser-safe capabilities), so the browser can use this for
+// placement previews and build-panel availability without receiving the full rules.
 import type { Catalog } from '@gravity-harvest/rules/deps';
+import { capabilitiesOf, withCapability } from '@gravity-harvest/rules/public';
+
+// the browser draws units facing the way the sim works it out (geometry.ts has no rules data either)
+export { facing } from './geometry.js';
 
 /** Simulation step. */
 export const TICK_MS = 50;
@@ -39,7 +43,11 @@ export const FACTION_COUNTERPART: Readonly<Record<string, string>> = {
   gravity_lab: 'gravity_forge', gravity_forge: 'gravity_lab',
 };
 
-/** Footprint (size x size tiles) of each building. Art-driven, so it lives here rather than in the spreadsheet. */
+/**
+ * Footprint (size x size tiles) of each building. Art-driven, so it lives here rather than in the spreadsheet; its
+ * model is rendered to fill the same size (tools/blender/construction/<id>.json `footprint`, checked by the game's
+ * content tests).
+ */
 export const FOOTPRINT: Readonly<Record<string, number>> = {
   assembly_yard: 4,
   power_plant: 3,
@@ -58,24 +66,18 @@ export const FOOTPRINT: Readonly<Record<string, number>> = {
   hound_kennel: 2,
 };
 
-export const footprint = (type: string): number => FOOTPRINT[type] ?? 3;
+/** A building's footprint. One without a size is a mistake (a new building missed here), not a 3 x 3 to guess at. */
+export function footprint(type: string): number {
+  const n = FOOTPRINT[type];
+  if (n === undefined) throw new Error(`No footprint for building "${type}" (add it to FOOTPRINT in packages/sim/src/layout.ts)`);
+  return n;
+}
 
-/**
- * Vehicles whose turret turns on its own (their art has a turret layer): they aim it at what they shoot instead of
- * turning the hull. Art-driven, like the footprints.
- */
-export const TURRET_UNITS: ReadonlySet<string> = new Set(['jackal']);
+/** Vehicles whose turret turns on its own (the `turret` capability, packages/rules/src/capabilities.ts). */
+export const TURRET_UNITS: ReadonlySet<string> = new Set(withCapability('turret'));
 
-/**
- * The hovering units (art-driven: render_vehicle.py `hover`): they take the rules of the soldiers they replaced (they
- * board transports, a Service Bay doesn't repair them) but their bodies are bigger (ENGINE.hoverRadius).
- */
-export const HOVER_UNITS: ReadonlySet<string> = new Set([
-  'hound', 'lancer', 'operator', 'engineer', 'medic', 'raider', 'infiltrator', 'grenadier', 'breaker',
-]);
-
-/** Units that repair their side's damaged buildings, working at them from outside (the Engineer). */
-export const FIXERS: ReadonlySet<string> = new Set(['engineer']);
+/** The hovering units (the `hover` capability): the browser draws them hovering, the sim gives them bigger bodies. */
+export const HOVER_UNITS: ReadonlySet<string> = new Set(withCapability('hover'));
 
 /**
  * Grid direction out of a transport's side door, facing `dir` (of 16): `side` 1 is its left (a quarter turn
@@ -432,14 +434,14 @@ export function checkPlacement(type: string, tx: number, ty: number, w: Placemen
       problem ??= why;
     }
   }
-  if (type === 'refinery') {
+  if (capabilitiesOf(type).refinery) {
     for (const t of refineryDock(tx, ty).ramp) {
       const bad = w.isBlocked(t.tx, t.ty);
       tiles.push({ ...t, bad, extra: true });
       if (bad) problem ??= 'The ramp needs open ground in front';
     }
   }
-  if (type === 'service_bay') {
+  if (capabilitiesOf(type).repairsVehicles) {
     for (const t of serviceBayPad(tx, ty).apron) {
       const bad = w.isBlocked(t.tx, t.ty);
       tiles.push({ ...t, bad, extra: true });

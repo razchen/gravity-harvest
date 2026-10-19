@@ -1,12 +1,24 @@
 // Match protocol: the browser and the server talk over one WebSocket per match at MATCH_PATH.
 // The server runs the simulation; the browser sends orders and draws the TeamView it is sent.
 // A TeamView only ever contains what that team may know (its own state, plus what its fog reveals).
+// The socket URL carries the player's anonymous id (`?player=<id>`, see player.ts); saves the match loads and writes
+// are that player's.
 
 import type { SaveGameSummary, SaveKind } from './saves.js';
 
 export const MATCH_PATH = '/api/match';
 
-export type TeamId = 'player' | 'enemy';
+/**
+ * The two sides of a match, by seat: `a` starts in the scenario's first base, `b` in the second. Neither is "you": the
+ * hello says which seat a connection plays (`MatchHello.you`), so a human can sit on either side and the computer
+ * takes the other.
+ */
+export type TeamId = 'a' | 'b';
+export const TEAMS: readonly TeamId[] = ['a', 'b'];
+/** The other side. */
+export const opponentOf = (t: TeamId): TeamId => (t === 'a' ? 'b' : 'a');
+/** One value per side, made by `make` (instead of writing out `{ a: ..., b: ... }`). */
+export const perTeam = <T>(make: (t: TeamId) => T): Record<TeamId, T> => ({ a: make('a'), b: make('b') });
 
 export interface GridPoint {
   gx: number;
@@ -79,8 +91,10 @@ export interface StartMatch {
   /** New match on a scenario, or resume a saved game. */
   scenario?: string;
   saveId?: string;
-  /** New match: the side you play (the computer takes the other). Default: the scenario's. */
+  /** New match: the faction you play (the computer takes the other). Default: the scenario's. */
   faction?: PlayableFaction;
+  /** New match: the seat you play, i.e. which start (the computer takes the other). Default: the scenario's. A save keeps its own. */
+  seat?: TeamId;
   /** New match: how well the computer plays. Default: DEFAULT_DIFFICULTY. A save keeps its own. */
   difficulty?: Difficulty;
   /** Write the autosave slot when the connection closes mid-match. */
@@ -89,6 +103,11 @@ export interface StartMatch {
 
 export type ClientMessage =
   | ({ t: 'start' } & StartMatch)
+  /**
+   * Back into this player's match after the connection dropped: the server keeps it, paused, for a while. Answered
+   * with a hello and a full view, as at the start, or an error when there's no match to go back to.
+   */
+  | { t: 'rejoin' }
   | { t: 'cmd'; cmd: Command }
   | { t: 'pause' }
   | { t: 'resume' }
@@ -230,7 +249,16 @@ export type MatchEvent =
   | { e: 'boarded'; unit: number; type: string; transport: number; gx: number; gy: number; side: 1 | -1 }
   /** A passenger came out of a transport through the door on `side`, down its ramp to where the view has him. */
   | { e: 'disembarked'; unit: number; transport: number; side: 1 | -1 }
-  | { e: 'toast'; text: string };
+  /** A message for the player: `text` to show (it may be reworded), `code` for what it means (the browser picks its sound by it). */
+  | { e: 'toast'; text: string; code: ToastCode };
+
+/** What a toast is about: stable, unlike its text. */
+export type ToastCode =
+  // refusals: an order the server won't carry out, and why
+  | 'needCredits' | 'needPrerequisite' | 'needAssemblyYard' | 'alreadyBuilding' | 'cantPlace' | 'cantDeploy'
+  | 'unitCap' | 'queueFull' | 'notDamaged' | 'repairNoCredits'
+  // news
+  | 'sold' | 'cancelled' | 'buildingReady' | 'unitReady' | 'repaired' | 'buildingDestroyed' | 'enemyBuildingDestroyed';
 
 /** Everything one team is allowed to know right now. */
 export interface TeamView {
@@ -304,7 +332,8 @@ export interface MatchCatalog {
 
 export interface MatchHello {
   scenario: string;
-  team: TeamId;
+  /** The seat this connection plays. */
+  you: TeamId;
   map: { width: number; height: number };
   /** Where the camera starts. */
   camera: GridPoint;
@@ -314,10 +343,12 @@ export interface MatchHello {
   scenery: SceneryView[];
   catalog: MatchCatalog;
   debug: boolean;
-  /** The side you're playing. */
-  faction: PlayableFaction;
+  /** Each side's faction (both can be the same). */
+  factions: Record<TeamId, PlayableFaction>;
   /** How well the computer opponent plays. */
   difficulty: Difficulty;
+  /** How long the server keeps the match waiting, paused, for this connection to come back (`rejoin`) if it drops (ms). */
+  reconnectMs?: number;
 }
 
 export type ServerMessage =

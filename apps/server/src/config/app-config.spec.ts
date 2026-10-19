@@ -10,6 +10,7 @@ describe('loadConfig', () => {
     expect(isAbsolute(config.databasePath)).toBe(true);
     expect(config.databasePath.endsWith('data/gravity-harvest.sqlite')).toBe(true);
     expect(config.bodyLimit).toBe('10mb');
+    expect(config.reconnectGraceMs).toBe(60_000);
   });
 
   it('parses overrides', () => {
@@ -17,12 +18,21 @@ describe('loadConfig', () => {
       PORT: '4000',
       DATABASE_PATH: ':memory:',
       CORS_ORIGIN: 'http://a.test, http://b.test',
+      RECONNECT_GRACE_MS: '5000',
     });
     expect(config).toMatchObject({
       port: 4000,
       databasePath: ':memory:',
       corsOrigins: ['http://a.test', 'http://b.test'],
+      reconnectGraceMs: 5000,
     });
+  });
+
+  it('syncs the schema and accepts debug commands only outside production', () => {
+    expect(loadConfig({})).toMatchObject({ dbSynchronize: true, debugCommands: true });
+    expect(loadConfig({ NODE_ENV: 'production' })).toMatchObject({ dbSynchronize: false, debugCommands: false });
+    expect(loadConfig({ NODE_ENV: 'production', DB_SYNCHRONIZE: 'true' }).dbSynchronize).toBe(true);
+    expect(loadConfig({ DB_SYNCHRONIZE: 'false' }).dbSynchronize).toBe(false);
   });
 
   it('rejects an invalid port', () => {

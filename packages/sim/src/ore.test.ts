@@ -57,7 +57,7 @@ describe('ore density and growth (rules from the Economy sheet)', () => {
   it('a field nobody harvests grows back', () => {
     const sim = Sim.create('skirmish', 7);
     const far = sim.ore.nearestField(72, 9);
-    sim.debug('player', { d: 'destroyTeam', team: 'enemy', units: true, buildings: false }); // nobody: not even the enemy's harvester
+    sim.debug('a', { d: 'destroyTeam', team: 'b', units: true, buildings: false }); // nobody: not even the enemy's harvester
     for (const t of sim.ore.tiles.values()) if (t.field === far) for (const r of t.rocks) r.amount = 1;
     const thin = units(sim, far);
     run(sim, 5 * 60_000); // the player's harvester is still busy at home
@@ -67,7 +67,7 @@ describe('ore density and growth (rules from the Economy sheet)', () => {
   it('a mined-out field never vanishes: its heart grows back on its own, and spread builds on it', () => {
     const sim = Sim.create('skirmish', 7);
     const far = sim.ore.nearestField(72, 9);
-    sim.debug('player', { d: 'destroyTeam', team: 'enemy', units: true, buildings: false }); // nobody: not even the enemy's harvester
+    sim.debug('a', { d: 'destroyTeam', team: 'b', units: true, buildings: false }); // nobody: not even the enemy's harvester
     for (const t of sim.ore.tiles.values()) if (t.field === far) t.rocks = [];
     run(sim, 10 * 60_000);
     expect(units(sim, far)).toBeGreaterThan(10);
@@ -97,7 +97,7 @@ describe('ore density and growth (rules from the Economy sheet)', () => {
 
 describe('which ore harvesters go for', () => {
   type Seen = { isExplored: (tx: number, ty: number, size: number) => boolean };
-  const fogOf = (sim: Sim, team: 'player' | 'enemy') => (sim as unknown as { fog: Record<string, Seen> }).fog[team];
+  const fogOf = (sim: Sim, team: 'a' | 'b') => (sim as unknown as { fog: Record<string, Seen> }).fog[team];
   const centreOf = (b: { tx: number; ty: number; size: number }) => ({ gx: b.tx + b.size / 2, gy: b.ty + b.size / 2 });
   const dist = (t: { tx: number; ty: number }, p: { gx: number; gy: number }) => Math.hypot(t.tx + 0.5 - p.gx, t.ty + 0.5 - p.gy);
 
@@ -105,7 +105,7 @@ describe('which ore harvesters go for', () => {
     let checked = 0;
     for (const seed of [1, 7, 42]) {
       const sim = Sim.create('skirmish', seed);
-      for (const team of ['player', 'enemy'] as const) {
+      for (const team of ['a', 'b'] as const) {
         const ref = [...sim.buildings.values()].find((b) => b.team === team && b.type === 'refinery');
         const h = [...sim.units.values()].find((u) => u.team === team && u.kind === 'harvester');
         if (!ref || h?.kind !== 'harvester') continue;
@@ -139,11 +139,11 @@ describe('gravity vents', () => {
   /** Skirmish with only the vent's ore left, nobody but `harvesters` of the player's, sent out from its home refinery. */
   const ventOnly = (harvesters: number) => {
     const sim = Sim.create('skirmish', 7);
-    sim.debug('player', { d: 'reveal', on: true });
-    sim.debug('player', { d: 'destroyTeam', team: 'enemy', units: true, buildings: false });
+    sim.debug('a', { d: 'reveal', on: true });
+    sim.debug('a', { d: 'destroyTeam', team: 'b', units: true, buildings: false });
     for (const [k, t] of sim.ore.tiles) if (!sim.ore.isVentField(t.field)) sim.ore.tiles.delete(k); // the home fields are dry
-    for (const u of [...sim.units.values()]) if (u.team === 'player') sim.killUnit(u);
-    for (let i = 0; i < harvesters; i++) sim.debug('player', { d: 'spawn', unit: 'harvester', team: 'player', gx: 9 + i, gy: 12 });
+    for (const u of [...sim.units.values()]) if (u.team === 'a') sim.killUnit(u);
+    for (let i = 0; i < harvesters; i++) sim.debug('a', { d: 'spawn', unit: 'harvester', team: 'a', gx: 9 + i, gy: 12 });
     return sim;
   };
 
@@ -180,7 +180,7 @@ describe('gravity vents', () => {
     // the late game: home fields dry, one harvester working the vent from its home refinery (about 30 tiles away)
     const sim = ventOnly(1);
     const field = sim.ore.vents[0].field;
-    const earned = () => sim.players.player.stats.creditsEarned;
+    const earned = () => sim.players.a.stats.creditsEarned;
     run(sim, 10 * 60_000);
     const first = earned();
     run(sim, 10 * 60_000);
@@ -197,12 +197,12 @@ describe('gravity vents', () => {
     const two = ventOnly(2);
     run(one, 10 * 60_000);
     run(two, 10 * 60_000);
-    const a = one.players.player.stats.creditsEarned;
-    const b = two.players.player.stats.creditsEarned;
+    const a = one.players.a.stats.creditsEarned;
+    const b = two.players.a.stats.creditsEarned;
     run(one, 10 * 60_000);
     run(two, 10 * 60_000);
-    const lateOne = (one.players.player.stats.creditsEarned - a) / 10;
-    const lateTwo = (two.players.player.stats.creditsEarned - b) / 10;
+    const lateOne = (one.players.a.stats.creditsEarned - a) / 10;
+    const lateTwo = (two.players.a.stats.creditsEarned - b) / 10;
     // measured: one about $1,260 a minute, two about $1,440 between them: a second harvester adds little once it's drained
     expect(lateTwo).toBeLessThan(lateOne * 1.4);
     expect(lateTwo).toBeLessThan(1800);
@@ -214,7 +214,7 @@ describe('gravity vents', () => {
     expect(back.ore.vents).toEqual(sim.ore.vents);
     const v = back.ore.vents[0];
     expect(back.map.isBlocked(v.tx, v.ty)).toBe(true);
-    expect(back.hello('player').scenery.some((s) => s.kind === VENT_KIND && s.tx === v.tx && s.ty === v.ty)).toBe(true);
+    expect(back.hello('a').scenery.some((s) => s.kind === VENT_KIND && s.tx === v.tx && s.ty === v.ty)).toBe(true);
     for (const t of back.ore.tiles.values()) if (t.field === v.field) t.rocks = [];
     run(back, ECONOMY.resourceGrowthIntervalSec * 1000 + TICK_MS);
     expect(units(back, v.field)).toBeGreaterThan(0);
