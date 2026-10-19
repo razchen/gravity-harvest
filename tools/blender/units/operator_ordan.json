@@ -1,0 +1,11 @@
+{
+ "length_tiles": 0.9,
+ "model": "hover/operator_ordan.glb",
+ "hover": {
+  "height": 0.28,
+  "glow": [0.55,0.12,1.0]
+ },
+ "muzzle": [
+  [0.49, 0.0, 0.12]
+ ]
+}

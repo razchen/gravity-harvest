@@ -1,0 +1,668 @@
+{
+ "frames": {
+  "v_engineer_sable_5": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 100,
+    "h": 137
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 13,
+    "y": 26,
+    "w": 100,
+    "h": 137
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_7": {
+   "frame": {
+    "x": 102,
+    "y": 0,
+    "w": 91,
+    "h": 137
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 26,
+    "w": 91,
+    "h": 137
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_4": {
+   "frame": {
+    "x": 195,
+    "y": 0,
+    "w": 119,
+    "h": 135
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 3,
+    "y": 28,
+    "w": 119,
+    "h": 135
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_6": {
+   "frame": {
+    "x": 316,
+    "y": 0,
+    "w": 77,
+    "h": 135
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 30,
+    "y": 25,
+    "w": 77,
+    "h": 135
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_8": {
+   "frame": {
+    "x": 395,
+    "y": 0,
+    "w": 112,
+    "h": 135
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 21,
+    "y": 28,
+    "w": 112,
+    "h": 135
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_3": {
+   "frame": {
+    "x": 509,
+    "y": 0,
+    "w": 128,
+    "h": 130
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 31,
+    "w": 128,
+    "h": 130
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_9": {
+   "frame": {
+    "x": 639,
+    "y": 0,
+    "w": 125,
+    "h": 130
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 11,
+    "y": 31,
+    "w": 125,
+    "h": 130
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_2": {
+   "frame": {
+    "x": 766,
+    "y": 0,
+    "w": 124,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 35,
+    "w": 124,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_10": {
+   "frame": {
+    "x": 892,
+    "y": 0,
+    "w": 124,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 35,
+    "w": 124,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_1": {
+   "frame": {
+    "x": 1018,
+    "y": 0,
+    "w": 125,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 125,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_11": {
+   "frame": {
+    "x": 1145,
+    "y": 0,
+    "w": 128,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 38,
+    "w": 128,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_0": {
+   "frame": {
+    "x": 1275,
+    "y": 0,
+    "w": 112,
+    "h": 111
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 3,
+    "y": 39,
+    "w": 112,
+    "h": 111
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_13": {
+   "frame": {
+    "x": 1389,
+    "y": 0,
+    "w": 100,
+    "h": 111
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 38,
+    "w": 100,
+    "h": 111
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_15": {
+   "frame": {
+    "x": 1491,
+    "y": 0,
+    "w": 92,
+    "h": 111
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 13,
+    "y": 38,
+    "w": 92,
+    "h": 111
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_12": {
+   "frame": {
+    "x": 1585,
+    "y": 0,
+    "w": 119,
+    "h": 110
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 14,
+    "y": 39,
+    "w": 119,
+    "h": 110
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_14": {
+   "frame": {
+    "x": 1706,
+    "y": 0,
+    "w": 77,
+    "h": 108
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 30,
+    "y": 38,
+    "w": 77,
+    "h": 108
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s8": {
+   "frame": {
+    "x": 1785,
+    "y": 0,
+    "w": 122,
+    "h": 66
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 39,
+    "y": 145,
+    "w": 122,
+    "h": 66
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s15": {
+   "frame": {
+    "x": 1909,
+    "y": 0,
+    "w": 98,
+    "h": 65
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 137,
+    "w": 98,
+    "h": 65
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s0": {
+   "frame": {
+    "x": 2009,
+    "y": 0,
+    "w": 95,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 143,
+    "w": 95,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s12": {
+   "frame": {
+    "x": 2106,
+    "y": 0,
+    "w": 121,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 128,
+    "w": 121,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s13": {
+   "frame": {
+    "x": 2229,
+    "y": 0,
+    "w": 106,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 9,
+    "y": 129,
+    "w": 106,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s7": {
+   "frame": {
+    "x": 2337,
+    "y": 0,
+    "w": 110,
+    "h": 63
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 39,
+    "y": 148,
+    "w": 110,
+    "h": 63
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s14": {
+   "frame": {
+    "x": 2449,
+    "y": 0,
+    "w": 94,
+    "h": 61
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 135,
+    "w": 94,
+    "h": 61
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s9": {
+   "frame": {
+    "x": 2545,
+    "y": 0,
+    "w": 120,
+    "h": 58
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 40,
+    "y": 145,
+    "w": 120,
+    "h": 58
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s11": {
+   "frame": {
+    "x": 2667,
+    "y": 0,
+    "w": 127,
+    "h": 58
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 16,
+    "y": 134,
+    "w": 127,
+    "h": 58
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s6": {
+   "frame": {
+    "x": 2796,
+    "y": 0,
+    "w": 95,
+    "h": 57
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 154,
+    "w": 95,
+    "h": 57
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s1": {
+   "frame": {
+    "x": 2893,
+    "y": 0,
+    "w": 97,
+    "h": 54
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 151,
+    "w": 97,
+    "h": 54
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s4": {
+   "frame": {
+    "x": 2992,
+    "y": 0,
+    "w": 121,
+    "h": 51
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 160,
+    "w": 121,
+    "h": 51
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s5": {
+   "frame": {
+    "x": 3115,
+    "y": 0,
+    "w": 105,
+    "h": 51
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 22,
+    "y": 160,
+    "w": 105,
+    "h": 51
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s10": {
+   "frame": {
+    "x": 3222,
+    "y": 0,
+    "w": 120,
+    "h": 51
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 145,
+    "w": 120,
+    "h": 51
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s3": {
+   "frame": {
+    "x": 3344,
+    "y": 0,
+    "w": 121,
+    "h": 50
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 161,
+    "w": 121,
+    "h": 50
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  },
+  "v_engineer_sable_s2": {
+   "frame": {
+    "x": 3467,
+    "y": 0,
+    "w": 109,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 158,
+    "w": 109,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 324,
+    "h": 211
+   }
+  }
+ },
+ "meta": {
+  "image": "v_engineer_sable.png",
+  "size": {
+   "w": 4096,
+   "h": 256
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 68.1,
+   "y": 174.9
+  },
+  "res": 1.5,
+  "directions": 16,
+  "direction_0": "nose along world +X (grid +gx); directions turn counter-clockwise seen from above",
+  "hover": {
+   "height_px": 38.0,
+   "glow": [
+    1.0,
+    0.08,
+    0.04
+   ]
+  },
+  "shadow": "baked, lightened to 18%"
+ }
+}

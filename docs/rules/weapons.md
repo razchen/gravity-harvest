@@ -36,3 +36,52 @@ Damage already includes the HP/damage scale. Raw DPS = damage × burst ÷ fire i
 | `thermal_turret` | Thermal Turret | 500 | 3.333 | 1 | 150.02 | 4 | thermal | fireball | ground |
 | `gravity_discharge` | Gravity Discharge | 400 | 8 | 1 | 50 | 8.5 | universal | instant discharge | ground |
 | `aa_missile` | AA Missile | 200 | 1.333 | 1 | 150.04 | 7.5 | armor_piercing | guided missile | air |
+
+## Projectiles
+
+Data only for now (the simulation does not read these yet). Speed in tiles per second; homing turn in degrees per second.
+
+| Name | Speed | Homing °/s | Inaccurate | Arcing | Over walls | Air | Ground | Submerged | Faster vs air | Charge-up |
+|---|---:|---:|---|---|---|---|---|---|---|---|
+| Service Rifle | instant |  |  |  |  |  | yes |  |  |  |
+| Sky Missile | 7.5 | 421.9 |  |  | yes | yes |  |  |  |  |
+| Armor Missile | 3.75 | 105.5 | yes |  | yes | yes | yes |  |  |  |
+| Precision Sidearm | instant |  |  |  |  |  | yes |  |  |  |
+| Field Heal | instant |  |  |  |  |  | yes |  |  |  |
+| Hound Strike | 2.99 | 421.9 |  |  |  |  | yes |  |  |  |
+| Frag Grenade | 0.7 |  | yes | yes | yes |  | yes |  |  |  |
+| Thermal Projector | 1.76 |  |  |  |  |  | yes |  |  |  |
+| Light Autocannon | instant |  |  |  |  |  | yes |  |  |  |
+| Light Cannon | 5.98 |  |  |  |  |  | yes |  |  |  |
+| Battle Cannon | 5.98 |  |  |  |  |  | yes |  |  |  |
+| Heavy Cannon | 5.98 |  |  |  |  |  | yes |  |  |  |
+| Anvil Cannon | 5.98 |  |  |  |  |  | yes |  |  |  |
+| Support Missiles | 4.45 | 105.5 | yes |  | yes | yes | yes |  |  |  |
+| Siege Artillery | 1.76 |  | yes | yes | yes |  | yes |  |  |  |
+| Siege Missile | 3.75 |  | yes |  | yes |  | yes |  |  |  |
+| Rotary Cannon | instant |  |  |  |  |  | yes |  |  |  |
+| Strike Missile | 4.45 | 105.5 | yes |  | yes | yes | yes |  |  |  |
+| Attack Missile | 4.45 | 105.5 | yes |  | yes | yes | yes |  |  |  |
+| Deck Cannon | 3.75 |  |  |  |  |  | yes |  |  |  |
+| Depth Charge | 0.7 |  | yes | yes | yes |  |  | yes |  |  |
+| Naval Missile | 2.99 | 421.9 |  |  | yes | yes | yes |  | yes |  |
+| Heavy Naval Cannon | 0.88 |  | yes | yes | yes |  | yes |  |  |  |
+| Torpedo | 2.23 |  |  |  |  |  | yes | yes |  |  |
+| Sentry Autocannon | instant |  |  |  |  |  | yes |  |  |  |
+| Lance Cannon | 5.98 |  |  |  |  |  | yes |  |  |  |
+| AA Autocannon | instant |  |  |  |  | yes |  |  |  |  |
+| Thermal Turret | 1.76 |  |  |  |  |  | yes |  |  |  |
+| Gravity Discharge | instant |  |  |  |  |  | yes |  |  | yes |
+| AA Missile | 7.5 | 421.9 |  |  | yes | yes |  |  |  |  |
+
+- **Sky Missile:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.2 s of flight (not against aircraft).
+- **Armor Missile:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft).
+- **Field Heal:** Heals only within 0.03 tiles, unarmored targets only.
+- **Hound Strike:** A leap, not a projectile: kills its infantry target outright and harms nothing else.
+- **Support Missiles:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft).
+- **Siege Missile:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.67 s of flight (not against aircraft).
+- **Strike Missile:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft).
+- **Attack Missile:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft).
+- **Naval Missile:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.2 s of flight (not against aircraft).
+- **Torpedo:** Runs under water; bursts on leaving water.
+- **AA Missile:** Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.2 s of flight (not against aircraft).

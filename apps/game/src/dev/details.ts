@@ -2,10 +2,13 @@
 import type { DevBuilding } from './buildings';
 import type { DevUnit } from './unitData';
 
+/** Names in a column on the left, numbers on the right (a page can size it from outside: [&>dl]:text-[16px]). */
+const STATS = 'mt-0.5 grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-px text-[14px] [&>dt]:text-muted';
+
 export function statsHtml(b: DevBuilding): string {
-  return `<dl class="stats">
+  return `<dl class="${STATS}">
     <dt>Cost</dt><dd>$${b.cost.toLocaleString('en')}</dd>
-    <dt>Power</dt><dd class="${b.power > 0 ? 'plus' : b.power < 0 ? 'minus' : ''}">${b.power > 0 ? '+' : ''}${b.power}${b.requiresPower ? ' · stops on low power' : ''}</dd>
+    <dt>Power</dt><dd class="${b.power > 0 ? 'text-[#8fd36a]' : b.power < 0 ? 'text-[#ff9a7a]' : ''}">${b.power > 0 ? '+' : ''}${b.power}${b.requiresPower ? ' · stops on low power' : ''}</dd>
     <dt>Build</dt><dd>${+b.buildTimeSec.toFixed(1)} s</dd>
     <dt>HP</dt><dd>${b.hp.toLocaleString('en')} · ${b.armor}</dd>
     <dt>Needs</dt><dd>${b.needs.join(', ') || 'nothing'}</dd>
@@ -15,7 +18,7 @@ export function statsHtml(b: DevBuilding): string {
 }
 
 export function unitStatsHtml(u: DevUnit): string {
-  return `<dl class="stats">
+  return `<dl class="${STATS}">
     <dt>Cost</dt><dd>$${u.cost.toLocaleString('en')}</dd>
     <dt>Build</dt><dd>${+u.buildTimeSec.toFixed(1)} s</dd>
     <dt>HP</dt><dd>${u.hp.toLocaleString('en')} · ${u.armor}</dd>

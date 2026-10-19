@@ -51,10 +51,13 @@ class MinHeap {
 /**
  * 8-way A* on tiles. Returns the tiles from start (exclusive) to goal (inclusive), or null.
  * Diagonal moves can't cut the corner of a blocked tile. `maxNodes` caps the search so an
- * unreachable goal can't stall a tick.
+ * unreachable goal can't stall a tick. `avoid` marks extra tiles to go round (other units), except the goal.
  */
-export function findPath(map: Grid, start: Tile | null, goal: Tile | null, maxNodes = 12_000): Tile[] | null {
+export function findPath(map: Grid, start: Tile | null, goal: Tile | null, maxNodes = 12_000, avoid?: (tx: number, ty: number) => boolean): Tile[] | null {
   if (!start || !goal || map.isBlocked(goal.tx, goal.ty)) return null;
+  const blocked = avoid
+    ? (tx: number, ty: number) => map.isBlocked(tx, ty) || ((tx !== goal.tx || ty !== goal.ty) && avoid(tx, ty))
+    : (tx: number, ty: number) => map.isBlocked(tx, ty);
   const h = (tx: number, ty: number) => {
     const dx = Math.abs(tx - goal.tx);
     const dy = Math.abs(ty - goal.ty);
@@ -80,8 +83,8 @@ export function findPath(map: Grid, start: Tile | null, goal: Tile | null, maxNo
         if (!dx && !dy) continue;
         const nx = cur.tx + dx;
         const ny = cur.ty + dy;
-        if (map.isBlocked(nx, ny)) continue;
-        if (dx && dy && (map.isBlocked(cur.tx + dx, cur.ty) || map.isBlocked(cur.tx, cur.ty + dy))) continue;
+        if (blocked(nx, ny)) continue;
+        if (dx && dy && (blocked(cur.tx + dx, cur.ty) || blocked(cur.tx, cur.ty + dy))) continue;
         const g = cur.g + (dx && dy ? 1.414 : 1);
         const k = map.key(nx, ny);
         if (g >= (best.get(k) ?? Infinity)) continue;

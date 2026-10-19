@@ -1,0 +1,62 @@
+{
+ "tracks": [
+  {
+   "file": "ashfall",
+   "title": "Ashfall",
+   "use": "menu",
+   "seconds": 90.0
+  },
+  {
+   "file": "iron_vigil",
+   "title": "Iron Vigil",
+   "use": "match",
+   "seconds": 120.0
+  },
+  {
+   "file": "cold_front",
+   "title": "Cold Front",
+   "use": "match",
+   "seconds": 120.0
+  },
+  {
+   "file": "scorched_line",
+   "title": "Scorched Line",
+   "use": "match",
+   "seconds": 120.0
+  },
+  {
+   "file": "the_long_dark",
+   "title": "The Long Dark",
+   "use": "match",
+   "seconds": 120.0
+  },
+  {
+   "file": "ordan_victory",
+   "title": "Ordan Victory",
+   "use": "victory",
+   "side": "ordan",
+   "seconds": 25.1
+  },
+  {
+   "file": "ordan_defeat",
+   "title": "Ordan Defeat",
+   "use": "defeat",
+   "side": "ordan",
+   "seconds": 20.0
+  },
+  {
+   "file": "sable_victory",
+   "title": "Sable Victory",
+   "use": "victory",
+   "side": "sable",
+   "seconds": 25.1
+  },
+  {
+   "file": "sable_defeat",
+   "title": "Sable Defeat",
+   "use": "defeat",
+   "side": "sable",
+   "seconds": 20.0
+  }
+ ]
+}

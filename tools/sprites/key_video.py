@@ -19,6 +19,10 @@ open a door from a clip that only closes it well), and just the door is cut out 
 changes inside the box) as `<atlas>_door_<f>`, closed at 0: the building's door animation, drawn over its rendered
 base in place of the one rendered from its model; meta.video = {fps, door: {frames}}.
 
+A vehicle's clip (`vehicle <name> <video> <vehicle id> <its still>`) is made from a still render_vehicle.py made of it
+(STILL=<d>,<k>): its frames land on the vehicle's own sprite canvas, `<name>_<f>`, played once; `--freeze-left <x>` keeps
+everything left of x (video px) as in the first frame.
+
 The green is keyed out by how much greener than red and blue each pixel is, and what's left of it on the edges is
 taken out (despill). Needs ffmpeg.
 """
@@ -45,6 +49,8 @@ DOOR_DIFF = 30             # how far (in 0-255 per channel) a pixel must change 
 DOOR_GROW = 6              # px the door's mask is grown by, then feathered by
 DOOR_SHUT = 0.95           # share of its biggest change where the door counts as fully closed
 DOOR_OPEN = 0.12           # ... and where it counts as fully open again
+PAD = 4                    # px round a vehicle's canvas (render_vehicle.py frame_canvas)
+FREEZE_BLEND = 30          # px over which a frozen part (`--freeze-left`) blends into the moving one
 
 
 def body(rgba: np.ndarray) -> np.ndarray:
@@ -180,8 +186,50 @@ def run_key(atlas: str, video: str, door=None, closed=False) -> None:
     print(f"{len(frames)} frames, video px x {F:.3f} at ({ox:.1f}, {oy:.1f})")
 
 
+def key_vehicle(name: str, video: str, vid: str, still: str, freeze_left: int = 0) -> None:
+    """A clip of a vehicle made from one of its stills (render_vehicle.py STILL=<d>,<k>: k x its sprite canvas, same
+    anchor): its frames, keyed, on the vehicle's own sprite canvas as `<name>_<f>` in the atlas `<name>`, with its
+    anchor and res, and meta `frames` and `fps` (it plays once). `freeze_left`: everything left of that x (video px)
+    stays as in the first frame (what the generator moved that shouldn't, like the harvester's front drums), blended
+    into the moving part over FREEZE_BLEND px."""
+    box = json.load(open(os.path.join(VIDEO, f"{name}_green.json")))
+    info = json.load(open(os.path.join(ROOT, "tools", "blender", "frames", "vehicles", vid, "frames.json")))
+    k = int(still.rsplit("_x", 1)[1].split("_")[0].split(".")[0])     # still_<d>_x<k>[...].png
+    W, H = info["w"], info["h"]
+    with tempfile.TemporaryDirectory() as tmp:
+        subprocess.run(["ffmpeg", "-v", "error", "-i", video, "-vf", f"fps={FPS}", os.path.join(tmp, "%04d.png")], check=True)
+        files = sorted(os.listdir(tmp))
+        vw, vh = Image.open(os.path.join(tmp, files[0])).size
+        # video px -> still px (minus where it was put, over its scale, plus its crop) -> sprite px (over k)
+        F = box["size"][0] / vw / box["scale"] / k
+        # render_vehicle.py pads its canvas by the same PAD px at any scale: the still's corner is that much closer in
+        ox = (-box["at"][0] / box["scale"] + box["crop"][0]) / k + PAD * (1 - 1 / k)
+        oy = (-box["at"][1] / box["scale"] + box["crop"][1]) / k + PAD * (1 - 1 / k)
+        out = os.path.join(VIDEO, name)
+        os.makedirs(out, exist_ok=True)
+        frames = []
+        first = key(np.array(Image.open(os.path.join(tmp, files[0])).convert("RGB"))).astype(np.float32)
+        still_share = np.clip((freeze_left + FREEZE_BLEND / 2 - np.arange(vw)) / FREEZE_BLEND, 0, 1)[None, :, None]
+        for i, f in enumerate(files):
+            rgba = key(np.array(Image.open(os.path.join(tmp, f)).convert("RGB")))
+            if freeze_left:
+                rgba = (first * still_share + rgba * (1 - still_share)).round().astype(np.uint8)
+            Image.fromarray(rgba).save(os.path.join(out, f"{i:03d}.png"))
+            small = Image.fromarray(rgba).resize((round(vw * F), round(vh * F)), Image.LANCZOS)
+            canvas = Image.new("RGBA", (W, H))
+            canvas.paste(small, (round(ox), round(oy)), small)
+            a = np.array(canvas)
+            a[a[:, :, 3] < 6, 3] = 0
+            frames.append((f"{name}_{i}", a))
+    pack_trimmed(name, frames, W, H, {"anchor": info["anchor"], "res": info["res"], "frames": len(frames), "fps": FPS}, lighten=False)
+    print(f"{len(frames)} frames, video px x {F:.3f} at ({ox:.1f}, {oy:.1f})")
+
+
 if __name__ == "__main__":
-    if sys.argv[1] == "prepare":
+    if sys.argv[1] == "vehicle":
+        freeze = int(sys.argv[sys.argv.index("--freeze-left") + 1]) if "--freeze-left" in sys.argv else 0
+        key_vehicle(*sys.argv[2:6], freeze_left=freeze)
+    elif sys.argv[1] == "prepare":
         prepare(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else "")
     else:
         door = None

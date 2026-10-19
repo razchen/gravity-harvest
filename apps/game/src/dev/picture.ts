@@ -69,7 +69,8 @@ const FILL_H = 0.84;
 
 /**
  * Put a picture in `box`. A preview is sized and centred by the building alone, so every building fills its box the
- * same way and its shadow spills out wherever it falls; a plain sprite is fitted inside the box.
+ * same way and its shadow spills out wherever it falls; a plain sprite is fitted inside the box. (The img gets `fit` or
+ * `placed`, which a picture box styles: ui.ts PIC.)
  */
 export async function mountPicture(box: HTMLElement, file: string, frame: string, preview?: string): Promise<void> {
   const img = await picture(file, frame, preview);

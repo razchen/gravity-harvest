@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { ATLASES, TERRAIN, sprites, type SpriteMeta } from '../assets/manifest';
+import { loadAudio } from '../audio/Sounds';
 import { loadFxSheets } from '../render/fxTextures';
 
 /** Loads every atlas, records each atlas's meta block, builds the shared animations, then opens the menu. */
@@ -14,6 +15,7 @@ export class BootScene extends Phaser.Scene {
     this.load.on(Phaser.Loader.Events.PROGRESS, (p: number) => { if (bar) bar.style.width = `${Math.round(p * 100)}%`; });
     this.load.image(TERRAIN.earth.key, TERRAIN.earth.file);
     loadFxSheets(this); // fire and smoke flipbooks (render/Destruction.ts)
+    loadAudio(this); // sound effects (audio/Sounds.ts)
     for (const a of ATLASES) {
       this.load.atlas(a.key, `assets/sprites/${a.file}.png`, `assets/sprites/${a.file}.json`);
       this.load.json(`${a.key}_meta`, `assets/sprites/${a.file}.json`);

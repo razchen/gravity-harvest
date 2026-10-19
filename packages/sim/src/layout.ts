@@ -17,7 +17,7 @@ export const ROSTER = {
     'assembly_yard', 'power_plant', 'reactor_plant', 'refinery', 'barracks', 'radar', 'motor_works', 'service_bay',
     'gravity_lab', 'gravity_forge', 'sentry', 'lance_battery', 'incinerator', 'anchor', 'hound_kennel',
   ],
-  units: ['harvester', 'rifleman', 'medic', 'raider', 'infiltrator', 'skimmer', 'jackal', 'ram', 'spire', 'carrier', 'watcher', 'shroud', 'seeder', 'assembler'],
+  units: ['harvester', 'rifleman', 'medic', 'raider', 'infiltrator', 'hound', 'engineer', 'breaker', 'grenadier', 'operator', 'lancer', 'skimmer', 'jackal', 'ram', 'spire', 'carrier', 'watcher', 'shroud', 'seeder', 'assembler'],
 } as const;
 
 /**
@@ -66,6 +66,32 @@ export const footprint = (type: string): number => FOOTPRINT[type] ?? 3;
  */
 export const TURRET_UNITS: ReadonlySet<string> = new Set(['jackal']);
 
+/**
+ * The hovering units (art-driven: render_vehicle.py `hover`): they take the rules of the soldiers they replaced (they
+ * board transports, a Service Bay doesn't repair them) but their bodies are bigger (ENGINE.hoverRadius).
+ */
+export const HOVER_UNITS: ReadonlySet<string> = new Set([
+  'hound', 'lancer', 'operator', 'engineer', 'medic', 'raider', 'infiltrator', 'grenadier', 'breaker',
+]);
+
+/** Units that repair their side's damaged buildings, working at them from outside (the Engineer). */
+export const FIXERS: ReadonlySet<string> = new Set(['engineer']);
+
+/**
+ * Grid direction out of a transport's side door, facing `dir` (of 16): `side` 1 is its left (a quarter turn
+ * counter-clockwise from the way it faces), -1 its right.
+ */
+export function doorSide(dir: number, side: 1 | -1): { gx: number; gy: number } {
+  const a = ((dir * 360) / 16 + 90 * side) * (Math.PI / 180);
+  return { gx: Math.cos(a), gy: -Math.sin(a) };
+}
+
+/** The side door seen from the camera's side (the one that faces down the screen); its left one if neither does. */
+export function viewerSide(dir: number): 1 | -1 {
+  const l = doorSide(dir, 1);
+  return l.gx + l.gy >= -1e-9 ? 1 : -1;
+}
+
 /** Engine tuning that the spreadsheet doesn't cover. */
 export const ENGINE = {
   unitCap: 50,
@@ -77,15 +103,47 @@ export const ENGINE = {
   unloadMsPerUnit: 60,
   /** The refinery door animation, opening or closing. */
   doorMs: 700,
+  /**
+   * A harvester stays docked at least this long, however little it unloads: its bed tipping its load out is drawn
+   * over this long (the game's HARVESTER_UNLOAD_MS).
+   */
+  dockMinMs: 3000,
   /** Low power: construction and production run this many times slower, unloading too. */
   lowPowerSlowdown: 2,
   /** An Assembler deploying: its Assembly Yard unpacks in this many seconds. */
   deploySec: 4,
   /** Repairing a building takes it from nothing to full health in this many seconds (it pays as it goes). */
   repairSecondsForFull: 30,
-  /** Service Bay: vehicles within this many tiles of it are repaired, by this share of their health a second. */
-  repairRangeTiles: 1.5,
+  /** Service Bay: the vehicle on its pad is repaired by this share of its health a second (half as fast on low power). */
   repairSharePerSec: 0.04,
+  /**
+   * Units keep apart: a vehicle's body is this radius (tiles; about a tile across), a soldier's less. Overlaps are
+   * eased apart by at most `pushTilesPerTick` a tick, the idle one giving way most. A unit that makes no headway for
+   * `stuckMs` goes round whoever is in its way, up to `detours` times, then settles on the nearest free tile; within
+   * `settleTiles` of where it was going it counts as there.
+   */
+  vehicleRadius: 0.45,
+  infantryRadius: 0.3,
+  /** A hovering unit's body (they're 0.8 to 1 tile long, a little smaller than the vehicles). */
+  hoverRadius: 0.38,
+  /**
+   * Medics and Engineers: how far they look for a damaged unit or building of their side to see to (tiles; their sight
+   * if it's more), how close an Engineer works from (tiles from the building's edge), and how long its work takes to
+   * mend a building from nothing to full (s; free, unlike a paid repair).
+   */
+  supportLook: 6,
+  fixReach: 0.9,
+  fixSecondsForFull: 40,
+  /** A Medic's or Engineer's arms keep working this long (ms) after each heal or repair step, for its animation. */
+  workMs: 900,
+  pushTilesPerTick: 0.12,
+  stuckMs: 800,
+  detours: 2,
+  settleTiles: 1.6,
+  /** Group moves: a formation is at most this many tiles from its middle per square root of its size (wider groups close up). */
+  formationSpread: 0.5,
+  /** An idle unit nudged further than this from where it stopped goes back once its spot is free. */
+  restSlack: 0.6,
   /** Guards chase intruders at most this far from their post. */
   guardLeash: 9,
   /**
@@ -93,15 +151,35 @@ export const ENGINE = {
    * A rifleman (range 3, sight 4) reacts at 6 tiles.
    */
   acquireMargin: 3,
+  /**
+   * Transports (units with passengers): the foot of each side door's ramp is this far out from its middle (tiles); a
+   * soldier at it (or within `boardReachTiles` once he can get no nearer) gets in. Its doors take `hatchMs` to open or
+   * shut (the art's door clip: 8 frames at 16 fps), passengers go in or out one every `boardGapMs`, and the doors stay
+   * open `hatchHoldMs` after the last one.
+   */
+  transportDoorTiles: 1.1,
+  boardReachTiles: 1.6,
+  hatchMs: 500,
+  boardGapMs: 450,
+  hatchHoldMs: 600,
   fogUpdateMs: 200,
-  /** Raids are off: the computer only guards its base. */
-  aiRaids: false,
-  aiRaidMax: 4,
+  /**
+   * Gravity vents (map features the scenario places; footprint and art are the `gravity_vent` scenery kind): each owns
+   * a ring of ore around it, about `ventOreRadius` tiles from its middle (about 34 tiles), a field of its own that never
+   * dies out. On every growth tick (the spreadsheet's `resourceGrowthIntervalSec`) each of its tiles below full gains a
+   * unit with `ventGrowthChance`, emptied ones too (a normal field only grows partly harvested tiles, and restarts
+   * emptied ones rarely), and an emptied tile touching the vent always starts again. Tuned so a vent keeps about one
+   * harvester busy for the whole match, about $1,260 a minute from a home refinery 30 tiles away (a fresh home field
+   * gives one about $2,100), and a second harvester adds little: an income worth fighting over, not a replacement for
+   * expanding (measured in ore.test.ts). These could move to the spreadsheet's Economy sheet.
+   */
+  ventOreRadius: 3.6,
+  ventGrowthChance: 0.2,
 } as const;
 
 // --- Scenery ----------------------------------------------------------------------------------------------------
 
-export type SceneryCategory = 'tree' | 'rock' | 'bush' | 'log' | 'debris' | 'wreck' | 'grass' | 'decal';
+export type SceneryCategory = 'tree' | 'rock' | 'bush' | 'log' | 'debris' | 'wreck' | 'grass' | 'decal' | 'vent';
 
 export interface SceneryKind {
   /** Frame in the `scenery` atlas (tools/sprites/make_scenery.py). */
@@ -109,7 +187,7 @@ export interface SceneryKind {
   category: SceneryCategory;
   /** Footprint in tiles (size x size). */
   size: 1 | 2;
-  /** Trees, rocks, debris and wrecks block movement and building; bushes, logs, grass and decals are decoration. */
+  /** Trees, rocks, debris, wrecks and vents block movement and building; bushes, logs, grass and decals are decoration. */
   blocks: boolean;
   /** Lies flat on the ground (craters, scorch marks, stains): drawn under every shadow, not depth-sorted, no shadow. */
   flat?: boolean;
@@ -130,6 +208,8 @@ export const SCENERY_KINDS: readonly SceneryKind[] = [
   ...['log', 'mossy_log', 'stump', 'snag'].map((id) => ({ id, category: 'log' as const, size: 1 as const, blocks: false })),
   ...numbered('debris', 4).map((id) => ({ id, category: 'debris' as const, size: 1 as const, blocks: true })),
   ...['wreck_generator', 'wreck_pump', 'wreck_drill', 'wreck_unit'].map((id) => ({ id, category: 'wreck' as const, size: 2 as const, blocks: true })),
+  // a map feature, not grown: the scenario places it (ScenarioDef.vents) and it seeds ore around itself (ore.ts)
+  { id: 'gravity_vent', category: 'vent', size: 2, blocks: true },
   ...[...numbered('grass', 8), ...numbered('grass_patch', 8)].map((id) => ({ id, category: 'grass' as const, size: 1 as const, blocks: false })),
   ...[...numbered('crater', 4), ...numbered('scorch', 4), ...numbered('oil', 2), 'ore_scar', ...numbered('ore_bits', 6)]
     .map((id) => ({ id, category: 'decal' as const, size: 1 as const, blocks: false, flat: true })),
@@ -140,6 +220,9 @@ export const SCENERY_KINDS: readonly SceneryKind[] = [
 
 /** Decals the server never places: the browser shows them where things happen (mined-out ore). */
 export const EVENT_ONLY_SCENERY: readonly string[] = ['ore_scar'];
+
+/** The gravity vent's scenery kind: placed by the scenario (never grown), a 2 x 2 blocker that seeds ore forever. */
+export const VENT_KIND = 'gravity_vent';
 
 const KIND_BY_ID = new Map(SCENERY_KINDS.map((k) => [k.id, k]));
 export function sceneryKind(id: string): SceneryKind {
@@ -297,6 +380,25 @@ export const refineryDock = (tx: number, ty: number) => ({
 /** Harvester sprite direction that points the nose out of a refinery bay (along +gy): it backs onto the dock. */
 export const DOCK_FACING = 12;
 
+// --- Service Bay pad (relative to the footprint corner; matches the bay sprite's pad, under its roof arms) ----------
+
+export const serviceBayPad = (tx: number, ty: number) => ({
+  /**
+   * Parked on the pad, nose out along +gy (it backs on, as onto a refinery's ramp): the pad fills the front of the
+   * footprint, and its rear sits under where the roof arms reach down (service_bay_v2.blend).
+   */
+  pad: { gx: tx + 1.38, gy: ty + 1.8 },
+  /**
+   * On the pad's axis (it runs along gy), just out in front of the bay: vehicles back onto the pad in a straight line
+   * from here, and drive forward off it in a straight line to here.
+   */
+  front: { gx: tx + 1.38, gy: ty + 3.9 },
+  /** Where one waits while the pad is taken (near enough to be repaired from there already). */
+  wait: { gx: tx + 2.7, gy: ty + 4.2 },
+  /** The tile in front of the pad, which must stay open. */
+  apron: [{ tx: tx + 1, ty: ty + 3 }],
+});
+
 // --- Placement --------------------------------------------------------------------------------------------
 
 export interface PlacementWorld {
@@ -335,6 +437,13 @@ export function checkPlacement(type: string, tx: number, ty: number, w: Placemen
       const bad = w.isBlocked(t.tx, t.ty);
       tiles.push({ ...t, bad, extra: true });
       if (bad) problem ??= 'The ramp needs open ground in front';
+    }
+  }
+  if (type === 'service_bay') {
+    for (const t of serviceBayPad(tx, ty).apron) {
+      const bad = w.isBlocked(t.tx, t.ty);
+      tiles.push({ ...t, bad, extra: true });
+      if (bad) problem ??= 'The pad needs open ground in front';
     }
   }
   let near = false;

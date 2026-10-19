@@ -1,0 +1,668 @@
+{
+ "frames": {
+  "v_raider_12": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 131,
+    "h": 133
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 20,
+    "w": 131,
+    "h": 133
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_13": {
+   "frame": {
+    "x": 133,
+    "y": 0,
+    "w": 121,
+    "h": 131
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 39,
+    "y": 18,
+    "w": 121,
+    "h": 131
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_11": {
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 137,
+    "h": 129
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 28,
+    "y": 26,
+    "w": 137,
+    "h": 129
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_15": {
+   "frame": {
+    "x": 395,
+    "y": 0,
+    "w": 121,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 31,
+    "y": 23,
+    "w": 121,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_10": {
+   "frame": {
+    "x": 518,
+    "y": 0,
+    "w": 124,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 34,
+    "y": 34,
+    "w": 124,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_0": {
+   "frame": {
+    "x": 644,
+    "y": 0,
+    "w": 131,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 28,
+    "y": 24,
+    "w": 131,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_9": {
+   "frame": {
+    "x": 777,
+    "y": 0,
+    "w": 137,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 28,
+    "y": 39,
+    "w": 137,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_14": {
+   "frame": {
+    "x": 916,
+    "y": 0,
+    "w": 115,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 38,
+    "y": 22,
+    "w": 115,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_8": {
+   "frame": {
+    "x": 1033,
+    "y": 0,
+    "w": 131,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 41,
+    "w": 131,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_1": {
+   "frame": {
+    "x": 1166,
+    "y": 0,
+    "w": 136,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 30,
+    "w": 136,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_2": {
+   "frame": {
+    "x": 1304,
+    "y": 0,
+    "w": 124,
+    "h": 117
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 34,
+    "y": 38,
+    "w": 124,
+    "h": 117
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_3": {
+   "frame": {
+    "x": 1430,
+    "y": 0,
+    "w": 136,
+    "h": 116
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 43,
+    "w": 136,
+    "h": 116
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_4": {
+   "frame": {
+    "x": 1568,
+    "y": 0,
+    "w": 131,
+    "h": 116
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 28,
+    "y": 45,
+    "w": 131,
+    "h": 116
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_7": {
+   "frame": {
+    "x": 1701,
+    "y": 0,
+    "w": 121,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 39,
+    "y": 46,
+    "w": 121,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_5": {
+   "frame": {
+    "x": 1824,
+    "y": 0,
+    "w": 122,
+    "h": 109
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 31,
+    "y": 50,
+    "w": 122,
+    "h": 109
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_6": {
+   "frame": {
+    "x": 1948,
+    "y": 0,
+    "w": 115,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 38,
+    "y": 51,
+    "w": 115,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s15": {
+   "frame": {
+    "x": 2065,
+    "y": 0,
+    "w": 122,
+    "h": 86
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 36,
+    "y": 115,
+    "w": 122,
+    "h": 86
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s0": {
+   "frame": {
+    "x": 2189,
+    "y": 0,
+    "w": 133,
+    "h": 85
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 22,
+    "y": 116,
+    "w": 133,
+    "h": 85
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s14": {
+   "frame": {
+    "x": 2324,
+    "y": 0,
+    "w": 122,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 45,
+    "y": 121,
+    "w": 122,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s5": {
+   "frame": {
+    "x": 2448,
+    "y": 0,
+    "w": 141,
+    "h": 77
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 142,
+    "w": 141,
+    "h": 77
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s1": {
+   "frame": {
+    "x": 2591,
+    "y": 0,
+    "w": 149,
+    "h": 76
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 3,
+    "y": 125,
+    "w": 149,
+    "h": 76
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s13": {
+   "frame": {
+    "x": 2742,
+    "y": 0,
+    "w": 140,
+    "h": 76
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 45,
+    "y": 124,
+    "w": 140,
+    "h": 76
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s6": {
+   "frame": {
+    "x": 2884,
+    "y": 0,
+    "w": 121,
+    "h": 75
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 24,
+    "y": 145,
+    "w": 121,
+    "h": 75
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s7": {
+   "frame": {
+    "x": 3007,
+    "y": 0,
+    "w": 122,
+    "h": 75
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 34,
+    "y": 145,
+    "w": 122,
+    "h": 75
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s8": {
+   "frame": {
+    "x": 3131,
+    "y": 0,
+    "w": 134,
+    "h": 74
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 36,
+    "y": 146,
+    "w": 134,
+    "h": 74
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s4": {
+   "frame": {
+    "x": 3267,
+    "y": 0,
+    "w": 147,
+    "h": 70
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 139,
+    "w": 147,
+    "h": 70
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s9": {
+   "frame": {
+    "x": 3416,
+    "y": 0,
+    "w": 148,
+    "h": 70
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 40,
+    "y": 146,
+    "w": 148,
+    "h": 70
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s12": {
+   "frame": {
+    "x": 3566,
+    "y": 0,
+    "w": 157,
+    "h": 70
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 46,
+    "y": 133,
+    "w": 157,
+    "h": 70
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s2": {
+   "frame": {
+    "x": 3725,
+    "y": 0,
+    "w": 145,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 134,
+    "w": 145,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s3": {
+   "frame": {
+    "x": 3872,
+    "y": 0,
+    "w": 144,
+    "h": 63
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 139,
+    "w": 144,
+    "h": 63
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s10": {
+   "frame": {
+    "x": 0,
+    "y": 135,
+    "w": 147,
+    "h": 62
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 47,
+    "y": 145,
+    "w": 147,
+    "h": 62
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  },
+  "v_raider_s11": {
+   "frame": {
+    "x": 149,
+    "y": 135,
+    "w": 158,
+    "h": 62
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 48,
+    "y": 140,
+    "w": 158,
+    "h": 62
+   },
+   "sourceSize": {
+    "w": 355,
+    "h": 220
+   }
+  }
+ },
+ "meta": {
+  "image": "v_raider.png",
+  "size": {
+   "w": 4096,
+   "h": 256
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 95.7,
+   "y": 170.2
+  },
+  "res": 1.5,
+  "directions": 16,
+  "direction_0": "nose along world +X (grid +gx); directions turn counter-clockwise seen from above",
+  "hover": {
+   "height_px": 38.0,
+   "glow": [
+    0.55,
+    0.12,
+    1.0
+   ]
+  },
+  "shadow": "baked, lightened to 18%"
+ }
+}

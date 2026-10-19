@@ -4,1293 +4,1133 @@
    "frame": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_stage_2": {
    "frame": {
-    "x": 539,
+    "x": 504,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_stage_3": {
    "frame": {
-    "x": 1078,
+    "x": 1008,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_stage_4": {
    "frame": {
-    "x": 1617,
+    "x": 1512,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_stage_5": {
    "frame": {
-    "x": 2156,
+    "x": 2016,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_new_1": {
    "frame": {
     "x": 0,
-    "y": 296,
-    "w": 539,
-    "h": 296
+    "y": 292,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_new_2": {
    "frame": {
-    "x": 539,
-    "y": 296,
-    "w": 539,
-    "h": 296
+    "x": 504,
+    "y": 292,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_new_3": {
    "frame": {
-    "x": 1078,
-    "y": 296,
-    "w": 539,
-    "h": 296
+    "x": 1008,
+    "y": 292,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_new_4": {
    "frame": {
-    "x": 1617,
-    "y": 296,
-    "w": 539,
-    "h": 296
+    "x": 1512,
+    "y": 292,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_new_5": {
    "frame": {
-    "x": 2156,
-    "y": 296,
-    "w": 539,
-    "h": 296
+    "x": 2016,
+    "y": 292,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_shadow_1": {
    "frame": {
     "x": 0,
-    "y": 592,
-    "w": 539,
-    "h": 296
+    "y": 584,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_shadow_2": {
    "frame": {
-    "x": 539,
-    "y": 592,
-    "w": 539,
-    "h": 296
+    "x": 504,
+    "y": 584,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_shadow_3": {
    "frame": {
-    "x": 1078,
-    "y": 592,
-    "w": 539,
-    "h": 296
+    "x": 1008,
+    "y": 584,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_shadow_4": {
    "frame": {
-    "x": 1617,
-    "y": 592,
-    "w": 539,
-    "h": 296
+    "x": 1512,
+    "y": 584,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_shadow_5": {
    "frame": {
-    "x": 2156,
-    "y": 592,
-    "w": 539,
-    "h": 296
+    "x": 2016,
+    "y": 584,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
   "b_service_bay_build_anim_base": {
    "frame": {
     "x": 0,
-    "y": 888,
-    "w": 539,
-    "h": 296
+    "y": 876,
+    "w": 504,
+    "h": 292
    },
    "rotated": false,
    "trimmed": false,
    "spriteSourceSize": {
     "x": 0,
     "y": 0,
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_0": {
+  "b_service_bay_build_arms_0": {
    "frame": {
     "x": 0,
-    "y": 1184,
-    "w": 59,
-    "h": 81
+    "y": 1168,
+    "w": 91,
+    "h": 114
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 141,
-    "y": 140,
-    "w": 59,
-    "h": 81
+    "x": 117,
+    "y": 37,
+    "w": 91,
+    "h": 114
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_1": {
+  "b_service_bay_build_arms_1": {
    "frame": {
-    "x": 61,
-    "y": 1184,
-    "w": 60,
-    "h": 81
+    "x": 93,
+    "y": 1168,
+    "w": 90,
+    "h": 114
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 140,
-    "w": 60,
-    "h": 81
+    "x": 118,
+    "y": 37,
+    "w": 90,
+    "h": 114
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_2": {
-   "frame": {
-    "x": 123,
-    "y": 1184,
-    "w": 60,
-    "h": 80
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 140,
-    "y": 141,
-    "w": 60,
-    "h": 80
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_3": {
+  "b_service_bay_build_arms_2": {
    "frame": {
     "x": 185,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "y": 1168,
+    "w": 90,
+    "h": 113
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 141,
-    "w": 59,
-    "h": 80
+    "x": 118,
+    "y": 38,
+    "w": 90,
+    "h": 113
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_4": {
+  "b_service_bay_build_arms_3": {
    "frame": {
-    "x": 246,
-    "y": 1184,
-    "w": 59,
-    "h": 81
+    "x": 277,
+    "y": 1168,
+    "w": 89,
+    "h": 111
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 141,
-    "w": 59,
-    "h": 81
+    "x": 119,
+    "y": 40,
+    "w": 89,
+    "h": 111
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_5": {
-   "frame": {
-    "x": 307,
-    "y": 1184,
-    "w": 59,
-    "h": 81
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 140,
-    "y": 142,
-    "w": 59,
-    "h": 81
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_6": {
+  "b_service_bay_build_arms_4": {
    "frame": {
     "x": 368,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "y": 1168,
+    "w": 88,
+    "h": 111
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 143,
-    "w": 59,
-    "h": 80
+    "x": 120,
+    "y": 41,
+    "w": 88,
+    "h": 111
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_7": {
+  "b_service_bay_build_arms_5": {
    "frame": {
-    "x": 429,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "x": 458,
+    "y": 1168,
+    "w": 90,
+    "h": 110
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 143,
-    "w": 59,
-    "h": 80
+    "x": 118,
+    "y": 42,
+    "w": 90,
+    "h": 110
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_8": {
+  "b_service_bay_build_arms_6": {
    "frame": {
-    "x": 490,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "x": 550,
+    "y": 1168,
+    "w": 97,
+    "h": 108
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 143,
-    "w": 59,
-    "h": 80
+    "x": 112,
+    "y": 43,
+    "w": 97,
+    "h": 108
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_9": {
+  "b_service_bay_build_arms_7": {
    "frame": {
-    "x": 551,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 649,
+    "y": 1168,
+    "w": 99,
+    "h": 107
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 144,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 99,
+    "h": 107
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_10": {
+  "b_service_bay_build_arms_8": {
    "frame": {
-    "x": 612,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 750,
+    "y": 1168,
+    "w": 98,
+    "h": 105
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 144,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 105
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_11": {
+  "b_service_bay_build_arms_9": {
    "frame": {
-    "x": 673,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 850,
+    "y": 1168,
+    "w": 98,
+    "h": 103
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 144,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 103
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_12": {
+  "b_service_bay_build_arms_10": {
    "frame": {
-    "x": 734,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 950,
+    "y": 1168,
+    "w": 98,
+    "h": 101
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 144,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 101
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_13": {
+  "b_service_bay_build_arms_11": {
    "frame": {
-    "x": 795,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 1050,
+    "y": 1168,
+    "w": 98,
+    "h": 100
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 144,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 100
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_14": {
+  "b_service_bay_build_arms_12": {
    "frame": {
-    "x": 856,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 1150,
+    "y": 1168,
+    "w": 98,
+    "h": 100
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 144,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 100
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_15": {
+  "b_service_bay_build_arms_13": {
    "frame": {
-    "x": 917,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 1250,
+    "y": 1168,
+    "w": 98,
+    "h": 102
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 144,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 102
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_16": {
+  "b_service_bay_build_arms_14": {
    "frame": {
-    "x": 978,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "x": 1350,
+    "y": 1168,
+    "w": 98,
+    "h": 105
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 143,
-    "w": 59,
-    "h": 80
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 105
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_17": {
+  "b_service_bay_build_arms_15": {
    "frame": {
-    "x": 1039,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "x": 1450,
+    "y": 1168,
+    "w": 98,
+    "h": 107
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 143,
-    "w": 59,
-    "h": 80
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 107
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_18": {
+  "b_service_bay_build_arms_16": {
    "frame": {
-    "x": 1100,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "x": 1550,
+    "y": 1168,
+    "w": 98,
+    "h": 105
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 143,
-    "w": 59,
-    "h": 80
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 105
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_19": {
+  "b_service_bay_build_arms_17": {
    "frame": {
-    "x": 1161,
-    "y": 1184,
-    "w": 59,
-    "h": 81
+    "x": 1650,
+    "y": 1168,
+    "w": 98,
+    "h": 102
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 142,
-    "w": 59,
-    "h": 81
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 102
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_20": {
+  "b_service_bay_build_arms_18": {
    "frame": {
-    "x": 1222,
-    "y": 1184,
-    "w": 59,
-    "h": 81
+    "x": 1750,
+    "y": 1168,
+    "w": 98,
+    "h": 100
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 141,
-    "w": 59,
-    "h": 81
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 100
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_21": {
+  "b_service_bay_build_arms_19": {
    "frame": {
-    "x": 1283,
-    "y": 1184,
-    "w": 59,
-    "h": 80
+    "x": 1850,
+    "y": 1168,
+    "w": 98,
+    "h": 101
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 141,
-    "w": 59,
-    "h": 80
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 101
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_22": {
+  "b_service_bay_build_arms_20": {
    "frame": {
-    "x": 1344,
-    "y": 1184,
-    "w": 60,
-    "h": 80
+    "x": 1950,
+    "y": 1168,
+    "w": 98,
+    "h": 103
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 141,
-    "w": 60,
-    "h": 80
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 103
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_23": {
+  "b_service_bay_build_arms_21": {
    "frame": {
-    "x": 1406,
-    "y": 1184,
-    "w": 60,
-    "h": 81
+    "x": 2050,
+    "y": 1168,
+    "w": 98,
+    "h": 106
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 140,
-    "y": 140,
-    "w": 60,
-    "h": 81
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 106
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_24": {
+  "b_service_bay_build_arms_22": {
    "frame": {
-    "x": 1468,
-    "y": 1184,
-    "w": 59,
-    "h": 81
+    "x": 2150,
+    "y": 1168,
+    "w": 98,
+    "h": 107
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 141,
-    "y": 140,
-    "w": 59,
-    "h": 81
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 107
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_25": {
+  "b_service_bay_build_arms_23": {
    "frame": {
-    "x": 1529,
-    "y": 1184,
-    "w": 59,
-    "h": 79
+    "x": 2250,
+    "y": 1168,
+    "w": 98,
+    "h": 104
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 141,
-    "y": 140,
-    "w": 59,
-    "h": 79
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 104
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_26": {
+  "b_service_bay_build_arms_24": {
    "frame": {
-    "x": 1590,
-    "y": 1184,
-    "w": 59,
-    "h": 77
+    "x": 2350,
+    "y": 1168,
+    "w": 98,
+    "h": 101
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 141,
-    "y": 140,
-    "w": 59,
-    "h": 77
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 101
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_27": {
-   "frame": {
-    "x": 1651,
-    "y": 1184,
-    "w": 58,
-    "h": 76
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 140,
-    "w": 58,
-    "h": 76
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_28": {
-   "frame": {
-    "x": 1711,
-    "y": 1184,
-    "w": 58,
-    "h": 74
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 140,
-    "w": 58,
-    "h": 74
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_29": {
-   "frame": {
-    "x": 1771,
-    "y": 1184,
-    "w": 58,
-    "h": 73
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 140,
-    "w": 58,
-    "h": 73
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_30": {
-   "frame": {
-    "x": 1831,
-    "y": 1184,
-    "w": 58,
-    "h": 71
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 141,
-    "w": 58,
-    "h": 71
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_31": {
-   "frame": {
-    "x": 1891,
-    "y": 1184,
-    "w": 58,
-    "h": 69
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 142,
-    "w": 58,
-    "h": 69
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_32": {
-   "frame": {
-    "x": 1951,
-    "y": 1184,
-    "w": 57,
-    "h": 68
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 142,
-    "w": 57,
-    "h": 68
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_33": {
-   "frame": {
-    "x": 2010,
-    "y": 1184,
-    "w": 57,
-    "h": 67
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 142,
-    "w": 57,
-    "h": 67
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_34": {
-   "frame": {
-    "x": 2069,
-    "y": 1184,
-    "w": 57,
-    "h": 65
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 143,
-    "w": 57,
-    "h": 65
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_35": {
-   "frame": {
-    "x": 2128,
-    "y": 1184,
-    "w": 57,
-    "h": 65
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 143,
-    "w": 57,
-    "h": 65
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_36": {
-   "frame": {
-    "x": 2187,
-    "y": 1184,
-    "w": 57,
-    "h": 65
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 143,
-    "w": 57,
-    "h": 65
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_37": {
-   "frame": {
-    "x": 2246,
-    "y": 1184,
-    "w": 57,
-    "h": 65
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 143,
-    "w": 57,
-    "h": 65
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_38": {
-   "frame": {
-    "x": 2305,
-    "y": 1184,
-    "w": 57,
-    "h": 65
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 143,
-    "w": 57,
-    "h": 65
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_39": {
-   "frame": {
-    "x": 2364,
-    "y": 1184,
-    "w": 57,
-    "h": 67
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 142,
-    "w": 57,
-    "h": 67
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_40": {
-   "frame": {
-    "x": 2423,
-    "y": 1184,
-    "w": 57,
-    "h": 68
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 143,
-    "y": 142,
-    "w": 57,
-    "h": 68
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_41": {
-   "frame": {
-    "x": 2482,
-    "y": 1184,
-    "w": 58,
-    "h": 69
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 142,
-    "w": 58,
-    "h": 69
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_42": {
-   "frame": {
-    "x": 2542,
-    "y": 1184,
-    "w": 58,
-    "h": 71
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 141,
-    "w": 58,
-    "h": 71
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_43": {
-   "frame": {
-    "x": 2602,
-    "y": 1184,
-    "w": 58,
-    "h": 73
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 142,
-    "y": 140,
-    "w": 58,
-    "h": 73
-   },
-   "sourceSize": {
-    "w": 539,
-    "h": 296
-   }
-  },
-  "b_service_bay_build_arm_44": {
+  "b_service_bay_build_arms_25": {
    "frame": {
     "x": 0,
-    "y": 1267,
-    "w": 58,
-    "h": 74
+    "y": 1284,
+    "w": 98,
+    "h": 100
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 142,
-    "y": 140,
-    "w": 58,
-    "h": 74
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 100
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_45": {
+  "b_service_bay_build_arms_26": {
    "frame": {
-    "x": 60,
-    "y": 1267,
-    "w": 58,
-    "h": 76
+    "x": 100,
+    "y": 1284,
+    "w": 98,
+    "h": 101
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 142,
-    "y": 140,
-    "w": 58,
-    "h": 76
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 101
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_46": {
+  "b_service_bay_build_arms_27": {
    "frame": {
+    "x": 200,
+    "y": 1284,
+    "w": 98,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_28": {
+   "frame": {
+    "x": 300,
+    "y": 1284,
+    "w": 98,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_29": {
+   "frame": {
+    "x": 400,
+    "y": 1284,
+    "w": 98,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_30": {
+   "frame": {
+    "x": 500,
+    "y": 1284,
+    "w": 98,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 110,
+    "y": 43,
+    "w": 98,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_31": {
+   "frame": {
+    "x": 600,
+    "y": 1284,
+    "w": 97,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 111,
+    "y": 43,
+    "w": 97,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_32": {
+   "frame": {
+    "x": 699,
+    "y": 1284,
+    "w": 92,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 116,
+    "y": 42,
+    "w": 92,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_33": {
+   "frame": {
+    "x": 793,
+    "y": 1284,
+    "w": 89,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
     "x": 120,
-    "y": 1267,
-    "w": 59,
-    "h": 77
-   },
-   "rotated": false,
-   "trimmed": true,
-   "spriteSourceSize": {
-    "x": 141,
-    "y": 140,
-    "w": 59,
-    "h": 77
+    "y": 41,
+    "w": 89,
+    "h": 107
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
    }
   },
-  "b_service_bay_build_arm_47": {
+  "b_service_bay_build_arms_34": {
    "frame": {
-    "x": 181,
-    "y": 1267,
-    "w": 59,
-    "h": 79
+    "x": 884,
+    "y": 1284,
+    "w": 90,
+    "h": 109
    },
    "rotated": false,
    "trimmed": true,
    "spriteSourceSize": {
-    "x": 141,
-    "y": 140,
-    "w": 59,
-    "h": 79
+    "x": 119,
+    "y": 40,
+    "w": 90,
+    "h": 109
    },
    "sourceSize": {
-    "w": 539,
-    "h": 296
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_35": {
+   "frame": {
+    "x": 976,
+    "y": 1284,
+    "w": 90,
+    "h": 113
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 118,
+    "y": 38,
+    "w": 90,
+    "h": 113
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_36": {
+   "frame": {
+    "x": 1068,
+    "y": 1284,
+    "w": 90,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 118,
+    "y": 37,
+    "w": 90,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_37": {
+   "frame": {
+    "x": 1160,
+    "y": 1284,
+    "w": 91,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 117,
+    "y": 37,
+    "w": 91,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_38": {
+   "frame": {
+    "x": 1253,
+    "y": 1284,
+    "w": 91,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 117,
+    "y": 37,
+    "w": 91,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
+   }
+  },
+  "b_service_bay_build_arms_39": {
+   "frame": {
+    "x": 1346,
+    "y": 1284,
+    "w": 91,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 117,
+    "y": 37,
+    "w": 91,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 292
    }
   }
  },
  "meta": {
   "image": "b_service_bay_build.png",
   "size": {
-   "w": 2695,
-   "h": 1346
+   "w": 2520,
+   "h": 1398
   },
   "scale": "1",
   "anchor": {
-   "x": 150.2,
-   "y": 218.1
+   "x": 125.7,
+   "y": 206.0
   },
   "footprint_tiles": 3,
   "tile_px": 128,
@@ -1301,306 +1141,306 @@
      "name": "Foundation",
      "welds": [
       [
-       156,
-       251
-      ],
-      [
-       32,
-       233
-      ],
-      [
-       158,
-       243
-      ],
-      [
-       172,
-       247
-      ],
-      [
-       302,
-       214
-      ],
-      [
-       288,
-       228
-      ],
-      [
-       117,
-       272
-      ],
-      [
-       80,
-       161
+       59,
+       239
       ],
       [
        148,
-       249
+       223
       ],
       [
-       120,
-       148
+       136,
+       230
       ],
       [
-       125,
-       147
-      ],
-      [
-       113,
-       267
-      ],
-      [
-       252,
-       189
-      ],
-      [
-       264,
-       196
-      ],
-      [
-       174,
-       248
-      ],
-      [
-       58,
-       173
-      ],
-      [
-       77,
-       163
-      ],
-      [
-       144,
-       258
-      ],
-      [
-       24,
-       225
-      ],
-      [
-       134,
-       140
-      ],
-      [
-       163,
-       266
-      ],
-      [
-       124,
-       248
-      ],
-      [
-       90,
-       152
-      ],
-      [
-       109,
-       155
-      ],
-      [
-       191,
-       160
-      ],
-      [
-       213,
-       249
-      ],
-      [
-       218,
-       253
-      ],
-      [
-       122,
-       149
-      ],
-      [
-       255,
-       191
-      ],
-      [
-       104,
-       232
-      ],
-      [
-       50,
-       232
-      ],
-      [
-       191,
-       251
-      ],
-      [
-       144,
-       135
-      ],
-      [
-       124,
-       242
-      ],
-      [
-       188,
-       236
-      ],
-      [
-       176,
-       254
-      ],
-      [
-       294,
-       222
-      ],
-      [
-       176,
-       259
-      ],
-      [
-       64,
-       254
-      ],
-      [
-       98,
-       158
-      ],
-      [
-       130,
-       141
-      ],
-      [
-       268,
-       242
-      ],
-      [
-       194,
-       250
-      ],
-      [
-       264,
-       244
-      ],
-      [
-       245,
-       187
-      ],
-      [
-       54,
-       180
-      ],
-      [
-       131,
-       140
-      ],
-      [
-       23,
-       225
-      ],
-      [
-       56,
-       177
-      ],
-      [
-       180,
-       252
-      ],
-      [
-       270,
-       199
-      ],
-      [
-       111,
-       142
-      ],
-      [
-       131,
-       262
-      ],
-      [
-       83,
-       160
-      ],
-      [
-       183,
-       247
-      ],
-      [
-       266,
-       197
-      ],
-      [
-       117,
-       254
-      ],
-      [
-       233,
-       181
+       81,
+       234
       ],
       [
        175,
-       260
+       211
+      ],
+      [
+       154,
+       220
+      ],
+      [
+       172,
+       271
+      ],
+      [
+       70,
+       171
+      ],
+      [
+       105,
+       236
+      ],
+      [
+       120,
+       155
+      ],
+      [
+       123,
+       154
+      ],
+      [
+       120,
+       264
+      ],
+      [
+       78,
+       195
+      ],
+      [
+       79,
+       198
+      ],
+      [
+       107,
+       235
+      ],
+      [
+       56,
+       181
       ],
       [
        94,
-       268
+       173
+      ],
+      [
+       219,
+       249
+      ],
+      [
+       27,
+       218
+      ],
+      [
+       133,
+       148
+      ],
+      [
+       116,
+       262
+      ],
+      [
+       82,
+       235
+      ],
+      [
+       163,
+       160
+      ],
+      [
+       98,
+       165
+      ],
+      [
+       183,
+       170
+      ],
+      [
+       55,
+       237
+      ],
+      [
+       93,
+       243
+      ],
+      [
+       156,
+       156
+      ],
+      [
+       37,
+       196
+      ],
+      [
+       38,
+       223
+      ],
+      [
+       268,
+       222
+      ],
+      [
+       127,
+       239
+      ],
+      [
+       78,
+       143
+      ],
+      [
+       154,
+       229
+      ],
+      [
+       171,
+       225
+      ],
+      [
+       119,
+       244
+      ],
+      [
+       165,
+       216
+      ],
+      [
+       94,
+       251
+      ],
+      [
+       123,
+       243
+      ],
+      [
+       65,
+       168
+      ],
+      [
+       96,
+       149
+      ],
+      [
+       104,
+       230
+      ],
+      [
+       58,
+       238
+      ],
+      [
+       48,
+       232
+      ],
+      [
+       230,
+       193
+      ],
+      [
+       41,
+       188
+      ],
+      [
+       93,
+       148
+      ],
+      [
+       26,
+       218
+      ],
+      [
+       213,
+       185
+      ],
+      [
+       88,
+       241
+      ],
+      [
+       76,
+       200
+      ],
+      [
+       61,
+       150
+      ],
+      [
+       208,
+       253
+      ],
+      [
+       69,
+       170
+      ],
+      [
+       97,
+       234
+      ],
+      [
+       30,
+       199
+      ],
+      [
+       230,
+       243
+      ],
+      [
+       221,
+       189
+      ],
+      [
+       107,
+       252
+      ],
+      [
+       185,
+       265
       ]
      ],
      "dust": [
       [
        11,
+       209
+      ],
+      [
+       29,
        219
       ],
       [
-       32,
+       47,
        233
       ],
       [
-       53,
-       248
+       65,
+       242
       ],
       [
-       74,
-       259
+       83,
+       251
       ],
       [
-       95,
-       268
-      ],
-      [
-       116,
-       272
-      ],
-      [
-       137,
-       279
-      ],
-      [
-       158,
-       269
-      ],
-      [
-       179,
-       258
-      ],
-      [
-       200,
-       244
-      ],
-      [
-       221,
+       101,
        254
       ],
       [
-       242,
-       258
+       119,
+       263
+      ],
+      [
+       137,
+       272
+      ],
+      [
+       155,
+       281
+      ],
+      [
+       173,
+       272
+      ],
+      [
+       191,
+       263
+      ],
+      [
+       209,
+       254
+      ],
+      [
+       227,
+       245
+      ],
+      [
+       245,
+       236
       ],
       [
        263,
-       248
-      ],
-      [
-       284,
-       234
-      ],
-      [
-       305,
-       217
+       227
       ]
      ]
     },
@@ -1608,306 +1448,306 @@
      "name": "Lower structure",
      "welds": [
       [
-       95,
-       126
+       128,
+       132
       ],
       [
-       241,
-       199
+       36,
+       203
       ],
       [
-       168,
-       214
-      ],
-      [
-       171,
-       250
-      ],
-      [
-       212,
-       207
-      ],
-      [
-       246,
-       241
-      ],
-      [
-       150,
-       158
-      ],
-      [
-       97,
-       264
-      ],
-      [
-       218,
-       175
-      ],
-      [
-       81,
-       195
-      ],
-      [
-       291,
-       224
-      ],
-      [
-       65,
-       167
-      ],
-      [
-       69,
-       255
-      ],
-      [
-       177,
-       210
-      ],
-      [
-       157,
-       262
-      ],
-      [
-       259,
-       228
-      ],
-      [
-       157,
-       150
-      ],
-      [
-       91,
-       180
-      ],
-      [
-       153,
-       255
-      ],
-      [
-       146,
-       174
-      ],
-      [
-       141,
-       171
-      ],
-      [
-       175,
-       138
-      ],
-      [
-       78,
+       231,
        212
       ],
       [
-       281,
-       233
-      ],
-      [
-       88,
-       264
-      ],
-      [
-       167,
-       257
-      ],
-      [
-       147,
-       224
-      ],
-      [
-       294,
-       198
-      ],
-      [
-       24,
-       224
-      ],
-      [
-       106,
-       160
-      ],
-      [
-       66,
-       199
-      ],
-      [
-       80,
-       161
-      ],
-      [
-       117,
-       157
-      ],
-      [
-       157,
-       233
-      ],
-      [
-       86,
-       263
-      ],
-      [
-       89,
-       262
-      ],
-      [
-       75,
-       162
-      ],
-      [
-       81,
-       261
-      ],
-      [
-       193,
-       168
+       170,
+       243
       ],
       [
        159,
+       208
+      ],
+      [
+       227,
+       235
+      ],
+      [
+       75,
        158
       ],
       [
-       225,
-       186
+       99,
+       253
       ],
       [
-       169,
-       229
-      ],
-      [
-       134,
-       234
-      ],
-      [
-       78,
-       162
-      ],
-      [
-       116,
-       135
-      ],
-      [
-       141,
-       172
-      ],
-      [
-       115,
-       241
-      ],
-      [
-       37,
-       214
-      ],
-      [
-       128,
-       238
-      ],
-      [
-       90,
-       135
-      ],
-      [
-       244,
-       242
-      ],
-      [
-       90,
-       143
-      ],
-      [
-       138,
-       228
-      ],
-      [
-       18,
-       206
-      ],
-      [
-       229,
-       209
-      ],
-      [
-       198,
-       215
-      ],
-      [
-       81,
-       160
-      ],
-      [
-       16,
-       216
+       67,
+       183
       ],
       [
        235,
-       245
+       200
       ],
       [
-       95,
-       132
+       260,
+       221
+      ],
+      [
+       58,
+       170
+      ],
+      [
+       79,
+       246
+      ],
+      [
+       123,
+       210
+      ],
+      [
+       112,
+       251
+      ],
+      [
+       252,
+       224
+      ],
+      [
+       60,
+       151
+      ],
+      [
+       59,
+       188
+      ],
+      [
+       170,
+       246
+      ],
+      [
+       192,
+       181
+      ],
+      [
+       56,
+       177
+      ],
+      [
+       158,
+       139
+      ],
+      [
+       155,
+       211
+      ],
+      [
+       135,
+       228
+      ],
+      [
+       98,
+       253
+      ],
+      [
+       112,
+       248
+      ],
+      [
+       147,
+       221
+      ],
+      [
+       188,
+       202
+      ],
+      [
+       114,
+       221
+      ],
+      [
+       112,
+       160
+      ],
+      [
+       231,
+       202
+      ],
+      [
+       119,
+       161
+      ],
+      [
+       80,
+       156
+      ],
+      [
+       61,
+       228
+      ],
+      [
+       155,
+       251
+      ],
+      [
+       86,
+       251
+      ],
+      [
+       119,
+       162
+      ],
+      [
+       88,
+       250
+      ],
+      [
+       46,
+       173
+      ],
+      [
+       107,
+       158
+      ],
+      [
+       256,
+       194
+      ],
+      [
+       140,
+       225
+      ],
+      [
+       205,
+       228
+      ],
+      [
+       131,
+       162
+      ],
+      [
+       130,
+       137
+      ],
+      [
+       69,
+       178
+      ],
+      [
+       137,
+       235
+      ],
+      [
+       205,
+       212
+      ],
+      [
+       174,
+       232
+      ],
+      [
+       63,
+       137
+      ],
+      [
+       202,
+       236
+      ],
+      [
+       128,
+       143
+      ],
+      [
+       142,
+       224
+      ],
+      [
+       277,
+       206
+      ],
+      [
+       179,
+       209
+      ],
+      [
+       39,
+       214
+      ],
+      [
+       96,
+       160
+      ],
+      [
+       195,
+       214
+      ],
+      [
+       208,
+       239
+      ],
+      [
+       134,
+       135
       ]
      ],
      "dust": [
       [
        15,
-       218
+       200
       ],
       [
-       36,
-       233
+       34,
+       220
       ],
       [
-       57,
-       248
+       53,
+       234
       ],
       [
-       78,
-       259
+       72,
+       244
       ],
       [
-       99,
-       265
+       91,
+       251
       ],
       [
-       120,
-       269
+       110,
+       244
       ],
       [
-       141,
-       274
+       129,
+       260
       ],
       [
-       162,
-       259
+       148,
+       257
       ],
       [
-       183,
-       238
+       167,
+       245
       ],
       [
-       204,
-       231
-      ],
-      [
-       225,
-       249
-      ],
-      [
-       246,
+       186,
        242
       ],
       [
-       267,
-       238
+       205,
+       228
       ],
       [
-       288,
-       230
+       224,
+       235
       ],
       [
-       309,
-       219
+       243,
+       229
+      ],
+      [
+       262,
+       220
+      ],
+      [
+       281,
+       210
       ]
      ]
     },
@@ -1915,306 +1755,302 @@
      "name": "Main bodies",
      "welds": [
       [
-       181,
-       110
-      ],
-      [
-       224,
-       171
-      ],
-      [
-       203,
-       99
-      ],
-      [
-       65,
-       195
-      ],
-      [
-       80,
-       149
-      ],
-      [
-       125,
-       189
-      ],
-      [
-       104,
-       153
-      ],
-      [
-       215,
-       128
-      ],
-      [
-       130,
-       186
-      ],
-      [
-       238,
-       178
-      ],
-      [
-       76,
-       165
-      ],
-      [
-       174,
-       115
-      ],
-      [
-       228,
-       105
-      ],
-      [
-       206,
-       98
-      ],
-      [
-       264,
-       225
-      ],
-      [
-       139,
-       125
-      ],
-      [
-       191,
-       89
-      ],
-      [
-       192,
-       204
-      ],
-      [
-       78,
-       149
-      ],
-      [
-       120,
-       158
-      ],
-      [
-       91,
-       191
-      ],
-      [
-       274,
-       157
-      ],
-      [
-       98,
-       107
-      ],
-      [
-       250,
-       115
-      ],
-      [
-       276,
-       155
-      ],
-      [
-       191,
-       203
-      ],
-      [
-       285,
-       171
-      ],
-      [
-       230,
-       95
-      ],
-      [
-       199,
-       174
-      ],
-      [
-       142,
-       243
-      ],
-      [
-       155,
-       141
-      ],
-      [
-       74,
-       191
-      ],
-      [
-       244,
-       207
-      ],
-      [
-       163,
-       193
+       136,
+       112
       ],
       [
        273,
-       165
+       157
       ],
       [
-       248,
-       161
+       86,
+       100
       ],
       [
-       294,
-       194
+       234,
+       181
       ],
       [
-       226,
-       104
+       166,
+       134
       ],
       [
-       269,
-       140
+       224,
+       174
       ],
       [
-       136,
-       223
+       165,
+       137
       ],
       [
-       94,
-       163
+       44,
+       126
       ],
       [
-       250,
-       109
+       156,
+       171
       ],
       [
-       67,
-       161
+       188,
+       166
       ],
       [
-       78,
-       147
-      ],
-      [
-       183,
-       214
-      ],
-      [
-       134,
-       173
-      ],
-      [
-       256,
-       207
-      ],
-      [
-       198,
-       81
-      ],
-      [
-       132,
-       221
-      ],
-      [
-       83,
+       68,
        149
       ],
       [
-       204,
-       173
+       135,
+       117
       ],
       [
-       297,
-       167
+       154,
+       106
       ],
       [
-       284,
-       205
+       175,
+       99
       ],
       [
-       213,
-       209
+       206,
+       213
       ],
       [
-       226,
-       221
+       64,
+       124
       ],
       [
-       77,
+       82,
+       86
+      ],
+      [
+       275,
+       191
+      ],
+      [
+       165,
+       134
+      ],
+      [
+       193,
+       141
+      ],
+      [
+       168,
+       177
+      ],
+      [
+       152,
+       141
+      ],
+      [
+       123,
+       108
+      ],
+      [
+       196,
+       117
+      ],
+      [
+       42,
+       140
+      ],
+      [
+       254,
+       190
+      ],
+      [
+       129,
+       158
+      ],
+      [
+       175,
+       96
+      ],
+      [
+       183,
+       161
+      ],
+      [
+       139,
+       233
+      ],
+      [
+       132,
        132
       ],
       [
-       306,
-       178
+       130,
+       177
       ],
       [
-       290,
+       189,
+       195
+      ],
+      [
+       265,
+       179
+      ],
+      [
+       109,
+       150
+      ],
+      [
+       198,
+       144
+      ],
+      [
+       225,
+       181
+      ],
+      [
+       98,
+       105
+      ],
+      [
+       85,
+       132
+      ],
+      [
+       167,
        211
       ],
       [
-       118,
-       127
+       115,
+       146
       ],
       [
-       257,
-       211
+       66,
+       112
+      ],
+      [
+       204,
+       143
+      ],
+      [
+       232,
+       133
+      ],
+      [
+       167,
+       202
+      ],
+      [
+       59,
+       160
+      ],
+      [
+       198,
+       195
+      ],
+      [
+       104,
+       74
+      ],
+      [
+       237,
+       209
+      ],
+      [
+       191,
+       134
+      ],
+      [
+       127,
+       160
+      ],
+      [
+       198,
+       153
+      ],
+      [
+       253,
+       193
+      ],
+      [
+       281,
+       196
+      ],
+      [
+       176,
+       210
+      ],
+      [
+       96,
+       128
+      ],
+      [
+       216,
+       166
+      ],
+      [
+       279,
+       199
+      ],
+      [
+       46,
+       125
+      ],
+      [
+       245,
+       199
       ]
      ],
      "dust": [
       [
-       63,
-       196
+       30,
+       165
       ],
       [
-       80,
-       197
+       48,
+       188
       ],
       [
-       97,
-       187
+       66,
+       171
       ],
       [
-       114,
-       163
+       84,
+       162
       ],
       [
-       131,
-       221
+       102,
+       154
       ],
       [
-       148,
-       243
+       120,
+       172
       ],
       [
-       165,
-       218
+       138,
+       234
       ],
       [
-       182,
-       214
+       156,
+       216
       ],
       [
-       199,
-       236
+       174,
+       216
       ],
       [
-       216,
-       196
+       192,
+       192
       ],
       [
-       233,
-       209
+       210,
+       224
       ],
       [
-       250,
+       228,
+       191
+      ],
+      [
+       246,
+       206
+      ],
+      [
+       264,
        200
-      ],
-      [
-       267,
-       196
-      ],
-      [
-       284,
-       211
-      ],
-      [
-       301,
-       197
       ]
      ]
     },
@@ -2222,306 +2058,306 @@
      "name": "Upper",
      "welds": [
       [
-       159,
-       173
+       68,
+       146
       ],
       [
-       252,
-       116
+       133,
+       82
       ],
       [
-       272,
-       156
-      ],
-      [
-       105,
-       140
-      ],
-      [
-       116,
-       128
-      ],
-      [
-       227,
-       156
-      ],
-      [
-       238,
-       140
-      ],
-      [
-       112,
-       156
-      ],
-      [
-       152,
-       133
-      ],
-      [
-       268,
-       157
-      ],
-      [
-       193,
-       148
-      ],
-      [
-       113,
-       164
-      ],
-      [
-       125,
-       98
-      ],
-      [
-       259,
-       169
-      ],
-      [
-       156,
-       165
-      ],
-      [
-       151,
-       133
-      ],
-      [
-       117,
-       129
-      ],
-      [
-       236,
-       148
-      ],
-      [
-       216,
-       101
-      ],
-      [
-       269,
-       157
-      ],
-      [
-       217,
-       148
-      ],
-      [
-       160,
-       92
-      ],
-      [
-       240,
-       138
-      ],
-      [
-       198,
-       166
-      ],
-      [
-       196,
-       91
-      ],
-      [
-       84,
-       143
-      ],
-      [
-       234,
-       147
-      ],
-      [
-       203,
-       117
-      ],
-      [
-       199,
-       121
-      ],
-      [
-       229,
-       116
-      ],
-      [
-       217,
-       102
-      ],
-      [
-       151,
-       141
-      ],
-      [
-       101,
-       141
-      ],
-      [
-       242,
-       152
-      ],
-      [
-       116,
-       155
-      ],
-      [
-       103,
-       108
-      ],
-      [
-       152,
-       175
-      ],
-      [
-       154,
-       194
-      ],
-      [
-       259,
-       129
-      ],
-      [
-       165,
-       173
-      ],
-      [
-       162,
-       145
-      ],
-      [
-       276,
-       154
-      ],
-      [
-       99,
-       142
-      ],
-      [
-       113,
-       145
-      ],
-      [
-       165,
-       80
-      ],
-      [
-       113,
-       147
-      ],
-      [
-       235,
-       106
-      ],
-      [
-       220,
-       104
-      ],
-      [
-       217,
-       163
-      ],
-      [
-       185,
-       79
-      ],
-      [
-       164,
-       147
-      ],
-      [
-       88,
-       151
-      ],
-      [
-       176,
-       81
-      ],
-      [
-       119,
-       142
-      ],
-      [
-       155,
-       52
-      ],
-      [
-       110,
-       145
-      ],
-      [
-       116,
+       81,
        126
       ],
       [
-       229,
-       109
+       210,
+       99
       ],
       [
-       246,
-       128
+       165,
+       90
       ],
       [
-       153,
-       200
+       198,
+       125
+      ],
+      [
+       201,
+       100
+      ],
+      [
+       80,
+       125
+      ],
+      [
+       180,
+       178
+      ],
+      [
+       92,
+       127
+      ],
+      [
+       112,
+       112
+      ],
+      [
+       97,
+       137
+      ],
+      [
+       138,
+       71
+      ],
+      [
+       80,
+       143
+      ],
+      [
+       55,
+       139
+      ],
+      [
+       101,
+       94
+      ],
+      [
+       77,
+       91
+      ],
+      [
+       224,
+       112
+      ],
+      [
+       106,
+       73
+      ],
+      [
+       93,
+       127
+      ],
+      [
+       116,
+       112
+      ],
+      [
+       85,
+       67
+      ],
+      [
+       146,
+       98
+      ],
+      [
+       81,
+       140
+      ],
+      [
+       93,
+       66
+      ],
+      [
+       99,
+       104
+      ],
+      [
+       94,
+       111
+      ],
+      [
+       170,
+       82
+      ],
+      [
+       165,
+       86
+      ],
+      [
+       104,
+       82
+      ],
+      [
+       154,
+       73
+      ],
+      [
+       204,
+       101
+      ],
+      [
+       82,
+       101
+      ],
+      [
+       83,
+       119
+      ],
+      [
+       96,
+       123
+      ],
+      [
+       82,
+       78
+      ],
+      [
+       81,
+       147
+      ],
+      [
+       189,
+       158
+      ],
+      [
+       149,
+       91
+      ],
+      [
+       155,
+       146
+      ],
+      [
+       101,
+       107
+      ],
+      [
+       204,
+       122
+      ],
+      [
+       81,
+       103
+      ],
+      [
+       96,
+       107
+      ],
+      [
+       118,
+       55
+      ],
+      [
+       111,
+       110
+      ],
+      [
+       105,
+       77
+      ],
+      [
+       93,
+       75
+      ],
+      [
+       79,
+       136
+      ],
+      [
+       109,
+       55
+      ],
+      [
+       221,
+       110
+      ],
+      [
+       72,
+       116
+      ],
+      [
+       119,
+       56
+      ],
+      [
+       103,
+       103
+      ],
+      [
+       132,
+       49
+      ],
+      [
+       80,
+       107
+      ],
+      [
+       190,
+       89
+      ],
+      [
+       165,
+       78
+      ],
+      [
+       65,
+       91
+      ],
+      [
+       222,
+       163
       ]
      ],
      "dust": [
       [
-       77,
-       165
-      ],
-      [
-       92,
-       142
-      ],
-      [
-       107,
-       153
-      ],
-      [
-       122,
-       126
-      ],
-      [
-       137,
-       134
-      ],
-      [
-       152,
-       212
-      ],
-      [
-       167,
-       167
-      ],
-      [
-       182,
-       155
-      ],
-      [
-       197,
-       198
-      ],
-      [
-       212,
-       185
-      ],
-      [
-       227,
-       157
-      ],
-      [
-       242,
+       49,
        156
       ],
       [
-       257,
-       172
+       63,
+       153
       ],
       [
-       272,
-       165
+       77,
+       149
       ],
       [
-       287,
-       157
+       91,
+       140
+      ],
+      [
+       105,
+       115
+      ],
+      [
+       119,
+       128
+      ],
+      [
+       133,
+       137
+      ],
+      [
+       147,
+       142
+      ],
+      [
+       161,
+       149
+      ],
+      [
+       175,
+       159
+      ],
+      [
+       189,
+       170
+      ],
+      [
+       203,
+       124
+      ],
+      [
+       217,
+       154
+      ],
+      [
+       231,
+       147
+      ],
+      [
+       245,
+       150
       ]
      ]
     },
@@ -2529,306 +2365,306 @@
      "name": "Finished",
      "welds": [
       [
-       197,
-       101
-      ],
-      [
-       226,
-       94
-      ],
-      [
-       146,
-       133
-      ],
-      [
-       256,
-       140
+       192,
+       88
       ],
       [
        117,
-       104
+       71
       ],
       [
-       146,
-       77
+       215,
+       114
       ],
       [
-       214,
-       165
-      ],
-      [
-       256,
-       156
-      ],
-      [
-       225,
-       107
-      ],
-      [
-       199,
-       93
-      ],
-      [
-       129,
-       98
-      ],
-      [
-       196,
-       91
-      ],
-      [
-       188,
-       105
-      ],
-      [
-       213,
-       175
-      ],
-      [
-       104,
-       102
-      ],
-      [
-       150,
-       135
-      ],
-      [
-       224,
-       91
-      ],
-      [
-       260,
-       154
-      ],
-      [
-       175,
-       94
-      ],
-      [
-       247,
-       127
-      ],
-      [
-       98,
+       191,
        120
       ],
       [
-       252,
-       143
-      ],
-      [
-       218,
-       111
-      ],
-      [
-       165,
-       98
-      ],
-      [
-       143,
-       137
-      ],
-      [
-       209,
-       141
-      ],
-      [
-       207,
-       106
-      ],
-      [
-       231,
-       123
-      ],
-      [
-       256,
-       129
-      ],
-      [
-       279,
-       144
-      ],
-      [
-       105,
-       121
-      ],
-      [
-       114,
+       173,
        94
       ],
       [
-       182,
-       102
+       112,
+       21
       ],
       [
-       195,
-       112
-      ],
-      [
-       174,
-       86
-      ],
-      [
-       210,
-       128
-      ],
-      [
-       111,
-       107
-      ],
-      [
-       245,
-       158
-      ],
-      [
-       267,
-       165
-      ],
-      [
-       133,
-       95
-      ],
-      [
-       181,
-       96
-      ],
-      [
-       275,
-       148
-      ],
-      [
-       210,
-       133
-      ],
-      [
-       230,
-       124
-      ],
-      [
-       219,
-       124
-      ],
-      [
-       226,
-       113
-      ],
-      [
-       199,
-       102
-      ],
-      [
-       213,
-       171
-      ],
-      [
-       268,
-       143
-      ],
-      [
-       225,
-       90
-      ],
-      [
-       238,
-       156
+       228,
+       151
       ],
       [
        127,
+       142
+      ],
+      [
+       71,
+       100
+      ],
+      [
+       136,
+       67
+      ],
+      [
+       93,
+       78
+      ],
+      [
+       153,
+       62
+      ],
+      [
+       161,
+       96
+      ],
+      [
+       214,
+       172
+      ],
+      [
+       178,
+       89
+      ],
+      [
+       123,
+       116
+      ],
+      [
+       216,
+       177
+      ],
+      [
+       129,
+       138
+      ],
+      [
+       93,
+       70
+      ],
+      [
+       204,
+       111
+      ],
+      [
+       104,
+       108
+      ],
+      [
+       93,
+       125
+      ],
+      [
+       158,
+       104
+      ],
+      [
+       95,
+       78
+      ],
+      [
+       200,
+       117
+      ],
+      [
+       140,
+       122
+      ],
+      [
+       188,
+       97
+      ],
+      [
+       178,
+       109
+      ],
+      [
+       114,
+       113
+      ],
+      [
+       148,
+       126
+      ],
+      [
+       205,
+       108
+      ],
+      [
+       128,
+       68
+      ],
+      [
+       171,
+       90
+      ],
+      [
+       102,
+       105
+      ],
+      [
+       92,
+       45
+      ],
+      [
+       66,
+       112
+      ],
+      [
+       178,
        98
+      ],
+      [
+       237,
+       145
+      ],
+      [
+       240,
+       150
+      ],
+      [
+       157,
+       71
+      ],
+      [
+       161,
+       74
+      ],
+      [
+       249,
+       131
+      ],
+      [
+       118,
+       115
+      ],
+      [
+       194,
+       110
+      ],
+      [
+       107,
+       110
+      ],
+      [
+       84,
+       106
+      ],
+      [
+       158,
+       91
+      ],
+      [
+       223,
+       162
+      ],
+      [
+       147,
+       125
+      ],
+      [
+       92,
+       60
+      ],
+      [
+       171,
+       141
+      ],
+      [
+       92,
+       78
+      ],
+      [
+       89,
+       93
+      ],
+      [
+       108,
+       25
+      ],
+      [
+       149,
+       70
+      ],
+      [
+       199,
+       150
+      ],
+      [
+       164,
+       77
       ],
       [
        181,
        103
       ],
       [
-       147,
-       79
+       96,
+       70
       ],
       [
-       201,
-       94
-      ],
-      [
-       214,
-       164
-      ],
-      [
-       110,
-       98
-      ],
-      [
-       201,
-       110
-      ],
-      [
-       181,
-       94
-      ],
-      [
-       266,
-       137
+       208,
+       180
       ]
      ],
      "dust": [
       [
-       98,
-       120
+       55,
+       105
       ],
       [
-       111,
-       112
+       69,
+       113
       ],
       [
-       124,
-       100
+       85,
+       118
       ],
       [
-       137,
-       93
-      ],
-      [
-       150,
-       142
-      ],
-      [
-       163,
-       103
-      ],
-      [
-       176,
-       107
-      ],
-      [
-       189,
-       110
-      ],
-      [
-       202,
-       173
-      ],
-      [
-       215,
-       132
-      ],
-      [
-       228,
+       99,
        126
       ],
       [
-       241,
-       171
+       113,
+       113
       ],
       [
-       254,
-       161
+       127,
+       142
       ],
       [
-       267,
-       167
+       141,
+       130
       ],
       [
-       280,
-       152
+       155,
+       133
+      ],
+      [
+       169,
+       141
+      ],
+      [
+       183,
+       128
+      ],
+      [
+       197,
+       126
+      ],
+      [
+       211,
+       181
+      ],
+      [
+       225,
+       159
+      ],
+      [
+       239,
+       151
+      ],
+      [
+       253,
+       147
       ]
      ]
     }
@@ -2837,57 +2673,67 @@
   "damage": {
    "spots": [
     [
-     59,
-     220
-    ],
-    [
-     89,
-     119
-    ],
-    [
-     119,
-     114
-    ],
-    [
-     149,
+     70,
      102
     ],
     [
-     178,
-     112
+     95,
+     74
     ],
     [
-     208,
-     94
+     120,
+     98
     ],
     [
-     238,
-     189
+     145,
+     110
     ],
     [
-     268,
-     174
+     169,
+     116
+    ],
+    [
+     194,
+     129
+    ],
+    [
+     219,
+     124
+    ],
+    [
+     244,
+     163
     ]
    ]
   },
   "anims": [
    {
-    "name": "arm",
+    "name": "arms",
     "when": "working",
-    "frames": 48,
-    "fps": 10
+    "frames": 40,
+    "fps": 8
    }
   ],
   "effects": [
    {
     "kind": "sparks",
-    "x": 163.1,
-    "y": 211.5
+    "x": 121.4,
+    "y": 124.2
+   },
+   {
+    "kind": "sparks",
+    "x": 134.9,
+    "y": 148.7
    },
    {
     "kind": "light",
-    "x": 228.7,
-    "y": 73.4
+    "x": 114.7,
+    "y": 12.4
+   },
+   {
+    "kind": "light",
+    "x": 216.3,
+    "y": 53.8
    }
   ]
  }

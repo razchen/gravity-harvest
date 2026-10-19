@@ -1,0 +1,1113 @@
+{
+ "ambience": [
+  "elevenlabs-free/sfx/ambience/ambience_20261016-231406_1.mp3",
+  "elevenlabs-free/sfx/ambience/ambience_20261016-231411_2.mp3"
+ ],
+ "artillery_fire": [
+  "elevenlabs-free/sfx/artillery_fire/artillery_fire_20261016-231248_1.mp3",
+  "elevenlabs-free/sfx/artillery_fire/artillery_fire_20261016-231249_2.mp3"
+ ],
+ "autocannon_fire": [
+  "elevenlabs-free/sfx/autocannon_fire/autocannon_fire_20261017-061801_2.mp3"
+ ],
+ "building_done": [
+  "elevenlabs-free/sfx/building_done/building_done_20261017-061020_1.mp3",
+  "elevenlabs-free/sfx/building_done/building_done_20261017-061022_2.mp3",
+  "elevenlabs-free/sfx/building_done/building_done_20261017-061024_3.mp3"
+ ],
+ "building_explode": [
+  "elevenlabs-free/sfx/building_explode/building_explode_20261016-231303_1.mp3",
+  "elevenlabs-free/sfx/building_explode/building_explode_20261016-231305_2.mp3"
+ ],
+ "building_place": [
+  "elevenlabs-free/sfx/building_place/building_place_20261017-061014_1.mp3",
+  "elevenlabs-free/sfx/building_place/building_place_20261017-061016_2.mp3",
+  "elevenlabs-free/sfx/building_place/building_place_20261017-061018_3.mp3"
+ ],
+ "building_ready": [
+  "elevenlabs-free/sfx/building_ready/building_ready_20261016-231355_1.mp3",
+  "elevenlabs-free/sfx/building_ready/building_ready_20261016-231356_2.mp3"
+ ],
+ "building_sold": [
+  "elevenlabs-free/sfx/building_sold/building_sold_20261016-231342_2.mp3"
+ ],
+ "bullet_hit": [
+  "elevenlabs-free/sfx/bullet_hit/bullet_hit_20261016-231257_1.mp3",
+  "elevenlabs-free/sfx/bullet_hit/bullet_hit_20261016-231259_2.mp3",
+  "elevenlabs-free/sfx/bullet_hit/bullet_hit_20261016-231301_3.mp3"
+ ],
+ "cannon_fire": [
+  "elevenlabs-free/sfx/cannon_fire/cannon_fire_20261017-061755_1.mp3",
+  "elevenlabs-free/sfx/cannon_fire/cannon_fire_20261017-061758_3.mp3"
+ ],
+ "construction": [
+  "elevenlabs-free/sfx/construction/construction_20261016-231332_1.mp3",
+  "elevenlabs-free/sfx/construction/construction_20261016-231335_2.mp3"
+ ],
+ "credits": [
+  "elevenlabs-free/sfx/credits/credits_20261016-231358_1.mp3",
+  "elevenlabs-free/sfx/credits/credits_20261016-231359_2.mp3"
+ ],
+ "discharge_fire": [
+  "elevenlabs-free/sfx/discharge_fire/discharge_fire_20261016-231254_1.mp3",
+  "elevenlabs-free/sfx/discharge_fire/discharge_fire_20261016-231255_2.mp3"
+ ],
+ "door": [
+  "elevenlabs-free/sfx/door/door_20261016-231343_1.mp3",
+  "elevenlabs-free/sfx/door/door_20261016-231345_2.mp3"
+ ],
+ "flame_fire": [
+  "elevenlabs-free/sfx/flame_fire/flame_fire_20261016-231251_1.mp3",
+  "elevenlabs-free/sfx/flame_fire/flame_fire_20261016-231252_2.mp3"
+ ],
+ "infantry_death": [
+  "elevenlabs-free/sfx/infantry_death/infantry_death_20261017-061010_1.mp3",
+  "elevenlabs-free/sfx/infantry_death/infantry_death_20261017-061011_2.mp3",
+  "elevenlabs-free/sfx/infantry_death/infantry_death_20261017-061013_3.mp3"
+ ],
+ "power_down": [
+  "elevenlabs-free/sfx/power_down/power_down_20261016-231346_1.mp3",
+  "elevenlabs-free/sfx/power_down/power_down_20261016-231348_2.mp3"
+ ],
+ "power_up": [
+  "elevenlabs-free/sfx/power_up/power_up_20261017-061811_1.mp3"
+ ],
+ "rifle_fire": [
+  "elevenlabs-free/sfx/rifle_fire/rifle_fire_20261016-231240_1.mp3",
+  "elevenlabs-free/sfx/rifle_fire/rifle_fire_20261016-231242_2.mp3",
+  "elevenlabs-free/sfx/rifle_fire/rifle_fire_20261016-231243_3.mp3"
+ ],
+ "rocket_hit": [
+  "elevenlabs-free/sfx/rocket_hit/rocket_hit_20261016-230618_1.mp3",
+  "elevenlabs-free/sfx/rocket_hit/rocket_hit_20261016-230620_2.mp3",
+  "elevenlabs-free/sfx/rocket_hit/rocket_hit_20261016-230621_3.mp3"
+ ],
+ "rocket_launch": [
+  "elevenlabs-free/sfx/rocket_launch/rocket_launch_20261017-061806_2.mp3",
+  "elevenlabs-free/sfx/rocket_launch/rocket_launch_20261017-061809_3.mp3"
+ ],
+ "shell_hit": [
+  "elevenlabs-free/sfx/shell_hit/shell_hit_20261016-230608_1.mp3",
+  "elevenlabs-free/sfx/shell_hit/shell_hit_20261016-230610_2.mp3",
+  "elevenlabs-free/sfx/shell_hit/shell_hit_20261016-230612_3.mp3"
+ ],
+ "under_attack": [
+  "elevenlabs-free/sfx/under_attack/under_attack_20261016-231401_1.mp3",
+  "elevenlabs-free/sfx/under_attack/under_attack_20261016-231402_2.mp3"
+ ],
+ "unit_ready": [
+  "elevenlabs-free/sfx/unit_ready/unit_ready_20261016-231352_1.mp3",
+  "elevenlabs-free/sfx/unit_ready/unit_ready_20261016-231354_2.mp3"
+ ],
+ "vehicle_explode": [
+  "elevenlabs-free/sfx/vehicle_explode/vehicle_explode_20261016-230623_1.mp3",
+  "elevenlabs-free/sfx/vehicle_explode/vehicle_explode_20261016-230624_2.mp3",
+  "elevenlabs-free/sfx/vehicle_explode/vehicle_explode_20261016-230626_3.mp3"
+ ],
+ "ui_click": [
+  "kenney/interface-sounds/Audio/click_001.ogg",
+  "kenney/interface-sounds/Audio/click_002.ogg",
+  "kenney/interface-sounds/Audio/click_003.ogg"
+ ],
+ "ui_hover": [
+  "elevenlabs-free/sfx/ui_hover/ui_hover_20261017-061026_1.mp3"
+ ],
+ "ui_error": [
+  "kenney/interface-sounds/Audio/error_004.ogg"
+ ],
+ "music_menu": [
+  "elevenlabs-starter/music/ashfall_20261017-123740.mp3"
+ ],
+ "music_battle": [
+  "elevenlabs-starter/music/iron_vigil_20261017-123742.mp3",
+  "elevenlabs-starter/music/cold_front_20261017-123755.mp3",
+  "elevenlabs-starter/music/scorched_line_20261017-123755.mp3",
+  "elevenlabs-starter/music/the_long_dark_20261017-123808.mp3"
+ ],
+ "ack_assembler_move": [
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-063235_1.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-063236_2.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-063237_3.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-064639_4.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-064640_5.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-064642_6.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-064643_7.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-064644_8.mp3",
+  "elevenlabs-free/voice/ack_assembler_move/ack_assembler_move_20261017-064645_9.mp3"
+ ],
+ "ack_assembler_select": [
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-063231_1.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-063232_2.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-063233_3.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-064631_4.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-064633_5.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-064634_6.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-064635_7.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-064637_8.mp3",
+  "elevenlabs-free/voice/ack_assembler_select/ack_assembler_select_20261017-064638_9.mp3"
+ ],
+ "ack_carrier_attack": [
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-063200_1.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-063201_2.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-063203_3.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-064538_4.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-064539_5.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-064540_6.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-064541_7.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-064543_8.mp3",
+  "elevenlabs-free/voice/ack_carrier_attack/ack_carrier_attack_20261017-064544_9.mp3"
+ ],
+ "ack_carrier_move": [
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-063157_1.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-063158_2.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-063159_3.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-064531_4.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-064532_5.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-064533_6.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-064534_7.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-064535_8.mp3",
+  "elevenlabs-free/voice/ack_carrier_move/ack_carrier_move_20261017-064537_9.mp3"
+ ],
+ "ack_carrier_select": [
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-063152_1.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-063153_2.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-063155_3.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-064523_4.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-064525_5.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-064526_6.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-064527_7.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-064528_8.mp3",
+  "elevenlabs-free/voice/ack_carrier_select/ack_carrier_select_20261017-064529_9.mp3"
+ ],
+ "ack_harvester_move": [
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-063100_1.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-063102_2.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-063103_3.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-064350_4.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-064351_5.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-064352_6.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-064354_7.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-064355_8.mp3",
+  "elevenlabs-free/voice/ack_harvester_move/ack_harvester_move_20261017-064356_9.mp3"
+ ],
+ "ack_harvester_select": [
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-063057_1.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-063058_2.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-063059_3.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-064342_4.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-064344_5.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-064345_6.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-064346_7.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-064347_8.mp3",
+  "elevenlabs-free/voice/ack_harvester_select/ack_harvester_select_20261017-064349_9.mp3"
+ ],
+ "ack_infiltrator_move": [
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-063053_1.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-063054_2.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-063055_3.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-064335_4.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-064336_5.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-064338_6.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-064339_7.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-064340_8.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_move/ack_infiltrator_move_20261017-064341_9.mp3"
+ ],
+ "ack_infiltrator_select": [
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-063047_1.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-063050_2.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-063052_3.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-064328_4.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-064329_5.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-064330_6.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-064331_7.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-064333_8.mp3",
+  "elevenlabs-free/voice/ack_infiltrator_select/ack_infiltrator_select_20261017-064334_9.mp3"
+ ],
+ "ack_jackal_attack": [
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-063127_1.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-063128_2.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-063129_3.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-064434_4.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-064435_5.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-064437_6.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-064438_7.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-064439_8.mp3",
+  "elevenlabs-free/voice/ack_jackal_attack/ack_jackal_attack_20261017-064441_9.mp3"
+ ],
+ "ack_jackal_move": [
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-063123_1.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-063124_2.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-063125_3.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-064427_4.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-064428_5.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-064429_6.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-064430_7.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-064432_8.mp3",
+  "elevenlabs-free/voice/ack_jackal_move/ack_jackal_move_20261017-064433_9.mp3"
+ ],
+ "ack_jackal_select": [
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-063117_1.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-063119_2.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-063120_3.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-064419_4.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-064420_5.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-064422_6.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-064423_7.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-064424_8.mp3",
+  "elevenlabs-free/voice/ack_jackal_select/ack_jackal_select_20261017-064426_9.mp3"
+ ],
+ "ack_medic_move": [
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-063035_1.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-063036_2.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-063037_3.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-064305_4.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-064306_5.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-064307_6.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-064309_7.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-064310_8.mp3",
+  "elevenlabs-free/voice/ack_medic_move/ack_medic_move_20261017-064311_9.mp3"
+ ],
+ "ack_medic_select": [
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-063031_1.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-063032_2.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-063034_3.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-064257_4.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-064259_5.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-064300_6.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-064301_7.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-064302_8.mp3",
+  "elevenlabs-free/voice/ack_medic_select/ack_medic_select_20261017-064304_9.mp3"
+ ],
+ "ack_raider_move": [
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-063042_1.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-063043_2.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-063046_3.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-064320_4.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-064321_5.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-064322_6.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-064324_7.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-064325_8.mp3",
+  "elevenlabs-free/voice/ack_raider_move/ack_raider_move_20261017-064326_9.mp3"
+ ],
+ "ack_raider_select": [
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-063038_1.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-063040_2.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-063041_3.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-064312_4.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-064314_5.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-064315_6.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-064316_7.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-064317_8.mp3",
+  "elevenlabs-free/voice/ack_raider_select/ack_raider_select_20261017-064319_9.mp3"
+ ],
+ "ack_ram_attack": [
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-063137_1.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-063138_2.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-063139_3.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-064454_4.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-064455_5.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-064456_6.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-064457_7.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-064458_8.mp3",
+  "elevenlabs-free/voice/ack_ram_attack/ack_ram_attack_20261017-064459_9.mp3"
+ ],
+ "ack_ram_move": [
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-063134_1.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-063135_2.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-063136_3.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-064448_4.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-064449_5.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-064450_6.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-064451_7.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-064452_8.mp3",
+  "elevenlabs-free/voice/ack_ram_move/ack_ram_move_20261017-064453_9.mp3"
+ ],
+ "ack_ram_select": [
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-063130_1.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-063131_2.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-063132_3.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-064442_4.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-064443_5.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-064444_6.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-064445_7.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-064446_8.mp3",
+  "elevenlabs-free/voice/ack_ram_select/ack_ram_select_20261017-064447_9.mp3"
+ ],
+ "ack_rifleman_attack": [
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-063027_1.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-063029_2.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-063030_3.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-064250_4.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-064251_5.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-064252_6.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-064254_7.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-064255_8.mp3",
+  "elevenlabs-free/voice/ack_rifleman_attack/ack_rifleman_attack_20261017-064256_9.mp3"
+ ],
+ "ack_rifleman_move": [
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-063024_1.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-063025_2.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-063026_3.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-064242_4.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-064244_5.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-064245_6.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-064246_7.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-064247_8.mp3",
+  "elevenlabs-free/voice/ack_rifleman_move/ack_rifleman_move_20261017-064249_9.mp3"
+ ],
+ "ack_rifleman_select": [
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-063020_1.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-063021_2.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-063022_3.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-064235_4.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-064236_5.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-064237_6.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-064239_7.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-064240_8.mp3",
+  "elevenlabs-free/voice/ack_rifleman_select/ack_rifleman_select_20261017-064241_9.mp3"
+ ],
+ "ack_seeder_move": [
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-063227_1.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-063228_2.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-063229_3.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-064624_4.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-064625_5.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-064626_6.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-064628_7.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-064629_8.mp3",
+  "elevenlabs-free/voice/ack_seeder_move/ack_seeder_move_20261017-064630_9.mp3"
+ ],
+ "ack_seeder_select": [
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-063223_1.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-063224_2.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-063226_3.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-064616_4.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-064617_5.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-064618_6.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-064619_7.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-064621_8.mp3",
+  "elevenlabs-free/voice/ack_seeder_select/ack_seeder_select_20261017-064622_9.mp3"
+ ],
+ "ack_shroud_move": [
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-063219_1.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-063220_2.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-063222_3.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-064608_4.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-064609_5.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-064611_6.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-064612_7.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-064613_8.mp3",
+  "elevenlabs-free/voice/ack_shroud_move/ack_shroud_move_20261017-064614_9.mp3"
+ ],
+ "ack_shroud_select": [
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-063213_1.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-063215_2.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-063216_3.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-064600_4.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-064602_5.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-064603_6.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-064604_7.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-064605_8.mp3",
+  "elevenlabs-free/voice/ack_shroud_select/ack_shroud_select_20261017-064607_9.mp3"
+ ],
+ "ack_skimmer_attack": [
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-063113_1.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-063115_2.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-063116_3.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-064412_4.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-064413_5.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-064414_6.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-064416_7.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-064417_8.mp3",
+  "elevenlabs-free/voice/ack_skimmer_attack/ack_skimmer_attack_20261017-064418_9.mp3"
+ ],
+ "ack_skimmer_move": [
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-063108_1.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-063109_2.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-063110_3.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-064405_4.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-064406_5.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-064407_6.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-064408_7.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-064410_8.mp3",
+  "elevenlabs-free/voice/ack_skimmer_move/ack_skimmer_move_20261017-064411_9.mp3"
+ ],
+ "ack_skimmer_select": [
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-063104_1.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-063105_2.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-063107_3.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-064357_4.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-064358_5.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-064400_6.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-064401_7.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-064402_8.mp3",
+  "elevenlabs-free/voice/ack_skimmer_select/ack_skimmer_select_20261017-064403_9.mp3"
+ ],
+ "ack_spire_attack": [
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-063148_1.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-063150_2.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-063151_3.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-064516_4.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-064517_5.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-064518_6.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-064520_7.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-064521_8.mp3",
+  "elevenlabs-free/voice/ack_spire_attack/ack_spire_attack_20261017-064522_9.mp3"
+ ],
+ "ack_spire_move": [
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-063145_1.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-063146_2.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-063147_3.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-064508_4.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-064510_5.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-064511_6.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-064512_7.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-064513_8.mp3",
+  "elevenlabs-free/voice/ack_spire_move/ack_spire_move_20261017-064515_9.mp3"
+ ],
+ "ack_spire_select": [
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-063140_1.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-063142_2.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-063143_3.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-064501_4.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-064502_5.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-064503_6.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-064505_7.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-064506_8.mp3",
+  "elevenlabs-free/voice/ack_spire_select/ack_spire_select_20261017-064507_9.mp3"
+ ],
+ "ack_watcher_move": [
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-063209_1.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-063211_2.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-063212_3.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-064553_4.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-064554_5.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-064555_6.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-064556_7.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-064557_8.mp3",
+  "elevenlabs-free/voice/ack_watcher_move/ack_watcher_move_20261017-064559_9.mp3"
+ ],
+ "ack_watcher_select": [
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-063204_1.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-063205_2.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-063206_3.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-064545_4.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-064546_5.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-064548_6.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-064549_7.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-064550_8.mp3",
+  "elevenlabs-free/voice/ack_watcher_select/ack_watcher_select_20261017-064551_9.mp3"
+ ],
+ "announce_base_attack": [
+  "elevenlabs-free/voice/announce_base_attack/announce_base_attack_20261017-102009_8.mp3"
+ ],
+ "announce_building_lost": [
+  "elevenlabs-free/voice/announce_building_lost/announce_building_lost_20261017-063017_1.mp3"
+ ],
+ "announce_construction_complete": [
+  "elevenlabs-free/voice/announce_construction_complete/announce_construction_complete_20261017-100304_2.mp3"
+ ],
+ "announce_insufficient_funds": [
+  "elevenlabs-free/voice/announce_insufficient_funds/announce_insufficient_funds_20261017-063018_1.mp3"
+ ],
+ "announce_low_power": [
+  "elevenlabs-free/voice/announce_low_power/announce_low_power_20261017-063012_1.mp3"
+ ],
+ "announce_power_restored": [
+  "elevenlabs-free/voice/announce_power_restored/announce_power_restored_20261017-063013_1.mp3"
+ ],
+ "announce_unit_lost": [
+  "elevenlabs-free/voice/announce_unit_lost/announce_unit_lost_20261017-063016_1.mp3"
+ ],
+ "announce_unit_ready": [
+  "elevenlabs-free/voice/announce_unit_ready/announce_unit_ready_20261017-100310_3.mp3"
+ ],
+ "sable_ack_assembler_move": [
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104710_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104712_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104713_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104714_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104716_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104717_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104718_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104720_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_move/sable_ack_assembler_move_20261017-104721_9.mp3"
+ ],
+ "sable_ack_assembler_select": [
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104658_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104700_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104701_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104702_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104704_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104705_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104706_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104708_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_assembler_select/sable_ack_assembler_select_20261017-104709_9.mp3"
+ ],
+ "sable_ack_harvester_move": [
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104642_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104643_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104645_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104646_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104647_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104648_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104650_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104651_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_move/sable_ack_harvester_move_20261017-104652_9.mp3"
+ ],
+ "sable_ack_harvester_select": [
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104630_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104632_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104633_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104634_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104636_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104637_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104638_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104639_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_harvester_select/sable_ack_harvester_select_20261017-104641_9.mp3"
+ ],
+ "sable_ack_rifleman_attack": [
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104615_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104616_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104617_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104618_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104620_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104621_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104622_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104624_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_attack/sable_ack_rifleman_attack_20261017-104625_9.mp3"
+ ],
+ "sable_ack_rifleman_move": [
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104604_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104605_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104606_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104607_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104608_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104610_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104611_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104612_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_move/sable_ack_rifleman_move_20261017-104613_9.mp3"
+ ],
+ "sable_ack_rifleman_select": [
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104552_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104553_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104554_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104556_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104557_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104558_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104600_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104601_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_rifleman_select/sable_ack_rifleman_select_20261017-104602_9.mp3"
+ ],
+ "sable_ack_seeder_move": [
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104737_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104738_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104739_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104740_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104742_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104743_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104744_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104746_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_move/sable_ack_seeder_move_20261017-104747_9.mp3"
+ ],
+ "sable_ack_seeder_select": [
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104725_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104727_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104728_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104729_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104731_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104732_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104733_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104734_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_seeder_select/sable_ack_seeder_select_20261017-104736_9.mp3"
+ ],
+ "sable_announce_base_attack": [
+  "elevenlabs-starter/voice/sable_announce_base_attack/sable_announce_base_attack_20261017-123456_2.mp3",
+  "elevenlabs-starter/voice/sable_announce_base_attack/sable_announce_base_attack_20261017-123457_3.mp3",
+  "elevenlabs-starter/voice/sable_announce_base_attack/sable_announce_base_attack_20261017-123458_4.mp3"
+ ],
+ "sable_announce_building_lost": [
+  "elevenlabs-starter/voice/sable_announce_building_lost/sable_announce_building_lost_20261017-104549_1.mp3"
+ ],
+ "sable_announce_construction_complete": [
+  "elevenlabs-starter/voice/sable_announce_construction_complete/sable_announce_construction_complete_20261017-104542_1.mp3"
+ ],
+ "sable_announce_insufficient_funds": [
+  "elevenlabs-starter/voice/sable_announce_insufficient_funds/sable_announce_insufficient_funds_20261017-104551_1.mp3"
+ ],
+ "sable_announce_low_power": [
+  "elevenlabs-starter/voice/sable_announce_low_power/sable_announce_low_power_20261017-104544_1.mp3"
+ ],
+ "sable_announce_power_restored": [
+  "elevenlabs-starter/voice/sable_announce_power_restored/sable_announce_power_restored_20261017-104546_1.mp3"
+ ],
+ "sable_announce_unit_lost": [
+  "elevenlabs-starter/voice/sable_announce_unit_lost/sable_announce_unit_lost_20261017-104548_1.mp3"
+ ],
+ "sable_announce_unit_ready": [
+  "elevenlabs-starter/voice/sable_announce_unit_ready/sable_announce_unit_ready_20261017-104543_1.mp3"
+ ],
+ "music_victory": [
+  "elevenlabs-starter/music/ordan_victory_20261017-123802.mp3"
+ ],
+ "music_defeat": [
+  "elevenlabs-starter/music/ordan_defeat_20261017-123816.mp3"
+ ],
+ "music_sable_victory": [
+  "elevenlabs-starter/music/sable_victory_20261017-123816.mp3"
+ ],
+ "music_sable_defeat": [
+  "elevenlabs-starter/music/sable_defeat_20261017-123825.mp3"
+ ],
+ "announce_victory": [
+  "elevenlabs-starter/voice/announce_victory/announce_victory_20261017-123841_1.mp3"
+ ],
+ "announce_defeat": [
+  "elevenlabs-starter/voice/announce_defeat/announce_defeat_20261017-123843_1.mp3"
+ ],
+ "sable_announce_victory": [
+  "elevenlabs-starter/voice/sable_announce_victory/sable_announce_victory_20261017-123844_1.mp3"
+ ],
+ "sable_announce_defeat": [
+  "elevenlabs-starter/voice/sable_announce_defeat/sable_announce_defeat_20261017-123845_1.mp3"
+ ],
+ "sable_ack_operator_move": [
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123804_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123805_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123807_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123808_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123809_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123810_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123811_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123812_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_move/sable_ack_operator_move_20261017-123814_9.mp3"
+ ],
+ "sable_ack_operator_attack": [
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123815_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123816_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123817_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123819_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123820_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123821_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123822_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123824_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_attack/sable_ack_operator_attack_20261017-123825_9.mp3"
+ ],
+ "ack_goliath_select": [
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123948_1.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123949_2.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123950_3.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123952_4.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123953_5.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123954_6.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123955_7.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123957_8.mp3",
+  "elevenlabs-starter/voice/ack_goliath_select/ack_goliath_select_20261017-123958_9.mp3"
+ ],
+ "ack_operator_move": [
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123624_1.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123625_2.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123626_3.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123627_4.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123628_5.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123629_6.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123630_7.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123631_8.mp3",
+  "elevenlabs-starter/voice/ack_operator_move/ack_operator_move_20261017-123632_9.mp3"
+ ],
+ "ack_breaker_move": [
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123920_1.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123922_2.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123923_3.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123924_4.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123925_5.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123926_6.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123928_7.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123929_8.mp3",
+  "elevenlabs-starter/voice/ack_breaker_move/ack_breaker_move_20261017-123930_9.mp3"
+ ],
+ "ack_grenadier_select": [
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123831_1.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123833_2.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123834_3.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123836_4.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123837_5.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123838_6.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123839_7.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123841_8.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_select/ack_grenadier_select_20261017-123842_9.mp3"
+ ],
+ "ack_grenadier_move": [
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123843_1.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123844_2.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123846_3.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123847_4.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123848_5.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123849_6.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123850_7.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123852_8.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_move/ack_grenadier_move_20261017-123853_9.mp3"
+ ],
+ "ack_operator_select": [
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123615_1.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123616_2.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123617_3.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123618_4.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123619_5.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123620_6.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123621_7.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123622_8.mp3",
+  "elevenlabs-starter/voice/ack_operator_select/ack_operator_select_20261017-123623_9.mp3"
+ ],
+ "ack_anvil_attack": [
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124048_1.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124049_2.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124050_3.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124052_4.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124053_5.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124054_6.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124055_7.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124056_8.mp3",
+  "elevenlabs-starter/voice/ack_anvil_attack/ack_anvil_attack_20261017-124058_9.mp3"
+ ],
+ "sable_ack_lancer_attack": [
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123710_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123712_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123713_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123714_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123715_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123717_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123718_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123719_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_attack/sable_ack_lancer_attack_20261017-123720_9.mp3"
+ ],
+ "ack_breaker_attack": [
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123931_1.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123933_2.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123934_3.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123935_4.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123937_5.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123938_6.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123939_7.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123940_8.mp3",
+  "elevenlabs-starter/voice/ack_breaker_attack/ack_breaker_attack_20261017-123942_9.mp3"
+ ],
+ "sable_ack_engineer_select": [
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123727_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123728_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123730_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123731_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123732_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123734_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123735_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123736_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_select/sable_ack_engineer_select_20261017-123737_9.mp3"
+ ],
+ "ack_goliath_move": [
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-123959_1.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124000_2.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124002_3.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124003_4.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124004_5.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124006_6.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124007_7.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124008_8.mp3",
+  "elevenlabs-starter/voice/ack_goliath_move/ack_goliath_move_20261017-124009_9.mp3"
+ ],
+ "ack_salvo_move": [
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124116_1.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124118_2.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124119_3.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124120_4.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124122_5.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124123_6.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124124_7.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124125_8.mp3",
+  "elevenlabs-starter/voice/ack_salvo_move/ack_salvo_move_20261017-124127_9.mp3"
+ ],
+ "ack_anvil_move": [
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124037_1.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124038_2.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124040_3.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124041_4.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124042_5.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124043_6.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124044_7.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124046_8.mp3",
+  "elevenlabs-starter/voice/ack_anvil_move/ack_anvil_move_20261017-124047_9.mp3"
+ ],
+ "ack_salvo_attack": [
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124128_1.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124129_2.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124130_3.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124131_4.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124133_5.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124134_6.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124135_7.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124136_8.mp3",
+  "elevenlabs-starter/voice/ack_salvo_attack/ack_salvo_attack_20261017-124138_9.mp3"
+ ],
+ "ack_lancer_attack": [
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123542_1.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123543_2.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123544_3.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123546_4.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123547_5.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123548_6.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123550_7.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123551_8.mp3",
+  "elevenlabs-starter/voice/ack_lancer_attack/ack_lancer_attack_20261017-123552_9.mp3"
+ ],
+ "ack_anvil_select": [
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124026_1.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124027_2.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124029_3.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124030_4.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124031_5.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124032_6.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124033_7.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124035_8.mp3",
+  "elevenlabs-starter/voice/ack_anvil_select/ack_anvil_select_20261017-124036_9.mp3"
+ ],
+ "ack_breaker_select": [
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123909_1.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123910_2.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123912_3.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123913_4.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123914_5.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123915_6.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123917_7.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123918_8.mp3",
+  "elevenlabs-starter/voice/ack_breaker_select/ack_breaker_select_20261017-123919_9.mp3"
+ ],
+ "sable_ack_lancer_select": [
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123648_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123649_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123650_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123652_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123653_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123654_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123655_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123657_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_select/sable_ack_lancer_select_20261017-123658_9.mp3"
+ ],
+ "sable_ack_engineer_move": [
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123739_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123740_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123741_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123742_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123744_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123745_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123746_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123747_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_engineer_move/sable_ack_engineer_move_20261017-123748_9.mp3"
+ ],
+ "ack_grenadier_attack": [
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123854_1.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123855_2.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123856_3.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123858_4.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123859_5.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123900_6.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123901_7.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123902_8.mp3",
+  "elevenlabs-starter/voice/ack_grenadier_attack/ack_grenadier_attack_20261017-123904_9.mp3"
+ ],
+ "ack_lancer_move": [
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123531_1.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123532_2.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123533_3.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123535_4.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123536_5.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123537_6.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123538_7.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123539_8.mp3",
+  "elevenlabs-starter/voice/ack_lancer_move/ack_lancer_move_20261017-123540_9.mp3"
+ ],
+ "ack_operator_attack": [
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123633_1.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123634_2.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123635_3.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123636_4.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123637_5.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123638_6.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123639_7.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123640_8.mp3",
+  "elevenlabs-starter/voice/ack_operator_attack/ack_operator_attack_20261017-123641_9.mp3"
+ ],
+ "ack_salvo_select": [
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124105_1.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124106_2.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124107_3.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124109_4.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124110_5.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124112_6.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124113_7.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124114_8.mp3",
+  "elevenlabs-starter/voice/ack_salvo_select/ack_salvo_select_20261017-124115_9.mp3"
+ ],
+ "sable_ack_lancer_move": [
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123659_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123700_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123702_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123703_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123704_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123706_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123707_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123708_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_lancer_move/sable_ack_lancer_move_20261017-123709_9.mp3"
+ ],
+ "ack_lancer_select": [
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123520_1.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123521_2.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123522_3.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123524_4.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123525_5.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123526_6.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123527_7.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123529_8.mp3",
+  "elevenlabs-starter/voice/ack_lancer_select/ack_lancer_select_20261017-123530_9.mp3"
+ ],
+ "ack_engineer_move": [
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123604_1.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123605_2.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123607_3.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123608_4.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123609_5.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123610_6.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123611_7.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123612_8.mp3",
+  "elevenlabs-starter/voice/ack_engineer_move/ack_engineer_move_20261017-123614_9.mp3"
+ ],
+ "sable_ack_operator_select": [
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123753_1.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123754_2.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123755_3.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123757_4.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123758_5.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123759_6.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123800_7.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123802_8.mp3",
+  "elevenlabs-starter/voice/sable_ack_operator_select/sable_ack_operator_select_20261017-123803_9.mp3"
+ ],
+ "ack_engineer_select": [
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123553_1.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123554_2.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123556_3.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123557_4.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123558_5.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123559_6.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123601_7.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123602_8.mp3",
+  "elevenlabs-starter/voice/ack_engineer_select/ack_engineer_select_20261017-123603_9.mp3"
+ ],
+ "ack_goliath_attack": [
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124011_1.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124012_2.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124013_3.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124015_4.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124016_5.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124017_6.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124019_7.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124020_8.mp3",
+  "elevenlabs-starter/voice/ack_goliath_attack/ack_goliath_attack_20261017-124021_9.mp3"
+ ],
+ "jammer_on": [
+  "elevenlabs-starter/sfx/jammer_on/jammer_on_20261017-124243_1.mp3",
+  "elevenlabs-starter/sfx/jammer_on/jammer_on_20261017-124244_2.mp3"
+ ],
+ "ack_hound_select": [
+  "elevenlabs-starter/sfx/ack_hound_select/ack_hound_select_20261017-124207_1.mp3",
+  "elevenlabs-starter/sfx/ack_hound_select/ack_hound_select_20261017-124208_2.mp3",
+  "elevenlabs-starter/sfx/ack_hound_select/ack_hound_select_20261017-124210_3.mp3"
+ ],
+ "hound_strike": [
+  "elevenlabs-starter/sfx/hound_strike/hound_strike_20261017-124204_1.mp3",
+  "elevenlabs-starter/sfx/hound_strike/hound_strike_20261017-124205_2.mp3"
+ ],
+ "flamethrower_fire": [
+  "elevenlabs-starter/sfx/flamethrower_fire/flamethrower_fire_20261017-124154_1.mp3",
+  "elevenlabs-starter/sfx/flamethrower_fire/flamethrower_fire_20261017-124156_2.mp3"
+ ],
+ "infantry_explode": [
+  "elevenlabs-starter/sfx/infantry_explode/infantry_explode_20261017-124222_1.mp3",
+  "elevenlabs-starter/sfx/infantry_explode/infantry_explode_20261017-124224_2.mp3"
+ ],
+ "infiltrate": [
+  "elevenlabs-starter/sfx/infiltrate/infiltrate_20261017-124236_1.mp3",
+  "elevenlabs-starter/sfx/infiltrate/infiltrate_20261017-124238_2.mp3"
+ ],
+ "grenade_explode": [
+  "elevenlabs-starter/sfx/grenade_explode/grenade_explode_20261017-124151_1.mp3",
+  "elevenlabs-starter/sfx/grenade_explode/grenade_explode_20261017-124153_2.mp3"
+ ],
+ "cloak_field": [
+  "elevenlabs-starter/sfx/cloak_field/cloak_field_20261017-124245_1.mp3",
+  "elevenlabs-starter/sfx/cloak_field/cloak_field_20261017-124247_2.mp3"
+ ],
+ "heavy_missile_hit": [
+  "elevenlabs-starter/sfx/heavy_missile_hit/heavy_missile_hit_20261017-124201_1.mp3",
+  "elevenlabs-starter/sfx/heavy_missile_hit/heavy_missile_hit_20261017-124202_2.mp3"
+ ],
+ "sidearm_fire": [
+  "elevenlabs-starter/sfx/sidearm_fire/sidearm_fire_20261017-124142_1.mp3",
+  "elevenlabs-starter/sfx/sidearm_fire/sidearm_fire_20261017-124144_2.mp3"
+ ],
+ "mine_lay": [
+  "elevenlabs-starter/sfx/mine_lay/mine_lay_20261017-124225_1.mp3",
+  "elevenlabs-starter/sfx/mine_lay/mine_lay_20261017-124227_2.mp3"
+ ],
+ "heavy_missile_launch": [
+  "elevenlabs-starter/sfx/heavy_missile_launch/heavy_missile_launch_20261017-124158_1.mp3",
+  "elevenlabs-starter/sfx/heavy_missile_launch/heavy_missile_launch_20261017-124159_2.mp3"
+ ],
+ "mine_explode": [
+  "elevenlabs-starter/sfx/mine_explode/mine_explode_20261017-124229_1.mp3",
+  "elevenlabs-starter/sfx/mine_explode/mine_explode_20261017-124230_2.mp3"
+ ],
+ "ack_hound_move": [
+  "elevenlabs-starter/sfx/ack_hound_move/ack_hound_move_20261017-124212_1.mp3",
+  "elevenlabs-starter/sfx/ack_hound_move/ack_hound_move_20261017-124214_2.mp3",
+  "elevenlabs-starter/sfx/ack_hound_move/ack_hound_move_20261017-124215_3.mp3"
+ ],
+ "assembler_deploy": [
+  "elevenlabs-starter/sfx/assembler_deploy/assembler_deploy_20261017-124232_1.mp3",
+  "elevenlabs-starter/sfx/assembler_deploy/assembler_deploy_20261017-124234_2.mp3"
+ ],
+ "ack_hound_attack": [
+  "elevenlabs-starter/sfx/ack_hound_attack/ack_hound_attack_20261017-124217_1.mp3",
+  "elevenlabs-starter/sfx/ack_hound_attack/ack_hound_attack_20261017-124219_2.mp3",
+  "elevenlabs-starter/sfx/ack_hound_attack/ack_hound_attack_20261017-124221_3.mp3"
+ ],
+ "grenade_throw": [
+  "elevenlabs-starter/sfx/grenade_throw/grenade_throw_20261017-124148_1.mp3",
+  "elevenlabs-starter/sfx/grenade_throw/grenade_throw_20261017-124150_2.mp3"
+ ],
+ "self_repair": [
+  "elevenlabs-starter/sfx/self_repair/self_repair_20261017-124249_1.mp3",
+  "elevenlabs-starter/sfx/self_repair/self_repair_20261017-124250_2.mp3"
+ ],
+ "demolition_charge": [
+  "elevenlabs-starter/sfx/demolition_charge/demolition_charge_20261017-124239_1.mp3",
+  "elevenlabs-starter/sfx/demolition_charge/demolition_charge_20261017-124241_2.mp3"
+ ],
+ "heal_beam": [
+  "elevenlabs-starter/sfx/heal_beam/heal_beam_20261017-124145_1.mp3",
+  "elevenlabs-starter/sfx/heal_beam/heal_beam_20261017-124147_2.mp3"
+ ],
+ "plasma_fire": [
+  "elevenlabs-starter/sfx/plasma_fire/plasma_fire_20261017-173736_1.mp3",
+  "elevenlabs-starter/sfx/plasma_fire/plasma_fire_20261017-173738_2.mp3",
+  "elevenlabs-starter/sfx/plasma_fire/plasma_fire_20261017-173739_3.mp3"
+ ],
+ "laser_fire": [
+  "elevenlabs-starter/sfx/laser_fire/laser_fire_20261017-173741_1.mp3",
+  "elevenlabs-starter/sfx/laser_fire/laser_fire_20261017-173742_2.mp3",
+  "elevenlabs-starter/sfx/laser_fire/laser_fire_20261017-173744_3.mp3"
+ ],
+ "column_fire": [
+  "elevenlabs-starter/sfx/column_fire/column_fire_20261017-173745_1.mp3",
+  "elevenlabs-starter/sfx/column_fire/column_fire_20261017-173747_2.mp3",
+  "elevenlabs-starter/sfx/column_fire/column_fire_20261017-173748_3.mp3"
+ ]
+}

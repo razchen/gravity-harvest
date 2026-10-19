@@ -21,7 +21,9 @@
   "devDependencies": {
     "@google/model-viewer": "4.0.0",
     "@playwright/test": "^1.56.0",
+    "@tailwindcss/vite": "4.3.3",
     "@types/node": "^22.20.5",
+    "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
     "vite": "^8.3.4",
     "vitest": "^5.0.3"

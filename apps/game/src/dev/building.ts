@@ -8,6 +8,7 @@ import { ATLASES, TERRAIN, sprites, type SpriteMeta } from '../assets/manifest';
 import { CAMERA, DEPTH, DPR, TILE_H } from '../config/game';
 import { diamond, iso, toGrid } from '../core/geometry';
 import { CONSTRUCTION, ConstructionView } from '../render/Construction';
+import { armsDepth } from '../entities/BuildingSprite';
 import { BuildingDamage } from '../render/Destruction';
 import { loadFxSheets } from '../render/fxTextures';
 import type { GameMap } from '../world/GameMap';
@@ -20,6 +21,12 @@ import { mountPicture } from './picture';
 import { mountPictureViews } from './pictureView';
 import { onLeave } from './page';
 import { Traffic, tripAtlases, tripsFor, type Trip } from './traffic';
+import { LINK, NONE, PIC, ROLE, TAGS, TAG_V, VIEW_LABEL, ground, tagSide } from './ui';
+
+/** A stage or phase under the view: gold for the one showing, brighter for those already past; `button`: one to click. */
+const chip = (state: 'now' | 'done' | '' = '', button = false) => `mt-1 rounded-full border px-2.5 py-0.5 text-[13px] ${
+  button ? 'cursor-pointer font-medium hover:border-gold' : 'font-semibold'} ${
+  state === 'now' ? 'border-gold bg-gold text-ink' : `border-line ${button ? 'bg-panel ' : ''}${state === 'done' ? 'text-text' : 'text-muted'}`}`;
 
 /** Set up the page in the markup the sidebar has just put in (nav.ts). */
 export default function mount(): void {
@@ -75,7 +82,8 @@ export default function mount(): void {
     private t = 0;
     private playing = true;
     private phase = -1;
-    private zoomLevel = 2;
+    /** Relative to the game's start zoom: 1 is how a match opens. */
+    private zoomLevel = 1;
     /** Turret: where the heads point (degrees, counter-clockwise from world +X). */
     private aim = 0;
     /** Animation: units coming out of the first building and coming to it. */
@@ -134,6 +142,9 @@ export default function mount(): void {
         const gy = MAP - gx - b.footprint;
         const p = iso(gx + b.footprint / 2, gy + b.footprint / 2);
         const building = new ConstructionView(this, b.atlas, p.x, p.y, 0, { layer: shadows, id: this.placed.length });
+        // as in the game: a Service Bay's arms draw over a vehicle on its pad
+        const lift = armsDepth({ type: b.id, tx: gx, ty: gy }, 0, p.y);
+        if (lift !== null) building.liftMoving(lift);
         const damage = new BuildingDamage(this, b.atlas, p.x, p.y, 0);
         // the scorch mark a destroyed building leaves, at the size the game draws it (GameScene.burnMark)
         const scorch = this.add.image(p.x, p.y, 'scenery', SCORCH)
@@ -141,7 +152,7 @@ export default function mount(): void {
           .setScale(b.footprint / 2).setDepth(DEPTH.groundDecal).setAlpha(0);
         this.outline.lineStyle(3, 0xf5b301, 0.9).strokePoints(diamond(gx, gy, b.footprint), true);
         const label = document.createElement('div');
-        label.className = 'label';
+        label.className = `${VIEW_LABEL} bg-[rgba(18,19,21,0.75)] [&>small]:ml-1.5 [&>small]:font-medium [&>small]:text-muted [&>small]:[font-size:smaller]`;
         label.innerHTML = `${b.label}<small>${b.footprint}×${b.footprint}</small>`;
         labels.append(label);
         this.placed.push({ x: p.x, y: p.y, size: b.footprint, label, building, damage, scorch });
@@ -312,6 +323,8 @@ export default function mount(): void {
     private bindTraffic(): void {
       $('traffic').hidden = !this.traffic;
       if (!this.traffic) return;
+      // a Service Bay works only while a vehicle is on its pad, as in matches: its visitor sets it going, not the box
+      if (TRIPS.some((t) => t.kind === 'service')) $<HTMLInputElement>('working').checked = false;
       const group = (label: string, out: boolean) => {
         const options = TRIPS.map((t, i) => ({ t, i })).filter(({ t }) => (t.kind === 'out') === out)
           .map(({ t, i }) => `<option value="${i}">${UNITS[t.unit]?.name ?? t.unit}</option>`).join('');
@@ -415,6 +428,7 @@ export default function mount(): void {
         this.setPlaying(false);
         this.seek(+scrub.value / 1000, false);
       };
+      $<HTMLOptionElement>('zoommax').value = String(CAMERA.maxZoom / CAMERA.startZoom); // the game's closest zoom
       $<HTMLSelectElement>('zoom').onchange = (e) => {
         this.zoomLevel = +(e.target as HTMLSelectElement).value;
         this.fitCamera();
@@ -447,8 +461,7 @@ export default function mount(): void {
         const first = this.placed[0]?.building;
         const now = first?.stageIndex ?? -1;
         html = (first?.stages ?? []).map((s, i) => {
-          const cls = i === now ? 'chip now' : i < now ? 'chip done' : 'chip';
-          return `<span class="${cls}">${Math.round(CONSTRUCTION.thresholds[i] * 100)}% · ${s.name}</span>`;
+          return `<span class="${chip(i === now ? 'now' : i < now ? 'done' : '')}">${Math.round(CONSTRUCTION.thresholds[i] * 100)}% · ${s.name}</span>`;
         }).join('');
       } else if (mode === 'turret') {
         const b = this.placed[0]?.building;
@@ -456,12 +469,12 @@ export default function mount(): void {
         const d = ((Math.round((this.aim / 360) * n) % n) + n) % n;
         const how = $<HTMLSelectElement>('turn').value;
         html = b?.turret
-          ? `<span class="chip now">${n} directions</span><span class="chip">${how === 'sweep' ? `facing ${d} · ${Math.round((d * 360) / n)}°` : how === 'scan' ? 'scanning' : 'following the mouse'}</span><span class="chip">← → turn one step</span>`
-          : '<span class="chip">This atlas has no turret frames yet</span>';
+          ? `<span class="${chip('now')}">${n} directions</span><span class="${chip()}">${how === 'sweep' ? `facing ${d} · ${Math.round((d * 360) / n)}°` : how === 'scan' ? 'scanning' : 'following the mouse'}</span><span class="${chip()}">← → turn one step</span>`
+          : `<span class="${chip()}">This atlas has no turret frames yet</span>`;
       } else {
         html = PHASES.map((p, i) => {
-          const cls = i === this.phase ? 'chip now' : i < this.phase ? 'chip done' : 'chip';
-          return `<button class="${cls}" data-phase="${i}" title="Jump here (${i + 1})">${i + 1} · ${p.name}</button>`;
+          const state = i === this.phase ? 'now' : i < this.phase ? 'done' : '';
+          return `<button class="${chip(state, true)}" data-phase="${i}" title="Jump here (${i + 1})">${i + 1} · ${p.name}</button>`;
         }).join('');
       }
       if (box.innerHTML !== html) box.innerHTML = html;
@@ -498,11 +511,11 @@ export default function mount(): void {
   const size = () => ({ w: view.clientWidth, h: view.clientHeight });
   if (mode === 'picture' && known?.picture) {
     document.querySelector('footer')!.hidden = true;
-    view.classList.add('picture');
+    view.classList.add('flex', 'flex-col', ...ground(128).split(' '));
     mountPictureViews(view, known.picture.file, known.picture.frame, known.preview);
   } else if (mode === 'model' && known?.model) {
     document.querySelector('footer')!.hidden = true;
-    view.classList.add('model');
+    view.classList.add('flex', 'flex-col', '[&>model-viewer]:min-h-[320px]');
     void mountModel(view, [{ name: known.name, file: known.model }]);
   } else if (BUILDINGS.length) {
     const game = new Phaser.Game({
@@ -533,7 +546,7 @@ export default function mount(): void {
     if (!known) {
       $('title').textContent = 'Unknown building';
       $('blurb').textContent = '';
-      info.innerHTML = '<p>No building with that id. <a href="./">See all buildings</a></p>';
+      info.innerHTML = `<p class="my-[1em]">No building with that id. <a class="${LINK}" href="./">See all buildings</a></p>`;
       return;
     }
     $('title').textContent = known.name;
@@ -541,12 +554,12 @@ export default function mount(): void {
     $('blurb').textContent = '';
     const side = known.faction === 'both' ? 'Shared' : known.faction === 'ordan' ? 'Ordan' : 'Sable';
     info.innerHTML = `
-      <div class="pic">${known.picture ? '' : '<span class="none">No art yet</span>'}</div>
-      <div class="body">
-        <div class="tags"><span class="tag v">V${known.milestone}</span><span class="tag ${known.faction}">${side}</span>${known.role ? `<span class="role">${known.role}</span>` : ''}<span class="role">${known.footprint}×${known.footprint} tiles</span></div>
-        <p class="desc">${known.description}</p>
+      <div class="pic ${PIC} aspect-[16/10] w-[min(520px,100%)] rounded-[8px] border border-line ${ground(256)}">${known.picture ? '' : `<span class="${NONE} text-white/80">No art yet</span>`}</div>
+      <div class="grid min-w-[260px] max-w-[560px] flex-1 gap-2.5 [&>dl]:text-[16px]">
+        <div class="${TAGS}"><span class="${TAG_V}">V${known.milestone}</span><span class="${tagSide(known.faction)}">${side}</span>${known.role ? `<span class="${ROLE}">${known.role}</span>` : ''}<span class="${ROLE}">${known.footprint}×${known.footprint} tiles</span></div>
+        <p class="text-[18px]">${known.description}</p>
         ${statsHtml(known)}
-        <p class="note">${known.note} No construction stages yet: they need a Tripo parts model.</p>
+        <p class="italic text-muted">${known.note} No construction stages yet: they need a Tripo parts model.</p>
       </div>`;
     if (known.picture) {
       mountPicture(info.querySelector<HTMLElement>('.pic')!, known.picture.file, known.picture.frame, known.preview)

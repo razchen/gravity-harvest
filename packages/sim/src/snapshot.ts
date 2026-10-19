@@ -1,13 +1,15 @@
-import type { GridPoint, MatchStats, TeamId } from '@gravity-harvest/shared';
-import type { Rock } from './ore.js';
+import type { Difficulty, GridPoint, MatchStats, TeamId } from '@gravity-harvest/shared';
+import type { Rock, Vent } from './ore.js';
 import type { Scenery } from './scenery.js';
 
 /**
  * Bump when the shape changes. Version 1 was the browser-side format (before the server ran matches);
  * version 2 had no scenery (still loads, as a bare map); version 3 had trees only (`trees`); before version 5 the
- * Assembly Yard was assumed (loading gives each side the scenario's one, where it fits).
+ * Assembly Yard was assumed (loading gives each side the scenario's one, where it fits); version 6 added transports'
+ * passengers; version 7 added the computer's difficulty (older saves play Normal); version 8 added gravity vents
+ * (older saves have none, and play on as they were).
  */
-export const SNAPSHOT_VERSION = 5;
+export const SNAPSHOT_VERSION = 8;
 export const OLDEST_LOADABLE_VERSION = 2;
 
 /**
@@ -22,11 +24,17 @@ export interface SimSnapshot {
   timeMs: number;
   nextId: number;
   rng: number;
-  /** `faction` since version 5 (older saves play the scenario's sides). */
-  players: Record<TeamId, { credits: number; queue: { unit: string; progress: number; near?: GridPoint }[]; stats: MatchStats; faction?: 'ordan' | 'sable' }>;
+  /** `faction` since version 5 (older saves play the scenario's sides); `difficulty` since version 7. */
+  players: Record<TeamId, { credits: number; queue: { unit: string; progress: number; near?: GridPoint }[]; stats: MatchStats; faction?: 'ordan' | 'sable'; difficulty?: Difficulty }>;
   buildings: { id: number; type: string; team: TeamId; tx: number; ty: number; hp: number; progress: number; constructed: boolean; seenBy: TeamId[]; repairing?: boolean }[];
-  units: { id: number; type: string; team: TeamId; gx: number; gy: number; hp: number; cargo?: number; field?: number; post?: GridPoint | null }[];
+  /** `passengers`: who rides in a transport (since version 6). */
+  units: {
+    id: number; type: string; team: TeamId; gx: number; gy: number; hp: number; cargo?: number; field?: number; post?: GridPoint | null;
+    passengers?: { id: number; type: string; hp: number }[];
+  }[];
   ore: { tx: number; ty: number; field: number; richness: number; rocks: Rock[] }[];
+  /** Gravity vents and the ore field each seeds (since version 8; the vent itself is in `scenery`). */
+  vents?: Vent[];
   /** Since version 4 (version 3 called it `trees`). */
   scenery?: Scenery[];
   trees?: Scenery[];

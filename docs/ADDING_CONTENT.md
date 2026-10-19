@@ -70,7 +70,8 @@ Example: the Lancer (`lancer`).
 
 What already works for any unit from the sheet: movement (speed), sight, HP and armor, its weapons (damage, burst,
 fire interval, range, damage class against the target's armor), production at the right building with its
-prerequisites, the queue, refunds. Abilities, ammo, passengers, aircraft, naval units, cloaking, decoys and the trait
+prerequisites, the queue, refunds, and carrying infantry (a unit with `passengers`; its doors are a `v_<id>_door`
+clip, closed → open, in the manifest). Abilities, ammo, aircraft, naval units, cloaking, decoys and the trait
 notes in the spreadsheet are **not** implemented yet; they come with the units that need them.
 
 ## Scenery: trees, rocks, bushes, logs, rubble, wrecks, grass, decals
@@ -92,6 +93,8 @@ No 3D needed: scenery is plain cut-out images (AI-generated is fine).
    debris and wrecks do; bushes, logs, grass and decals are decoration). Decals (craters, scorch marks, stains) also
    set `flat: true`: they lie on the ground under every shadow, aren't depth-sorted and have no shadow or contact
    shadow (only the frame). A decal only the browser places (like `ore_scar`) goes in `EVENT_ONLY_SCENERY` too.
+   The gravity vent (`gravity_vent`, category `vent`) is a map feature, not grown: scenarios place it (see "A map"
+   below). Its floating stones cast no shadow (`shadow_rows` in `make_scenery.py`: only the rock cone does).
 4. Run `python3 tools/sprites/make_scenery.py` (needs Pillow, NumPy and SciPy). It cleans the cut-out's edges and
    stray specks, scales and anchors it, casts its shadow, adds the base decal and a contact shadow for trees and
    bushes, and rewrites `apps/game/public/assets/sprites/scenery.*`.
@@ -110,13 +113,19 @@ else until its real producer exists). `docs/rules/tech-tree.md` shows what each 
 
 ## A map
 
-Add a `ScenarioDef` to `packages/sim/src/scenarios.ts` and register it in `SCENARIOS`. It appears on the New Game
-screen (from `GET /api/scenarios`); its layout never reaches the browser until the fog reveals it.
+Add a `ScenarioDef` to `packages/sim/src/scenarios.ts` and register it in `SCENARIOS`. Gravity vents go in its
+`vents` list (the top-left tile of each 2 × 2 footprint): each rings itself with ore that never runs out, and the
+landscape grows around it. Put them where both sides are equally far away (Skirmish: the middle of the map). It appears on the New Game
+screen (from `GET /api/scenarios`); its layout never reaches the browser until the fog reveals it. Computer sides
+(`human: false`) are played by `packages/ai`; give them the same kind of start as the player. Then run
+`npm run simulate -- --quick --scenario <id>`: the map gets a verdict (does it work, can it be won, does it take too
+long).
 
 ## A rules change
 
 Edit `design/balance.xlsx`, then run `npm run import --workspace @gravity-harvest/rules`. That regenerates the typed
-data and `docs/rules/`. The rules tests fail if you forget to re-import, or if a prerequisite, producer, weapon or
+data and `docs/rules/`. Afterwards `npm run simulate -- --quick` shows what the change does to pacing, fairness and
+the economy (the AI picks units from the rules by their numbers, so it needs no change). The rules tests fail if you forget to re-import, or if a prerequisite, producer, weapon or
 damage class points at something that doesn't exist.
 
 ## A save-format change

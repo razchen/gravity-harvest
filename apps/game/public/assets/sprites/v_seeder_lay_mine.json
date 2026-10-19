@@ -1,0 +1,3863 @@
+{
+ "frames": {
+  "v_seeder_lay_mine_15_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 189,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 189,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_1": {
+   "frame": {
+    "x": 191,
+    "y": 0,
+    "w": 189,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 189,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_2": {
+   "frame": {
+    "x": 382,
+    "y": 0,
+    "w": 188,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 188,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_3": {
+   "frame": {
+    "x": 572,
+    "y": 0,
+    "w": 188,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 188,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_4": {
+   "frame": {
+    "x": 762,
+    "y": 0,
+    "w": 188,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 188,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_5": {
+   "frame": {
+    "x": 952,
+    "y": 0,
+    "w": 188,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 188,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_6": {
+   "frame": {
+    "x": 1142,
+    "y": 0,
+    "w": 188,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 188,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_7": {
+   "frame": {
+    "x": 1332,
+    "y": 0,
+    "w": 188,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 188,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_8": {
+   "frame": {
+    "x": 1522,
+    "y": 0,
+    "w": 189,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 189,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_9": {
+   "frame": {
+    "x": 1713,
+    "y": 0,
+    "w": 189,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 189,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_10": {
+   "frame": {
+    "x": 1904,
+    "y": 0,
+    "w": 189,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 189,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_15_11": {
+   "frame": {
+    "x": 2095,
+    "y": 0,
+    "w": 189,
+    "h": 177
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 15,
+    "w": 189,
+    "h": 177
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_0": {
+   "frame": {
+    "x": 2286,
+    "y": 0,
+    "w": 254,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 16,
+    "w": 254,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_1": {
+   "frame": {
+    "x": 2542,
+    "y": 0,
+    "w": 254,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 16,
+    "w": 254,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_2": {
+   "frame": {
+    "x": 2798,
+    "y": 0,
+    "w": 253,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 16,
+    "w": 253,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_3": {
+   "frame": {
+    "x": 3053,
+    "y": 0,
+    "w": 253,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 16,
+    "w": 253,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_4": {
+   "frame": {
+    "x": 3308,
+    "y": 0,
+    "w": 253,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 16,
+    "w": 253,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_5": {
+   "frame": {
+    "x": 3563,
+    "y": 0,
+    "w": 253,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 16,
+    "w": 253,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_6": {
+   "frame": {
+    "x": 3818,
+    "y": 0,
+    "w": 253,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 16,
+    "w": 253,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_7": {
+   "frame": {
+    "x": 0,
+    "y": 179,
+    "w": 253,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 16,
+    "w": 253,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_8": {
+   "frame": {
+    "x": 255,
+    "y": 179,
+    "w": 254,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 16,
+    "w": 254,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_9": {
+   "frame": {
+    "x": 511,
+    "y": 179,
+    "w": 254,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 16,
+    "w": 254,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_10": {
+   "frame": {
+    "x": 767,
+    "y": 179,
+    "w": 254,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 16,
+    "w": 254,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_13_11": {
+   "frame": {
+    "x": 1023,
+    "y": 179,
+    "w": 254,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 16,
+    "w": 254,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_0": {
+   "frame": {
+    "x": 1279,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_1": {
+   "frame": {
+    "x": 1481,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_2": {
+   "frame": {
+    "x": 1683,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_3": {
+   "frame": {
+    "x": 1885,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_4": {
+   "frame": {
+    "x": 2087,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_5": {
+   "frame": {
+    "x": 2289,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_6": {
+   "frame": {
+    "x": 2491,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_7": {
+   "frame": {
+    "x": 2693,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_8": {
+   "frame": {
+    "x": 2895,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_9": {
+   "frame": {
+    "x": 3097,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_10": {
+   "frame": {
+    "x": 3299,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_14_11": {
+   "frame": {
+    "x": 3501,
+    "y": 179,
+    "w": 200,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 16,
+    "w": 200,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_0": {
+   "frame": {
+    "x": 3703,
+    "y": 179,
+    "w": 199,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 199,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_1": {
+   "frame": {
+    "x": 0,
+    "y": 357,
+    "w": 199,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 199,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_2": {
+   "frame": {
+    "x": 201,
+    "y": 357,
+    "w": 197,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 197,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_3": {
+   "frame": {
+    "x": 400,
+    "y": 357,
+    "w": 197,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 197,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_4": {
+   "frame": {
+    "x": 599,
+    "y": 357,
+    "w": 197,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 197,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_5": {
+   "frame": {
+    "x": 798,
+    "y": 357,
+    "w": 197,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 197,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_6": {
+   "frame": {
+    "x": 997,
+    "y": 357,
+    "w": 197,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 197,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_7": {
+   "frame": {
+    "x": 1196,
+    "y": 357,
+    "w": 198,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 198,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_8": {
+   "frame": {
+    "x": 1396,
+    "y": 357,
+    "w": 199,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 199,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_9": {
+   "frame": {
+    "x": 1597,
+    "y": 357,
+    "w": 199,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 199,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_10": {
+   "frame": {
+    "x": 1798,
+    "y": 357,
+    "w": 199,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 199,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_0_11": {
+   "frame": {
+    "x": 1999,
+    "y": 357,
+    "w": 199,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 199,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_0": {
+   "frame": {
+    "x": 2200,
+    "y": 357,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_1": {
+   "frame": {
+    "x": 2491,
+    "y": 357,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_2": {
+   "frame": {
+    "x": 2782,
+    "y": 357,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_3": {
+   "frame": {
+    "x": 3073,
+    "y": 357,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_4": {
+   "frame": {
+    "x": 3364,
+    "y": 357,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_5": {
+   "frame": {
+    "x": 3655,
+    "y": 357,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_6": {
+   "frame": {
+    "x": 0,
+    "y": 533,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_7": {
+   "frame": {
+    "x": 291,
+    "y": 533,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_8": {
+   "frame": {
+    "x": 582,
+    "y": 533,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_9": {
+   "frame": {
+    "x": 873,
+    "y": 533,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_10": {
+   "frame": {
+    "x": 1164,
+    "y": 533,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_12_11": {
+   "frame": {
+    "x": 1455,
+    "y": 533,
+    "w": 289,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 18,
+    "w": 289,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_0": {
+   "frame": {
+    "x": 1746,
+    "y": 533,
+    "w": 206,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 206,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_1": {
+   "frame": {
+    "x": 1954,
+    "y": 533,
+    "w": 204,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 204,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_2": {
+   "frame": {
+    "x": 2160,
+    "y": 533,
+    "w": 203,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 203,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_3": {
+   "frame": {
+    "x": 2365,
+    "y": 533,
+    "w": 203,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 203,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_4": {
+   "frame": {
+    "x": 2570,
+    "y": 533,
+    "w": 202,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 202,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_5": {
+   "frame": {
+    "x": 2774,
+    "y": 533,
+    "w": 202,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 202,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_6": {
+   "frame": {
+    "x": 2978,
+    "y": 533,
+    "w": 202,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 202,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_7": {
+   "frame": {
+    "x": 3182,
+    "y": 533,
+    "w": 203,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 203,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_8": {
+   "frame": {
+    "x": 3387,
+    "y": 533,
+    "w": 204,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 204,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_9": {
+   "frame": {
+    "x": 3593,
+    "y": 533,
+    "w": 206,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 206,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_10": {
+   "frame": {
+    "x": 3801,
+    "y": 533,
+    "w": 206,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 206,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_1_11": {
+   "frame": {
+    "x": 0,
+    "y": 709,
+    "w": 206,
+    "h": 168
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 24,
+    "w": 206,
+    "h": 168
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_0": {
+   "frame": {
+    "x": 208,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_1": {
+   "frame": {
+    "x": 502,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_2": {
+   "frame": {
+    "x": 796,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_3": {
+   "frame": {
+    "x": 1090,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_4": {
+   "frame": {
+    "x": 1384,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_5": {
+   "frame": {
+    "x": 1678,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_6": {
+   "frame": {
+    "x": 1972,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_7": {
+   "frame": {
+    "x": 2266,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_8": {
+   "frame": {
+    "x": 2560,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_9": {
+   "frame": {
+    "x": 2854,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_10": {
+   "frame": {
+    "x": 3148,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_11_11": {
+   "frame": {
+    "x": 3442,
+    "y": 709,
+    "w": 292,
+    "h": 167
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 25,
+    "w": 292,
+    "h": 167
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_0": {
+   "frame": {
+    "x": 3736,
+    "y": 709,
+    "w": 206,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 206,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_1": {
+   "frame": {
+    "x": 0,
+    "y": 879,
+    "w": 205,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 205,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_2": {
+   "frame": {
+    "x": 207,
+    "y": 879,
+    "w": 202,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 202,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_3": {
+   "frame": {
+    "x": 411,
+    "y": 879,
+    "w": 202,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 202,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_4": {
+   "frame": {
+    "x": 615,
+    "y": 879,
+    "w": 202,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 202,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_5": {
+   "frame": {
+    "x": 819,
+    "y": 879,
+    "w": 201,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 201,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_6": {
+   "frame": {
+    "x": 1022,
+    "y": 879,
+    "w": 201,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 201,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_7": {
+   "frame": {
+    "x": 1225,
+    "y": 879,
+    "w": 202,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 202,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_8": {
+   "frame": {
+    "x": 1429,
+    "y": 879,
+    "w": 204,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 204,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_9": {
+   "frame": {
+    "x": 1635,
+    "y": 879,
+    "w": 205,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 205,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_10": {
+   "frame": {
+    "x": 1842,
+    "y": 879,
+    "w": 205,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 205,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_2_11": {
+   "frame": {
+    "x": 2049,
+    "y": 879,
+    "w": 205,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 205,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_0": {
+   "frame": {
+    "x": 2256,
+    "y": 879,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_1": {
+   "frame": {
+    "x": 2529,
+    "y": 879,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_2": {
+   "frame": {
+    "x": 2802,
+    "y": 879,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_3": {
+   "frame": {
+    "x": 3075,
+    "y": 879,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_4": {
+   "frame": {
+    "x": 3348,
+    "y": 879,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_5": {
+   "frame": {
+    "x": 3621,
+    "y": 879,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_6": {
+   "frame": {
+    "x": 0,
+    "y": 1040,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_7": {
+   "frame": {
+    "x": 273,
+    "y": 1040,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_8": {
+   "frame": {
+    "x": 546,
+    "y": 1040,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_9": {
+   "frame": {
+    "x": 819,
+    "y": 1040,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_10": {
+   "frame": {
+    "x": 1092,
+    "y": 1040,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_10_11": {
+   "frame": {
+    "x": 1365,
+    "y": 1040,
+    "w": 271,
+    "h": 159
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 33,
+    "w": 271,
+    "h": 159
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_0": {
+   "frame": {
+    "x": 1638,
+    "y": 1040,
+    "w": 181,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 36,
+    "w": 181,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_1": {
+   "frame": {
+    "x": 1821,
+    "y": 1040,
+    "w": 180,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 9,
+    "y": 36,
+    "w": 180,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_2": {
+   "frame": {
+    "x": 2003,
+    "y": 1040,
+    "w": 179,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 36,
+    "w": 179,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_7": {
+   "frame": {
+    "x": 2184,
+    "y": 1040,
+    "w": 179,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 36,
+    "w": 179,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_8": {
+   "frame": {
+    "x": 2365,
+    "y": 1040,
+    "w": 181,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 36,
+    "w": 181,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_9": {
+   "frame": {
+    "x": 2548,
+    "y": 1040,
+    "w": 181,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 36,
+    "w": 181,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_10": {
+   "frame": {
+    "x": 2731,
+    "y": 1040,
+    "w": 181,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 36,
+    "w": 181,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_11": {
+   "frame": {
+    "x": 2914,
+    "y": 1040,
+    "w": 181,
+    "h": 156
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 36,
+    "w": 181,
+    "h": 156
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_3": {
+   "frame": {
+    "x": 3097,
+    "y": 1040,
+    "w": 179,
+    "h": 155
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 37,
+    "w": 179,
+    "h": 155
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_4": {
+   "frame": {
+    "x": 3278,
+    "y": 1040,
+    "w": 179,
+    "h": 155
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 37,
+    "w": 179,
+    "h": 155
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_5": {
+   "frame": {
+    "x": 3459,
+    "y": 1040,
+    "w": 179,
+    "h": 155
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 37,
+    "w": 179,
+    "h": 155
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_7_6": {
+   "frame": {
+    "x": 3640,
+    "y": 1040,
+    "w": 179,
+    "h": 155
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 37,
+    "w": 179,
+    "h": 155
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_0": {
+   "frame": {
+    "x": 3821,
+    "y": 1040,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_1": {
+   "frame": {
+    "x": 0,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_2": {
+   "frame": {
+    "x": 203,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_3": {
+   "frame": {
+    "x": 406,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_4": {
+   "frame": {
+    "x": 609,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_5": {
+   "frame": {
+    "x": 812,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_6": {
+   "frame": {
+    "x": 1015,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_7": {
+   "frame": {
+    "x": 1218,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_8": {
+   "frame": {
+    "x": 1421,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_9": {
+   "frame": {
+    "x": 1624,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_10": {
+   "frame": {
+    "x": 1827,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_8_11": {
+   "frame": {
+    "x": 2030,
+    "y": 1201,
+    "w": 201,
+    "h": 154
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 38,
+    "w": 201,
+    "h": 154
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_0": {
+   "frame": {
+    "x": 2233,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_1": {
+   "frame": {
+    "x": 2415,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_2": {
+   "frame": {
+    "x": 2597,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_3": {
+   "frame": {
+    "x": 2779,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_4": {
+   "frame": {
+    "x": 2961,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_5": {
+   "frame": {
+    "x": 3143,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_6": {
+   "frame": {
+    "x": 3325,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_7": {
+   "frame": {
+    "x": 3507,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_8": {
+   "frame": {
+    "x": 3689,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_9": {
+   "frame": {
+    "x": 3871,
+    "y": 1201,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_10": {
+   "frame": {
+    "x": 0,
+    "y": 1357,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_6_11": {
+   "frame": {
+    "x": 182,
+    "y": 1357,
+    "w": 180,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 39,
+    "w": 180,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_0": {
+   "frame": {
+    "x": 364,
+    "y": 1357,
+    "w": 186,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 186,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_1": {
+   "frame": {
+    "x": 552,
+    "y": 1357,
+    "w": 186,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 186,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_2": {
+   "frame": {
+    "x": 740,
+    "y": 1357,
+    "w": 185,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 185,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_3": {
+   "frame": {
+    "x": 927,
+    "y": 1357,
+    "w": 186,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 186,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_4": {
+   "frame": {
+    "x": 1115,
+    "y": 1357,
+    "w": 185,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 185,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_5": {
+   "frame": {
+    "x": 1302,
+    "y": 1357,
+    "w": 185,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 185,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_6": {
+   "frame": {
+    "x": 1489,
+    "y": 1357,
+    "w": 185,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 185,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_7": {
+   "frame": {
+    "x": 1676,
+    "y": 1357,
+    "w": 185,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 185,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_8": {
+   "frame": {
+    "x": 1863,
+    "y": 1357,
+    "w": 186,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 186,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_9": {
+   "frame": {
+    "x": 2051,
+    "y": 1357,
+    "w": 186,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 186,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_10": {
+   "frame": {
+    "x": 2239,
+    "y": 1357,
+    "w": 186,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 186,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_5_11": {
+   "frame": {
+    "x": 2427,
+    "y": 1357,
+    "w": 186,
+    "h": 151
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 186,
+    "h": 151
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_0": {
+   "frame": {
+    "x": 2615,
+    "y": 1357,
+    "w": 198,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 198,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_1": {
+   "frame": {
+    "x": 2815,
+    "y": 1357,
+    "w": 197,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 197,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_2": {
+   "frame": {
+    "x": 3014,
+    "y": 1357,
+    "w": 196,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 196,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_3": {
+   "frame": {
+    "x": 3212,
+    "y": 1357,
+    "w": 196,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 196,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_4": {
+   "frame": {
+    "x": 3410,
+    "y": 1357,
+    "w": 196,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 196,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_5": {
+   "frame": {
+    "x": 3608,
+    "y": 1357,
+    "w": 196,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 196,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_6": {
+   "frame": {
+    "x": 3806,
+    "y": 1357,
+    "w": 196,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 196,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_7": {
+   "frame": {
+    "x": 0,
+    "y": 1512,
+    "w": 196,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 196,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_8": {
+   "frame": {
+    "x": 198,
+    "y": 1512,
+    "w": 197,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 197,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_9": {
+   "frame": {
+    "x": 397,
+    "y": 1512,
+    "w": 198,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 198,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_10": {
+   "frame": {
+    "x": 597,
+    "y": 1512,
+    "w": 198,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 198,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_4_11": {
+   "frame": {
+    "x": 797,
+    "y": 1512,
+    "w": 198,
+    "h": 150
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 198,
+    "h": 150
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_0": {
+   "frame": {
+    "x": 997,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_1": {
+   "frame": {
+    "x": 1239,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_2": {
+   "frame": {
+    "x": 1481,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_3": {
+   "frame": {
+    "x": 1723,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_4": {
+   "frame": {
+    "x": 1965,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_5": {
+   "frame": {
+    "x": 2207,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_6": {
+   "frame": {
+    "x": 2449,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_7": {
+   "frame": {
+    "x": 2691,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_8": {
+   "frame": {
+    "x": 2933,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_9": {
+   "frame": {
+    "x": 3175,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_10": {
+   "frame": {
+    "x": 3417,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_9_11": {
+   "frame": {
+    "x": 3659,
+    "y": 1512,
+    "w": 240,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 240,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_0": {
+   "frame": {
+    "x": 0,
+    "y": 1664,
+    "w": 204,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 204,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_1": {
+   "frame": {
+    "x": 206,
+    "y": 1664,
+    "w": 203,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 203,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_2": {
+   "frame": {
+    "x": 411,
+    "y": 1664,
+    "w": 202,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 202,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_3": {
+   "frame": {
+    "x": 615,
+    "y": 1664,
+    "w": 202,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 202,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_4": {
+   "frame": {
+    "x": 819,
+    "y": 1664,
+    "w": 202,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 202,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_5": {
+   "frame": {
+    "x": 1023,
+    "y": 1664,
+    "w": 202,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 202,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_6": {
+   "frame": {
+    "x": 1227,
+    "y": 1664,
+    "w": 202,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 202,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_7": {
+   "frame": {
+    "x": 1431,
+    "y": 1664,
+    "w": 202,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 202,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_8": {
+   "frame": {
+    "x": 1635,
+    "y": 1664,
+    "w": 204,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 204,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_9": {
+   "frame": {
+    "x": 1841,
+    "y": 1664,
+    "w": 205,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 205,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_10": {
+   "frame": {
+    "x": 2048,
+    "y": 1664,
+    "w": 204,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 204,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  },
+  "v_seeder_lay_mine_3_11": {
+   "frame": {
+    "x": 2254,
+    "y": 1664,
+    "w": 204,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 204,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 317,
+    "h": 192
+   }
+  }
+ },
+ "meta": {
+  "image": "v_seeder_lay_mine.png",
+  "size": {
+   "w": 4096,
+   "h": 2048
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 96.7,
+   "y": 141.7
+  },
+  "res": 1.5,
+  "directions": 16,
+  "direction_0": "nose along world +X (grid +gx); directions turn counter-clockwise seen from above",
+  "frames": 12,
+  "fps": 6.0,
+  "loop": false,
+  "shadow": "baked, lightened to 18%"
+ }
+}

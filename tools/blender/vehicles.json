@@ -1,11 +1,72 @@
 {
-  "skimmer": { "length_tiles": 1.05 },
-  "jackal": { "length_tiles": 1.2, "rig": "jackal.blend" },
-  "ram": { "length_tiles": 1.3 },
-  "spire": { "length_tiles": 1.4 },
-  "carrier": { "length_tiles": 1.35 },
-  "watcher": { "length_tiles": 1.1 },
-  "shroud": { "length_tiles": 1.1 },
-  "seeder": { "length_tiles": 1.3 },
-  "assembler": { "length_tiles": 1.7 }
+ "skimmer": {
+  "length_tiles": 1.05
+ },
+ "jackal": {
+  "length_tiles": 1.2,
+  "rig": "jackal.blend"
+ },
+ "ram": {
+  "length_tiles": 1.3,
+  "rig": "ram.blend"
+ },
+ "spire": {
+  "length_tiles": 1.4,
+  "rig": "spire.blend"
+ },
+ "carrier": {
+  "length_tiles": 1.35,
+  "rig": "carrier.blend",
+  "clips": {
+   "door": {
+    "frames": 8
+   }
+  }
+ },
+ "watcher": {
+  "length_tiles": 1.1,
+  "rig": "watcher.blend",
+  "clips": {
+   "scan": {
+    "frames": 24,
+    "loop": true
+   }
+  }
+ },
+ "shroud": {
+  "length_tiles": 1.1,
+  "rig": "shroud.blend"
+ },
+ "seeder": {
+  "length_tiles": 1.3,
+  "rig": "seeder.blend",
+  "clips": {
+   "lay_mine": {
+    "frames": 12
+   }
+  }
+ },
+ "assembler": {
+  "length_tiles": 1.7,
+  "rig": "assembler.blend"
+ },
+ "harvester": {
+  "length_tiles": 1.5,
+  "rig": "harvester.blend",
+  "nose_deg": 180,
+  "clips": {
+   "harvest": {
+    "frames": 12,
+    "loop": true
+   }
+  }
+ },
+ "harvester_empty": {
+  "length_tiles": 1.5,
+  "rig": "harvester.blend",
+  "nose_deg": 180,
+  "hide": [
+   "ore"
+  ]
+ }
 }

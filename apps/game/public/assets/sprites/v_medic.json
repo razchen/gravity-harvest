@@ -1,0 +1,668 @@
+{
+ "frames": {
+  "v_medic_14": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 71,
+    "h": 85
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 29,
+    "y": 22,
+    "w": 71,
+    "h": 85
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_15": {
+   "frame": {
+    "x": 73,
+    "y": 0,
+    "w": 86,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 26,
+    "y": 22,
+    "w": 86,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_13": {
+   "frame": {
+    "x": 161,
+    "y": 0,
+    "w": 82,
+    "h": 82
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 21,
+    "y": 24,
+    "w": 82,
+    "h": 82
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_0": {
+   "frame": {
+    "x": 245,
+    "y": 0,
+    "w": 105,
+    "h": 78
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 20,
+    "y": 25,
+    "w": 105,
+    "h": 78
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_12": {
+   "frame": {
+    "x": 352,
+    "y": 0,
+    "w": 106,
+    "h": 75
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 30,
+    "w": 106,
+    "h": 75
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_1": {
+   "frame": {
+    "x": 460,
+    "y": 0,
+    "w": 120,
+    "h": 73
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 9,
+    "y": 25,
+    "w": 120,
+    "h": 73
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_11": {
+   "frame": {
+    "x": 582,
+    "y": 0,
+    "w": 116,
+    "h": 71
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 30,
+    "w": 116,
+    "h": 71
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s15": {
+   "frame": {
+    "x": 700,
+    "y": 0,
+    "w": 87,
+    "h": 66
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 29,
+    "y": 72,
+    "w": 87,
+    "h": 66
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_7": {
+   "frame": {
+    "x": 789,
+    "y": 0,
+    "w": 86,
+    "h": 65
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 35,
+    "w": 86,
+    "h": 65
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_8": {
+   "frame": {
+    "x": 877,
+    "y": 0,
+    "w": 105,
+    "h": 65
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 31,
+    "w": 105,
+    "h": 65
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s14": {
+   "frame": {
+    "x": 984,
+    "y": 0,
+    "w": 78,
+    "h": 65
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 74,
+    "w": 78,
+    "h": 65
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_10": {
+   "frame": {
+    "x": 1064,
+    "y": 0,
+    "w": 117,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 29,
+    "w": 117,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_2": {
+   "frame": {
+    "x": 1183,
+    "y": 0,
+    "w": 117,
+    "h": 63
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 27,
+    "w": 117,
+    "h": 63
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_5": {
+   "frame": {
+    "x": 1302,
+    "y": 0,
+    "w": 81,
+    "h": 62
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 36,
+    "w": 81,
+    "h": 62
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_6": {
+   "frame": {
+    "x": 1385,
+    "y": 0,
+    "w": 71,
+    "h": 62
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 29,
+    "y": 38,
+    "w": 71,
+    "h": 62
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s13": {
+   "frame": {
+    "x": 1458,
+    "y": 0,
+    "w": 90,
+    "h": 62
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 30,
+    "y": 78,
+    "w": 90,
+    "h": 62
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s5": {
+   "frame": {
+    "x": 1550,
+    "y": 0,
+    "w": 91,
+    "h": 61
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 10,
+    "y": 84,
+    "w": 91,
+    "h": 61
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_9": {
+   "frame": {
+    "x": 1643,
+    "y": 0,
+    "w": 119,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 29,
+    "w": 119,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s6": {
+   "frame": {
+    "x": 1764,
+    "y": 0,
+    "w": 80,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 19,
+    "y": 86,
+    "w": 80,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_4": {
+   "frame": {
+    "x": 1846,
+    "y": 0,
+    "w": 106,
+    "h": 59
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 13,
+    "y": 33,
+    "w": 106,
+    "h": 59
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s0": {
+   "frame": {
+    "x": 1954,
+    "y": 0,
+    "w": 105,
+    "h": 59
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 76,
+    "w": 105,
+    "h": 59
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_3": {
+   "frame": {
+    "x": 2061,
+    "y": 0,
+    "w": 116,
+    "h": 58
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 5,
+    "y": 30,
+    "w": 116,
+    "h": 58
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s7": {
+   "frame": {
+    "x": 2179,
+    "y": 0,
+    "w": 85,
+    "h": 58
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 14,
+    "y": 88,
+    "w": 85,
+    "h": 58
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s8": {
+   "frame": {
+    "x": 2266,
+    "y": 0,
+    "w": 105,
+    "h": 56
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 90,
+    "w": 105,
+    "h": 56
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s4": {
+   "frame": {
+    "x": 2373,
+    "y": 0,
+    "w": 105,
+    "h": 53
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 83,
+    "w": 105,
+    "h": 53
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s12": {
+   "frame": {
+    "x": 2480,
+    "y": 0,
+    "w": 113,
+    "h": 53
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 24,
+    "y": 88,
+    "w": 113,
+    "h": 53
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s1": {
+   "frame": {
+    "x": 2595,
+    "y": 0,
+    "w": 120,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 84,
+    "w": 120,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s3": {
+   "frame": {
+    "x": 2717,
+    "y": 0,
+    "w": 109,
+    "h": 45
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 86,
+    "w": 109,
+    "h": 45
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s9": {
+   "frame": {
+    "x": 2828,
+    "y": 0,
+    "w": 122,
+    "h": 45
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 9,
+    "y": 95,
+    "w": 122,
+    "h": 45
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s11": {
+   "frame": {
+    "x": 2952,
+    "y": 0,
+    "w": 124,
+    "h": 45
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 20,
+    "y": 93,
+    "w": 124,
+    "h": 45
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s2": {
+   "frame": {
+    "x": 3078,
+    "y": 0,
+    "w": 114,
+    "h": 42
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 89,
+    "w": 114,
+    "h": 42
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  },
+  "v_medic_s10": {
+   "frame": {
+    "x": 3194,
+    "y": 0,
+    "w": 124,
+    "h": 39
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 16,
+    "y": 96,
+    "w": 124,
+    "h": 39
+   },
+   "sourceSize": {
+    "w": 234,
+    "h": 146
+   }
+  }
+ },
+ "meta": {
+  "image": "v_medic.png",
+  "size": {
+   "w": 4096,
+   "h": 128
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 64.6,
+   "y": 111.7
+  },
+  "res": 1.5,
+  "directions": 16,
+  "direction_0": "nose along world +X (grid +gx); directions turn counter-clockwise seen from above",
+  "hover": {
+   "height_px": 38.0,
+   "glow": [
+    0.55,
+    0.12,
+    1.0
+   ]
+  },
+  "shadow": "baked, lightened to 18%"
+ }
+}

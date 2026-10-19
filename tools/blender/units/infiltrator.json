@@ -1,0 +1,8 @@
+{
+ "length_tiles": 0.92,
+ "model": "hover/infiltrator.glb",
+ "hover": {
+  "height": 0.28,
+  "glow": [0.55, 0.12, 1.0]
+ }
+}

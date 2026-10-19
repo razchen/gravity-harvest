@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <title>Sounds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./dev.css">
+</head>
+<body class="bg-bg text-[15px]/[1.4] text-text h-full">
+  <header class="flex flex-wrap items-baseline gap-x-4 gap-y-1.5 px-4 pb-2 pt-3">
+    <h1 class="text-[22px] font-bold tracking-[0.02em]">Sounds</h1>
+    <p class="text-muted">Every sound the game plays, and when (a green dot: in matches now). Choose a slot, listen to what it uses, add or remove candidates from the list, or change its ElevenLabs prompt and make new ones. Picks save as you go (tools/audio/picks.json); <b>Update the game</b> puts them into the game.</p>
+  </header>
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 pb-2.5">
+    <label class="inline-flex items-center gap-2 text-muted">Volume <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7" class="w-[140px] accent-gold"></label>
+    <label class="inline-flex items-center gap-1.5 text-muted"><input type="checkbox" id="vary" checked> Vary pitch a little (as the game will, so repeats don't sound identical)</label>
+    <label class="inline-flex items-center gap-1.5 text-muted" title="Each sound at the loudness the game gives its slot (tools/audio/levels.json), as packed; off: as the file is"><input type="checkbox" id="normalize" checked> Game loudness</label>
+    <button id="stop" class="rounded-[4px] border border-line bg-panel px-3 py-1 font-semibold hover:border-gold">Stop all</button>
+    <span id="now" class="inline-flex min-w-[320px] items-center gap-2 text-muted" hidden><span id="now-name" class="max-w-[220px] truncate text-text"></span><input type="range" id="seek" min="0" max="1000" value="0" class="w-[220px] accent-gold" aria-label="Position in the sound"><span id="now-time" class="tabular-nums"></span></span>
+    <span id="saved" class="text-muted"></span>
+    <span class="flex-1"></span>
+    <button id="update" class="rounded-[4px] bg-gold px-3 py-1 font-bold text-ink disabled:opacity-50" title="Pack the picks into the game's sounds (tools/audio/pack_audio.py)">Update the game</button>
+    <span id="updated" class="text-muted"></span>
+  </div>
+  <main class="flex min-h-0 flex-1 gap-3 px-4 pb-3.5 narrow:flex-col" style="height: calc(100% - 118px)">
+    <section id="slots" class="w-[400px] flex-none overflow-y-auto rounded-[6px] border border-line bg-panel px-3 py-2.5 narrow:max-h-[40vh] narrow:w-auto"></section>
+    <section class="flex min-w-0 flex-1 flex-col overflow-hidden rounded-[6px] border border-line bg-panel">
+      <div id="slothead" class="border-b border-line px-3 py-2.5"></div>
+      <div id="finder" class="flex flex-wrap items-center gap-2 border-b border-line px-3 py-2" hidden>
+        <button id="finder-close" class="rounded-[4px] border border-line px-2.5 py-1 font-semibold text-muted hover:border-gold hover:text-text">← Back to the picks</button>
+        <input id="search" type="search" placeholder="Search sounds (explosion, laser, door…)" class="min-w-[220px] flex-1 rounded-[4px] border border-line bg-bg px-2 py-1 text-text">
+        <select id="pack" class="rounded-[4px] border border-line bg-bg px-2 py-1 text-text"></select>
+        <span id="count" class="text-muted"></span>
+      </div>
+      <div id="library" class="min-h-0 flex-1 overflow-y-auto px-3 py-2"></div>
+    </section>
+  </main>
+  <script type="module" src="/src/dev/nav.ts"></script>
+</body>
+</html>

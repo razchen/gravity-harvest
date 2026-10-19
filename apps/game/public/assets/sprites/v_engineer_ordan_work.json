@@ -1,0 +1,3863 @@
+{
+ "frames": {
+  "v_engineer_ordan_work_5_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 134
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 25,
+    "w": 98,
+    "h": 134
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_0": {
+   "frame": {
+    "x": 100,
+    "y": 0,
+    "w": 88,
+    "h": 134
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 25,
+    "w": 88,
+    "h": 134
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_11": {
+   "frame": {
+    "x": 190,
+    "y": 0,
+    "w": 98,
+    "h": 133
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 26,
+    "w": 98,
+    "h": 133
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_11": {
+   "frame": {
+    "x": 290,
+    "y": 0,
+    "w": 88,
+    "h": 133
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 26,
+    "w": 88,
+    "h": 133
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_0": {
+   "frame": {
+    "x": 380,
+    "y": 0,
+    "w": 118,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 27,
+    "w": 118,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_1": {
+   "frame": {
+    "x": 500,
+    "y": 0,
+    "w": 98,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 27,
+    "w": 98,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_0": {
+   "frame": {
+    "x": 600,
+    "y": 0,
+    "w": 73,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 24,
+    "w": 73,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_1": {
+   "frame": {
+    "x": 675,
+    "y": 0,
+    "w": 88,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 27,
+    "w": 88,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_0": {
+   "frame": {
+    "x": 765,
+    "y": 0,
+    "w": 114,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 18,
+    "y": 27,
+    "w": 114,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_11": {
+   "frame": {
+    "x": 881,
+    "y": 0,
+    "w": 118,
+    "h": 131
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 28,
+    "w": 118,
+    "h": 131
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_11": {
+   "frame": {
+    "x": 1001,
+    "y": 0,
+    "w": 73,
+    "h": 131
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 25,
+    "w": 73,
+    "h": 131
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_11": {
+   "frame": {
+    "x": 1076,
+    "y": 0,
+    "w": 114,
+    "h": 131
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 18,
+    "y": 28,
+    "w": 114,
+    "h": 131
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_1": {
+   "frame": {
+    "x": 1192,
+    "y": 0,
+    "w": 118,
+    "h": 129
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 30,
+    "w": 118,
+    "h": 129
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_10": {
+   "frame": {
+    "x": 1312,
+    "y": 0,
+    "w": 98,
+    "h": 129
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 30,
+    "w": 98,
+    "h": 129
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_1": {
+   "frame": {
+    "x": 1412,
+    "y": 0,
+    "w": 73,
+    "h": 129
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 27,
+    "w": 73,
+    "h": 129
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_10": {
+   "frame": {
+    "x": 1487,
+    "y": 0,
+    "w": 88,
+    "h": 129
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 30,
+    "w": 88,
+    "h": 129
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_1": {
+   "frame": {
+    "x": 1577,
+    "y": 0,
+    "w": 112,
+    "h": 129
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 20,
+    "y": 30,
+    "w": 112,
+    "h": 129
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_10": {
+   "frame": {
+    "x": 1691,
+    "y": 0,
+    "w": 73,
+    "h": 127
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 29,
+    "w": 73,
+    "h": 127
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_10": {
+   "frame": {
+    "x": 1766,
+    "y": 0,
+    "w": 118,
+    "h": 126
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 33,
+    "w": 118,
+    "h": 126
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_2": {
+   "frame": {
+    "x": 1886,
+    "y": 0,
+    "w": 98,
+    "h": 126
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 33,
+    "w": 98,
+    "h": 126
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_2": {
+   "frame": {
+    "x": 1986,
+    "y": 0,
+    "w": 88,
+    "h": 126
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 33,
+    "w": 88,
+    "h": 126
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_10": {
+   "frame": {
+    "x": 2076,
+    "y": 0,
+    "w": 109,
+    "h": 126
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 33,
+    "w": 109,
+    "h": 126
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_0": {
+   "frame": {
+    "x": 2187,
+    "y": 0,
+    "w": 129,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 31,
+    "w": 129,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_4": {
+   "frame": {
+    "x": 2318,
+    "y": 0,
+    "w": 98,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 34,
+    "w": 98,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_6": {
+   "frame": {
+    "x": 2418,
+    "y": 0,
+    "w": 98,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 34,
+    "w": 98,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_8": {
+   "frame": {
+    "x": 2518,
+    "y": 0,
+    "w": 98,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 34,
+    "w": 98,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_4": {
+   "frame": {
+    "x": 2618,
+    "y": 0,
+    "w": 88,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 34,
+    "w": 88,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_6": {
+   "frame": {
+    "x": 2708,
+    "y": 0,
+    "w": 88,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 34,
+    "w": 88,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_8": {
+   "frame": {
+    "x": 2798,
+    "y": 0,
+    "w": 88,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 34,
+    "w": 88,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_0": {
+   "frame": {
+    "x": 2888,
+    "y": 0,
+    "w": 129,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 31,
+    "w": 129,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_11": {
+   "frame": {
+    "x": 3019,
+    "y": 0,
+    "w": 128,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 32,
+    "w": 128,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_2": {
+   "frame": {
+    "x": 3149,
+    "y": 0,
+    "w": 118,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 35,
+    "w": 118,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_3": {
+   "frame": {
+    "x": 3269,
+    "y": 0,
+    "w": 98,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 35,
+    "w": 98,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_9": {
+   "frame": {
+    "x": 3369,
+    "y": 0,
+    "w": 98,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 35,
+    "w": 98,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_2": {
+   "frame": {
+    "x": 3469,
+    "y": 0,
+    "w": 73,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 32,
+    "w": 73,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_3": {
+   "frame": {
+    "x": 3544,
+    "y": 0,
+    "w": 88,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 35,
+    "w": 88,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_9": {
+   "frame": {
+    "x": 3634,
+    "y": 0,
+    "w": 88,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 35,
+    "w": 88,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_2": {
+   "frame": {
+    "x": 3724,
+    "y": 0,
+    "w": 106,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 26,
+    "y": 35,
+    "w": 106,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_11": {
+   "frame": {
+    "x": 3832,
+    "y": 0,
+    "w": 127,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 9,
+    "y": 32,
+    "w": 127,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_5": {
+   "frame": {
+    "x": 3961,
+    "y": 0,
+    "w": 98,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 36,
+    "w": 98,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_5_7": {
+   "frame": {
+    "x": 0,
+    "y": 136,
+    "w": 98,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 36,
+    "w": 98,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_4": {
+   "frame": {
+    "x": 100,
+    "y": 136,
+    "w": 73,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 33,
+    "w": 73,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_8": {
+   "frame": {
+    "x": 175,
+    "y": 136,
+    "w": 73,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 33,
+    "w": 73,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_7": {
+   "frame": {
+    "x": 250,
+    "y": 136,
+    "w": 88,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 36,
+    "w": 88,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_1": {
+   "frame": {
+    "x": 340,
+    "y": 136,
+    "w": 126,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 34,
+    "w": 126,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_4": {
+   "frame": {
+    "x": 468,
+    "y": 136,
+    "w": 118,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 37,
+    "w": 118,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_6": {
+   "frame": {
+    "x": 588,
+    "y": 136,
+    "w": 118,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 37,
+    "w": 118,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_8": {
+   "frame": {
+    "x": 708,
+    "y": 136,
+    "w": 118,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 37,
+    "w": 118,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_6": {
+   "frame": {
+    "x": 828,
+    "y": 136,
+    "w": 73,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 34,
+    "w": 73,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_9": {
+   "frame": {
+    "x": 903,
+    "y": 136,
+    "w": 73,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 34,
+    "w": 73,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_7_5": {
+   "frame": {
+    "x": 978,
+    "y": 136,
+    "w": 88,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 33,
+    "y": 37,
+    "w": 88,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_4": {
+   "frame": {
+    "x": 1068,
+    "y": 136,
+    "w": 105,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 37,
+    "w": 105,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_6": {
+   "frame": {
+    "x": 1175,
+    "y": 136,
+    "w": 105,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 37,
+    "w": 105,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_8": {
+   "frame": {
+    "x": 1282,
+    "y": 136,
+    "w": 105,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 37,
+    "w": 105,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_1": {
+   "frame": {
+    "x": 1389,
+    "y": 136,
+    "w": 125,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 11,
+    "y": 34,
+    "w": 125,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_3": {
+   "frame": {
+    "x": 1516,
+    "y": 136,
+    "w": 118,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 38,
+    "w": 118,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_9": {
+   "frame": {
+    "x": 1636,
+    "y": 136,
+    "w": 118,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 38,
+    "w": 118,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_3": {
+   "frame": {
+    "x": 1756,
+    "y": 136,
+    "w": 73,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 35,
+    "w": 73,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_3": {
+   "frame": {
+    "x": 1831,
+    "y": 136,
+    "w": 105,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 38,
+    "w": 105,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_9": {
+   "frame": {
+    "x": 1938,
+    "y": 136,
+    "w": 105,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 38,
+    "w": 105,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_5": {
+   "frame": {
+    "x": 2045,
+    "y": 136,
+    "w": 118,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 39,
+    "w": 118,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_4_7": {
+   "frame": {
+    "x": 2165,
+    "y": 136,
+    "w": 118,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 39,
+    "w": 118,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_5": {
+   "frame": {
+    "x": 2285,
+    "y": 136,
+    "w": 73,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 36,
+    "w": 73,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_6_7": {
+   "frame": {
+    "x": 2360,
+    "y": 136,
+    "w": 73,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 36,
+    "w": 73,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_5": {
+   "frame": {
+    "x": 2435,
+    "y": 136,
+    "w": 105,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 39,
+    "w": 105,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_8_7": {
+   "frame": {
+    "x": 2542,
+    "y": 136,
+    "w": 105,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 27,
+    "y": 39,
+    "w": 105,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_10": {
+   "frame": {
+    "x": 2649,
+    "y": 136,
+    "w": 125,
+    "h": 119
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 37,
+    "w": 125,
+    "h": 119
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_10": {
+   "frame": {
+    "x": 2776,
+    "y": 136,
+    "w": 122,
+    "h": 119
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 14,
+    "y": 37,
+    "w": 122,
+    "h": 119
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_0": {
+   "frame": {
+    "x": 2900,
+    "y": 136,
+    "w": 124,
+    "h": 117
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 35,
+    "w": 124,
+    "h": 117
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_0": {
+   "frame": {
+    "x": 3026,
+    "y": 136,
+    "w": 124,
+    "h": 117
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 35,
+    "w": 124,
+    "h": 117
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_11": {
+   "frame": {
+    "x": 3152,
+    "y": 136,
+    "w": 123,
+    "h": 116
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 36,
+    "w": 123,
+    "h": 116
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_2": {
+   "frame": {
+    "x": 3277,
+    "y": 136,
+    "w": 125,
+    "h": 116
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 40,
+    "w": 125,
+    "h": 116
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_2": {
+   "frame": {
+    "x": 3404,
+    "y": 136,
+    "w": 118,
+    "h": 116
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 18,
+    "y": 40,
+    "w": 118,
+    "h": 116
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_11": {
+   "frame": {
+    "x": 3524,
+    "y": 136,
+    "w": 123,
+    "h": 116
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 36,
+    "w": 123,
+    "h": 116
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_4": {
+   "frame": {
+    "x": 3649,
+    "y": 136,
+    "w": 125,
+    "h": 115
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 125,
+    "h": 115
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_6": {
+   "frame": {
+    "x": 3776,
+    "y": 136,
+    "w": 125,
+    "h": 115
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 125,
+    "h": 115
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_8": {
+   "frame": {
+    "x": 3903,
+    "y": 136,
+    "w": 125,
+    "h": 115
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 41,
+    "w": 125,
+    "h": 115
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_4": {
+   "frame": {
+    "x": 0,
+    "y": 261,
+    "w": 116,
+    "h": 115
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 20,
+    "y": 41,
+    "w": 116,
+    "h": 115
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_6": {
+   "frame": {
+    "x": 118,
+    "y": 261,
+    "w": 115,
+    "h": 115
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 21,
+    "y": 41,
+    "w": 115,
+    "h": 115
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_8": {
+   "frame": {
+    "x": 235,
+    "y": 261,
+    "w": 114,
+    "h": 115
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 22,
+    "y": 41,
+    "w": 114,
+    "h": 115
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_1": {
+   "frame": {
+    "x": 351,
+    "y": 261,
+    "w": 121,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 38,
+    "w": 121,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_9": {
+   "frame": {
+    "x": 474,
+    "y": 261,
+    "w": 125,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 125,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_9": {
+   "frame": {
+    "x": 601,
+    "y": 261,
+    "w": 114,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 22,
+    "y": 42,
+    "w": 114,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_1": {
+   "frame": {
+    "x": 717,
+    "y": 261,
+    "w": 121,
+    "h": 114
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 9,
+    "y": 38,
+    "w": 121,
+    "h": 114
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_3": {
+   "frame": {
+    "x": 840,
+    "y": 261,
+    "w": 125,
+    "h": 113
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 43,
+    "w": 125,
+    "h": 113
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_3": {
+   "frame": {
+    "x": 967,
+    "y": 261,
+    "w": 112,
+    "h": 113
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 24,
+    "y": 43,
+    "w": 112,
+    "h": 113
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_5": {
+   "frame": {
+    "x": 1081,
+    "y": 261,
+    "w": 125,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 125,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_3_7": {
+   "frame": {
+    "x": 1208,
+    "y": 261,
+    "w": 125,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 125,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_5": {
+   "frame": {
+    "x": 1335,
+    "y": 261,
+    "w": 113,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 44,
+    "w": 113,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_9_7": {
+   "frame": {
+    "x": 1450,
+    "y": 261,
+    "w": 112,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 24,
+    "y": 44,
+    "w": 112,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_10": {
+   "frame": {
+    "x": 1564,
+    "y": 261,
+    "w": 118,
+    "h": 110
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 42,
+    "w": 118,
+    "h": 110
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_10": {
+   "frame": {
+    "x": 1684,
+    "y": 261,
+    "w": 118,
+    "h": 110
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 42,
+    "w": 118,
+    "h": 110
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_0": {
+   "frame": {
+    "x": 1804,
+    "y": 261,
+    "w": 129,
+    "h": 108
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 39,
+    "w": 129,
+    "h": 108
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_0": {
+   "frame": {
+    "x": 1935,
+    "y": 261,
+    "w": 115,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 39,
+    "w": 115,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_11": {
+   "frame": {
+    "x": 2052,
+    "y": 261,
+    "w": 128,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 40,
+    "w": 128,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_2": {
+   "frame": {
+    "x": 2182,
+    "y": 261,
+    "w": 114,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 45,
+    "w": 114,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_2": {
+   "frame": {
+    "x": 2298,
+    "y": 261,
+    "w": 114,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 16,
+    "y": 45,
+    "w": 114,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_0": {
+   "frame": {
+    "x": 2414,
+    "y": 261,
+    "w": 129,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 39,
+    "w": 129,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_0": {
+   "frame": {
+    "x": 2545,
+    "y": 261,
+    "w": 117,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 39,
+    "w": 117,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_11": {
+   "frame": {
+    "x": 2664,
+    "y": 261,
+    "w": 114,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 40,
+    "w": 114,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_4": {
+   "frame": {
+    "x": 2780,
+    "y": 261,
+    "w": 114,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 46,
+    "w": 114,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_4": {
+   "frame": {
+    "x": 2896,
+    "y": 261,
+    "w": 113,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 46,
+    "w": 113,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_11": {
+   "frame": {
+    "x": 3011,
+    "y": 261,
+    "w": 128,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 40,
+    "w": 128,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_11": {
+   "frame": {
+    "x": 3141,
+    "y": 261,
+    "w": 117,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 40,
+    "w": 117,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_0": {
+   "frame": {
+    "x": 3260,
+    "y": 261,
+    "w": 98,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 38,
+    "w": 98,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_0": {
+   "frame": {
+    "x": 3360,
+    "y": 261,
+    "w": 88,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 38,
+    "w": 88,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_1": {
+   "frame": {
+    "x": 3450,
+    "y": 261,
+    "w": 113,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 41,
+    "w": 113,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_1": {
+   "frame": {
+    "x": 3565,
+    "y": 261,
+    "w": 126,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 42,
+    "w": 126,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_6": {
+   "frame": {
+    "x": 3693,
+    "y": 261,
+    "w": 114,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 47,
+    "w": 114,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_8": {
+   "frame": {
+    "x": 3809,
+    "y": 261,
+    "w": 114,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 47,
+    "w": 114,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_9": {
+   "frame": {
+    "x": 3925,
+    "y": 261,
+    "w": 114,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 47,
+    "w": 114,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_6": {
+   "frame": {
+    "x": 0,
+    "y": 378,
+    "w": 113,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 47,
+    "w": 113,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_8": {
+   "frame": {
+    "x": 115,
+    "y": 378,
+    "w": 113,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 47,
+    "w": 113,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_9": {
+   "frame": {
+    "x": 230,
+    "y": 378,
+    "w": 113,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 47,
+    "w": 113,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_1": {
+   "frame": {
+    "x": 345,
+    "y": 378,
+    "w": 117,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 41,
+    "w": 117,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_11": {
+   "frame": {
+    "x": 464,
+    "y": 378,
+    "w": 98,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 39,
+    "w": 98,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_11": {
+   "frame": {
+    "x": 564,
+    "y": 378,
+    "w": 88,
+    "h": 105
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 39,
+    "w": 88,
+    "h": 105
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_3": {
+   "frame": {
+    "x": 654,
+    "y": 378,
+    "w": 114,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 48,
+    "w": 114,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_3": {
+   "frame": {
+    "x": 770,
+    "y": 378,
+    "w": 113,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 48,
+    "w": 113,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_1": {
+   "frame": {
+    "x": 885,
+    "y": 378,
+    "w": 125,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 11,
+    "y": 42,
+    "w": 125,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_1": {
+   "frame": {
+    "x": 1012,
+    "y": 378,
+    "w": 98,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 40,
+    "w": 98,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_0": {
+   "frame": {
+    "x": 1112,
+    "y": 378,
+    "w": 73,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 38,
+    "w": 73,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_1": {
+   "frame": {
+    "x": 1187,
+    "y": 378,
+    "w": 88,
+    "h": 104
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 40,
+    "w": 88,
+    "h": 104
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_10": {
+   "frame": {
+    "x": 1277,
+    "y": 378,
+    "w": 110,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 43,
+    "w": 110,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_10": {
+   "frame": {
+    "x": 1389,
+    "y": 378,
+    "w": 122,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 44,
+    "w": 122,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_5": {
+   "frame": {
+    "x": 1513,
+    "y": 378,
+    "w": 114,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 49,
+    "w": 114,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_2_7": {
+   "frame": {
+    "x": 1629,
+    "y": 378,
+    "w": 114,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 49,
+    "w": 114,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_5": {
+   "frame": {
+    "x": 1745,
+    "y": 378,
+    "w": 113,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 49,
+    "w": 113,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_10_7": {
+   "frame": {
+    "x": 1860,
+    "y": 378,
+    "w": 113,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 17,
+    "y": 49,
+    "w": 113,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_10": {
+   "frame": {
+    "x": 1975,
+    "y": 378,
+    "w": 117,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 43,
+    "w": 117,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_11": {
+   "frame": {
+    "x": 2094,
+    "y": 378,
+    "w": 73,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 39,
+    "w": 73,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_10": {
+   "frame": {
+    "x": 2169,
+    "y": 378,
+    "w": 124,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 44,
+    "w": 124,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_2": {
+   "frame": {
+    "x": 2295,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_3": {
+   "frame": {
+    "x": 2395,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_4": {
+   "frame": {
+    "x": 2495,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_5": {
+   "frame": {
+    "x": 2595,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_6": {
+   "frame": {
+    "x": 2695,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_7": {
+   "frame": {
+    "x": 2795,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_8": {
+   "frame": {
+    "x": 2895,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_9": {
+   "frame": {
+    "x": 2995,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_13_10": {
+   "frame": {
+    "x": 3095,
+    "y": 378,
+    "w": 98,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 23,
+    "y": 42,
+    "w": 98,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_1": {
+   "frame": {
+    "x": 3195,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_2": {
+   "frame": {
+    "x": 3270,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_3": {
+   "frame": {
+    "x": 3345,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_4": {
+   "frame": {
+    "x": 3420,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_5": {
+   "frame": {
+    "x": 3495,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_6": {
+   "frame": {
+    "x": 3570,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_7": {
+   "frame": {
+    "x": 3645,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_8": {
+   "frame": {
+    "x": 3720,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_9": {
+   "frame": {
+    "x": 3795,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_14_10": {
+   "frame": {
+    "x": 3870,
+    "y": 378,
+    "w": 73,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 32,
+    "y": 40,
+    "w": 73,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_2": {
+   "frame": {
+    "x": 3945,
+    "y": 378,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_3": {
+   "frame": {
+    "x": 0,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_4": {
+   "frame": {
+    "x": 90,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_5": {
+   "frame": {
+    "x": 180,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_6": {
+   "frame": {
+    "x": 270,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_7": {
+   "frame": {
+    "x": 360,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_8": {
+   "frame": {
+    "x": 450,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_9": {
+   "frame": {
+    "x": 540,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_15_10": {
+   "frame": {
+    "x": 630,
+    "y": 485,
+    "w": 88,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 42,
+    "w": 88,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_2": {
+   "frame": {
+    "x": 720,
+    "y": 485,
+    "w": 106,
+    "h": 101
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 45,
+    "w": 106,
+    "h": 101
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_2": {
+   "frame": {
+    "x": 828,
+    "y": 485,
+    "w": 118,
+    "h": 101
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 46,
+    "w": 118,
+    "h": 101
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_2": {
+   "frame": {
+    "x": 948,
+    "y": 485,
+    "w": 117,
+    "h": 101
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 45,
+    "w": 117,
+    "h": 101
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_3": {
+   "frame": {
+    "x": 1067,
+    "y": 485,
+    "w": 105,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 46,
+    "w": 105,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_4": {
+   "frame": {
+    "x": 1174,
+    "y": 485,
+    "w": 105,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 46,
+    "w": 105,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_5": {
+   "frame": {
+    "x": 1281,
+    "y": 485,
+    "w": 105,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 46,
+    "w": 105,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_6": {
+   "frame": {
+    "x": 1388,
+    "y": 485,
+    "w": 105,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 46,
+    "w": 105,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_7": {
+   "frame": {
+    "x": 1495,
+    "y": 485,
+    "w": 105,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 46,
+    "w": 105,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_8": {
+   "frame": {
+    "x": 1602,
+    "y": 485,
+    "w": 105,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 46,
+    "w": 105,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_0_9": {
+   "frame": {
+    "x": 1709,
+    "y": 485,
+    "w": 105,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 4,
+    "y": 46,
+    "w": 105,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_4": {
+   "frame": {
+    "x": 1816,
+    "y": 485,
+    "w": 116,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 47,
+    "w": 116,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_6": {
+   "frame": {
+    "x": 1934,
+    "y": 485,
+    "w": 115,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 47,
+    "w": 115,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_8": {
+   "frame": {
+    "x": 2051,
+    "y": 485,
+    "w": 115,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 47,
+    "w": 115,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_2": {
+   "frame": {
+    "x": 2168,
+    "y": 485,
+    "w": 124,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 46,
+    "w": 124,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_3": {
+   "frame": {
+    "x": 2294,
+    "y": 485,
+    "w": 117,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 46,
+    "w": 117,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_4": {
+   "frame": {
+    "x": 2413,
+    "y": 485,
+    "w": 117,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 46,
+    "w": 117,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_5": {
+   "frame": {
+    "x": 2532,
+    "y": 485,
+    "w": 117,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 46,
+    "w": 117,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_6": {
+   "frame": {
+    "x": 2651,
+    "y": 485,
+    "w": 117,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 46,
+    "w": 117,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_7": {
+   "frame": {
+    "x": 2770,
+    "y": 485,
+    "w": 117,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 46,
+    "w": 117,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_8": {
+   "frame": {
+    "x": 2889,
+    "y": 485,
+    "w": 117,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 46,
+    "w": 117,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_12_9": {
+   "frame": {
+    "x": 3008,
+    "y": 485,
+    "w": 117,
+    "h": 100
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 15,
+    "y": 46,
+    "w": 117,
+    "h": 100
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_3": {
+   "frame": {
+    "x": 3127,
+    "y": 485,
+    "w": 112,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 48,
+    "w": 112,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_9": {
+   "frame": {
+    "x": 3241,
+    "y": 485,
+    "w": 115,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 48,
+    "w": 115,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_4": {
+   "frame": {
+    "x": 3358,
+    "y": 485,
+    "w": 124,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 47,
+    "w": 124,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_6": {
+   "frame": {
+    "x": 3484,
+    "y": 485,
+    "w": 124,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 47,
+    "w": 124,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_8": {
+   "frame": {
+    "x": 3610,
+    "y": 485,
+    "w": 124,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 47,
+    "w": 124,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_9": {
+   "frame": {
+    "x": 3736,
+    "y": 485,
+    "w": 124,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 47,
+    "w": 124,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_5": {
+   "frame": {
+    "x": 3862,
+    "y": 485,
+    "w": 113,
+    "h": 98
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 49,
+    "w": 113,
+    "h": 98
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_1_7": {
+   "frame": {
+    "x": 3977,
+    "y": 485,
+    "w": 113,
+    "h": 98
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 49,
+    "w": 113,
+    "h": 98
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_3": {
+   "frame": {
+    "x": 0,
+    "y": 589,
+    "w": 124,
+    "h": 98
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 48,
+    "w": 124,
+    "h": 98
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_7": {
+   "frame": {
+    "x": 126,
+    "y": 589,
+    "w": 124,
+    "h": 98
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 48,
+    "w": 124,
+    "h": 98
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  },
+  "v_engineer_ordan_work_11_5": {
+   "frame": {
+    "x": 252,
+    "y": 589,
+    "w": 124,
+    "h": 97
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 12,
+    "y": 49,
+    "w": 124,
+    "h": 97
+   },
+   "sourceSize": {
+    "w": 321,
+    "h": 209
+   }
+  }
+ },
+ "meta": {
+  "image": "v_engineer_ordan_work.png",
+  "size": {
+   "w": 4096,
+   "h": 1024
+  },
+  "scale": "1",
+  "anchor": {
+   "x": 68.1,
+   "y": 172.9
+  },
+  "res": 1.5,
+  "directions": 16,
+  "direction_0": "nose along world +X (grid +gx); directions turn counter-clockwise seen from above",
+  "frames": 12,
+  "fps": 11.52,
+  "loop": true,
+  "shadow": "baked, lightened to 18%"
+ }
+}

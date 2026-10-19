@@ -32,6 +32,8 @@ export interface GameEvents extends Record<string, unknown> {
   debugMenu: null;
   /** Toggle the performance readout (P). */
   perf: null;
+  /** Show or hide the Dev info panel (I). */
+  devInfo: null;
   /** Sell or repair mode switched on, or off (null). */
   mode: 'sell' | 'repair' | null;
 }

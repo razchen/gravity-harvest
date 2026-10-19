@@ -1,0 +1,1387 @@
+{
+ "note": "Made by tools/audio/pack_audio.py from tools/audio/picks.json",
+ "slots": {
+  "ack_anvil_attack": {
+   "files": [
+    "ack_anvil_attack_1",
+    "ack_anvil_attack_2",
+    "ack_anvil_attack_3",
+    "ack_anvil_attack_4",
+    "ack_anvil_attack_5",
+    "ack_anvil_attack_6",
+    "ack_anvil_attack_7",
+    "ack_anvil_attack_8",
+    "ack_anvil_attack_9"
+   ]
+  },
+  "ack_anvil_move": {
+   "files": [
+    "ack_anvil_move_1",
+    "ack_anvil_move_2",
+    "ack_anvil_move_3",
+    "ack_anvil_move_4",
+    "ack_anvil_move_5",
+    "ack_anvil_move_6",
+    "ack_anvil_move_7",
+    "ack_anvil_move_8",
+    "ack_anvil_move_9"
+   ]
+  },
+  "ack_anvil_select": {
+   "files": [
+    "ack_anvil_select_1",
+    "ack_anvil_select_2",
+    "ack_anvil_select_3",
+    "ack_anvil_select_4",
+    "ack_anvil_select_5",
+    "ack_anvil_select_6",
+    "ack_anvil_select_7",
+    "ack_anvil_select_8",
+    "ack_anvil_select_9"
+   ]
+  },
+  "ack_assembler_move": {
+   "files": [
+    "ack_assembler_move_1",
+    "ack_assembler_move_2",
+    "ack_assembler_move_3",
+    "ack_assembler_move_4",
+    "ack_assembler_move_5",
+    "ack_assembler_move_6",
+    "ack_assembler_move_7",
+    "ack_assembler_move_8",
+    "ack_assembler_move_9"
+   ]
+  },
+  "ack_assembler_select": {
+   "files": [
+    "ack_assembler_select_1",
+    "ack_assembler_select_2",
+    "ack_assembler_select_3",
+    "ack_assembler_select_4",
+    "ack_assembler_select_5",
+    "ack_assembler_select_6",
+    "ack_assembler_select_7",
+    "ack_assembler_select_8",
+    "ack_assembler_select_9"
+   ]
+  },
+  "ack_breaker_attack": {
+   "files": [
+    "ack_breaker_attack_1",
+    "ack_breaker_attack_2",
+    "ack_breaker_attack_3",
+    "ack_breaker_attack_4",
+    "ack_breaker_attack_5",
+    "ack_breaker_attack_6",
+    "ack_breaker_attack_7",
+    "ack_breaker_attack_8",
+    "ack_breaker_attack_9"
+   ]
+  },
+  "ack_breaker_move": {
+   "files": [
+    "ack_breaker_move_1",
+    "ack_breaker_move_2",
+    "ack_breaker_move_3",
+    "ack_breaker_move_4",
+    "ack_breaker_move_5",
+    "ack_breaker_move_6",
+    "ack_breaker_move_7",
+    "ack_breaker_move_8",
+    "ack_breaker_move_9"
+   ]
+  },
+  "ack_breaker_select": {
+   "files": [
+    "ack_breaker_select_1",
+    "ack_breaker_select_2",
+    "ack_breaker_select_3",
+    "ack_breaker_select_4",
+    "ack_breaker_select_5",
+    "ack_breaker_select_6",
+    "ack_breaker_select_7",
+    "ack_breaker_select_8",
+    "ack_breaker_select_9"
+   ]
+  },
+  "ack_carrier_attack": {
+   "files": [
+    "ack_carrier_attack_1",
+    "ack_carrier_attack_2",
+    "ack_carrier_attack_3",
+    "ack_carrier_attack_4",
+    "ack_carrier_attack_5",
+    "ack_carrier_attack_6",
+    "ack_carrier_attack_7",
+    "ack_carrier_attack_8",
+    "ack_carrier_attack_9"
+   ]
+  },
+  "ack_carrier_move": {
+   "files": [
+    "ack_carrier_move_1",
+    "ack_carrier_move_2",
+    "ack_carrier_move_3",
+    "ack_carrier_move_4",
+    "ack_carrier_move_5",
+    "ack_carrier_move_6",
+    "ack_carrier_move_7",
+    "ack_carrier_move_8",
+    "ack_carrier_move_9"
+   ]
+  },
+  "ack_carrier_select": {
+   "files": [
+    "ack_carrier_select_1",
+    "ack_carrier_select_2",
+    "ack_carrier_select_3",
+    "ack_carrier_select_4",
+    "ack_carrier_select_5",
+    "ack_carrier_select_6",
+    "ack_carrier_select_7",
+    "ack_carrier_select_8",
+    "ack_carrier_select_9"
+   ]
+  },
+  "ack_engineer_move": {
+   "files": [
+    "ack_engineer_move_1",
+    "ack_engineer_move_2",
+    "ack_engineer_move_3",
+    "ack_engineer_move_4",
+    "ack_engineer_move_5",
+    "ack_engineer_move_6",
+    "ack_engineer_move_7",
+    "ack_engineer_move_8",
+    "ack_engineer_move_9"
+   ]
+  },
+  "ack_engineer_select": {
+   "files": [
+    "ack_engineer_select_1",
+    "ack_engineer_select_2",
+    "ack_engineer_select_3",
+    "ack_engineer_select_4",
+    "ack_engineer_select_5",
+    "ack_engineer_select_6",
+    "ack_engineer_select_7",
+    "ack_engineer_select_8",
+    "ack_engineer_select_9"
+   ]
+  },
+  "ack_goliath_attack": {
+   "files": [
+    "ack_goliath_attack_1",
+    "ack_goliath_attack_2",
+    "ack_goliath_attack_3",
+    "ack_goliath_attack_4",
+    "ack_goliath_attack_5",
+    "ack_goliath_attack_6",
+    "ack_goliath_attack_7",
+    "ack_goliath_attack_8",
+    "ack_goliath_attack_9"
+   ]
+  },
+  "ack_goliath_move": {
+   "files": [
+    "ack_goliath_move_1",
+    "ack_goliath_move_2",
+    "ack_goliath_move_3",
+    "ack_goliath_move_4",
+    "ack_goliath_move_5",
+    "ack_goliath_move_6",
+    "ack_goliath_move_7",
+    "ack_goliath_move_8",
+    "ack_goliath_move_9"
+   ]
+  },
+  "ack_goliath_select": {
+   "files": [
+    "ack_goliath_select_1",
+    "ack_goliath_select_2",
+    "ack_goliath_select_3",
+    "ack_goliath_select_4",
+    "ack_goliath_select_5",
+    "ack_goliath_select_6",
+    "ack_goliath_select_7",
+    "ack_goliath_select_8",
+    "ack_goliath_select_9"
+   ]
+  },
+  "ack_grenadier_attack": {
+   "files": [
+    "ack_grenadier_attack_1",
+    "ack_grenadier_attack_2",
+    "ack_grenadier_attack_3",
+    "ack_grenadier_attack_4",
+    "ack_grenadier_attack_5",
+    "ack_grenadier_attack_6",
+    "ack_grenadier_attack_7",
+    "ack_grenadier_attack_8",
+    "ack_grenadier_attack_9"
+   ]
+  },
+  "ack_grenadier_move": {
+   "files": [
+    "ack_grenadier_move_1",
+    "ack_grenadier_move_2",
+    "ack_grenadier_move_3",
+    "ack_grenadier_move_4",
+    "ack_grenadier_move_5",
+    "ack_grenadier_move_6",
+    "ack_grenadier_move_7",
+    "ack_grenadier_move_8",
+    "ack_grenadier_move_9"
+   ]
+  },
+  "ack_grenadier_select": {
+   "files": [
+    "ack_grenadier_select_1",
+    "ack_grenadier_select_2",
+    "ack_grenadier_select_3",
+    "ack_grenadier_select_4",
+    "ack_grenadier_select_5",
+    "ack_grenadier_select_6",
+    "ack_grenadier_select_7",
+    "ack_grenadier_select_8",
+    "ack_grenadier_select_9"
+   ]
+  },
+  "ack_harvester_move": {
+   "files": [
+    "ack_harvester_move_1",
+    "ack_harvester_move_2",
+    "ack_harvester_move_3",
+    "ack_harvester_move_4",
+    "ack_harvester_move_5",
+    "ack_harvester_move_6",
+    "ack_harvester_move_7",
+    "ack_harvester_move_8",
+    "ack_harvester_move_9"
+   ]
+  },
+  "ack_harvester_select": {
+   "files": [
+    "ack_harvester_select_1",
+    "ack_harvester_select_2",
+    "ack_harvester_select_3",
+    "ack_harvester_select_4",
+    "ack_harvester_select_5",
+    "ack_harvester_select_6",
+    "ack_harvester_select_7",
+    "ack_harvester_select_8",
+    "ack_harvester_select_9"
+   ]
+  },
+  "ack_hound_attack": {
+   "files": [
+    "ack_hound_attack_1",
+    "ack_hound_attack_2",
+    "ack_hound_attack_3"
+   ]
+  },
+  "ack_hound_move": {
+   "files": [
+    "ack_hound_move_1",
+    "ack_hound_move_2",
+    "ack_hound_move_3"
+   ]
+  },
+  "ack_hound_select": {
+   "files": [
+    "ack_hound_select_1",
+    "ack_hound_select_2",
+    "ack_hound_select_3"
+   ]
+  },
+  "ack_infiltrator_move": {
+   "files": [
+    "ack_infiltrator_move_1",
+    "ack_infiltrator_move_2",
+    "ack_infiltrator_move_3",
+    "ack_infiltrator_move_4",
+    "ack_infiltrator_move_5",
+    "ack_infiltrator_move_6",
+    "ack_infiltrator_move_7",
+    "ack_infiltrator_move_8",
+    "ack_infiltrator_move_9"
+   ]
+  },
+  "ack_infiltrator_select": {
+   "files": [
+    "ack_infiltrator_select_1",
+    "ack_infiltrator_select_2",
+    "ack_infiltrator_select_3",
+    "ack_infiltrator_select_4",
+    "ack_infiltrator_select_5",
+    "ack_infiltrator_select_6",
+    "ack_infiltrator_select_7",
+    "ack_infiltrator_select_8",
+    "ack_infiltrator_select_9"
+   ]
+  },
+  "ack_jackal_attack": {
+   "files": [
+    "ack_jackal_attack_1",
+    "ack_jackal_attack_2",
+    "ack_jackal_attack_3",
+    "ack_jackal_attack_4",
+    "ack_jackal_attack_5",
+    "ack_jackal_attack_6",
+    "ack_jackal_attack_7",
+    "ack_jackal_attack_8",
+    "ack_jackal_attack_9"
+   ]
+  },
+  "ack_jackal_move": {
+   "files": [
+    "ack_jackal_move_1",
+    "ack_jackal_move_2",
+    "ack_jackal_move_3",
+    "ack_jackal_move_4",
+    "ack_jackal_move_5",
+    "ack_jackal_move_6",
+    "ack_jackal_move_7",
+    "ack_jackal_move_8",
+    "ack_jackal_move_9"
+   ]
+  },
+  "ack_jackal_select": {
+   "files": [
+    "ack_jackal_select_1",
+    "ack_jackal_select_2",
+    "ack_jackal_select_3",
+    "ack_jackal_select_4",
+    "ack_jackal_select_5",
+    "ack_jackal_select_6",
+    "ack_jackal_select_7",
+    "ack_jackal_select_8",
+    "ack_jackal_select_9"
+   ]
+  },
+  "ack_lancer_attack": {
+   "files": [
+    "ack_lancer_attack_1",
+    "ack_lancer_attack_2",
+    "ack_lancer_attack_3",
+    "ack_lancer_attack_4",
+    "ack_lancer_attack_5",
+    "ack_lancer_attack_6",
+    "ack_lancer_attack_7",
+    "ack_lancer_attack_8",
+    "ack_lancer_attack_9"
+   ]
+  },
+  "ack_lancer_move": {
+   "files": [
+    "ack_lancer_move_1",
+    "ack_lancer_move_2",
+    "ack_lancer_move_3",
+    "ack_lancer_move_4",
+    "ack_lancer_move_5",
+    "ack_lancer_move_6",
+    "ack_lancer_move_7",
+    "ack_lancer_move_8",
+    "ack_lancer_move_9"
+   ]
+  },
+  "ack_lancer_select": {
+   "files": [
+    "ack_lancer_select_1",
+    "ack_lancer_select_2",
+    "ack_lancer_select_3",
+    "ack_lancer_select_4",
+    "ack_lancer_select_5",
+    "ack_lancer_select_6",
+    "ack_lancer_select_7",
+    "ack_lancer_select_8",
+    "ack_lancer_select_9"
+   ]
+  },
+  "ack_medic_move": {
+   "files": [
+    "ack_medic_move_1",
+    "ack_medic_move_2",
+    "ack_medic_move_3",
+    "ack_medic_move_4",
+    "ack_medic_move_5",
+    "ack_medic_move_6",
+    "ack_medic_move_7",
+    "ack_medic_move_8",
+    "ack_medic_move_9"
+   ]
+  },
+  "ack_medic_select": {
+   "files": [
+    "ack_medic_select_1",
+    "ack_medic_select_2",
+    "ack_medic_select_3",
+    "ack_medic_select_4",
+    "ack_medic_select_5",
+    "ack_medic_select_6",
+    "ack_medic_select_7",
+    "ack_medic_select_8",
+    "ack_medic_select_9"
+   ]
+  },
+  "ack_operator_attack": {
+   "files": [
+    "ack_operator_attack_1",
+    "ack_operator_attack_2",
+    "ack_operator_attack_3",
+    "ack_operator_attack_4",
+    "ack_operator_attack_5",
+    "ack_operator_attack_6",
+    "ack_operator_attack_7",
+    "ack_operator_attack_8",
+    "ack_operator_attack_9"
+   ]
+  },
+  "ack_operator_move": {
+   "files": [
+    "ack_operator_move_1",
+    "ack_operator_move_2",
+    "ack_operator_move_3",
+    "ack_operator_move_4",
+    "ack_operator_move_5",
+    "ack_operator_move_6",
+    "ack_operator_move_7",
+    "ack_operator_move_8",
+    "ack_operator_move_9"
+   ]
+  },
+  "ack_operator_select": {
+   "files": [
+    "ack_operator_select_1",
+    "ack_operator_select_2",
+    "ack_operator_select_3",
+    "ack_operator_select_4",
+    "ack_operator_select_5",
+    "ack_operator_select_6",
+    "ack_operator_select_7",
+    "ack_operator_select_8",
+    "ack_operator_select_9"
+   ]
+  },
+  "ack_raider_move": {
+   "files": [
+    "ack_raider_move_1",
+    "ack_raider_move_2",
+    "ack_raider_move_3",
+    "ack_raider_move_4",
+    "ack_raider_move_5",
+    "ack_raider_move_6",
+    "ack_raider_move_7",
+    "ack_raider_move_8",
+    "ack_raider_move_9"
+   ]
+  },
+  "ack_raider_select": {
+   "files": [
+    "ack_raider_select_1",
+    "ack_raider_select_2",
+    "ack_raider_select_3",
+    "ack_raider_select_4",
+    "ack_raider_select_5",
+    "ack_raider_select_6",
+    "ack_raider_select_7",
+    "ack_raider_select_8",
+    "ack_raider_select_9"
+   ]
+  },
+  "ack_ram_attack": {
+   "files": [
+    "ack_ram_attack_1",
+    "ack_ram_attack_2",
+    "ack_ram_attack_3",
+    "ack_ram_attack_4",
+    "ack_ram_attack_5",
+    "ack_ram_attack_6",
+    "ack_ram_attack_7",
+    "ack_ram_attack_8",
+    "ack_ram_attack_9"
+   ]
+  },
+  "ack_ram_move": {
+   "files": [
+    "ack_ram_move_1",
+    "ack_ram_move_2",
+    "ack_ram_move_3",
+    "ack_ram_move_4",
+    "ack_ram_move_5",
+    "ack_ram_move_6",
+    "ack_ram_move_7",
+    "ack_ram_move_8",
+    "ack_ram_move_9"
+   ]
+  },
+  "ack_ram_select": {
+   "files": [
+    "ack_ram_select_1",
+    "ack_ram_select_2",
+    "ack_ram_select_3",
+    "ack_ram_select_4",
+    "ack_ram_select_5",
+    "ack_ram_select_6",
+    "ack_ram_select_7",
+    "ack_ram_select_8",
+    "ack_ram_select_9"
+   ]
+  },
+  "ack_rifleman_attack": {
+   "files": [
+    "ack_rifleman_attack_1",
+    "ack_rifleman_attack_2",
+    "ack_rifleman_attack_3",
+    "ack_rifleman_attack_4",
+    "ack_rifleman_attack_5",
+    "ack_rifleman_attack_6",
+    "ack_rifleman_attack_7",
+    "ack_rifleman_attack_8",
+    "ack_rifleman_attack_9"
+   ]
+  },
+  "ack_rifleman_move": {
+   "files": [
+    "ack_rifleman_move_1",
+    "ack_rifleman_move_2",
+    "ack_rifleman_move_3",
+    "ack_rifleman_move_4",
+    "ack_rifleman_move_5",
+    "ack_rifleman_move_6",
+    "ack_rifleman_move_7",
+    "ack_rifleman_move_8",
+    "ack_rifleman_move_9"
+   ]
+  },
+  "ack_rifleman_select": {
+   "files": [
+    "ack_rifleman_select_1",
+    "ack_rifleman_select_2",
+    "ack_rifleman_select_3",
+    "ack_rifleman_select_4",
+    "ack_rifleman_select_5",
+    "ack_rifleman_select_6",
+    "ack_rifleman_select_7",
+    "ack_rifleman_select_8",
+    "ack_rifleman_select_9"
+   ]
+  },
+  "ack_salvo_attack": {
+   "files": [
+    "ack_salvo_attack_1",
+    "ack_salvo_attack_2",
+    "ack_salvo_attack_3",
+    "ack_salvo_attack_4",
+    "ack_salvo_attack_5",
+    "ack_salvo_attack_6",
+    "ack_salvo_attack_7",
+    "ack_salvo_attack_8",
+    "ack_salvo_attack_9"
+   ]
+  },
+  "ack_salvo_move": {
+   "files": [
+    "ack_salvo_move_1",
+    "ack_salvo_move_2",
+    "ack_salvo_move_3",
+    "ack_salvo_move_4",
+    "ack_salvo_move_5",
+    "ack_salvo_move_6",
+    "ack_salvo_move_7",
+    "ack_salvo_move_8",
+    "ack_salvo_move_9"
+   ]
+  },
+  "ack_salvo_select": {
+   "files": [
+    "ack_salvo_select_1",
+    "ack_salvo_select_2",
+    "ack_salvo_select_3",
+    "ack_salvo_select_4",
+    "ack_salvo_select_5",
+    "ack_salvo_select_6",
+    "ack_salvo_select_7",
+    "ack_salvo_select_8",
+    "ack_salvo_select_9"
+   ]
+  },
+  "ack_seeder_move": {
+   "files": [
+    "ack_seeder_move_1",
+    "ack_seeder_move_2",
+    "ack_seeder_move_3",
+    "ack_seeder_move_4",
+    "ack_seeder_move_5",
+    "ack_seeder_move_6",
+    "ack_seeder_move_7",
+    "ack_seeder_move_8",
+    "ack_seeder_move_9"
+   ]
+  },
+  "ack_seeder_select": {
+   "files": [
+    "ack_seeder_select_1",
+    "ack_seeder_select_2",
+    "ack_seeder_select_3",
+    "ack_seeder_select_4",
+    "ack_seeder_select_5",
+    "ack_seeder_select_6",
+    "ack_seeder_select_7",
+    "ack_seeder_select_8",
+    "ack_seeder_select_9"
+   ]
+  },
+  "ack_shroud_move": {
+   "files": [
+    "ack_shroud_move_1",
+    "ack_shroud_move_2",
+    "ack_shroud_move_3",
+    "ack_shroud_move_4",
+    "ack_shroud_move_5",
+    "ack_shroud_move_6",
+    "ack_shroud_move_7",
+    "ack_shroud_move_8",
+    "ack_shroud_move_9"
+   ]
+  },
+  "ack_shroud_select": {
+   "files": [
+    "ack_shroud_select_1",
+    "ack_shroud_select_2",
+    "ack_shroud_select_3",
+    "ack_shroud_select_4",
+    "ack_shroud_select_5",
+    "ack_shroud_select_6",
+    "ack_shroud_select_7",
+    "ack_shroud_select_8",
+    "ack_shroud_select_9"
+   ]
+  },
+  "ack_skimmer_attack": {
+   "files": [
+    "ack_skimmer_attack_1",
+    "ack_skimmer_attack_2",
+    "ack_skimmer_attack_3",
+    "ack_skimmer_attack_4",
+    "ack_skimmer_attack_5",
+    "ack_skimmer_attack_6",
+    "ack_skimmer_attack_7",
+    "ack_skimmer_attack_8",
+    "ack_skimmer_attack_9"
+   ]
+  },
+  "ack_skimmer_move": {
+   "files": [
+    "ack_skimmer_move_1",
+    "ack_skimmer_move_2",
+    "ack_skimmer_move_3",
+    "ack_skimmer_move_4",
+    "ack_skimmer_move_5",
+    "ack_skimmer_move_6",
+    "ack_skimmer_move_7",
+    "ack_skimmer_move_8",
+    "ack_skimmer_move_9"
+   ]
+  },
+  "ack_skimmer_select": {
+   "files": [
+    "ack_skimmer_select_1",
+    "ack_skimmer_select_2",
+    "ack_skimmer_select_3",
+    "ack_skimmer_select_4",
+    "ack_skimmer_select_5",
+    "ack_skimmer_select_6",
+    "ack_skimmer_select_7",
+    "ack_skimmer_select_8",
+    "ack_skimmer_select_9"
+   ]
+  },
+  "ack_spire_attack": {
+   "files": [
+    "ack_spire_attack_1",
+    "ack_spire_attack_2",
+    "ack_spire_attack_3",
+    "ack_spire_attack_4",
+    "ack_spire_attack_5",
+    "ack_spire_attack_6",
+    "ack_spire_attack_7",
+    "ack_spire_attack_8",
+    "ack_spire_attack_9"
+   ]
+  },
+  "ack_spire_move": {
+   "files": [
+    "ack_spire_move_1",
+    "ack_spire_move_2",
+    "ack_spire_move_3",
+    "ack_spire_move_4",
+    "ack_spire_move_5",
+    "ack_spire_move_6",
+    "ack_spire_move_7",
+    "ack_spire_move_8",
+    "ack_spire_move_9"
+   ]
+  },
+  "ack_spire_select": {
+   "files": [
+    "ack_spire_select_1",
+    "ack_spire_select_2",
+    "ack_spire_select_3",
+    "ack_spire_select_4",
+    "ack_spire_select_5",
+    "ack_spire_select_6",
+    "ack_spire_select_7",
+    "ack_spire_select_8",
+    "ack_spire_select_9"
+   ]
+  },
+  "ack_watcher_move": {
+   "files": [
+    "ack_watcher_move_1",
+    "ack_watcher_move_2",
+    "ack_watcher_move_3",
+    "ack_watcher_move_4",
+    "ack_watcher_move_5",
+    "ack_watcher_move_6",
+    "ack_watcher_move_7",
+    "ack_watcher_move_8",
+    "ack_watcher_move_9"
+   ]
+  },
+  "ack_watcher_select": {
+   "files": [
+    "ack_watcher_select_1",
+    "ack_watcher_select_2",
+    "ack_watcher_select_3",
+    "ack_watcher_select_4",
+    "ack_watcher_select_5",
+    "ack_watcher_select_6",
+    "ack_watcher_select_7",
+    "ack_watcher_select_8",
+    "ack_watcher_select_9"
+   ]
+  },
+  "ambience": {
+   "files": [
+    "ambience_1",
+    "ambience_2"
+   ],
+   "loop": true
+  },
+  "announce_base_attack": {
+   "files": [
+    "announce_base_attack_1"
+   ]
+  },
+  "announce_building_lost": {
+   "files": [
+    "announce_building_lost_1"
+   ]
+  },
+  "announce_construction_complete": {
+   "files": [
+    "announce_construction_complete_1"
+   ]
+  },
+  "announce_defeat": {
+   "files": [
+    "announce_defeat_1"
+   ]
+  },
+  "announce_insufficient_funds": {
+   "files": [
+    "announce_insufficient_funds_1"
+   ]
+  },
+  "announce_low_power": {
+   "files": [
+    "announce_low_power_1"
+   ]
+  },
+  "announce_power_restored": {
+   "files": [
+    "announce_power_restored_1"
+   ]
+  },
+  "announce_unit_lost": {
+   "files": [
+    "announce_unit_lost_1"
+   ]
+  },
+  "announce_unit_ready": {
+   "files": [
+    "announce_unit_ready_1"
+   ]
+  },
+  "announce_victory": {
+   "files": [
+    "announce_victory_1"
+   ]
+  },
+  "artillery_fire": {
+   "files": [
+    "artillery_fire_1",
+    "artillery_fire_2"
+   ]
+  },
+  "assembler_deploy": {
+   "files": [
+    "assembler_deploy_1",
+    "assembler_deploy_2"
+   ]
+  },
+  "autocannon_fire": {
+   "files": [
+    "autocannon_fire_1"
+   ]
+  },
+  "building_done": {
+   "files": [
+    "building_done_1",
+    "building_done_2",
+    "building_done_3"
+   ]
+  },
+  "building_explode": {
+   "files": [
+    "building_explode_1",
+    "building_explode_2"
+   ]
+  },
+  "building_place": {
+   "files": [
+    "building_place_1",
+    "building_place_2",
+    "building_place_3"
+   ]
+  },
+  "building_ready": {
+   "files": [
+    "building_ready_1",
+    "building_ready_2"
+   ]
+  },
+  "building_sold": {
+   "files": [
+    "building_sold_1"
+   ]
+  },
+  "bullet_hit": {
+   "files": [
+    "bullet_hit_1",
+    "bullet_hit_2",
+    "bullet_hit_3"
+   ]
+  },
+  "cannon_fire": {
+   "files": [
+    "cannon_fire_1",
+    "cannon_fire_2"
+   ]
+  },
+  "cloak_field": {
+   "files": [
+    "cloak_field_1",
+    "cloak_field_2"
+   ]
+  },
+  "column_fire": {
+   "files": [
+    "column_fire_1",
+    "column_fire_2",
+    "column_fire_3"
+   ]
+  },
+  "construction": {
+   "files": [
+    "construction_1",
+    "construction_2"
+   ],
+   "loop": true
+  },
+  "credits": {
+   "files": [
+    "credits_1",
+    "credits_2"
+   ]
+  },
+  "demolition_charge": {
+   "files": [
+    "demolition_charge_1",
+    "demolition_charge_2"
+   ]
+  },
+  "discharge_fire": {
+   "files": [
+    "discharge_fire_1",
+    "discharge_fire_2"
+   ]
+  },
+  "door": {
+   "files": [
+    "door_1",
+    "door_2"
+   ]
+  },
+  "flame_fire": {
+   "files": [
+    "flame_fire_1",
+    "flame_fire_2"
+   ]
+  },
+  "flamethrower_fire": {
+   "files": [
+    "flamethrower_fire_1",
+    "flamethrower_fire_2"
+   ]
+  },
+  "grenade_explode": {
+   "files": [
+    "grenade_explode_1",
+    "grenade_explode_2"
+   ]
+  },
+  "grenade_throw": {
+   "files": [
+    "grenade_throw_1",
+    "grenade_throw_2"
+   ]
+  },
+  "heal_beam": {
+   "files": [
+    "heal_beam_1",
+    "heal_beam_2"
+   ]
+  },
+  "heavy_missile_hit": {
+   "files": [
+    "heavy_missile_hit_1",
+    "heavy_missile_hit_2"
+   ]
+  },
+  "heavy_missile_launch": {
+   "files": [
+    "heavy_missile_launch_1",
+    "heavy_missile_launch_2"
+   ]
+  },
+  "hound_strike": {
+   "files": [
+    "hound_strike_1",
+    "hound_strike_2"
+   ]
+  },
+  "infantry_death": {
+   "files": [
+    "infantry_death_1",
+    "infantry_death_2",
+    "infantry_death_3"
+   ]
+  },
+  "infantry_explode": {
+   "files": [
+    "infantry_explode_1",
+    "infantry_explode_2"
+   ]
+  },
+  "infiltrate": {
+   "files": [
+    "infiltrate_1",
+    "infiltrate_2"
+   ]
+  },
+  "jammer_on": {
+   "files": [
+    "jammer_on_1",
+    "jammer_on_2"
+   ]
+  },
+  "laser_fire": {
+   "files": [
+    "laser_fire_1",
+    "laser_fire_2",
+    "laser_fire_3"
+   ]
+  },
+  "mine_explode": {
+   "files": [
+    "mine_explode_1",
+    "mine_explode_2"
+   ]
+  },
+  "mine_lay": {
+   "files": [
+    "mine_lay_1",
+    "mine_lay_2"
+   ]
+  },
+  "plasma_fire": {
+   "files": [
+    "plasma_fire_1",
+    "plasma_fire_2",
+    "plasma_fire_3"
+   ]
+  },
+  "power_down": {
+   "files": [
+    "power_down_1",
+    "power_down_2"
+   ]
+  },
+  "power_up": {
+   "files": [
+    "power_up_1"
+   ]
+  },
+  "rifle_fire": {
+   "files": [
+    "rifle_fire_1",
+    "rifle_fire_2",
+    "rifle_fire_3"
+   ]
+  },
+  "rocket_hit": {
+   "files": [
+    "rocket_hit_1",
+    "rocket_hit_2",
+    "rocket_hit_3"
+   ]
+  },
+  "rocket_launch": {
+   "files": [
+    "rocket_launch_1",
+    "rocket_launch_2"
+   ]
+  },
+  "sable_ack_assembler_move": {
+   "files": [
+    "sable_ack_assembler_move_1",
+    "sable_ack_assembler_move_2",
+    "sable_ack_assembler_move_3",
+    "sable_ack_assembler_move_4",
+    "sable_ack_assembler_move_5",
+    "sable_ack_assembler_move_6",
+    "sable_ack_assembler_move_7",
+    "sable_ack_assembler_move_8",
+    "sable_ack_assembler_move_9"
+   ]
+  },
+  "sable_ack_assembler_select": {
+   "files": [
+    "sable_ack_assembler_select_1",
+    "sable_ack_assembler_select_2",
+    "sable_ack_assembler_select_3",
+    "sable_ack_assembler_select_4",
+    "sable_ack_assembler_select_5",
+    "sable_ack_assembler_select_6",
+    "sable_ack_assembler_select_7",
+    "sable_ack_assembler_select_8",
+    "sable_ack_assembler_select_9"
+   ]
+  },
+  "sable_ack_engineer_move": {
+   "files": [
+    "sable_ack_engineer_move_1",
+    "sable_ack_engineer_move_2",
+    "sable_ack_engineer_move_3",
+    "sable_ack_engineer_move_4",
+    "sable_ack_engineer_move_5",
+    "sable_ack_engineer_move_6",
+    "sable_ack_engineer_move_7",
+    "sable_ack_engineer_move_8",
+    "sable_ack_engineer_move_9"
+   ]
+  },
+  "sable_ack_engineer_select": {
+   "files": [
+    "sable_ack_engineer_select_1",
+    "sable_ack_engineer_select_2",
+    "sable_ack_engineer_select_3",
+    "sable_ack_engineer_select_4",
+    "sable_ack_engineer_select_5",
+    "sable_ack_engineer_select_6",
+    "sable_ack_engineer_select_7",
+    "sable_ack_engineer_select_8",
+    "sable_ack_engineer_select_9"
+   ]
+  },
+  "sable_ack_harvester_move": {
+   "files": [
+    "sable_ack_harvester_move_1",
+    "sable_ack_harvester_move_2",
+    "sable_ack_harvester_move_3",
+    "sable_ack_harvester_move_4",
+    "sable_ack_harvester_move_5",
+    "sable_ack_harvester_move_6",
+    "sable_ack_harvester_move_7",
+    "sable_ack_harvester_move_8",
+    "sable_ack_harvester_move_9"
+   ]
+  },
+  "sable_ack_harvester_select": {
+   "files": [
+    "sable_ack_harvester_select_1",
+    "sable_ack_harvester_select_2",
+    "sable_ack_harvester_select_3",
+    "sable_ack_harvester_select_4",
+    "sable_ack_harvester_select_5",
+    "sable_ack_harvester_select_6",
+    "sable_ack_harvester_select_7",
+    "sable_ack_harvester_select_8",
+    "sable_ack_harvester_select_9"
+   ]
+  },
+  "sable_ack_lancer_attack": {
+   "files": [
+    "sable_ack_lancer_attack_1",
+    "sable_ack_lancer_attack_2",
+    "sable_ack_lancer_attack_3",
+    "sable_ack_lancer_attack_4",
+    "sable_ack_lancer_attack_5",
+    "sable_ack_lancer_attack_6",
+    "sable_ack_lancer_attack_7",
+    "sable_ack_lancer_attack_8",
+    "sable_ack_lancer_attack_9"
+   ]
+  },
+  "sable_ack_lancer_move": {
+   "files": [
+    "sable_ack_lancer_move_1",
+    "sable_ack_lancer_move_2",
+    "sable_ack_lancer_move_3",
+    "sable_ack_lancer_move_4",
+    "sable_ack_lancer_move_5",
+    "sable_ack_lancer_move_6",
+    "sable_ack_lancer_move_7",
+    "sable_ack_lancer_move_8",
+    "sable_ack_lancer_move_9"
+   ]
+  },
+  "sable_ack_lancer_select": {
+   "files": [
+    "sable_ack_lancer_select_1",
+    "sable_ack_lancer_select_2",
+    "sable_ack_lancer_select_3",
+    "sable_ack_lancer_select_4",
+    "sable_ack_lancer_select_5",
+    "sable_ack_lancer_select_6",
+    "sable_ack_lancer_select_7",
+    "sable_ack_lancer_select_8",
+    "sable_ack_lancer_select_9"
+   ]
+  },
+  "sable_ack_operator_attack": {
+   "files": [
+    "sable_ack_operator_attack_1",
+    "sable_ack_operator_attack_2",
+    "sable_ack_operator_attack_3",
+    "sable_ack_operator_attack_4",
+    "sable_ack_operator_attack_5",
+    "sable_ack_operator_attack_6",
+    "sable_ack_operator_attack_7",
+    "sable_ack_operator_attack_8",
+    "sable_ack_operator_attack_9"
+   ]
+  },
+  "sable_ack_operator_move": {
+   "files": [
+    "sable_ack_operator_move_1",
+    "sable_ack_operator_move_2",
+    "sable_ack_operator_move_3",
+    "sable_ack_operator_move_4",
+    "sable_ack_operator_move_5",
+    "sable_ack_operator_move_6",
+    "sable_ack_operator_move_7",
+    "sable_ack_operator_move_8",
+    "sable_ack_operator_move_9"
+   ]
+  },
+  "sable_ack_operator_select": {
+   "files": [
+    "sable_ack_operator_select_1",
+    "sable_ack_operator_select_2",
+    "sable_ack_operator_select_3",
+    "sable_ack_operator_select_4",
+    "sable_ack_operator_select_5",
+    "sable_ack_operator_select_6",
+    "sable_ack_operator_select_7",
+    "sable_ack_operator_select_8",
+    "sable_ack_operator_select_9"
+   ]
+  },
+  "sable_ack_rifleman_attack": {
+   "files": [
+    "sable_ack_rifleman_attack_1",
+    "sable_ack_rifleman_attack_2",
+    "sable_ack_rifleman_attack_3",
+    "sable_ack_rifleman_attack_4",
+    "sable_ack_rifleman_attack_5",
+    "sable_ack_rifleman_attack_6",
+    "sable_ack_rifleman_attack_7",
+    "sable_ack_rifleman_attack_8",
+    "sable_ack_rifleman_attack_9"
+   ]
+  },
+  "sable_ack_rifleman_move": {
+   "files": [
+    "sable_ack_rifleman_move_1",
+    "sable_ack_rifleman_move_2",
+    "sable_ack_rifleman_move_3",
+    "sable_ack_rifleman_move_4",
+    "sable_ack_rifleman_move_5",
+    "sable_ack_rifleman_move_6",
+    "sable_ack_rifleman_move_7",
+    "sable_ack_rifleman_move_8",
+    "sable_ack_rifleman_move_9"
+   ]
+  },
+  "sable_ack_rifleman_select": {
+   "files": [
+    "sable_ack_rifleman_select_1",
+    "sable_ack_rifleman_select_2",
+    "sable_ack_rifleman_select_3",
+    "sable_ack_rifleman_select_4",
+    "sable_ack_rifleman_select_5",
+    "sable_ack_rifleman_select_6",
+    "sable_ack_rifleman_select_7",
+    "sable_ack_rifleman_select_8",
+    "sable_ack_rifleman_select_9"
+   ]
+  },
+  "sable_ack_seeder_move": {
+   "files": [
+    "sable_ack_seeder_move_1",
+    "sable_ack_seeder_move_2",
+    "sable_ack_seeder_move_3",
+    "sable_ack_seeder_move_4",
+    "sable_ack_seeder_move_5",
+    "sable_ack_seeder_move_6",
+    "sable_ack_seeder_move_7",
+    "sable_ack_seeder_move_8",
+    "sable_ack_seeder_move_9"
+   ]
+  },
+  "sable_ack_seeder_select": {
+   "files": [
+    "sable_ack_seeder_select_1",
+    "sable_ack_seeder_select_2",
+    "sable_ack_seeder_select_3",
+    "sable_ack_seeder_select_4",
+    "sable_ack_seeder_select_5",
+    "sable_ack_seeder_select_6",
+    "sable_ack_seeder_select_7",
+    "sable_ack_seeder_select_8",
+    "sable_ack_seeder_select_9"
+   ]
+  },
+  "sable_announce_base_attack": {
+   "files": [
+    "sable_announce_base_attack_1",
+    "sable_announce_base_attack_2",
+    "sable_announce_base_attack_3"
+   ]
+  },
+  "sable_announce_building_lost": {
+   "files": [
+    "sable_announce_building_lost_1"
+   ]
+  },
+  "sable_announce_construction_complete": {
+   "files": [
+    "sable_announce_construction_complete_1"
+   ]
+  },
+  "sable_announce_defeat": {
+   "files": [
+    "sable_announce_defeat_1"
+   ]
+  },
+  "sable_announce_insufficient_funds": {
+   "files": [
+    "sable_announce_insufficient_funds_1"
+   ]
+  },
+  "sable_announce_low_power": {
+   "files": [
+    "sable_announce_low_power_1"
+   ]
+  },
+  "sable_announce_power_restored": {
+   "files": [
+    "sable_announce_power_restored_1"
+   ]
+  },
+  "sable_announce_unit_lost": {
+   "files": [
+    "sable_announce_unit_lost_1"
+   ]
+  },
+  "sable_announce_unit_ready": {
+   "files": [
+    "sable_announce_unit_ready_1"
+   ]
+  },
+  "sable_announce_victory": {
+   "files": [
+    "sable_announce_victory_1"
+   ]
+  },
+  "self_repair": {
+   "files": [
+    "self_repair_1",
+    "self_repair_2"
+   ]
+  },
+  "shell_hit": {
+   "files": [
+    "shell_hit_1",
+    "shell_hit_2",
+    "shell_hit_3"
+   ]
+  },
+  "sidearm_fire": {
+   "files": [
+    "sidearm_fire_1",
+    "sidearm_fire_2"
+   ]
+  },
+  "ui_click": {
+   "files": [
+    "ui_click_1",
+    "ui_click_2",
+    "ui_click_3"
+   ]
+  },
+  "ui_error": {
+   "files": [
+    "ui_error_1"
+   ]
+  },
+  "ui_hover": {
+   "files": [
+    "ui_hover_1"
+   ]
+  },
+  "under_attack": {
+   "files": [
+    "under_attack_1",
+    "under_attack_2"
+   ]
+  },
+  "unit_ready": {
+   "files": [
+    "unit_ready_1",
+    "unit_ready_2"
+   ]
+  },
+  "vehicle_explode": {
+   "files": [
+    "vehicle_explode_1",
+    "vehicle_explode_2",
+    "vehicle_explode_3"
+   ]
+  }
+ }
+}

@@ -15,6 +15,12 @@ import type { GameMap } from '../world/GameMap';
 import { ShadowLayer } from '../world/ShadowLayer';
 import { TERRAIN_COPY_PX } from '../world/Terrain';
 import { onLeave } from './page';
+import { VIEW_LABEL } from './ui';
+
+/** A row's title, on the left (its x is placed like a label's). */
+const ROW_TITLE = 'absolute left-3 -translate-y-1/2 rounded-[4px] bg-gold px-2.5 py-0.5 font-bold text-ink';
+/** A test's label under it, its note on a second line. */
+const LABEL = `${VIEW_LABEL} bg-[rgba(18,19,21,0.78)] text-center [&>small]:block [&>small]:font-medium [&>small]:text-muted [&>small]:[font-size:smaller]`;
 
 /** Set up the page in the markup the sidebar has just put in (nav.ts). */
 export default function mount(): void {
@@ -130,7 +136,7 @@ export default function mount(): void {
         return v;
       };
       const at = (x: number, y: number, [fx, fy]: [number, number]) => ({ x: x + fx - anchor.x, y: y + fy - anchor.y });
-      const rowTitle = (text: string, y: number) => this.mark(-2.1 * COL + 140, y - 260, `<span>${text}</span>`, 'row-title');
+      const rowTitle = (text: string, y: number) => this.mark(-2.1 * COL + 140, y - 260, `<span>${text}</span>`, ROW_TITLE);
 
       // --- row 1: burning --------------------------------------------------------------------------------------
       const fires: FireTest[] = [
@@ -227,13 +233,13 @@ export default function mount(): void {
 
     private shellHits(shadows: ShadowLayer, nextId: () => number): void {
       const y = TOP - ROW;
-      this.mark(-((IMPACT_STYLES.length - 1) / 2 + 0.6) * COL + 140, y - 260, '<span>Shell hits</span>', 'row-title');
+      this.mark(-((IMPACT_STYLES.length - 1) / 2 + 0.6) * COL + 140, y - 260, '<span>Shell hits</span>', ROW_TITLE);
       const m = (this.cache.json.get('shooter_meta') as { meta: SpriteMeta }).meta;
       const k = 1 / (m.res ?? 1);
       const tl = m.turret_layer;
       const titles: Record<ImpactStyle, [string, string]> = {
-        painted: ['Painted (in the game)', 'painted puffs, embers, debris'],
-        shockwave: ['Shockwave', 'pop, dust ring, sparks'],
+        painted: ['Painted', 'painted puffs, embers, debris'],
+        shockwave: ['Shockwave (in the game)', 'pop, dust ring, sparks'],
         plasma: ['Plasma', 'cyan core, ground ring, arcs'],
         ion: ['Ion arc', 'lightning over the target'],
         gravity: ['Gravity collapse', 'pulls in, then pops'],
@@ -364,7 +370,7 @@ export default function mount(): void {
       }
     }
 
-    private mark(x: number, y: number, html: string, cls = 'label'): void {
+    private mark(x: number, y: number, html: string, cls = LABEL): void {
       const el = document.createElement('div');
       el.className = cls;
       el.innerHTML = html;

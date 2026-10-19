@@ -1,4 +1,4 @@
-import { SAVE_KINDS, type ClientMessage, type Command, type DebugCommand } from '@gravity-harvest/shared';
+import { DIFFICULTIES, SAVE_KINDS, type ClientMessage, type Command, type DebugCommand } from '@gravity-harvest/shared';
 
 // Everything from a socket is untrusted: check the shape of each message before the simulation sees it.
 
@@ -15,6 +15,7 @@ function command(c: unknown): c is Command {
   if (!isObj(c)) return false;
   switch (c.c) {
     case 'move':
+    case 'attackMove':
       return Array.isArray(c.orders) && c.orders.length <= MAX_IDS && c.orders.every((o) => isObj(o) && int(o.id) && num(o.gx) && num(o.gy));
     case 'attack':
       return ids(c.units) && int(c.target);
@@ -22,6 +23,8 @@ function command(c: unknown): c is Command {
       return ids(c.units) && int(c.tx) && int(c.ty);
     case 'dock':
       return ids(c.units) && int(c.refinery);
+    case 'service':
+      return ids(c.units) && int(c.bay);
     case 'stop':
       return ids(c.units);
     case 'place':
@@ -35,8 +38,14 @@ function command(c: unknown): c is Command {
       return int(c.building);
     case 'repair':
       return int(c.building) && typeof c.on === 'boolean';
+    case 'support':
+      return ids(c.units) && int(c.target);
     case 'deploy':
       return int(c.unit);
+    case 'board':
+      return ids(c.units) && int(c.transport);
+    case 'unload':
+      return int(c.transport);
     default:
       return false;
   }
@@ -82,6 +91,7 @@ export function parseClientMessage(raw: string): ClientMessage | null {
       if (m.scenario !== undefined && !str(m.scenario)) return null;
       if (m.saveId !== undefined && !str(m.saveId)) return null;
       if (m.faction !== undefined && m.faction !== 'ordan' && m.faction !== 'sable') return null;
+      if (m.difficulty !== undefined && !DIFFICULTIES.includes(m.difficulty as never)) return null;
       return m as ClientMessage;
     case 'cmd':
       return command(m.cmd) ? (m as ClientMessage) : null;

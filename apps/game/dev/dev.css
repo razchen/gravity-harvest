@@ -1,124 +1,24 @@
-/* Shared look of the dev pages (apps/game/dev). */
-:root { --bg: #121315; --panel: #1d1f23; --line: #2e3137; --text: #e9e4d6; --muted: #9a968c; --gold: #f5b301; }
-* { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); font: 15px/1.4 Rajdhani, system-ui, sans-serif; }
-a { color: var(--gold); text-decoration: none; }
-a:hover { text-decoration: underline; }
-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; padding: 12px 16px 8px; }
-h1 { margin: 0; font-size: 22px; letter-spacing: 0.02em; }
-header p { margin: 0; color: var(--muted); }
-button { background: var(--panel); color: var(--text); border: 1px solid var(--line); padding: 4px 12px; border-radius: 4px; font: inherit; font-weight: 600; cursor: pointer; }
-button:hover { border-color: var(--gold); }
-button.primary { background: var(--gold); color: #1a1406; border-color: var(--gold); min-width: 72px; }
-select { background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; font: inherit; }
-label { color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+/*
+ * The dev pages' styles (apps/game/dev): Tailwind, with our colours and font. The markup (dev/*.html, src/dev/*.ts)
+ * carries the utility classes; only the dev pages link this file, so the game never gets Tailwind or its reset.
+ */
+@import "tailwindcss" source(none);
+@source "./";
+@source "../src/dev";
 
-/* Sidebar (src/dev/nav.ts) */
-body.with-nav { display: flex; flex-direction: row; min-height: 100vh; }
-body.with-nav > .page { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.sidebar { position: sticky; top: 0; height: 100vh; width: 200px; flex: none; display: flex; flex-direction: column; gap: 2px; padding: 12px 10px; background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; }
-.sidebar .brand { font-size: 17px; font-weight: 700; color: var(--text); padding: 2px 8px 8px; }
-.sidebar .brand small { color: var(--gold); font-weight: 600; }
-.sidebar .brand { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.sidebar .brand img { width: 100%; height: auto; }
-.sidebar .brand small { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; }
-.sidebar .sect { margin: 12px 8px 4px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.sidebar .sub { margin: 8px 8px 2px 12px; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
-.sidebar a, .sidebar .off { padding: 4px 8px; border-radius: 4px; color: var(--text); font-weight: 600; }
-.sidebar a:hover { background: #26292e; text-decoration: none; }
-.sidebar a.on { background: var(--gold); color: #1a1406; }
-.sidebar .off { color: #5d5a54; cursor: default; }
-.sidebar a.notready:not(.on) { color: #7d7a72; }
-.sidebar details { display: flex; flex-direction: column; }
-.sidebar details > a { display: block; padding-left: 20px; }
-.sidebar summary { padding: 4px 8px; border-radius: 4px; font-weight: 700; cursor: pointer; list-style: none; user-select: none; }
-.sidebar summary::-webkit-details-marker { display: none; }
-.sidebar summary::before { content: '▸'; display: inline-block; width: 12px; color: var(--muted); transition: transform 0.15s; }
-.sidebar details[open] > summary::before { transform: rotate(90deg); }
-.sidebar summary:hover { background: #26292e; }
-.sidebar details i { float: right; font-style: normal; font-size: 12px; font-weight: 600; color: var(--muted); margin-left: 6px; }
-.sidebar details a.on i { color: #1a1406; }
-.sidebar summary small { color: var(--muted); font-weight: 500; margin-left: 4px; }
-@media (max-width: 760px) {
-  body.with-nav { flex-direction: column; height: auto; }
-  .sidebar { position: static; height: auto; width: auto; flex-direction: row; flex-wrap: wrap; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); }
-  .sidebar .sect, .sidebar .sub { display: none; }
-  .sidebar details > a { padding-left: 8px; }
-  .sidebar .brand { padding-bottom: 2px; flex-direction: row; }
-  .sidebar .brand img { width: 130px; }
+@theme {
+  --color-bg: #121315;
+  --color-panel: #1d1f23;
+  --color-line: #2e3137;
+  --color-text: #e9e4d6;
+  --color-muted: #9a968c;
+  --color-gold: #f5b301;
+  /* dark text on gold */
+  --color-ink: #1a1406;
+  --font-sans: Rajdhani, system-ui, sans-serif;
+  /* in px, as the pages were drawn: p-3 is 12px whatever the browser's font size */
+  --spacing: 4px;
 }
 
-/* A building's numbers (src/dev/details.ts) */
-.stats { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; margin: 2px 0 0; font-size: 14px; }
-.stats dt { color: var(--muted); }
-.stats dd { margin: 0; }
-.stats .plus { color: #8fd36a; }
-.stats .minus { color: #ff9a7a; }
-
-/* Galleries (cards, tags, filters) */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-.card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; color: var(--text); }
-.card .pic { border-radius: 7px 7px 0 0; }
-a.card:hover { border-color: var(--gold); text-decoration: none; }
-.card .pic { height: 170px; background: #8a6c47 url(/assets/terrain/dry_earth.png) 0 0 / 256px; display: grid; place-items: center; }
-.card .pic, .info .pic { position: relative; }
-.pic img.fit { position: absolute; inset: 0; width: 100%; height: 100%; padding: 10px; box-sizing: border-box; object-fit: contain; display: block; }
-/* previews: placed by the building, the shadow may run past the box (src/dev/picture.ts) */
-.pic img.placed { position: absolute; max-width: none; height: auto; display: block; pointer-events: none; z-index: 1; }
-.card .body { position: relative; z-index: 2; }
-.card .body { padding: 10px 12px 12px; display: grid; gap: 4px; }
-.card h2 { margin: 0; font-size: 18px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.card h2 small { color: var(--muted); font-size: 14px; font-weight: 500; }
-.card p { margin: 0; color: var(--muted); font-size: 14px; }
-.chip { justify-self: start; margin-top: 4px; padding: 1px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); font-size: 13px; font-weight: 600; }
-a.card:not(.off) .chip { background: var(--gold); border-color: var(--gold); color: #1a1406; }
-.card.off .pic { filter: saturate(0.75) brightness(0.85); }
-.card[hidden] { display: none; }
-.card .none { color: rgba(255, 255, 255, 0.75); font-weight: 600; background: rgba(18, 19, 21, 0.6); padding: 2px 10px; border-radius: 4px; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.tag { padding: 0 8px; border-radius: 4px; font-size: 13px; font-weight: 700; }
-.tag.v { background: var(--gold); color: #1a1406; }
-.tag.both { background: #3a3d44; color: var(--text); }
-.tag.ordan { background: #1f4a7a; color: #e3efff; }
-.tag.sable { background: #7a2a22; color: #ffe6e2; }
-.role { color: var(--muted); font-size: 13px; }
-.card p.desc { color: var(--text); font-size: 15px; }
-.card p.note { font-size: 13px; font-style: italic; }
-.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 12px; }
-.filters .count { color: var(--muted); margin-left: 6px; }
-.filters .group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-right: 10px; }
-
-/* A building or unit page without stages (the info view) */
-.info { margin: 4px 16px 24px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
-.info .pic { width: min(520px, 100%); aspect-ratio: 16 / 10; border: 1px solid var(--line); border-radius: 8px; background: #8a6c47 url(/assets/terrain/dry_earth.png) 0 0 / 256px; display: grid; place-items: center; }
-
-.info .pic.anim { aspect-ratio: auto; display: grid; gap: 0; place-items: stretch; overflow: hidden; }
-/* the 3D model viewer (src/dev/model.ts) */
-#view.model { display: flex; flex-direction: column; }
-#view.picture { display: flex; flex-direction: column; background: #8a6c47 url(/assets/terrain/dry_earth.png) 0 0 / 128px; }
-.unit-picture { margin: 0 16px 16px; height: 460px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #8a6c47 url(/assets/terrain/dry_earth.png) 0 0 / 128px; }
-.unit-picture .pic-stage, #view.picture .pic-stage { position: relative; flex: 1; min-height: 320px; display: grid; place-items: center; overflow: hidden; }
-.pic-stage canvas.game-size { height: auto; }
-#view.model model-viewer { flex: 1; min-height: 320px; }
-.model-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 8px 10px; background: rgba(18, 19, 21, 0.85); border-top: 1px solid var(--line); }
-.model-bar .group { display: inline-flex; gap: 4px; }
-.model-status { color: var(--muted); }
-.model-wait { display: grid; place-content: center; justify-items: center; gap: 8px; height: 100%; min-height: 200px; color: var(--muted); }
-.unit-model { margin: 0 16px 24px; height: 520px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.unit-model model-viewer { flex: 1; }
-.anim-stage { display: grid; place-items: center; padding: 12px; min-height: 260px; }
-.anim-stage canvas { max-width: 100%; height: auto !important; }
-.anim-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 8px 10px; background: rgba(18, 19, 21, 0.85); border-top: 1px solid var(--line); }
-.anim-controls .group { display: inline-flex; align-items: center; gap: 4px; }
-.anim-controls .dir { min-width: 110px; text-align: center; font-variant-numeric: tabular-nums; }
-.info .none { color: rgba(255, 255, 255, 0.8); font-weight: 600; background: rgba(18, 19, 21, 0.6); padding: 2px 10px; border-radius: 4px; }
-.info .body { flex: 1; min-width: 260px; max-width: 560px; display: grid; gap: 10px; }
-.info .desc { margin: 0; font-size: 18px; }
-.info .note { margin: 0; color: var(--muted); font-style: italic; }
-.info .stats { font-size: 16px; }
-
-/* Faction emblems next to their names (docs/FACTIONS.md) */
-img.emblem { width: 1.15em; height: 1.15em; vertical-align: -0.22em; margin-right: 4px; object-fit: contain; }
-.sidebar summary img.emblem { margin-left: 2px; }
-.tag.ordan { background: #3b2a66; color: #efe6ff; }
-.tag.sable { background: #6e2a10; color: #ffe9dc; }
+/* the sidebar's narrow-screen layout (and the fire playground's) */
+@custom-variant narrow (@media (max-width: 760px));

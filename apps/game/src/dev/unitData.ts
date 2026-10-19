@@ -1,15 +1,20 @@
 // The units the dev pages know about: every unit in the rules (design/balance.xlsx), with our art for the ones that
 // have it. Like buildings.ts, this reads the full rules, which is fine because the dev pages aren't in the game build.
-import { BUILDINGS, UNITS, WEAPONS } from '@gravity-harvest/rules';
+import { BUILDINGS, UNITS, WEAPONS, speedToTilesPerSec } from '@gravity-harvest/rules';
 import type { UnitAnims } from './anim';
 import type { ModelFile } from './model';
 import { DEV_BUILDINGS, type FactionScope, type Milestone } from './buildings';
 
-/** The two kinds the dev pages split units into: soldiers (and the Hound) on foot, and everything with an engine. */
-export type UnitKind = 'infantry' | 'vehicle';
+/**
+ * The kinds the dev pages split units into: soldiers (and the Hound) on foot, ground vehicles, aircraft (V2) and
+ * ships (V4).
+ */
+export type UnitKind = 'infantry' | 'vehicle' | 'aircraft' | 'naval';
 export const UNIT_KINDS: { id: UnitKind; name: string }[] = [
   { id: 'infantry', name: 'Infantry' },
   { id: 'vehicle', name: 'Vehicles' },
+  { id: 'aircraft', name: 'Aircraft' },
+  { id: 'naval', name: 'Naval' },
 ];
 
 export interface DevUnit {
@@ -17,7 +22,7 @@ export interface DevUnit {
   name: string;
   faction: FactionScope;
   category: string;
-  /** Infantry, or a vehicle (ground support, combat, aircraft and naval). */
+  /** Infantry, a ground vehicle (support or combat), an aircraft or a ship. */
   kind: UnitKind;
   role: string;
   /** One line on what it does (design/balance.xlsx, Units: Description). */
@@ -49,10 +54,16 @@ export interface DevUnit {
 const range = (n: number) => Array.from({ length: n }, (_, i) => i);
 const clip = (name: string, file: string): ModelFile => ({ name, file: `meshy/rifleman_v2/Meshy_AI_sci_fi_rifleman_rigge_biped_Animation_${file}_withSkin.glb` });
 /**
- * A vehicle rendered by tools/blender/render_vehicle.py: 16 directions, its Tripo model, and where it stands. One with
- * a `turret` that turns on its own (rendered from its rig) also shows it sweeping round, and driving while it shoots.
+ * A rig's clip (render_vehicle.py `clips`), packed into its own atlas `v_<id>_<clip>`: its name here, frames and fps,
+ * and whether it plays once (then holds and starts again) or loops.
  */
-const vehicle = (id: string, note: string, turret = false): Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'> => ({
+interface VehicleClip { clip: string; name: string; frames: number; fps: number; once?: boolean }
+/**
+ * A vehicle rendered by tools/blender/render_vehicle.py: 16 directions, its Tripo model, and where it stands. One with
+ * a `turret` that turns on its own (rendered from its rig) also shows it sweeping round, and driving while it shoots;
+ * one with `clips` plays them too.
+ */
+const vehicle = (id: string, note: string, turret = false, clips: VehicleClip[] = []): Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'> => ({
   picture: { file: `v_${id}`, frame: `v_${id}_13` },
   preview: `/assets/previews/v_${id}.webp`,
   note: `Tripo model, in matches: 16 directions${turret ? ', its turret turning on its own' : ''}. ${note}`,
@@ -65,41 +76,68 @@ const vehicle = (id: string, note: string, turret = false): Pick<DevUnit, 'pictu
       ...(turret ? [
         { name: 'Turret', atlas: `v_${id}`, frames: (d: number) => [`v_${id}_h${d}`], fps: 1, turret: { frame: (t: number) => `v_${id}_t${t}`, mode: 'sweep' as const } },
         {
-          name: 'Drive & shoot', atlas: `v_${id}`, frames: (d: number) => [`v_${id}_h${d}`], overlay: (d: number) => range(6).map((f) => `v_${id}_w${d}_${f}`), fps: 12,
-          fire: 'shell' as const, turret: { frame: (t: number) => `v_${id}_t${t}`, mode: 'aim' as const },
+          name: 'Drive & aim', atlas: `v_${id}`, frames: (d: number) => [`v_${id}_h${d}`], overlay: (d: number) => range(6).map((f) => `v_${id}_w${d}_${f}`), fps: 12,
+          turret: { frame: (t: number) => `v_${id}_t${t}`, mode: 'aim' as const },
         },
       ] : []),
+      ...clips.map((c) => ({
+        name: c.name, atlas: `v_${id}_${c.clip}`, frames: (d: number) => range(c.frames).map((f) => `v_${id}_${c.clip}_${d}_${f}`), fps: c.fps,
+        once: c.once,
+      })),
     ],
   },
   models: [{ name: id, file: `tripo/${id}.glb` }],
 });
 /**
- * A soldier rendered by tools/blender/make_infantry.py from one Meshy GLB with all his clips: 16 directions; his
- * standing model, run, and his death (`deathFrames` at `deathFps`).
+ * A hovering unit rendered by tools/blender/render_vehicle.py (`hover`): 16 directions, bobbing over its shadow, its
+ * lights glowing underneath. Its shots are on the page under the player (weapons.ts), as a match draws them.
  */
-const soldier = (id: string, note: string, deathFrames: number, deathFps: number): Pick<DevUnit, 'picture' | 'note' | 'anims' | 'models'> => ({
-  picture: { file: id, frame: 'inf_2_idle' },
-  models: [{ name: 'Running, walking and death', file: `meshy/${id}/${id}_all_animations.glb` }],
-  note: `Meshy rigged model (tools/blender/make_infantry.py), in matches: 16 directions; standing, run, and shot down. ${note}`,
-  anims: {
-    directions: 16,
-    start: 14,
-    list: [
-      { name: 'Standing', atlas: id, frames: (d) => [`inf_${d}_idle`], fps: 1 },
-      { name: 'Run', atlas: id, frames: (d) => range(12).map((i) => `inf_${d}_${i}`), fps: 18 },
-      { name: 'Death', atlas: `${id}_death`, frames: (d) => range(deathFrames).map((i) => `inf_${d}_die_${i}`), fps: deathFps, once: true },
-    ],
-  },
+const hovering = (id: string, model: string, note: string, clip?: VehicleClip): Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'> => ({
+  picture: { file: `v_${id}`, frame: `v_${id}_13` },
+  preview: `/assets/previews/v_${id}.webp`,
+  note: `Tripo model, hovering, in matches: 16 directions, bobbing over its shadow. ${note}`,
+  anims: { directions: 16, start: 13, list: hoverAnims(id, '', clip) },
+  models: [{ name: id, file: `tripo/hover/${model}.glb` }],
+});
+/** A hovering unit's animations: hovering, and its clip (arms working). `label` names the side. */
+const hoverAnims = (id: string, label: string, clip?: VehicleClip) => [
+  { name: `Hover${label}`, atlas: `v_${id}`, frames: (d: number) => [`v_${id}_${d}`], under: (d: number) => `v_${id}_s${d}`, fps: 1 },
+  ...(clip ? [{
+    name: `${clip.name}${label}`, atlas: `v_${id}_${clip.clip}`, under: (d: number) => `v_${id}_s${d}`, fps: clip.fps,
+    frames: (d: number) => range(clip.frames).map((f) => `v_${id}_${clip.clip}_${d}_${f}`),
+  }] : []),
+];
+/** A shared unit each side builds to its own design (`<id>_ordan`, `<id>_sable`): both on its page. */
+const hoveringBySide = (id: string, note: string, clip?: VehicleClip): Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'> => ({
+  picture: { file: `v_${id}_ordan`, frame: `v_${id}_ordan_13` },
+  preview: `/assets/previews/v_${id}_ordan.webp`,
+  note: `Tripo models, one per side (Ordan's and Sable's), hovering, in matches: 16 directions, bobbing over its shadow. ${note}`,
+  anims: { directions: 16, start: 13, list: [...hoverAnims(`${id}_ordan`, ' (Ordan)', clip), ...hoverAnims(`${id}_sable`, ' (Sable)', clip)] },
+  models: [{ name: `${id} (Ordan)`, file: `tripo/hover/${id}_ordan.glb` }, { name: `${id} (Sable)`, file: `tripo/hover/${id}_sable.glb` }],
 });
 const ART: Record<string, Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'>> = {
   skimmer: vehicle('skimmer', 'Fights with its light autocannon.'),
   jackal: vehicle('jackal', 'Fights with its light cannon, on the move too.', true),
-  ram: vehicle('ram', 'Fights with its battle cannon.'),
-  spire: vehicle('spire', 'Fires artillery shells (no arc yet).'),
-  carrier: vehicle('carrier', 'Fights with its autocannon; carrying infantry comes later.'),
-  watcher: vehicle('watcher', 'Drives; its radar disruption comes later.'),
+  ram: vehicle('ram', 'Fights with its battle cannon, on the move too; tracked (its tracks don\'t turn yet).', true),
+  spire: vehicle('spire', 'Fires heavy artillery shells on a long, flat path from its long barrel.', true),
+  carrier: (() => {
+    const v = vehicle('carrier', 'Fights with its autocannon and carries five soldiers (its doors, and a rifleman boarding, are shown here).');
+    // its side doors drop into ramps (the `v_carrier_door` clip): opening and shutting, and a rifleman running in
+    const doors = (d: number) => range(8).map((f) => `v_carrier_door_${d}_${f}`);
+    v.anims!.list.push(
+      { name: 'Doors', atlas: 'v_carrier_door', frames: doors, fps: 16, pingPong: true },
+      { name: 'Soldier boards', atlas: 'v_carrier_door', frames: doors, fps: 16, board: { atlas: 'rifleman', tilesPerSec: speedToTilesPerSec(UNITS.rifleman.speed) } },
+    );
+    return v;
+  })(),
+  watcher: vehicle('watcher', 'Drives; its radar disruption in matches comes later (its scan loop is rendered).', false, [
+    { clip: 'scan', name: 'Scan', frames: 24, fps: 6 },
+  ]),
   shroud: vehicle('shroud', 'Drives; hiding nearby units comes later.'),
-  seeder: vehicle('seeder', 'Drives; laying mines comes later.'),
+  seeder: vehicle('seeder', 'Drives; laying mines in matches comes later (its lay-mine animation is rendered).', false, [
+    { clip: 'lay_mine', name: 'Lay mine', frames: 12, fps: 6, once: true },
+  ]),
+  hound: hovering('hound', 'hound', 'Fires a red energy ball from each side pod.'),
   assembler: vehicle('assembler', 'Press E with it selected to deploy it into an Assembly Yard where it stands.'),
   rifleman: {
     picture: { file: 'rifleman', frame: 'inf_2_idle' },
@@ -116,18 +154,25 @@ const ART: Record<string, Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims'
       ],
     },
   },
-  medic: soldier('medic', 'Carries his datapad in his right hand; healing comes later.', 20, 6.51),
-  raider: soldier('raider', 'Unarmed; infiltrating economic buildings comes later.', 16, 8.18),
-  infiltrator: soldier('infiltrator', 'Unarmed; infiltrating buildings comes later.', 16, 9.47),
-  harvester: {
-    picture: { file: 'harvester', frame: 'harv_02_0' },
-    note: 'Meshy model, in matches (16 directions, wheels turning).',
-    anims: {
-      directions: 16,
-      start: 2,
-      list: [{ name: 'Drive', atlas: 'harvester', frames: (d) => range(8).map((i) => `harv_${String(d).padStart(2, '0')}_${i}`), fps: 12 }],
-    },
-  },
+  medic: hovering('medic', 'medic', 'Unarmed; its two arms work in its heal loop while it heals a damaged unit.', { clip: 'heal', name: 'Heal', frames: 12, fps: 10 }),
+  raider: hovering('raider', 'raider', 'Unarmed; infiltrating economic buildings comes later.'),
+  infiltrator: hovering('infiltrator', 'infiltrator', 'Unarmed; infiltrating buildings comes later.'),
+  grenadier: hovering('grenadier', 'grenadier', 'Lobs fragmentation grenades from the launcher on its top.'),
+  breaker: hovering('breaker', 'breaker', 'Charges up, then a column of light strikes its target.'),
+  lancer: hoveringBySide('lancer', 'Fires a homing missile from each pod, its exhaust in its side\'s colour.'),
+  operator: hoveringBySide('operator', 'Fires a crackling energy bolt in its side\'s colour from its nose gun.'),
+  engineer: hoveringBySide('engineer', 'Unarmed; its arm works in its repair loop while it repairs a damaged building.', { clip: 'work', name: 'Work', frames: 12, fps: 10 }),
+  harvester: (() => {
+    const v = vehicle('harvester', 'Its front drums turn while it scoops ore; at a refinery\'s dock it tips its load out (a generated video\'s frames, facing the dock only), and it drives off empty.', false, [
+      { clip: 'harvest', name: 'Harvest', frames: 12, fps: 22 },
+    ]);
+    v.anims!.list.push(
+      { name: 'Drive empty', atlas: 'v_harvester_empty', frames: (d) => [`v_harvester_empty_${d}`], overlay: (d) => range(6).map((f) => `v_harvester_empty_w${d}_${f}`), fps: 12 },
+      // 96 frames over the 3 s it plays in matches (HARVESTER_UNLOAD_MS), facing the dock whichever way it's turned
+      { name: 'Unload (docked)', atlas: 'v_harvester_unload', frames: () => range(96).map((f) => `v_harvester_unload_${f}`), fps: 32, once: true },
+    );
+    return v;
+  })(),
 };
 
 const sameSide = (a: FactionScope, b: FactionScope) => a === 'both' || b === 'both' || a === b;
@@ -147,7 +192,7 @@ export const DEV_UNITS: DevUnit[] = Object.values(UNITS)
       name: u.name,
       faction,
       category: u.category ?? '',
-      kind: u.category === 'Infantry' ? 'infantry' : 'vehicle',
+      kind: u.category === 'Infantry' ? 'infantry' : u.category === 'Aircraft' ? 'aircraft' : u.category === 'Naval' ? 'naval' : 'vehicle',
       role: u.role ?? '',
       description: u.description ?? '',
       cost: u.cost,
