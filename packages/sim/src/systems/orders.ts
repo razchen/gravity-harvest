@@ -1,5 +1,5 @@
 // Orders: a player's commands, checked for legality and handed to the systems that carry them out.
-import { BUILDINGS, UNITS, refundFor } from '@gravity-harvest/rules';
+import { BUILDINGS, UNITS, refundFor, capabilitiesOf } from '@gravity-harvest/rules';
 import type { Command, GridPoint, TeamId } from '@gravity-harvest/shared';
 import { isVehicleType, isInfantryType, type Unit } from '../entities.js';
 import type { SimState } from '../state.js';
@@ -64,7 +64,7 @@ export function command(s: SimState, team: TeamId, cmd: Command): void {
     }
     case 'dock': {
       const ref = s.buildings.get(cmd.refinery);
-      if (!ref || ref.type !== 'refinery' || ref.team !== team || !ref.built) return;
+      if (!ref || !capabilitiesOf(ref.type).refinery || ref.team !== team || !ref.built) return;
       for (const id of cmd.units) {
         const u = own(id);
         if (u?.kind === 'harvester') {
@@ -76,7 +76,7 @@ export function command(s: SimState, team: TeamId, cmd: Command): void {
     }
     case 'service': {
       const bay = s.buildings.get(cmd.bay);
-      if (!bay || bay.type !== 'service_bay' || bay.team !== team || !bay.built) return;
+      if (!bay || !capabilitiesOf(bay.type).repairsVehicles || bay.team !== team || !bay.built) return;
       for (const id of cmd.units) {
         const u = own(id);
         if (u?.kind === 'fighter' && isVehicleType(u.type) && u.hp < u.maxHp) toBay(s, u, bay);

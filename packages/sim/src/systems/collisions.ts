@@ -1,8 +1,9 @@
 // Collisions and steering: units keep apart, go round each other, get unstuck, and a group sent to one point spreads
 // over a tile each around it.
+import { capabilitiesOf } from '@gravity-harvest/rules';
 import type { GridPoint } from '@gravity-harvest/shared';
 import { distance, type Tile } from '../geometry.js';
-import { ENGINE, HOVER_UNITS } from '../layout.js';
+import { ENGINE } from '../layout.js';
 import { isInfantryType, type Unit } from '../entities.js';
 import type { SimState } from '../state.js';
 import { arrive } from './harvesting.js';
@@ -18,7 +19,7 @@ function ghost(u: Unit): boolean {
 
 /** Its body's radius in tiles: vehicles are about a tile across, soldiers less. */
 function radius(u: Unit): number {
-  return HOVER_UNITS.has(u.type) ? ENGINE.hoverRadius : isInfantryType(u.type) ? ENGINE.infantryRadius : ENGINE.vehicleRadius;
+  return capabilitiesOf(u.type).hover ? ENGINE.hoverRadius : isInfantryType(u.type) ? ENGINE.infantryRadius : ENGINE.vehicleRadius;
 }
 
 /**

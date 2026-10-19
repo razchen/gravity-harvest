@@ -1,5 +1,5 @@
 // Power: each side's balance from its finished buildings, what low power slows down, and whether its radar works.
-import { BUILDINGS, powerBalance } from '@gravity-harvest/rules';
+import { BUILDINGS, powerBalance, capabilitiesOf } from '@gravity-harvest/rules';
 import { TEAMS, type TeamId, type TeamView } from '@gravity-harvest/shared';
 import { ENGINE } from '../layout.js';
 import type { SimState } from '../state.js';
@@ -14,6 +14,7 @@ export function slowdown(s: SimState, team: TeamId): number {
 }
 
 export function radar(s: SimState, team: TeamId): TeamView['radar'] {
-  if (!s.teamBuildings(team).some((b) => b.type === 'radar')) return 'none';
-  return BUILDINGS.radar.requiresPower && s.power[team].low ? 'offline' : 'online';
+  const radar = s.teamBuildings(team).find((b) => capabilitiesOf(b.type).radar);
+  if (!radar) return 'none';
+  return BUILDINGS[radar.type].requiresPower && s.power[team].low ? 'offline' : 'online';
 }

@@ -1,6 +1,6 @@
 // Harvesting: harvesters mine ore, queue at and dock with refineries, unload for credits, and find work again; ore
 // grows back on the spreadsheet's growth tick.
-import { ECONOMY, creditsFor } from '@gravity-harvest/rules';
+import { ECONOMY, creditsFor, capabilitiesOf } from '@gravity-harvest/rules';
 import type { GridPoint, TeamId } from '@gravity-harvest/shared';
 import { facing } from '../geometry.js';
 import { DOCK_FACING, ENGINE, TICK_MS, refineryDock } from '../layout.js';
@@ -19,7 +19,7 @@ export function nearestRefinery(s: SimState, gx: number, gy: number, team: TeamI
   let best: Building | null = null;
   let bestD = Infinity;
   for (const b of s.buildings.values()) {
-    if (b.type !== 'refinery' || !b.built || b.team !== team) continue;
+    if (!capabilitiesOf(b.type).refinery || !b.built || b.team !== team) continue;
     const d = Math.hypot(b.tx + 2 - gx, b.ty + 2 - gy);
     if (d < bestD) {
       best = b;
@@ -226,9 +226,10 @@ export function onHomeLost(s: SimState, h: Harvester): void {
   else leaveDock(s, h);
 }
 
-export function spawnHarvester(s: SimState, ref: Building): Harvester {
+/** A harvester out of a refinery, at its queue spot, off to work: the one it comes with (`grants`), or one it made. */
+export function spawnHarvester(s: SimState, ref: Building, type = capabilitiesOf(ref.type).refinery!.grants): Harvester {
   const d = refineryDock(ref.tx, ref.ty);
-  const h = addUnit(s, 'harvester', ref.team, d.wait.gx, d.wait.gy) as Harvester;
+  const h = addUnit(s, type, ref.team, d.wait.gx, d.wait.gy) as Harvester;
   h.home = ref.id;
   autoHarvest(s, h, true);
   return h;

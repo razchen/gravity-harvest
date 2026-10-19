@@ -1,6 +1,6 @@
 // What is on the map: buildings and units, and the players. Plain data (saved as it is, snapshot.ts); the systems in
 // ./systems give it its behaviour.
-import { UNITS, weapon, type Armor, type Faction } from '@gravity-harvest/rules';
+import { UNITS, capabilitiesOf, weapon, type Armor, type Faction } from '@gravity-harvest/rules';
 import type { Difficulty, GridPoint, MatchStats, TeamId } from '@gravity-harvest/shared';
 
 export interface Building {
@@ -172,13 +172,13 @@ export interface PlayerState {
   difficulty: Difficulty;
 }
 
-export const isHarvesterType = (type: string) => type === 'harvester';
+export const isHarvesterType = (type: string) => !!capabilitiesOf(type).harvester;
 /** Ground vehicles (combat and support, harvesters included): what a Service Bay repairs. Not infantry, aircraft or ships. */
 export const isVehicleType = (type: string) => UNITS[type]?.category?.endsWith('Vehicle') ?? false;
 /** Soldiers: what rides in transports. */
 export const isInfantryType = (type: string) => UNITS[type]?.category === 'Infantry';
-/** A unit's heal (a weapon that mends instead of harming: the Medic's), if it has one. */
-export const healOf = (type: string): string | null => UNITS[type]?.weapons.find((w) => weapon(w).damage < 0) ?? null;
+/** A healer's heal (a weapon that mends instead of harming: the Medic's). */
+export const healOf = (type: string): string | null => (capabilitiesOf(type).heals ? UNITS[type]?.weapons.find((w) => weapon(w).damage < 0) ?? null : null);
 
 /** Distance in tiles from a point to a unit, or to the edge of a building's footprint. */
 export function distTo(a: GridPoint, t: Entity): number {

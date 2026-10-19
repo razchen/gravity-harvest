@@ -1,6 +1,6 @@
 // Construction and production: placing buildings (and an Assembler deploying), building them up, the production
 // queue's lanes, and units coming out of their factory.
-import { BUILDINGS, UNITS, canBuild, missingRequirements } from '@gravity-harvest/rules';
+import { BUILDINGS, UNITS, canBuild, missingRequirements, capabilitiesOf } from '@gravity-harvest/rules';
 import { TEAMS, type GridPoint, type TeamId } from '@gravity-harvest/shared';
 import { distance } from '../geometry.js';
 import { ASSUME_OWNED, ENGINE, ROSTER, checkPlacement, footprint } from '../layout.js';
@@ -17,20 +17,26 @@ import { onPad } from './service.js';
 /** A defence (it shoots): built one at a time alongside one other building (each has its own build slot). */
 const isDefence = (type: string) => BUILDINGS[type].weapons.length > 0;
 
-/** An Assembler unpacks into an Assembly Yard centred where it stands, if the ground there is clear. */
+/** A side has somewhere its buildings go up from (an Assembly Yard). */
+function canConstruct(s: SimState, team: TeamId): boolean {
+  return [...ASSUME_OWNED].some((id) => capabilitiesOf(id).constructs) || s.teamBuildings(team).some((b) => capabilitiesOf(b.type).constructs);
+}
+
+/** A unit that deploys (an Assembler) unpacks into its building (an Assembly Yard) centred where it stands, if the ground there is clear. */
 export function deploy(s: SimState, team: TeamId, id: number): void {
   const u = s.units.get(id);
-  if (!u || u.team !== team || u.type !== 'assembler') return;
-  const n = footprint('assembly_yard');
+  const into = u && capabilitiesOf(u.type).deploysInto;
+  if (!u || u.team !== team || !into) return;
+  const n = footprint(into);
   const tx = Math.round(u.gx - n / 2), ty = Math.round(u.gy - n / 2);
   const world = placementWorld(s, team);
   // it doesn't need to be near the base (that's the point), and it isn't in its own way
-  const check = checkPlacement('assembly_yard', tx, ty, { ...world, unitOn: (x, y) => [...s.units.values()].some((o) => o.id !== u.id && Math.floor(o.gx) === x && Math.floor(o.gy) === y), ownBuildings: [{ tx, ty, size: n }] });
+  const check = checkPlacement(into, tx, ty, { ...world, unitOn: (x, y) => [...s.units.values()].some((o) => o.id !== u.id && Math.floor(o.gx) === x && Math.floor(o.gy) === y), ownBuildings: [{ tx, ty, size: n }] });
   if (check.problem) return toast(s, team, 'cantDeploy', `Can't deploy here: ${check.problem.toLowerCase()}`);
   u.alive = false;
   s.units.delete(u.id);
-  const b = addBuilding(s, 'assembly_yard', team, tx, ty, false);
-  b.boost = BUILDINGS.assembly_yard.buildTimeSec / ENGINE.deploySec;
+  const b = addBuilding(s, into, team, tx, ty, false);
+  b.boost = BUILDINGS[into].buildTimeSec / ENGINE.deploySec;
   s.players[team].stats.buildingsBuilt++;
   refresh(s);
 }
@@ -50,7 +56,7 @@ export function place(s: SimState, team: TeamId, type: string, tx: number, ty: n
     return toast(s, team, 'needPrerequisite', `Build a ${missing(s, team, type) ?? 'prerequisite'} first`);
   }
   // buildings go up from an Assembly Yard, one at a time (and one defence at a time beside it)
-  if (!ASSUME_OWNED.has('assembly_yard') && !s.teamBuildings(team).some((b) => b.type === 'assembly_yard')) return toast(s, team, 'needAssemblyYard', 'Needs an Assembly Yard');
+  if (!canConstruct(s, team)) return toast(s, team, 'needAssemblyYard', 'Needs an Assembly Yard');
   const busy = underConstruction(s, team, isDefence(type));
   if (busy) return toast(s, team, 'alreadyBuilding', `Already building a ${BUILDINGS[busy.type].name}`);
   const check = checkPlacement(type, tx, ty, placementWorld(s, team));
@@ -95,7 +101,7 @@ export function train(s: SimState, team: TeamId, unit: string, near?: GridPoint)
 }
 
 export function construct(s: SimState, dt: number): void {
-  const yard = new Set(TEAMS.filter((t) => ASSUME_OWNED.has('assembly_yard') || s.teamBuildings(t).some((b) => b.type === 'assembly_yard')));
+  const yard = new Set(TEAMS.filter((t) => canConstruct(s, t)));
   for (const b of s.buildings.values()) {
     if (b.built) continue;
     // with no Assembly Yard left, what's going up stops until there's one again (an unpacking yard goes on)
@@ -105,7 +111,7 @@ export function construct(s: SimState, dt: number): void {
     b.built = true;
     emit(s, b.team, { e: 'buildingDone', id: b.id });
     toast(s, b.team, 'buildingReady', `${BUILDINGS[b.type].name} ready`);
-    if (b.type === 'refinery' && b.constructed) spawnHarvester(s, b); // refinery completion grants one
+    if (capabilitiesOf(b.type).refinery && b.constructed) spawnHarvester(s, b); // refinery completion grants one
   }
 }
 
@@ -136,7 +142,7 @@ function produceItem(s: SimState, t: TeamId, item: QueueItem, dt: number): void 
   p.queue.splice(p.queue.indexOf(item), 1);
   const near = item.near;
   const from = near ? producers.reduce((a, b) => (distance(centre(a), near) <= distance(centre(b), near) ? a : b)) : producers[0];
-  const u = isHarvesterType(item.unit) && from.type === 'refinery' ? spawnHarvester(s, from) : spawnFighter(s, item.unit, from);
+  const u = isHarvesterType(item.unit) && capabilitiesOf(from.type).refinery ? spawnHarvester(s, from, item.unit) : spawnFighter(s, item.unit, from);
   emitSeen(s, { e: 'unitOut', building: from.id, unit: u.id }, centre(from), from.team);
   emit(s, t, { e: 'unitReady', id: u.id, type: u.type });
   toast(s, t, 'unitReady', `${UNITS[u.type].name} ready`);
@@ -162,7 +168,7 @@ function spawnFighter(s: SimState, type: string, from: Building): Unit {
  * Assembly Yard) its side building something.
  */
 export function isWorking(s: SimState, b: Building): boolean {
-  if (b.type === 'service_bay') return onPad(s, b) !== null;
-  if (b.type === 'assembly_yard') return s.teamBuildings(b.team, false).some((o) => !o.built);
+  if (capabilitiesOf(b.type).repairsVehicles) return onPad(s, b) !== null;
+  if (capabilitiesOf(b.type).constructs) return s.teamBuildings(b.team, false).some((o) => !o.built);
   return laneHeads(s.players[b.team].queue).some((q) => MATCH_CATALOG.units[q.unit]?.producedAt.includes(b.type));
 }

@@ -1,9 +1,9 @@
 // Combat: weapons and what they reach, finding something to shoot, firing (units and defences), damage and fighting
 // back.
-import { BUILDINGS, volleyDamage, weapon, weaponFor, layerOf, canHit } from '@gravity-harvest/rules';
+import { BUILDINGS, volleyDamage, weapon, weaponFor, layerOf, canHit, capabilitiesOf } from '@gravity-harvest/rules';
 import { TEAMS, type GridPoint, type TeamId } from '@gravity-harvest/shared';
 import { distance, facing } from '../geometry.js';
-import { ENGINE, TURRET_UNITS } from '../layout.js';
+import { ENGINE } from '../layout.js';
 import { distTo, centre, pos, type Building, type Fighter, type Entity } from '../entities.js';
 import type { SimState } from '../state.js';
 import { emit } from './events.js';
@@ -21,7 +21,7 @@ export function reload(u: Fighter, ms: number): void {
 
 /** A turret that turns on its own points at what the unit is shooting at, or back along the hull. */
 export function aimTurret(u: Fighter, target: Entity | undefined): void {
-  if (!TURRET_UNITS.has(u.type)) return;
+  if (!capabilitiesOf(u.type).turret) return;
   const at = target && u.weapons.length ? pos(target) : null;
   u.aim = at ? facing(at.gx - u.gx, at.gy - u.gy, TURRET_DIRECTIONS) : -1;
 }
@@ -112,7 +112,7 @@ export function nearestBuilding(s: SimState, gx: number, gy: number, team: TeamI
 export function fire(s: SimState, u: Fighter, target: Entity): void {
   const at = pos(target);
   // a turret aims on its own (updateFighter); otherwise the whole vehicle turns to fire
-  if (!TURRET_UNITS.has(u.type) && weaponAt(u.weapons, target)) u.dir = facing(at.gx - u.gx, at.gy - u.gy, 16);
+  if (!capabilitiesOf(u.type).turret && weaponAt(u.weapons, target)) u.dir = facing(at.gx - u.gx, at.gy - u.gy, 16);
   volley(s, u, u.weapons, u.cools, target);
 }
 
@@ -145,7 +145,7 @@ function damage(s: SimState, target: Entity, amount: number, attacker?: Entity):
   // fight back unless already busy with a chosen target (a unit on the move stops, then carries on afterwards; one
   // whose turret turns on its own fires back on the move)
   if (target.cat === 'unit' && target.kind === 'fighter' && target.weapons.length && attacker?.alive && attacker.team !== target.team && (target.target === null || target.target === target.mission)) {
-    if (target.mode === 'move' && (!TURRET_UNITS.has(target.type) || target.attackMove)) {
+    if (target.mode === 'move' && (!capabilitiesOf(target.type).turret || target.attackMove)) {
       target.resume = target.path[target.path.length - 1] ?? null;
       target.path = [];
       target.mode = 'idle';

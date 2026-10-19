@@ -1,6 +1,6 @@
 // Service Bays and repairs: vehicles back onto a bay's pad (or wait their turn by it) and are repaired there; buildings
 // being repaired heal. Both pay as they go.
-import { BUILDINGS, ECONOMY, UNITS } from '@gravity-harvest/rules';
+import { BUILDINGS, ECONOMY, UNITS, capabilitiesOf } from '@gravity-harvest/rules';
 import type { GridPoint } from '@gravity-harvest/shared';
 import { ENGINE, serviceBayPad } from '../layout.js';
 import type { Building, Fighter } from '../entities.js';
@@ -21,7 +21,7 @@ export function onPad(s: SimState, bay: Building): Fighter | null {
 export function bayUnder(s: SimState, u: GridPoint): Building | undefined {
   const tx = Math.floor(u.gx), ty = Math.floor(u.gy);
   for (const b of s.buildings.values()) {
-    if (b.type === 'service_bay' && b.alive && tx >= b.tx && tx < b.tx + b.size && ty >= b.ty && ty < b.ty + b.size) return b;
+    if (capabilitiesOf(b.type).repairsVehicles && b.alive && tx >= b.tx && tx < b.tx + b.size && ty >= b.ty && ty < b.ty + b.size) return b;
   }
   return undefined;
 }
@@ -125,7 +125,7 @@ export function repair(s: SimState, dt: number): void {
     }
   }
   for (const bay of s.buildings.values()) {
-    if (bay.type !== 'service_bay' || !bay.built) continue;
+    if (!capabilitiesOf(bay.type).repairsVehicles || !bay.built) continue;
     // only the vehicle parked on the pad: the ones waiting by the bay get nothing until it's their turn
     const u = onPad(s, bay);
     if (!u) continue;

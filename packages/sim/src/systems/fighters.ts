@@ -1,9 +1,10 @@
 // A fighter's tick: every unit that isn't a harvester. Each mechanic it has (a transport's doors, a Service Bay visit,
 // boarding, mending its side) takes it over for the tick when it applies, in that order; otherwise it follows its
 // orders: keeps or picks a target, fights and moves.
+import { capabilitiesOf } from '@gravity-harvest/rules';
 import { opponentOf } from '@gravity-harvest/shared';
 import { distance } from '../geometry.js';
-import { ENGINE, TURRET_UNITS } from '../layout.js';
+import { ENGINE } from '../layout.js';
 import { distTo, pos, type Entity, type Fighter } from '../entities.js';
 import type { SimState } from '../state.js';
 import { spotTaken } from './collisions.js';
@@ -38,7 +39,7 @@ function followOrders(s: SimState, u: Fighter, dt: number): void {
   // then carries on, unless its turret turns on its own: that fires on the move); otherwise anything within
   // acquire range, which it moves in on. On an attack-move it looks as far as an idle unit, buildings too, and
   // always stops to fight; while it shoots a building it keeps looking, for units that turn up.
-  const firesOnTheMove = TURRET_UNITS.has(u.type) && u.mode === 'move' && !u.attackMove;
+  const firesOnTheMove = !!capabilitiesOf(u.type).turret && u.mode === 'move' && !u.attackMove;
   target = chooseTarget(s, u, target, firesOnTheMove);
   u.target = target?.id ?? null;
   if (target) u.rest = null;

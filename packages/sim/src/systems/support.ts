@@ -1,7 +1,7 @@
 // Support units: Medics heal their side's damaged soldiers, Engineers repair its damaged buildings, for free.
-import { BUILDINGS, weapon } from '@gravity-harvest/rules';
+import { BUILDINGS, weapon, capabilitiesOf } from '@gravity-harvest/rules';
 import { facing } from '../geometry.js';
-import { ENGINE, FIXERS } from '../layout.js';
+import { ENGINE } from '../layout.js';
 import { distTo, pos, isInfantryType, healOf, type Fighter, type Entity } from '../entities.js';
 import type { SimState } from '../state.js';
 import { approachPoint } from './combat.js';
@@ -9,7 +9,10 @@ import { toast, emitSeen } from './events.js';
 import { goTo, stepAlong } from './movement.js';
 
 /** A unit that mends rather than fights: no weapons that harm, and a heal (a Medic) or repairs (an Engineer). */
-export const isSupport = (u: Fighter): boolean => !u.weapons.length && !!(healOf(u.type) || FIXERS.has(u.type));
+export function isSupport(u: Fighter): boolean {
+  const c = capabilitiesOf(u.type);
+  return !u.weapons.length && !!(c.heals || c.fixes);
+}
 
 /** Its part of every tick: its arms wind down, and a support unit sees to its side (true if it did, this tick). */
 export function tendSide(s: SimState, u: Fighter, dt: number): boolean {
