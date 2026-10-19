@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { CAMERA } from '../src/config/game';
 import { debug, myUnits, openGame, scene, screenAt } from './helpers';
 
 // The match runs on the server; these drive it through the real HUD and mouse, and set up state with the
@@ -12,8 +13,10 @@ test.describe('skirmish', () => {
       mine: [...s.buildings.values()].filter((b: any) => b.team === 'player').map((b: any) => b.type).sort(),
       riflemen: [...s.units.values()].filter((u: any) => u.type === 'rifleman' && u.team === 'player').length,
     }));
-    expect(start).toEqual({ mine: ['power_plant', 'refinery'], riflemen: 2 });
-    await expect(page.locator('.card[data-id]')).toHaveCount(4); // only the roster with art
+    expect(start).toEqual({ mine: ['assembly_yard', 'power_plant', 'refinery'], riflemen: 2 });
+    // the Build tab: this side's roster (its own lab, not the other side's), defences on their own tab
+    const cards = await page.locator('.card[data-id]').evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.id));
+    expect(cards).toEqual(['assembly_yard', 'power_plant', 'reactor_plant', 'refinery', 'barracks', 'radar', 'motor_works', 'service_bay', 'gravity_lab']);
     expect(errors).toEqual([]);
   });
 
@@ -91,16 +94,16 @@ test.describe('shadows', () => {
   test('buildings put their shadow into the shared layer, and take it out when they go', async ({ page }) => {
     await openGame(page);
     const layer = () => scene(page, (s) => ({ buildings: s.shadows.dynamic.size, scenery: s.shadows.fixed.length, alpha: s.shadows.rt.alpha }));
-    expect(await layer()).toMatchObject({ buildings: 2, alpha: 0.18 }); // refinery + power plant
+    expect(await layer()).toMatchObject({ buildings: 3, alpha: 0.18 }); // assembly yard + refinery + power plant
     expect((await layer()).scenery).toBeGreaterThan(50);
     const plant = await scene(page, (s) => [...s.buildings.values()].find((b: any) => b.type === 'power_plant').id);
     await scene(page, `(s) => s.net.command({ c: 'sell', building: ${plant} })` as never);
-    await expect.poll(async () => (await layer()).buildings).toBe(1);
+    await expect.poll(async () => (await layer()).buildings).toBe(2);
   });
 });
 
 test.describe('controls', () => {
-  test('zoom is on the keyboard (− held zooms out, + back in no further than the default, Z resets), not the wheel', async ({ page }) => {
+  test('zoom is on the keyboard (+ held zooms in no further than the closest, − out, Z resets), not the wheel', async ({ page }) => {
     await openGame(page);
     const zoom = () => scene(page, (s) => s.zoomLevel);
     const centre = await screenAt(page, 11, 9);
@@ -108,10 +111,11 @@ test.describe('controls', () => {
     await page.mouse.wheel(0, -400);
     await page.waitForTimeout(200);
     expect(await zoom()).toBe(1);
-    await page.keyboard.down('Equal'); // the + key: already as close as it goes (sprites are pixel for pixel here)
+    const closest = CAMERA.maxZoom / CAMERA.startZoom; // a little closer than the default, and no further
+    await page.keyboard.down('Equal'); // the + key
     await page.waitForTimeout(500);
     await page.keyboard.up('Equal');
-    expect(await zoom()).toBe(1);
+    expect(await zoom()).toBeCloseTo(closest, 5);
     await page.keyboard.down('Minus');
     await page.waitForTimeout(800);
     await page.keyboard.up('Minus');
@@ -121,7 +125,7 @@ test.describe('controls', () => {
     await page.waitForTimeout(300);
     await page.keyboard.up('Equal');
     expect(await zoom()).toBeGreaterThan(out);
-    expect(await zoom()).toBeLessThanOrEqual(1);
+    expect(await zoom()).toBeLessThanOrEqual(closest);
     await page.keyboard.press('KeyZ');
     expect(await zoom()).toBe(1);
   });
@@ -132,7 +136,7 @@ test.describe('controls', () => {
       const cam = s.cameras.main;
       return { x: cam.scrollX + cam.width / 2, y: cam.scrollY + cam.height / 2 };
     });
-    // the 64 x 64 field's bounding box in world px: x from -4096 to 4096, y from 0 to 4096
+    // the 88 x 48 field's bounding box in world px: x from -3072 to 5632, y from 0 to 4352
     const hold = async (keys: string[], ms = 2500) => {
       for (const k of keys) await page.keyboard.down(k);
       await page.waitForTimeout(ms);
@@ -146,11 +150,9 @@ test.describe('controls', () => {
     expect(still.x).toBeCloseTo(top.x, 0);
     expect(still.y).toBeCloseTo(0, 0);
     await hold(['KeyA', 'ArrowUp']);
-    expect(await centre()).toEqual({ x: -4096, y: 0 });
-    await hold(['KeyS', 'KeyD'], 6000);
-    const c = await centre();
-    expect(c.x).toBeLessThanOrEqual(4096);
-    expect(c.y).toBeLessThanOrEqual(4096);
+    expect(await centre()).toEqual({ x: -3072, y: 0 });
+    await hold(['KeyS', 'KeyD'], 8000); // across the whole field, and on into the opposite corner
+    expect(await centre()).toEqual({ x: 5632, y: 4352 });
   });
 
   test('the debug menu lists the shortcuts and toggles them', async ({ page }) => {
