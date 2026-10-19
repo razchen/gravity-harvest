@@ -1,4 +1,6 @@
-// Save-game API contract: GET/POST /api/saves, GET/PUT/DELETE /api/saves/:id.
+// Save-game API contract. Over HTTP saves are only listed, read and deleted: GET /api/saves, GET and DELETE
+// /api/saves/:id, each scoped to the player id in the PLAYER_ID_HEADER header (player.ts). Saves are written only by
+// the server's running match, on the `save` socket message (match.ts), so a player can't upload a doctored state.
 // The server validates against SAVE_LIMITS; the client uses the same numbers for its forms.
 
 export const SAVE_LIMITS = {
@@ -10,19 +12,19 @@ export const SAVE_LIMITS = {
   listMax: 100,
 } as const;
 
-/** Manual saves are made by the player; autosaves by the game (one slot per scenario, overwritten). */
+/** Manual saves are made by the player; autosaves by the game (one slot per player and scenario, overwritten). */
 export const SAVE_KINDS = ['manual', 'auto'] as const;
 export type SaveKind = (typeof SAVE_KINDS)[number];
 
 export const THUMBNAIL_PATTERN = /^data:image\/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/;
 
-/** A stored save as returned by GET /saves/:id, POST and PUT. `state` is opaque to the server. */
+/** A stored save. `state` is the match's SimSnapshot: it stays on the server and is never sent to players. */
 export interface SaveGame {
   id: string;
   name: string;
   scenario: string;
   kind: SaveKind;
-  /** Save-format version written by the client (the game's SNAPSHOT_VERSION). */
+  /** Snapshot format version the server's match wrote (packages/sim's SNAPSHOT_VERSION). */
   version: number;
   /** In-game elapsed time when saved. */
   gameTimeMs: number;
@@ -32,10 +34,10 @@ export interface SaveGame {
   updatedAt: string;
 }
 
-/** Each item of GET /saves (the heavy `state` is left out). */
+/** What GET /saves (each item) and GET /saves/:id return, and the `saved` socket reply: everything but `state`. */
 export type SaveGameSummary = Omit<SaveGame, 'state'>;
 
-/** Body of POST /saves (create) and PUT /saves/:id (full overwrite). */
+/** What the server's match hands SavesService to create or overwrite a save (never sent over HTTP). */
 export interface SaveGameInput {
   name: string;
   scenario: string;
@@ -53,7 +55,7 @@ export interface ListSavesQuery {
   limit?: number;
 }
 
-/** Client-side check mirroring the server's validation (so the UI can fail fast with a clear message). */
+/** The checks SavesService runs on every save it writes. Returns one message per problem (empty when valid). */
 export function validateSaveInput(input: SaveGameInput): string[] {
   const errors: string[] = [];
   const name = input.name?.trim() ?? '';

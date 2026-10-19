@@ -25,6 +25,13 @@ describe('loadConfig', () => {
     });
   });
 
+  it('syncs the schema and accepts debug commands only outside production', () => {
+    expect(loadConfig({})).toMatchObject({ dbSynchronize: true, debugCommands: true });
+    expect(loadConfig({ NODE_ENV: 'production' })).toMatchObject({ dbSynchronize: false, debugCommands: false });
+    expect(loadConfig({ NODE_ENV: 'production', DB_SYNCHRONIZE: 'true' }).dbSynchronize).toBe(true);
+    expect(loadConfig({ DB_SYNCHRONIZE: 'false' }).dbSynchronize).toBe(false);
+  });
+
   it('rejects an invalid port', () => {
     expect(() => loadConfig({ PORT: 'abc' })).toThrow(/Invalid PORT/);
   });

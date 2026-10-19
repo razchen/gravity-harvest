@@ -32,6 +32,8 @@ export class MatchSession {
   constructor(
     private readonly ws: WebSocket,
     private readonly saves: SavesService,
+    /** The connecting player's anonymous id: every save this match reads or writes is theirs. */
+    private readonly owner: string,
     private readonly debugCommands: boolean,
   ) {
     ws.on('message', (data) => {
@@ -84,7 +86,7 @@ export class MatchSession {
   private async start(m: StartMatch): Promise<void> {
     this.stop();
     if (m.saveId) {
-      const { state } = await this.saves.getState(m.saveId);
+      const { state } = await this.saves.getState(this.owner, m.saveId);
       this.sim = Sim.restore(state as SimSnapshot);
     } else {
       // a fresh forest, ore and spread every match
@@ -133,8 +135,8 @@ export class MatchSession {
     this.sendView();
     this.send({ t: 'gameOver', result: sim.winner === 'player' ? 'victory' : 'defeat', stats: { ...sim.players.player.stats, creditsEarned: Math.floor(sim.players.player.stats.creditsEarned) } });
     // a finished match can't be continued
-    const autos = await this.saves.list({ scenario: sim.scenario.id, kind: 'auto' });
-    await Promise.all(autos.map((a) => this.saves.remove(a.id)));
+    const autos = await this.saves.list(this.owner, { scenario: sim.scenario.id, kind: 'auto' });
+    await Promise.all(autos.map((a) => this.saves.remove(this.owner, a.id)));
   }
 
   private async save(kind: SaveKind, name: string, thumbnail: string | null, overwriteId?: string) {
@@ -150,10 +152,11 @@ export class MatchSession {
       state: sim.snapshot() as unknown as Record<string, unknown>,
     };
     if (kind === 'auto') {
-      const slot = (await this.saves.list({ scenario: sim.scenario.id, kind: 'auto', limit: 1 }))[0];
-      return slot ? this.saves.replace(slot.id, input, true) : this.saves.create(input);
+      // one autosave slot per player and scenario
+      const slot = (await this.saves.list(this.owner, { scenario: sim.scenario.id, kind: 'auto', limit: 1 }))[0];
+      return slot ? this.saves.replace(this.owner, slot.id, input, true) : this.saves.create(this.owner, input);
     }
-    return overwriteId ? this.saves.replace(overwriteId, input) : this.saves.create(input);
+    return overwriteId ? this.saves.replace(this.owner, overwriteId, input) : this.saves.create(this.owner, input);
   }
 
   private async onClose(): Promise<void> {

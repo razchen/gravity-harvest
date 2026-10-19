@@ -1,9 +1,10 @@
 // The browser's side of a match: one WebSocket to the server (MATCH_PATH). Orders go up, views come down.
 // The browser never runs the rules; it draws the TeamView it is sent and asks the server to act.
 import {
-  MATCH_PATH, type ClientMessage, type Command, type DebugCommand, type MatchHello, type MatchStats, type SaveGameSummary,
+  MATCH_PATH, PLAYER_ID_PARAM, type ClientMessage, type Command, type DebugCommand, type MatchHello, type MatchStats, type SaveGameSummary,
   type SaveKind, type ServerMessage, type StartMatch, type TeamView,
 } from '@gravity-harvest/shared';
+import { playerId } from './playerId';
 
 export interface MatchHandlers {
   hello(h: MatchHello): void;
@@ -41,7 +42,8 @@ export class MatchClient {
   start(m: StartMatch): void {
     this.close();
     const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-    const ws = (this.ws = new WebSocket(`${proto}://${location.host}${MATCH_PATH}`));
+    // the player id rides on the URL (a browser can't set headers on a WebSocket): the match saves and loads as this player
+    const ws = (this.ws = new WebSocket(`${proto}://${location.host}${MATCH_PATH}?${PLAYER_ID_PARAM}=${playerId()}`));
     this.started = false;
     ws.onopen = () => this.send({ t: 'start', ...m });
     ws.onmessage = (e) => {

@@ -8,13 +8,23 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
  * move to another SQL engine) don't depend on TypeORM naming defaults.
  * Timestamps are set by the service (millisecond precision) rather than by
  * SQLite's `datetime('now')`, which only has second precision.
+ *
+ * The schema is owned by the migrations in database/migrations: a change here needs a new migration
+ * (database/migrations.spec.ts fails until the two match).
  */
 @Entity({ name: 'save_games' })
-@Index('idx_save_games_updated_at', ['updatedAt'])
-@Index('idx_save_games_scenario_updated_at', ['scenario', 'updatedAt'])
+@Index('idx_save_games_owner_updated_at', ['owner', 'updatedAt'])
+@Index('idx_save_games_owner_scenario_updated_at', ['owner', 'scenario', 'updatedAt'])
 export class SaveGameEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  /**
+   * The anonymous player id of whoever saved it (every query is scoped to it). Null only on saves made before saves
+   * had owners: no player can see those.
+   */
+  @Column({ type: 'varchar', length: 36, nullable: true })
+  owner: string | null;
 
   @Column({ type: 'varchar', length: 80 })
   name: string;

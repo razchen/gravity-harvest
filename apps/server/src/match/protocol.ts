@@ -10,69 +10,58 @@ const str = (v: unknown, max = 64): v is string => typeof v === 'string' && v.le
 const ids = (v: unknown): v is number[] => Array.isArray(v) && v.length <= MAX_IDS && v.every(int);
 const team = (v: unknown) => v === 'player' || v === 'enemy';
 const point = (v: unknown) => isObj(v) && num(v.gx) && num(v.gy);
+const orders = (v: unknown) => Array.isArray(v) && v.length <= MAX_IDS && v.every((o) => isObj(o) && int(o.id) && num(o.gx) && num(o.gy));
 
-function command(c: unknown): c is Command {
-  if (!isObj(c)) return false;
-  switch (c.c) {
-    case 'move':
-    case 'attackMove':
-      return Array.isArray(c.orders) && c.orders.length <= MAX_IDS && c.orders.every((o) => isObj(o) && int(o.id) && num(o.gx) && num(o.gy));
-    case 'attack':
-      return ids(c.units) && int(c.target);
-    case 'harvest':
-      return ids(c.units) && int(c.tx) && int(c.ty);
-    case 'dock':
-      return ids(c.units) && int(c.refinery);
-    case 'service':
-      return ids(c.units) && int(c.bay);
-    case 'stop':
-      return ids(c.units);
-    case 'place':
-      return str(c.building) && int(c.tx) && int(c.ty);
-    case 'train':
-      return str(c.unit) && (c.near === undefined || point(c.near));
-    case 'cancelTrain':
-      return str(c.unit);
-    case 'sell':
-    case 'cancelBuild':
-      return int(c.building);
-    case 'repair':
-      return int(c.building) && typeof c.on === 'boolean';
-    case 'support':
-      return ids(c.units) && int(c.target);
-    case 'deploy':
-      return int(c.unit);
-    case 'board':
-      return ids(c.units) && int(c.transport);
-    case 'unload':
-      return int(c.transport);
-    default:
-      return false;
-  }
+type CommandName = Command['c'];
+type Fields = Record<string, unknown>;
+
+/**
+ * One shape check per command. Typed as a full map over `Command['c']` so adding a command to the protocol without
+ * a check here is a compile error, not a "Malformed message" at runtime.
+ */
+export type CommandChecks = { readonly [K in CommandName]: (c: Fields) => boolean };
+
+const COMMANDS: CommandChecks = {
+  move: (c) => orders(c.orders),
+  attackMove: (c) => orders(c.orders),
+  attack: (c) => ids(c.units) && int(c.target),
+  harvest: (c) => ids(c.units) && int(c.tx) && int(c.ty),
+  dock: (c) => ids(c.units) && int(c.refinery),
+  service: (c) => ids(c.units) && int(c.bay),
+  stop: (c) => ids(c.units),
+  place: (c) => str(c.building) && int(c.tx) && int(c.ty),
+  train: (c) => str(c.unit) && (c.near === undefined || point(c.near)),
+  cancelTrain: (c) => str(c.unit),
+  sell: (c) => int(c.building),
+  cancelBuild: (c) => int(c.building),
+  repair: (c) => int(c.building) && typeof c.on === 'boolean',
+  support: (c) => ids(c.units) && int(c.target),
+  deploy: (c) => int(c.unit),
+  board: (c) => ids(c.units) && int(c.transport),
+  unload: (c) => int(c.transport),
+};
+
+/** Is this a known command with the right fields? */
+export function isCommand(c: unknown): c is Command {
+  if (!isObj(c) || typeof c.c !== 'string' || !Object.hasOwn(COMMANDS, c.c)) return false;
+  return COMMANDS[c.c as CommandName](c);
 }
 
-function debug(d: unknown): d is DebugCommand {
-  if (!isObj(d)) return false;
-  switch (d.d) {
-    case 'credits':
-      return num(d.amount);
-    case 'reveal':
-      return typeof d.on === 'boolean';
-    case 'fast':
-      return num(d.factor) && d.factor >= 1 && d.factor <= 20;
-    case 'teleport':
-      return ids(d.units) && num(d.gx) && num(d.gy);
-    case 'spawn':
-      return str(d.unit) && team(d.team) && num(d.gx) && num(d.gy);
-    case 'destroyTeam':
-      return team(d.team) && typeof d.units === 'boolean' && typeof d.buildings === 'boolean';
-    case 'addTime':
-      return num(d.ms) && d.ms >= 0;
-    case 'finishBuilds':
-      return true;
-    default:
-      return false;
-  }
+/** The same for debug commands. */
+const DEBUG: { readonly [K in DebugCommand['d']]: (d: Fields) => boolean } = {
+  credits: (d) => num(d.amount),
+  reveal: (d) => typeof d.on === 'boolean',
+  fast: (d) => num(d.factor) && d.factor >= 1 && d.factor <= 20,
+  teleport: (d) => ids(d.units) && num(d.gx) && num(d.gy),
+  spawn: (d) => str(d.unit) && team(d.team) && num(d.gx) && num(d.gy),
+  destroyTeam: (d) => team(d.team) && typeof d.units === 'boolean' && typeof d.buildings === 'boolean',
+  addTime: (d) => num(d.ms) && d.ms >= 0,
+  finishBuilds: () => true,
+};
+
+function isDebugCommand(d: unknown): d is DebugCommand {
+  if (!isObj(d) || typeof d.d !== 'string' || !Object.hasOwn(DEBUG, d.d)) return false;
+  return DEBUG[d.d as DebugCommand['d']](d);
 }
 
 /** Parse and check a raw socket message. Returns null for anything malformed. */
@@ -94,7 +83,7 @@ export function parseClientMessage(raw: string): ClientMessage | null {
       if (m.difficulty !== undefined && !DIFFICULTIES.includes(m.difficulty as never)) return null;
       return m as ClientMessage;
     case 'cmd':
-      return command(m.cmd) ? (m as ClientMessage) : null;
+      return isCommand(m.cmd) ? (m as ClientMessage) : null;
     case 'pause':
     case 'resume':
     case 'end':
@@ -105,7 +94,7 @@ export function parseClientMessage(raw: string): ClientMessage | null {
       if (m.thumbnail !== null && typeof m.thumbnail !== 'string') return null;
       return m as ClientMessage;
     case 'debug':
-      return debug(m.cmd) ? (m as ClientMessage) : null;
+      return isDebugCommand(m.cmd) ? (m as ClientMessage) : null;
     default:
       return null;
   }
