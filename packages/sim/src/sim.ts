@@ -151,6 +151,8 @@ export class Sim {
     if (s.winner) return;
     s.tick++;
     s.timeMs += TICK_MS;
+    // (the grid follows every move as it happens; starting each tick afresh also covers what happened between ticks)
+    s.grid.rebuild(s.units.values());
     const dt = TICK_MS / 1000;
     for (const t of TEAMS) s.players[t].stats.gameTimeMs = s.timeMs;
     refresh(s);

@@ -79,12 +79,14 @@ export function stepAlong(s: SimState, u: Unit, dt: number): number {
       if (straight(s, u, to)) {
         u.gx = to.gx;
         u.gy = to.gy;
+        s.grid.moved(u);
         moved += Math.hypot(sx, sy);
       }
       break;
     }
     u.gx += mx;
     u.gy += my;
+    s.grid.moved(u);
     moved += move;
     step -= move;
     if (move >= dist) u.path.shift();

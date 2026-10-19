@@ -1,7 +1,7 @@
 // Combat: weapons and what they reach, finding something to shoot, firing (units and defences), damage and fighting
 // back.
 import { BUILDINGS, volleyDamage, weapon, weaponFor, layerOf, canHit, capabilitiesOf } from '@gravity-harvest/rules';
-import { TEAMS, type GridPoint, type TeamId } from '@gravity-harvest/shared';
+import { TEAMS, opponentOf, type GridPoint, type TeamId } from '@gravity-harvest/shared';
 import { distance, facing } from '../geometry.js';
 import { ENGINE } from '../layout.js';
 import { distTo, centre, pos, type Building, type Fighter, type Entity } from '../entities.js';
@@ -52,7 +52,7 @@ export function acquireRange(u: Fighter): number {
 export function findEnemy(s: SimState, u: Fighter, reach: number, buildings = false): Entity | null {
   let best: Entity | null = null;
   let bestD = reach;
-  for (const o of s.units.values()) {
+  for (const o of s.grid.near(u.gx, u.gy, reach)) {
     if (!o.alive || o.team === u.team) continue;
     if (Math.abs(o.gx - u.gx) > reach || Math.abs(o.gy - u.gy) > reach) continue;
     if (!weaponAt(u.weapons, o) || !inSight(s, u.team, o)) continue;
@@ -63,8 +63,8 @@ export function findEnemy(s: SimState, u: Fighter, reach: number, buildings = fa
     }
   }
   if (!s.players[u.team].human || (buildings && !best)) {
-    for (const b of s.buildings.values()) {
-      if (b.team === u.team || !weaponAt(u.weapons, b) || !b.seenBy.has(u.team)) continue;
+    for (const b of s.teamBuildingMap[opponentOf(u.team)].values()) {
+      if (!weaponAt(u.weapons, b) || !b.seenBy.has(u.team)) continue;
       const d = distTo(u, b);
       if (d < bestD) {
         best = b;
@@ -98,8 +98,8 @@ export function approachPoint(s: SimState, t: Entity, from: GridPoint): GridPoin
 export function nearestBuilding(s: SimState, gx: number, gy: number, team: TeamId, knownTo?: TeamId): Building | null {
   let best: Building | null = null;
   let bestD = Infinity;
-  for (const b of s.buildings.values()) {
-    if (b.team !== team || (knownTo && !b.seenBy.has(knownTo))) continue;
+  for (const b of s.teamBuildingMap[team].values()) {
+    if (knownTo && !b.seenBy.has(knownTo)) continue;
     const d = distance(centre(b), { gx, gy });
     if (d < bestD) {
       best = b;
@@ -167,7 +167,8 @@ export function defend(s: SimState, dt: number): void {
     if (!target?.alive || distTo(target, b) > range || !inSight(s, b.team, target)) {
       target = undefined;
       let best = range;
-      for (const u of s.units.values()) {
+      // only units within range of its footprint can be closer than `range`
+      for (const u of s.grid.within(b.tx - range, b.ty - range, b.tx + b.size + range, b.ty + b.size + range)) {
         if (!u.alive || u.team === b.team || !weaponAt(def.weapons, u) || !inSight(s, b.team, u)) continue;
         const d = distTo(u, b);
         if (d <= best) {

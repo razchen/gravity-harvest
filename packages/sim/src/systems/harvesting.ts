@@ -18,8 +18,8 @@ const HARVESTER_RETRY_MS = 3000;
 export function nearestRefinery(s: SimState, gx: number, gy: number, team: TeamId): Building | null {
   let best: Building | null = null;
   let bestD = Infinity;
-  for (const b of s.buildings.values()) {
-    if (!capabilitiesOf(b.type).refinery || !b.built || b.team !== team) continue;
+  for (const b of s.teamBuildingMap[team].values()) {
+    if (!capabilitiesOf(b.type).refinery || !b.built) continue;
     const d = Math.hypot(b.tx + 2 - gx, b.ty + 2 - gy);
     if (d < bestD) {
       best = b;

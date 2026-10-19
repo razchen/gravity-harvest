@@ -17,10 +17,15 @@ function ghost(u: Unit): boolean {
   return u.kind === 'fighter' && u.mode === 'board';
 }
 
-/** Its body's radius in tiles: vehicles are about a tile across, soldiers less. */
+/** Its body's radius in tiles: vehicles are about a tile across, soldiers less (by type, worked out once). */
 function radius(u: Unit): number {
-  return capabilitiesOf(u.type).hover ? ENGINE.hoverRadius : isInfantryType(u.type) ? ENGINE.infantryRadius : ENGINE.vehicleRadius;
+  let r = RADIUS.get(u.type);
+  if (r === undefined) RADIUS.set(u.type, (r = capabilitiesOf(u.type).hover ? ENGINE.hoverRadius : isInfantryType(u.type) ? ENGINE.infantryRadius : ENGINE.vehicleRadius));
+  return r;
 }
+const RADIUS = new Map<string, number>();
+/** The biggest body: two units further apart than twice this along either axis can't touch. */
+const MAX_RADIUS = Math.max(ENGINE.hoverRadius, ENGINE.infantryRadius, ENGINE.vehicleRadius);
 
 /**
  * Destinations for a group sent to one point: a tile each around it, as compact as the ground allows, each unit
@@ -128,12 +133,14 @@ export function separate(s: SimState): void {
   const list = [...s.units.values()];
   const push = list.map(() => ({ gx: 0, gy: 0 }));
   const gives = list.map((u) => give(s, u));
+  const index = new Map(list.map((u, i) => [u, i]));
   for (let i = 0; i < list.length; i++) {
     const a = list[i];
     if (ghost(a)) continue;
-    for (let j = i + 1; j < list.length; j++) {
-      const b = list[j];
-      if (ghost(b)) continue;
+    // each pair once, in the order of the list: only those near enough to touch (the grid's are in that order too)
+    for (const b of s.grid.near(a.gx, a.gy, 2 * MAX_RADIUS)) {
+      const j = index.get(b)!;
+      if (j <= i || ghost(b)) continue;
       const r = radius(a) + radius(b);
       const dx = b.gx - a.gx, dy = b.gy - a.gy;
       if (Math.abs(dx) >= r || Math.abs(dy) >= r) continue;
@@ -173,6 +180,7 @@ export function separate(s: SimState): void {
     if (!to) return;
     u.gx = to.gx;
     u.gy = to.gy;
+    s.grid.moved(u);
     const next = u.path[0];
     if (next && (Math.floor(to.gx) !== Math.floor(from.gx) || Math.floor(to.gy) !== Math.floor(from.gy)) && !straight(s, u, next)) rePath(s, u);
   });
@@ -185,7 +193,7 @@ export function separate(s: SimState): void {
  */
 export function steer(s: SimState, u: Unit, mx: number, my: number): [number, number] {
   if (anchored(s, u) || ghost(u)) return [mx, my];
-  for (const o of s.units.values()) {
+  for (const o of s.grid.near(u.gx, u.gy, radius(u) + MAX_RADIUS + 0.5)) {
     if (o === u || ghost(o)) continue;
     const r = radius(u) + radius(o);
     const dx = o.gx - u.gx, dy = o.gy - u.gy;
@@ -215,7 +223,7 @@ function sameWay(a: Unit, b: Unit): boolean {
 /** Tiles where others stand in a unit's way (still, held in place, or stuck themselves): to path round them. */
 function standing(s: SimState, self: Unit): (tx: number, ty: number) => boolean {
   const keys = new Set<number>();
-  for (const o of s.units.values()) {
+  for (const o of s.grid.near(self.gx, self.gy, 6)) {
     if (o === self || distance(o, self) > 6) continue;
     if (!o.path.length || o.stuck > 0 || anchored(s, o)) keys.add(s.map.key(Math.floor(o.gx), Math.floor(o.gy)));
   }

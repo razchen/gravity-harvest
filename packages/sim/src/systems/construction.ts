@@ -31,10 +31,10 @@ export function deploy(s: SimState, team: TeamId, id: number): void {
   const tx = Math.round(u.gx - n / 2), ty = Math.round(u.gy - n / 2);
   const world = placementWorld(s, team);
   // it doesn't need to be near the base (that's the point), and it isn't in its own way
-  const check = checkPlacement(into, tx, ty, { ...world, unitOn: (x, y) => [...s.units.values()].some((o) => o.id !== u.id && Math.floor(o.gx) === x && Math.floor(o.gy) === y), ownBuildings: [{ tx, ty, size: n }] });
+  const check = checkPlacement(into, tx, ty, { ...world, unitOn: (x, y) => s.grid.on(x, y).some((o) => o.id !== u.id && Math.floor(o.gx) === x && Math.floor(o.gy) === y), ownBuildings: [{ tx, ty, size: n }] });
   if (check.problem) return toast(s, team, 'cantDeploy', `Can't deploy here: ${check.problem.toLowerCase()}`);
   u.alive = false;
-  s.units.delete(u.id);
+  s.dropUnit(u);
   const b = addBuilding(s, into, team, tx, ty, false);
   b.boost = BUILDINGS[into].buildTimeSec / ENGINE.deploySec;
   s.players[team].stats.buildingsBuilt++;
@@ -72,7 +72,7 @@ export function place(s: SimState, team: TeamId, type: string, tx: number, ty: n
  * Assembler unpacked doesn't count (that's the Assembler's doing, not the yard's).
  */
 export function underConstruction(s: SimState, team: TeamId, defence: boolean): Building | null {
-  for (const b of s.buildings.values()) if (b.team === team && !b.built && b.boost === 1 && isDefence(b.type) === defence) return b;
+  for (const b of s.teamBuildingMap[team].values()) if (!b.built && b.boost === 1 && isDefence(b.type) === defence) return b;
   return null;
 }
 
@@ -80,7 +80,7 @@ export function placementWorld(s: SimState, team: TeamId) {
   return {
     isBlocked: (x: number, y: number) => s.map.isBlocked(x, y),
     hasOre: (x: number, y: number) => s.ore.hasOre(x, y),
-    unitOn: (x: number, y: number) => [...s.units.values()].some((u) => Math.floor(u.gx) === x && Math.floor(u.gy) === y),
+    unitOn: (x: number, y: number) => s.grid.on(x, y).some((u) => Math.floor(u.gx) === x && Math.floor(u.gy) === y),
     ownBuildings: s.teamBuildings(team, false),
   };
 }

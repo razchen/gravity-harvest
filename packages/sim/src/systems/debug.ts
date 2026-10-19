@@ -26,6 +26,7 @@ export function debug(s: SimState, team: TeamId, cmd: DebugCommand): void {
         else Object.assign(u, { path: [], mode: 'idle', target: null, rest: null });
         u.gx = cmd.gx + (i % 3) * 0.8;
         u.gy = cmd.gy + Math.floor(i / 3) * 0.8;
+        s.grid.moved(u);
       });
       updateFog(s);
       return;
@@ -45,7 +46,7 @@ export function debug(s: SimState, team: TeamId, cmd: DebugCommand): void {
       for (const t of TEAMS) s.players[t].stats.gameTimeMs = s.timeMs;
       return;
     case 'finishBuilds':
-      for (const b of s.buildings.values()) if (b.team === team && !b.built) b.progress = 0.9999;
+      for (const b of s.teamBuildingMap[team].values()) if (!b.built) b.progress = 0.9999;
       for (const q of s.players[team].queue) q.progress = 0.9999;
       return;
   }

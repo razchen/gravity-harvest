@@ -8,6 +8,7 @@ import { Fog } from './fog.js';
 import { Grid } from './grid.js';
 import { Ore } from './ore.js';
 import { Rng } from './rng.js';
+import { UnitGrid } from './spatial.js';
 import type { ScenarioDef } from './scenarios.js';
 import type { Scenery } from './scenery.js';
 
@@ -18,8 +19,12 @@ export class SimState {
   readonly players: Record<TeamId, PlayerState>;
   /** Debug fast mode: each team's speed-up for building, production and movement (1 = normal). */
   readonly fast: Record<TeamId, number> = perTeam(() => 1);
+  /** Every building and unit on the map, in the order they were put there (the order every system meets them in). */
   readonly buildings = new Map<number, Building>();
   readonly units = new Map<number, Unit>();
+  /** The same, by team (each in the same order), and the units by tile: kept in step by put/drop and `grid.moved`. */
+  readonly teamBuildingMap: Record<TeamId, Map<number, Building>> = perTeam(() => new Map());
+  readonly grid = new UnitGrid();
   /** Trees, rocks (they block their tiles), bushes and logs. */
   scenery: Scenery[] = [];
   tick = 0;
@@ -56,8 +61,32 @@ export class SimState {
     return this.buildings.get(id) ?? this.units.get(id);
   }
 
+  /** A building onto the map (it goes last in the order). */
+  putBuilding(b: Building): void {
+    this.buildings.set(b.id, b);
+    this.teamBuildingMap[b.team].set(b.id, b);
+  }
+
+  dropBuilding(b: Building): void {
+    this.buildings.delete(b.id);
+    this.teamBuildingMap[b.team].delete(b.id);
+  }
+
+  /** A unit onto the map: a new one, or one back out of a transport (it goes last in the order). */
+  putUnit(u: Unit): void {
+    this.units.set(u.id, u);
+    this.grid.add(u);
+  }
+
+  /** A unit off the map: killed, gone into a transport or deployed. */
+  dropUnit(u: Unit): void {
+    this.units.delete(u.id);
+    this.grid.remove(u);
+  }
+
   teamBuildings(team: TeamId, builtOnly = true): Building[] {
-    return [...this.buildings.values()].filter((b) => b.team === team && (!builtOnly || b.built));
+    const all = [...this.teamBuildingMap[team].values()];
+    return builtOnly ? all.filter((b) => b.built) : all;
   }
 
   teamUnits(team: TeamId): Unit[] {

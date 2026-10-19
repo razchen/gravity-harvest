@@ -19,7 +19,7 @@ export function addBuilding(s: SimState, type: string, team: TeamId, tx: number,
     progress: built ? 1 : 0, built, alive: true, seenBy: new Set([team]), occupant: null, constructed: !built,
     repairing: false, boost: 1, dir: -1, target: null, cools: def.weapons.map(() => 0),
   };
-  s.buildings.set(id, b);
+  s.putBuilding(b);
   s.map.setFootprint(tx, ty, size, true);
   return b;
 }
@@ -39,7 +39,7 @@ export function addUnit(s: SimState, type: string, team: TeamId, gx: number, gy:
       ...base, kind: 'fighter', dir: 14, mode: 'idle', target: null, mission: null, post: null, resume: null, attackMove: null, rest: null, weapons, cools: weapons.map(() => 0), cool: 0, scan: s.rng.range(0, 300), repath: 0, aim: -1, service: null,
       seats: def.passengers ?? 0, passengers: [], hatch: 'closed', hatchTimer: 0, gap: 0, unloading: false, board: null,
     };
-  s.units.set(id, u);
+  s.putUnit(u);
   return u;
 }
 
@@ -48,7 +48,7 @@ export function killUnit(s: SimState, u: Unit): void {
   if (u.kind === 'harvester') cancelHarvester(s, u);
   u.alive = false;
   u.path = [];
-  s.units.delete(u.id);
+  s.dropUnit(u);
   // a transport's passengers die with it
   const lost = 1 + (u.kind === 'fighter' ? u.passengers.length : 0);
   if (u.kind === 'fighter') for (const p of u.passengers.splice(0)) p.alive = false;
@@ -60,7 +60,7 @@ export function killUnit(s: SimState, u: Unit): void {
 export function destroyBuilding(s: SimState, b: Building, sold = false): void {
   if (!b.alive) return;
   b.alive = false;
-  s.buildings.delete(b.id);
+  s.dropBuilding(b);
   s.map.setFootprint(b.tx, b.ty, b.size, false);
   const name = BUILDINGS[b.type].name;
   if (!sold) {

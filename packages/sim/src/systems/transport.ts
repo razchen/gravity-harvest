@@ -49,7 +49,7 @@ function stopBoarding(u: Fighter): void {
 
 /** A soldier at its door goes in: off the map, kept (with his health) until he comes out. */
 function getIn(s: SimState, u: Fighter, t: Fighter, side: 1 | -1): void {
-  s.units.delete(u.id);
+  s.dropUnit(u);
   Object.assign(u, { path: [], moving: false, mode: 'idle', target: null, resume: null, board: null, post: null, mission: null });
   t.passengers.push(u);
   t.gap = ENGINE.boardGapMs;
@@ -129,7 +129,7 @@ function letOut(s: SimState, t: Fighter): boolean {
     const from = s.map.isBlocked(fx, fy) ? { gx: best.tx + 0.5, gy: best.ty + 0.5 } : foot;
     const v = doorSide(t.dir, side);
     Object.assign(p, { gx: from.gx, gy: from.gy, dir: facing(v.gx, v.gy, 16), path: [], moving: false, mode: 'idle', target: null, resume: null, rest: null, board: null, scan: 0 });
-    s.units.set(p.id, p);
+    s.putUnit(p);
     if (distance(from, { gx: best.tx + 0.5, gy: best.ty + 0.5 }) > 0.05 && goTo(s, p, best.tx + 0.5, best.ty + 0.5)) p.mode = 'move';
     emitSeen(s, { e: 'disembarked', unit: p.id, transport: t.id, side }, t, t.team);
     return true;

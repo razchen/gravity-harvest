@@ -116,7 +116,7 @@ function restoreBuilding(s: SimState, saved: SavedBuilding): void {
 /** A saved unit back on the map (a passenger: back inside its transport, off the map). */
 function restoreUnit(s: SimState, saved: SavedUnit, passenger = false): Unit {
   const u = addUnit(s, saved.type, saved.team, saved.gx, saved.gy, saved.id);
-  if (passenger) s.units.delete(u.id);
+  if (passenger) s.dropUnit(u);
   // (copies: the same save may be loaded again)
   if (saved.kind === 'harvester' || u.kind === 'harvester') return Object.assign(u, JSON.parse(JSON.stringify(saved)) as SavedUnit);
   const { passengers, cools, ...rest } = saved;
