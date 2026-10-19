@@ -35,7 +35,7 @@ a build always loads the recorded version from S3, so `dist/` holds only the cod
 Run a single package with `npx turbo run <task> --filter=@gravity-harvest/game` (or `server`, `sim`, `ai`, `rules`,
 `shared`, `simulator`).
 
-CI (`.github/workflows/check.yml`) runs `npm run check` and the e2e tests on every pull request and push to `main`.
+CI (`.github/workflows/check.yml`) runs `npm run check` and the server's API e2e tests (not the game's browser tests, for now) on every pull request and push to `main`.
 
 ## Controls
 

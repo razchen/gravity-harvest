@@ -26,7 +26,8 @@ only acceptable because they are served by the dev server and never built: the b
 Anything the game itself loads may only use the entry points in the table above.
 
 **CI** (`.github/workflows/check.yml`) runs on every pull request and push to `main`: `npm run assets:pull`,
-`npm run check`, then the e2e tests (server API and the game in Chromium).
+`npm run check`, then the server's API e2e tests. The game's browser tests (Playwright, ~6 min) aren't in CI for now;
+run them locally before big changes.
 
 ## Principles
 

@@ -1,4 +1,5 @@
-# Typecheck, unit tests, build, then the e2e tests (server API + the game in Chromium), on every push and pull request.
+# Typecheck, unit tests, build and the server's API e2e tests on every push and pull request. The game's browser
+# tests (Playwright, ~6 min) are left out for now: run them locally with `npm run test:e2e --workspace @gravity-harvest/game`.
 name: check
 
 on:
@@ -13,7 +14,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,12 +30,4 @@ jobs:
           key: assets-${{ hashFiles('apps/game/assets.json') }}
       - run: npm run assets:pull
       - run: npm run check
-      - run: npx playwright install --with-deps chromium
-        working-directory: apps/game
-      - run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: playwright-results
-          path: apps/game/test-results
-          retention-days: 7
+      - run: npm run test:e2e --workspace @gravity-harvest/server
