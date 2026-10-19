@@ -18,8 +18,9 @@ import {
 import { Ore, type OreChange, type OreTile } from './ore.js';
 import { findPath } from './pathfinder.js';
 import { Rng } from './rng.js';
-import { SCENARIOS, humanSeat, type ScenarioDef } from './scenarios.js';
-import { OLDEST_LOADABLE_VERSION, SNAPSHOT_VERSION, migrateSnapshot, type SimSnapshot } from './snapshot.js';
+import { migrateSnapshot, type RawSave } from './migrations.js';
+import { SCENARIOS, humanSeat, scenarioHash, type ScenarioDef } from './scenarios.js';
+import { SNAPSHOT_VERSION, type SavedBuilding, type SavedFighter, type SavedUnit, type SimSnapshot } from './snapshot.js';
 import { growScenery, type Scenery } from './scenery.js';
 
 /** The full catalog limited to the roster, with stand-ins (see layout.ts). */
@@ -259,7 +260,7 @@ export class Sim {
   readonly ore: Ore;
   readonly fog: Record<TeamId, Fog>;
   readonly players: Record<TeamId, PlayerState>;
-  /** Debug fast mode: each team's speed-up for building, production and movement (1 = normal; not saved). */
+  /** Debug fast mode: each team's speed-up for building, production and movement (1 = normal). */
   private readonly fast: Record<TeamId, number> = perTeam(() => 1);
   readonly buildings = new Map<number, Building>();
   readonly units = new Map<number, Unit>();
@@ -347,10 +348,11 @@ export class Sim {
     return sim;
   }
 
-  /** Resume a saved match. */
-  static restore(saved: SimSnapshot): Sim {
-    if (saved.version > SNAPSHOT_VERSION) throw new Error('Save is from a newer version');
-    if (saved.version < OLDEST_LOADABLE_VERSION) throw new Error('Save is from an older version and can no longer be loaded');
+  /**
+   * Carry on a saved match exactly where it was (an older save is migrated first; it loads with every unit idle). The
+   * scenario is rebuilt from code: a save made on an earlier version of its map still loads (see `saveWarnings`).
+   */
+  static restore(saved: SimSnapshot | RawSave): Sim {
     const raw = migrateSnapshot(saved);
     const sc = SCENARIOS[raw.scenario];
     if (!sc) throw new Error(`Unknown scenario "${raw.scenario}"`);
@@ -359,93 +361,104 @@ export class Sim {
     sim.timeMs = raw.timeMs;
     for (const team of TEAMS) {
       const p = raw.players[team];
-      Object.assign(sim.players[team], {
-        credits: p.credits, queue: p.queue.map((q) => ({ ...q })), stats: { ...p.stats }, ...(p.human !== undefined && { human: p.human }),
-        ...(p.faction && { faction: p.faction }), ...(p.difficulty && { difficulty: p.difficulty }),
-      });
+      Object.assign(sim.players[team], { credits: p.credits, queue: p.queue.map((q) => ({ ...q })), stats: { ...p.stats }, human: p.human, faction: p.faction, difficulty: p.difficulty });
       sim.fog[team].restoreExplored(raw.explored[team]);
     }
-    for (const b of raw.buildings) {
-      const nb = sim.addBuilding(b.type, b.team, b.tx, b.ty, b.progress >= 1, b.id);
-      Object.assign(nb, { hp: b.hp, progress: b.progress, constructed: b.constructed, seenBy: new Set<TeamId>([b.team, ...b.seenBy]), repairing: !!b.repairing });
-    }
-    sim.scenery = (raw.scenery ?? raw.trees ?? []).map((t) => ({ ...t }));
+    for (const b of raw.buildings) sim.restoreBuilding(b);
+    sim.scenery = raw.scenery.map((t) => ({ ...t }));
     for (const t of sim.scenery) {
       const k = sceneryKind(t.kind);
       if (k.blocks) sim.map.setFootprint(t.tx, t.ty, k.size, true);
     }
     for (const t of raw.ore) sim.ore.tiles.set(sim.map.key(t.tx, t.ty), { ...t, rocks: t.rocks.map((r) => ({ ...r })) });
-    for (const v of raw.vents ?? []) sim.ore.vents.push({ ...v });
-    for (const u of raw.units) {
-      const nu = sim.addUnit(u.type, u.team, u.gx, u.gy, u.id);
-      nu.hp = u.hp;
-      if (nu.kind === 'harvester') {
-        nu.cargo = u.cargo ?? 0;
-        nu.field = u.field ?? sim.ore.nearestField(nu.gx, nu.gy);
-      } else {
-        nu.post = u.post ?? null;
-        // its passengers, back inside it
-        for (const p of u.passengers ?? []) {
-          const np = sim.addUnit(p.type, u.team, u.gx, u.gy, p.id);
-          sim.units.delete(np.id);
-          np.hp = p.hp;
-          if (np.kind === 'fighter') nu.passengers.push(np);
-        }
-      }
-    }
+    for (const v of raw.vents) sim.ore.vents.push({ ...v });
+    for (const u of raw.units) sim.restoreUnit(u);
     sim.nextId = raw.nextId;
-    // saves from before the Assembly Yard was a real building: each side gets the scenario's one, where it fits
-    if (raw.version < 5) {
-      for (const y of sc.buildings.filter((b) => b.type === 'assembly_yard')) {
-        if (sim.teamBuildings(y.team, false).some((b) => b.type === 'assembly_yard')) continue;
-        const n = footprint(y.type);
-        let free = true;
-        for (let x = y.tx; x < y.tx + n; x++) for (let z = y.ty; z < y.ty + n; z++) if (sim.map.isBlocked(x, z)) free = false;
-        if (free) sim.addBuilding(y.type, y.team, y.tx, y.ty, true);
+    // (making the units drew from the generator: it carries on from where the save left it)
+    sim.rng.state = raw.rng;
+    const live = raw.live;
+    if (live) {
+      for (const t of TEAMS) {
+        sim.fog[t].restore(live.fog[t]);
+        sim.fog[t].revealAll = live.revealAll[t];
+        for (const g of live.ghosts[t]) sim.ghosts[t].set(g.id, { ...g });
+        sim.power[t] = { ...live.power[t] };
+        sim.fast[t] = live.fast[t];
       }
+      sim.fogTimer = live.fogTimer;
+      sim.growTimer = live.growTimer;
+      sim.winner = live.winner;
+    } else {
+      // an older save: what each side sees, and remembers of the other's buildings, starts from how things are now
+      sim.refresh();
+      sim.updateFog();
+      for (const t of TEAMS) for (const b of sim.buildings.values()) if (b.team !== t && b.seenBy.has(t) && !sim.ghosts[t].has(b.id)) sim.ghosts[t].set(b.id, sim.buildingView(b, t));
     }
-    sim.refresh();
-    // transient state (paths, timers, targets) isn't saved: harvesters go back to work, guards back to posts
-    for (const u of sim.units.values()) {
-      if (u.kind !== 'harvester') continue;
-      u.home = sim.nearestRefinery(u.gx, u.gy, u.team)?.id ?? null;
-      if (u.cargo >= ECONOMY.harvesterCapacity) sim.returnHome(u);
-      else sim.autoHarvest(u);
-    }
-    sim.updateFog();
-    // saves don't carry what each side last saw of the other's buildings: they start from how they are now
-    for (const t of TEAMS) for (const b of sim.buildings.values()) if (b.team !== t && b.seenBy.has(t) && !sim.ghosts[t].has(b.id)) sim.ghosts[t].set(b.id, sim.buildingView(b, t));
     return sim;
   }
 
+  /** A saved building back on the map: what its type gives it from the rules, everything else as saved. */
+  private restoreBuilding(saved: SavedBuilding): void {
+    const { seenBy, cools, ...rest } = saved;
+    const b = this.addBuilding(saved.type, saved.team, saved.tx, saved.ty, saved.built, saved.id);
+    Object.assign(b, rest, { seenBy: new Set<TeamId>(seenBy), cools: b.cools.map((_, i) => cools[i] ?? 0) });
+  }
+
+  /** A saved unit back on the map (a passenger: back inside its transport, off the map). */
+  private restoreUnit(saved: SavedUnit, passenger = false): Unit {
+    const u = this.addUnit(saved.type, saved.team, saved.gx, saved.gy, saved.id);
+    if (passenger) this.units.delete(u.id);
+    // (copies: the same save may be loaded again)
+    if (saved.kind === 'harvester' || u.kind === 'harvester') return Object.assign(u, JSON.parse(JSON.stringify(saved)) as SavedUnit);
+    const { passengers, cools, ...rest } = saved;
+    Object.assign(u, JSON.parse(JSON.stringify(rest)) as typeof rest, { cools: u.cools.map((_, i) => cools[i] ?? 0) });
+    u.passengers = passengers.map((p) => this.restoreUnit(p, true) as Fighter);
+    return u;
+  }
+
+  /** The whole match, as plain JSON (a copy: it never changes with the match). */
   snapshot(): SimSnapshot {
-    return {
+    const building = ({ cat: _c, size: _s, maxHp: _m, armor: _a, alive: _l, seenBy, ...b }: Building): SavedBuilding => ({ ...b, seenBy: [...seenBy] });
+    const unit = (u: Unit): SavedUnit => {
+      if (u.kind === 'harvester') {
+        const { cat: _c, maxHp: _m, armor: _a, alive: _l, speed: _s, sight: _v, ...h } = u;
+        return h;
+      }
+      const { cat: _c, maxHp: _m, armor: _a, alive: _l, speed: _s, sight: _v, weapons: _w, seats: _n, passengers, ...f } = u;
+      return { ...f, passengers: passengers.map((p) => unit(p) as SavedFighter) };
+    };
+    const snap: SimSnapshot = {
       version: SNAPSHOT_VERSION,
       scenario: this.scenario.id,
+      scenarioHash: scenarioHash(this.scenario),
       tick: this.tick,
       timeMs: this.timeMs,
       nextId: this.nextId,
       rng: this.rng.state,
       players: perTeam((t) => {
         const p = this.players[t];
-        return { credits: p.credits, queue: p.queue.map((q) => ({ ...q })), stats: { ...p.stats }, human: p.human, faction: p.faction, difficulty: p.difficulty };
+        return { credits: p.credits, queue: p.queue, stats: p.stats, human: p.human, faction: p.faction, difficulty: p.difficulty };
       }),
-      buildings: [...this.buildings.values()].map((b) => ({
-        id: b.id, type: b.type, team: b.team, tx: b.tx, ty: b.ty, hp: b.hp, progress: b.progress, constructed: b.constructed, seenBy: [...b.seenBy],
-        ...(b.repairing && { repairing: true }),
-      })),
-      units: [...this.units.values()].map((u) => u.kind === 'harvester'
-        ? { id: u.id, type: u.type, team: u.team, gx: u.gx, gy: u.gy, hp: u.hp, cargo: u.cargo, field: u.field }
-        : {
-          id: u.id, type: u.type, team: u.team, gx: u.gx, gy: u.gy, hp: u.hp, post: u.post,
-          ...(u.passengers.length > 0 && { passengers: u.passengers.map((p) => ({ id: p.id, type: p.type, hp: p.hp })) }),
-        }),
-      ore: [...this.ore.tiles.values()].map((t) => ({ tx: t.tx, ty: t.ty, field: t.field, richness: t.richness, rocks: t.rocks.map((r) => ({ ...r })) })),
-      vents: this.ore.vents.map((v) => ({ ...v })),
-      scenery: this.scenery.map((t) => ({ ...t })),
+      buildings: [...this.buildings.values()].map(building),
+      units: [...this.units.values()].map(unit),
+      ore: [...this.ore.tiles.values()].map((t) => ({ tx: t.tx, ty: t.ty, field: t.field, richness: t.richness, rocks: t.rocks })),
+      vents: this.ore.vents,
+      scenery: this.scenery,
       explored: perTeam((t) => this.fog[t].serializeExplored()),
+      live: {
+        fog: perTeam((t) => this.fog[t].serialize()),
+        revealAll: perTeam((t) => this.fog[t].revealAll),
+        ghosts: perTeam((t) => [...this.ghosts[t].values()]),
+        power: this.power,
+        fogTimer: this.fogTimer,
+        growTimer: this.growTimer,
+        fast: this.fast,
+        winner: this.winner,
+      },
       rulesHash: RULES_HASH,
     };
+    // through JSON: a copy that shares nothing with the match, exactly as it will be stored
+    return JSON.parse(JSON.stringify(snap)) as SimSnapshot;
   }
 
   // --- Entities ---------------------------------------------------------------------------------------------

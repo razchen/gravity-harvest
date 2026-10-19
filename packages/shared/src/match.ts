@@ -347,6 +347,8 @@ export interface MatchHello {
   factions: Record<TeamId, PlayableFaction>;
   /** How well the computer opponent plays. */
   difficulty: Difficulty;
+  /** How long the server keeps the match waiting, paused, for this connection to come back (`rejoin`) if it drops (ms). */
+  reconnectMs?: number;
 }
 
 export type ServerMessage =

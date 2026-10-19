@@ -1,11 +1,10 @@
 import { Logger } from '@nestjs/common';
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer, type AiState } from '@gravity-harvest/ai';
-import { RULES_HASH } from '@gravity-harvest/rules';
 import {
   DEFAULT_DIFFICULTY, TEAMS, perTeam, type Command, type DebugCommand, type SaveGameSummary, type SaveKind, type ServerMessage, type StartMatch, type TeamId,
 } from '@gravity-harvest/shared';
 import {
-  CommandQueue, SNAPSHOT_VERSION, TICK_MS, TeamFeed, VIEW_EVERY_TICKS, humanSeat, recordMatch, startMatch, type MatchRecord, type MatchStart,
+  CommandQueue, SNAPSHOT_VERSION, TICK_MS, TeamFeed, VIEW_EVERY_TICKS, humanSeat, recordMatch, saveWarnings, startMatch, type MatchRecord, type MatchStart,
   type SavedComputer, type Sim, type SimSnapshot,
 } from '@gravity-harvest/sim';
 import { randomInt } from 'node:crypto';
@@ -80,7 +79,7 @@ export class MatchRoom {
     if (m.saveId) {
       saved = (await deps.saves.getState(owner, m.saveId)).state as SimSnapshot;
       start = { snapshot: saved };
-      if (saved.rulesHash && saved.rulesHash !== RULES_HASH) log.warn(`Save ${m.saveId} was made under other rules (${saved.rulesHash.slice(0, 12)}); loading it anyway`);
+      for (const w of saveWarnings(saved)) log.warn(`Save ${m.saveId} was ${w}; loading it anyway`);
     } else {
       // a fresh forest, ore and spread every match
       start = { scenario: m.scenario!, seed: randomInt(2 ** 31), ...(m.faction && { faction: m.faction }), options: { seat: m.seat, difficulty: m.difficulty ?? DEFAULT_DIFFICULTY } };
@@ -123,7 +122,7 @@ export class MatchRoom {
       this.log.log(`Player back in seat ${seat}; the match goes on`);
     }
     this.lastStep = performance.now();
-    link.send({ t: 'hello', ...this.sim.hello(seat), debug: this.deps.debugCommands });
+    link.send({ t: 'hello', ...this.sim.hello(seat), debug: this.deps.debugCommands, reconnectMs: this.deps.graceMs });
     this.feeds[seat].resendFog();
     this.sendView(seat);
   }

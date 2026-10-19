@@ -76,4 +76,15 @@ export class Fog {
   restoreExplored(data: string): void {
     for (let i = 0; i < this.state.length && i < data.length; i++) if (data[i] === '1') this.state[i] = FogState.Explored;
   }
+
+  /** Every tile's state as `encode()` gives it, but the real fog beneath a debug reveal: what a full save keeps. */
+  serialize(): string {
+    let out = '';
+    for (const v of this.state) out += v;
+    return out;
+  }
+
+  restore(data: string): void {
+    for (let i = 0; i < this.state.length && i < data.length; i++) this.state[i] = Number(data[i]) as FogState;
+  }
 }
