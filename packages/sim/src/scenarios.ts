@@ -88,3 +88,16 @@ export const SKIRMISH: ScenarioDef = {
 };
 
 export const SCENARIOS: Readonly<Record<string, ScenarioDef>> = { [SKIRMISH.id]: SKIRMISH };
+
+/**
+ * A fingerprint of what a scenario puts on the field (map size, sides, ore fields, vents, starting buildings and units,
+ * cameras; not its name or description). Saves keep only the scenario's id and rebuild the map from code, so a save
+ * records this to tell when the map has changed under it since (FNV-1a over its JSON, as hex).
+ */
+export function scenarioHash(sc: ScenarioDef): string {
+  const { map, players, oreFields, mirrorX, vents, buildings, units, camera } = sc;
+  const s = JSON.stringify({ map, players, oreFields, mirrorX, vents, buildings, units, camera });
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193);
+  return (h >>> 0).toString(16).padStart(8, '0');
+}

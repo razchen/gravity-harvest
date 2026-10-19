@@ -130,6 +130,9 @@ export class GameScene extends Phaser.Scene implements HudBridge {
       gameOver: (result, stats) => this.onGameOver(result, stats),
       failed: (msg) => this.game.events.emit('match-failed', msg),
       error: (msg) => this.bus.emit('toast', msg),
+      // shown again before every try (at most 2 s apart), so it stays up until the connection is back
+      reconnecting: () => this.bus.emit('toast', 'Connection lost: reconnecting…'),
+      reconnected: () => this.bus.emit('toast', 'Reconnected'),
     });
     const net = this.net;
     this.events.once('shutdown', () => net.close());
