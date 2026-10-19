@@ -3,14 +3,15 @@
   "private": true,
   "description": "Gravity Harvest: a classic isometric real-time strategy game for the browser.",
   "packageManager": "npm@10.9.7",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": ["apps/*", "packages/*", "tools/simulator"],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
-    "check": "turbo run typecheck test build"
+    "check": "turbo run typecheck test build",
+    "simulate": "turbo run build --filter=@gravity-harvest/simulator --output-logs=errors-only && node tools/simulator/dist/cli.js"
   },
   "devDependencies": {
     "turbo": "^2.5.0",

@@ -2,6 +2,7 @@
 // auto-rotate, and a model's own animations. One model at a time, loaded only when asked for and removed when you
 // leave the page (a 45-110 MB GLB takes a few hundred MB in the browser while it's shown). Not part of the game.
 import { onLeave } from './page';
+import { BAR, BUTTON, CHECKBOX, LABEL, STATUS } from './ui';
 
 export interface ModelFile {
   /** Shown on its button ("Running"). */
@@ -19,16 +20,16 @@ interface ModelViewerEl extends HTMLElement {
 
 /** Put a 3D viewer in `host` for these files (a button each when there are several), showing the first. */
 export async function mountModel(host: HTMLElement, files: ModelFile[]): Promise<void> {
-  host.innerHTML = '<div class="model-wait">Loading the 3D viewer…</div>';
+  host.innerHTML = '<div class="grid h-full min-h-[200px] place-content-center justify-items-center gap-2 text-muted">Loading the 3D viewer…</div>';
   await import('@google/model-viewer');
   host.innerHTML = `
-    <model-viewer camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" shadow-intensity="1"
+    <model-viewer class="flex-1" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" shadow-intensity="1"
       exposure="1" environment-image="neutral" interaction-prompt="none" autoplay
       style="width:100%;height:100%;background:radial-gradient(#3a3d40,#16171a)"></model-viewer>
-    <div class="model-bar">
-      ${files.length > 1 ? `<span class="group">${files.map((f, i) => `<button data-m="${i}">${f.name}</button>`).join('')}</span>` : ''}
-      <label><input type="checkbox" class="spin" checked> Turn</label>
-      <span class="model-status"></span>
+    <div class="model-bar ${BAR} gap-x-3.5 gap-y-1.5">
+      ${files.length > 1 ? `<span class="inline-flex gap-1">${files.map((f, i) => `<button class="${BUTTON}" data-m="${i}">${f.name}</button>`).join('')}</span>` : ''}
+      <label class="${LABEL}"><input type="checkbox" class="spin ${CHECKBOX}" checked> Turn</label>
+      <span class="model-status ${STATUS}"></span>
     </div>`;
   const mv = host.querySelector('model-viewer') as ModelViewerEl;
   const status = host.querySelector<HTMLElement>('.model-status')!;

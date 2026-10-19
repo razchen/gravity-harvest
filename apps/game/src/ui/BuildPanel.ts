@@ -1,7 +1,9 @@
-import { BUILDING_ART, UNIT_ART } from '../data/art';
+import { BUILDING_ART, UNIT_ART, unitArt } from '../data/art';
+import { inGame } from '../input/InputController';
 import { getCatalog, missingFor } from '../systems/availability';
 import { $, $$ } from './dom';
 import type { HudBridge } from './HudBridge';
+import { cardHotkey, panelKey, stepTab } from './panelKeys';
 import type { Toast } from './Toast';
 
 export type Tab = 'build' | 'units' | 'defense';
@@ -21,6 +23,7 @@ const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
  * Right-hand panel: tabs and build / unit cards for the match roster. Names and prices come from the catalog the
  * server sends; cards for things whose prerequisites aren't met are locked. Right-click a unit card to cancel
  * one from the queue. Each card's i opens its info card: what it does, its numbers, what it needs and unlocks.
+ * Keys (panelKeys.ts): Tab / Shift+Tab step through the tabs, Alt+1 … Alt+0 press the tab's first ten cards.
  */
 export class BuildPanel {
   private tab: Tab = 'build';
@@ -31,11 +34,7 @@ export class BuildPanel {
 
   constructor(private readonly game: HudBridge, private readonly toast: Toast) {
     for (const b of $$('[data-tab]')) {
-      b.addEventListener('click', () => {
-        this.setTab(b.dataset.tab as Tab);
-        const first = b.closest('#cats') ? b : document.querySelector(`#cats .sq[data-tab="${b.dataset.tab}"]`);
-        for (const x of $$('#cats .sq')) x.classList.toggle('active', x === first);
-      });
+      b.addEventListener('click', () => this.setTab(b.dataset.tab as Tab));
     }
     // sell / repair modes: each button toggles its mode
     const modes = { sell: $('#btn-sell'), repair: $('#btn-repair') };
@@ -55,7 +54,18 @@ export class BuildPanel {
       const t = e.target as HTMLElement;
       if (this.infoFor && !t.closest('#info-card') && !t.closest('.card .info')) this.closeInfo();
     });
+    document.addEventListener('keydown', (e) => this.onKey(e));
     this.render();
+  }
+
+  /** Tab / Shift+Tab: the next or previous tab. Alt+number: that card, just as a click on it (Alt+Shift: a shift-click). */
+  private onKey(e: KeyboardEvent): void {
+    const k = panelKey(e);
+    if (!k || !inGame() || !$('#help').hidden || $('#hud').hidden) return;
+    e.preventDefault(); // Tab would move the browser's focus; Alt+digit types a character on macOS
+    if ('tab' in k) return this.setTab(stepTab($$('[data-tab]').map((b) => b.dataset.tab as Tab), this.tab, k.tab));
+    if (e.repeat) return;
+    $$('.card', this.box)[k.card]?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, shiftKey: k.shift }));
   }
 
   /** Rebuild the cards (a new match may have a different roster). */
@@ -80,7 +90,7 @@ export class BuildPanel {
     if (this.tab === 'units') {
       return Object.values(getCatalog().units).filter((d) => UNIT_ART[d.id]).map((d) => {
         const id = d.id;
-        return { id, name: d.name, price: d.cost, img: UNIT_ART[id].card, sub: `${d.buildTimeSec}s`, action: () => this.buy(id) };
+        return { id, name: d.name, price: d.cost, img: unitArt(id, this.game.faction)!.card, sub: `${d.buildTimeSec}s`, action: () => this.buy(id) };
       });
     }
     return [];
@@ -98,7 +108,10 @@ export class BuildPanel {
       const el = document.createElement('button');
       el.className = 'card';
       el.dataset.id = c.id;
+      const hotkey = cardHotkey(this.cards.indexOf(c));
+      if (hotkey) el.dataset.hotkey = hotkey;
       el.innerHTML = `<img src="${c.img}" alt=""><div class="name">${c.name}</div>` +
+        (hotkey ? `<span class="hotkey" aria-hidden="true">${hotkey}</span>` : '') +
         `<div class="price">$${c.price.toLocaleString()}</div><div class="sub">${c.sub}</div>` +
         '<div class="queue-count"></div><div class="queue-bar"></div>' +
         (this.tab === 'units' ? `<span class="cancel" role="button" tabindex="-1" title="Cancel one (all of its price back)" aria-label="Cancel one ${esc(c.name)}">×</span>` : '') +
@@ -148,7 +161,7 @@ export class BuildPanel {
     const b = cat.buildings[id];
     const u = cat.units[id];
     const d = b ?? u!;
-    const img = b ? BUILDING_ART[id]?.card : UNIT_ART[id]?.card;
+    const img = b ? BUILDING_ART[id]?.card : unitArt(id, this.game.faction)?.card;
     let rows = row('Cost', `$${d.cost.toLocaleString()}`) + row('Build time', `${+d.buildTimeSec.toFixed(1)} s`) + row('Health', d.hp.toLocaleString());
     if (b) {
       rows += row('Power', b.power > 0 ? `+${b.power} (makes)` : b.power < 0 ? `${b.power} (uses)` : '');
@@ -170,7 +183,9 @@ export class BuildPanel {
     const d = getCatalog().buildings[id];
     const needs = missingFor(id, this.game.ownedTypes());
     if (needs) return this.toast.show(`Build a ${needs} first`);
-    if (this.game.startPlacement(id) === 'poor') this.toast.show(`Need $${(d.cost - this.game.credits()).toLocaleString()} more`);
+    const r = this.game.startPlacement(id);
+    if (r === 'poor') this.toast.show(`Need $${(d.cost - this.game.credits()).toLocaleString()} more`);
+    else if (r !== 'ok') this.toast.show(r);
     else this.toast.show(`Place the ${d.name}: left-click to build, right-click or Esc to cancel`);
   }
 
@@ -198,9 +213,10 @@ export class BuildPanel {
       el.classList.toggle('placing', placing === id);
       const needs = missingFor(id, owned);
       el.classList.toggle('locked', !!needs);
-      el.title = needs ? `Needs ${needs}` : '';
+      el.title = [needs ? `Needs ${needs}` : '', el.dataset.hotkey ? `Hotkey: ${el.dataset.hotkey}` : ''].filter(Boolean).join(' · ');
       const mine = queue.filter((q) => q.unit === id);
-      const head = queue[0]?.unit === id ? queue[0].progress : 0;
+      // each lane builds its first unit: the one of this type that's under way, if any
+      const head = Math.max(0, ...mine.map((q) => q.progress));
       el.querySelector<HTMLElement>('.queue-count')!.textContent = mine.length ? String(mine.length) : '';
       el.classList.toggle('queued', mine.length > 0);
       el.querySelector<HTMLElement>('.queue-bar')!.style.width = `${Math.round(head * 100)}%`;

@@ -1,0 +1,12 @@
+{
+ "length_tiles": 0.9,
+ "rig": "hover/engineer_sable.blend",
+ "nose_deg": 180,
+ "hover": {
+  "height": 0.28,
+  "glow": [1.0, 0.08, 0.04]
+ },
+ "clips": {
+  "work": {"frames": 12, "loop": true}
+ }
+}

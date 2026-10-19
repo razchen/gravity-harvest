@@ -146,6 +146,15 @@ export class ConstructionView {
     return !!a && a.img.visible && a.f === a.frames - 1;
   }
 
+  /**
+   * Draw the moving parts (not a door) and the sparks at this depth instead of just over the building: a Service Bay's
+   * roof arms reach down over a vehicle on its pad (entities/BuildingSprite.ts armsDepth).
+   */
+  liftMoving(depth: number): void {
+    for (const a of this.anims) if (a.when !== 'door') a.img.setDepth(depth);
+    this.fx?.liftSparks(depth + 0.01);
+  }
+
   /** Finished, the building is its base (without the moving parts) with each animation's layer over it. */
   private showIdle(): void {
     const on = this.finished && this.base.visible;

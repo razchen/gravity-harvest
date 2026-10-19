@@ -1,4 +1,5 @@
 import { button, el, fmtTime } from './kit';
+import { difficultyName } from './menus';
 import type { Screens } from './Screens';
 
 /** Victory / defeat: result, match stats, and where to go next. */
@@ -6,6 +7,7 @@ export function gameOverScreen(s: Screens): HTMLElement {
   const go = s.ctx.gameOver;
   const victory = go?.result === 'victory';
   const st = go?.stats;
+  const level = s.actions.difficulty();
   const stat = (label: string, value: string) =>
     el('div', { className: 'stat' }, el('div', { className: 'stat-value', textContent: value }), el('div', { className: 'stat-label', textContent: label }));
   return el('div', { className: `gameover ${victory ? 'victory' : 'defeat'}` },
@@ -13,6 +15,7 @@ export function gameOverScreen(s: Screens): HTMLElement {
     el('div', { className: 'gameover-sub', textContent: victory ? 'Every enemy structure has been destroyed.' : 'Your base has fallen.' }),
     st ? el('div', { className: 'stats panel' },
       stat('Time', fmtTime(st.gameTimeMs)),
+      level ? stat('Opponent', difficultyName(level)) : null,
       stat('Credits earned', `$${st.creditsEarned.toLocaleString()}`),
       stat('Units destroyed', String(st.unitsKilled)),
       stat('Units lost', String(st.unitsLost)),

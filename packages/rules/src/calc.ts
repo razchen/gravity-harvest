@@ -44,6 +44,27 @@ export function hitDamage(weaponId: string, targetArmor: Armor): number {
   return w.damage * damageMultiplier(w.damageClass, targetArmor);
 }
 
+// --- Targeting ---------------------------------------------------------------------------------------------
+
+/** Where something is, as far as weapons go: aircraft fly, everything else (buildings too) is on the ground. */
+export type Layer = 'ground' | 'air';
+
+export function layerOf(id: string): Layer {
+  return UNITS[id]?.category === 'Aircraft' ? 'air' : 'ground';
+}
+
+/** Whether a weapon reaches this layer, from its targeting ("ground", "air", "air / ground", "surface"...; none = ground). */
+export function canHit(weaponId: string, layer: Layer): boolean {
+  const t = weapon(weaponId).targeting;
+  if (layer === 'air') return !!t && /air/.test(t);
+  return !t || /ground|surface|structure|personnel|armor|light|infantry/.test(t);
+}
+
+/** The weapon an entity uses on something in this layer: the first of its weapons that reaches it, if any. */
+export function weaponFor(weapons: readonly string[], layer: Layer): string | null {
+  return weapons.find((w) => canHit(w, layer)) ?? null;
+}
+
 /** Damage per firing (all hits of a burst) after armor. */
 export function volleyDamage(weaponId: string, targetArmor: Armor): number {
   return hitDamage(weaponId, targetArmor) * weapon(weaponId).burst;

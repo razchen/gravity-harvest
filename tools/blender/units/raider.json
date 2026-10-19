@@ -1,0 +1,10 @@
+{
+ "length_tiles": 1.286,
+ "rig": "hover/raider.blend",
+ "hide": ["canvas_pad"],
+ "hover": {
+  "height": 0.28,
+  "glow": [0.55, 0.12, 1.0],
+  "light": 19.6
+ }
+}

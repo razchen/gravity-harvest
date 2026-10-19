@@ -61,25 +61,6 @@
     </button>
   </div>
 
-  <!-- Category column -->
-  <nav id="cats">
-    <button class="sq panel active" data-tab="build" title="Structures">
-      <svg viewBox="0 0 24 24"><path d="M2 21V10l5-3v3l5-3v3l5-3V3h3v18zM6 15h2v3H6zm5 0h2v3h-2zm5 0h2v3h-2z"/></svg>
-    </button>
-    <button class="sq panel" data-tab="units" title="Vehicles">
-      <svg viewBox="0 0 24 24"><path d="M3 15v-3l3-1 2-3h6l2 3h4l1 4zM5.5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6.5 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6.5 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
-    </button>
-    <button class="sq panel" data-tab="units" title="Infantry">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.5"/><path d="M9 8h6l2 6h-2.5l-.5 8h-4l-.5-8H7z"/></svg>
-    </button>
-    <button class="sq panel" data-tab="units" title="Aircraft">
-      <svg viewBox="0 0 24 24"><path d="M12 2c1 0 1.5 1.5 1.5 3v4.5L22 14v2l-8.5-2.5V18l2.5 2v1.5L12 20.5l-4 1V20l2.5-2v-4.5L2 16v-2l8.5-4.5V5c0-1.5.5-3 1.5-3z"/></svg>
-    </button>
-    <button class="sq panel" data-tab="defense" title="Defenses and repair">
-      <svg viewBox="0 0 24 24"><path d="M21.7 18.6 13 9.9a5.5 5.5 0 0 0-7-7l3.3 3.3-2.8 2.8L3.2 5.7a5.5 5.5 0 0 0 7 7l8.7 8.7a2 2 0 0 0 2.8-2.8z"/></svg>
-    </button>
-  </nav>
-
   <!-- Minimap -->
   <div id="minimap-frame" class="panel">
     <canvas id="minimap" width="232" height="126"></canvas>
@@ -95,6 +76,11 @@
         <svg viewBox="0 0 24 24"><path class="gold" d="M21.7 18.6 13 9.9a5.5 5.5 0 0 0-7-7l3.3 3.3-2.8 2.8L3.2 5.7a5.5 5.5 0 0 0 7 7l8.7 8.7a2 2 0 0 0 2.8-2.8z"/></svg>
         Repair</button>
     </div>
+    <div id="unit-cmds" class="modes" hidden>
+      <button id="btn-unload" title="Unload (E): the selected transports stop, open their doors and let their passengers out.">
+        <svg viewBox="0 0 24 24"><path class="gold" d="M3 13h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM10.5 2h3v6h3.5l-5 5-5-5h3.5z"/></svg>
+        Unload</button>
+    </div>
     <div class="tabs">
       <button data-tab="build" class="active">Build</button>
       <button data-tab="units">Units</button>
@@ -105,7 +91,15 @@
 
   <div id="info-card" class="panel" hidden></div>
   <div id="perf" class="panel" hidden></div>
+  <!-- Selection panel: what's selected, and the control groups (bottom centre, between the minimap and the build panel) -->
+  <div id="selection" hidden>
+    <div id="sel-panel" class="panel">
+      <div id="sel-groups"></div>
+      <div id="sel-body"></div>
+    </div>
+  </div>
   <div id="debug-menu" class="panel" hidden></div>
+  <div id="dev-info" class="panel" hidden></div>
   </div>
   <!-- /HUD -->
   <div id="toast"></div>
@@ -114,9 +108,12 @@
     <h2>Controls</h2>
     <p><b>Left-click</b> a unit to select it, <b>shift</b> to add, or <b>drag a box</b> to select a group.</p>
     <p><b>Harvesters:</b> click ore to harvest, a refinery to unload there. <b>Riflemen:</b> click an enemy (red) to attack; idle troops fire at anything in range. Click <b>ground</b> to move.</p>
-    <p><b>Build</b> from the right panel: a ghost follows the mouse, green = OK, red = blocked. Left-click places, right-click / Esc cancels. <b>Sell</b> / <b>Repair</b> (top of the panel): click your buildings to sell them (half back; one still under construction is cancelled for all of it) or repair them (it costs as it heals); right-click or Esc to stop. The <b>×</b> on a unit card cancels one in production (all of it back). <b>E</b> with an Assembler selected deploys it into a new Assembly Yard where it stands. Power Plants keep the lights on; low power slows refineries and kills the radar (minimap).</p>
+    <p><b>Build</b> from the right panel: a ghost follows the mouse, green = OK, red = blocked. Left-click places, right-click / Esc cancels. <b>Sell</b> / <b>Repair</b> (top of the panel): click your buildings to sell them (half back; one still under construction is cancelled for all of it) or repair them (it costs as it heals); right-click or Esc to stop. The <b>×</b> on a unit card cancels one in production (all of it back). <b>E</b> with an Assembler selected deploys it into a new Assembly Yard where it stands. <b>Carriers:</b> with soldiers selected, click (or right-click) your Carrier and they get in, up to five; <b>Unload</b> (or <b>E</b>) with it selected lets them out. Passengers die with it. Power Plants keep the lights on; low power slows refineries and kills the radar (minimap).</p>
+    <p><b>Control groups:</b> <b>Ctrl+number</b> (1 to 9, 0) saves the selection as that group (Cmd+number works too where the browser allows it). The <b>number</b> selects the group again; press it twice quickly to centre on it. <b>Shift+number</b> adds the group to the selection. The panel at the bottom shows what's selected: click a unit type to keep only those, shift-click to drop them.</p>
+    <p><b>Attack-move:</b> with units selected, <b>Ctrl+right-click</b> the ground (or <b>Ctrl+click</b> on a Mac): they drive there but stop to fight any enemy, unit or building, they meet on the way, then carry on. Hold <b>Ctrl</b> to see the attack-move cursor. Harvesters just go there.</p>
+    <p><b>Build panel:</b> <b>Tab</b> / <b>Shift+Tab</b> switch to the next / previous tab (Build, Units, Defense). <b>Alt+1</b> to <b>Alt+9</b> and <b>Alt+0</b> (<b>⌥ Option</b> on a Mac) press the first ten cards of the tab, as a click would: queue a unit, or pick a building to place. Each card shows its key in a corner.</p>
     <p><b>Goal:</b> the enemy base (red) is in the far corner, hidden by fog of war. Scout it, build up, and destroy every enemy building. They only guard their base and won't come after you. Click an enemy building with troops selected to attack it.</p>
-    <p><b>Right-click</b> deselects &middot; <b>right-drag</b> / <b>WASD</b> pan &middot; <b>+</b> / <b>&minus;</b> zoom (<b>0</b> resets) &middot; <b>`</b> or the gear: shortcuts and debug &middot; <b>Esc</b> opens the menu (save, load, quit). The game autosaves every couple of minutes.</p>
+    <p><b>Right-click</b> deselects &middot; <b>right-drag</b> / <b>WASD</b> pan &middot; <b>+</b> / <b>&minus;</b> zoom (<b>Z</b> resets) &middot; <b>`</b> or the gear: shortcuts and debug &middot; <b>Esc</b> opens the menu (save, load, quit). The game autosaves every couple of minutes.</p>
     <button id="help-close" class="primary">Got it</button>
   </div>
 

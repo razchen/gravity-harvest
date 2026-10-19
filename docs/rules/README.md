@@ -9,6 +9,7 @@ Generated from `design/balance.xlsx`, the source of truth. To change a number, e
 - [Buildings](buildings.md) and [Units](units.md)
 - [Weapons](weapons.md) and the [damage matrix](damage-matrix.md)
 - [Abilities](abilities.md)
+- [Engine rules](engine-rules.md): formulas, rates and effects (data only for now) and [crates](crates.md)
 - [Tech tree](tech-tree.md): stages and the dependency graph
 - [Calculations](calculations.md): every formula and the function that implements it
 - [Design decisions](decisions.md)

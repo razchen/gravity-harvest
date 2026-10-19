@@ -18,6 +18,19 @@ empties added): each `wheel_<n>` empty is a wheel's axle with its parts under it
 turn forwards over the scene's frame range), and a `turret` empty is a head that turns on its own: then `hull_<d>.png`
 is the vehicle without it and `turret_<t>.png` the head alone in TURRET_DIRECTIONS directions, its pivot on the
 anchor; frames.json says where the pivot sits over each hull direction and where the gun fires from.
+
+A hovering unit (`hover: {"height": <tiles>, "glow": [r, g, b]}` in its config, its model in `model`, a path under
+art/models/tripo/) floats that high over the ground: `dir_<d>.png` is the unit alone and `shadow_<d>.png` its shadow
+alone, both on the same canvas, so the game can bob it over its shadow. Its lights are the model's own accent colours
+(the saturated panels) made to glow, strongest along its underside, with a light of `glow` under it. `muzzle` (a list of
+points, each [forward, left, up] as fractions of the model's length, width and height from its centre on the ground)
+are where its guns fire from: frames.json gives them in each direction.
+
+A rig's `hide` leaves out the parts under those of its handles (`harvester_empty` is the harvester without its ore).
+A rig's `clips` (`{"lay_mine": {"frames": 12}, "scan": {"frames": 24, "loop": true}}`) are animations in its .blend
+between the timeline markers `<name>` and `<name>_end`: `clip_<name>_<d>_<f>.png` are the whole vehicle in direction d
+(on the same canvas as dir_*), `frames` even steps through that range. One that plays once takes in both its ends; a
+`loop` stops a step short of the end, which is its start again. frames.json gives each its frames, fps and loop.
 """
 import json
 import math
@@ -28,8 +41,16 @@ import bpy
 from mathutils import Matrix, Vector
 
 CONFIG = json.load(open(os.path.join("tools", "blender", "vehicles.json")))
+# one file per unit as well (tools/blender/units/<id>.json, the hovering units'), the same as an entry in vehicles.json
+UNITS_DIR = os.path.join("tools", "blender", "units")
+if os.path.isdir(UNITS_DIR):
+    for f in sorted(os.listdir(UNITS_DIR)):
+        if f.endswith(".json"):
+            CONFIG[f[:-5]] = json.load(open(os.path.join(UNITS_DIR, f)))
 args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 WANT = args[0] if args else None
+# STILL=<direction>,<scale>: render only that direction, scale x bigger, with no shadow (tools/sprites/key_video.py)
+STILL = tuple(int(n) for n in os.environ["STILL"].split(",")) if os.environ.get("STILL") else None
 
 TILE_PX = 128
 RES = 1.5
@@ -37,6 +58,7 @@ DIRS = 16
 CARD_DIR = 13                                   # nose to the bottom left (towards the camera, a little left)
 WHEEL_FRAMES = 6
 TURRET_DIRECTIONS = 32                          # as the defences' heads (the sim aims in as many)
+HOVER_SUN_DEG = 18                              # a hovering unit's shadow: the sun this far off overhead
 CARD_SCALE = 8                                  # the card view doubles as the dev pages' high-res picture
 
 
@@ -67,6 +89,59 @@ def setup_scene():
     return sc, sun
 
 
+def glow(parts, hover, lift, h, length):
+    """A hovering unit's lights: its accent colours (saturated, bright texels) glow, most along its underside and
+    least on top; and a light of the glow colour under it, lighting its belly and lower sides."""
+    r, g, b = hover["glow"]
+    strength = hover.get("strength", 2.5)
+    for mat in {s.material for o in parts for s in o.material_slots if s.material}:
+        nt = mat.node_tree
+        bsdf = next((n for n in nt.nodes if n.type == "BSDF_PRINCIPLED"), None)
+        if not bsdf or not bsdf.inputs["Base Color"].is_linked:
+            continue
+        base = bsdf.inputs["Base Color"].links[0].from_socket
+        hsv = nt.nodes.new("ShaderNodeSeparateColor")
+        hsv.mode = "HSV"
+        nt.links.new(base, hsv.inputs[0])
+        # the accent mask: saturated and not dark
+        sat = nt.nodes.new("ShaderNodeMapRange")
+        sat.inputs["From Min"].default_value, sat.inputs["From Max"].default_value = 0.55, 0.85
+        nt.links.new(hsv.outputs[1], sat.inputs["Value"])
+        val = nt.nodes.new("ShaderNodeMapRange")
+        val.inputs["From Min"].default_value, val.inputs["From Max"].default_value = 0.3, 0.7
+        nt.links.new(hsv.outputs[2], val.inputs["Value"])
+        mask = nt.nodes.new("ShaderNodeMath")
+        mask.operation = "MULTIPLY"
+        nt.links.new(sat.outputs[0], mask.inputs[0])
+        nt.links.new(val.outputs[0], mask.inputs[1])
+        # along the underside: full at its bottom, almost none from 30 % of its height up
+        geo = nt.nodes.new("ShaderNodeNewGeometry")
+        z = nt.nodes.new("ShaderNodeSeparateXYZ")
+        nt.links.new(geo.outputs["Position"], z.inputs[0])
+        low = nt.nodes.new("ShaderNodeMapRange")
+        low.inputs["From Min"].default_value, low.inputs["From Max"].default_value = lift + 0.3 * h, lift
+        low.inputs["To Min"].default_value, low.inputs["To Max"].default_value = 0.06, 1.0
+        nt.links.new(z.outputs[2], low.inputs["Value"])
+        k = nt.nodes.new("ShaderNodeMath")
+        k.operation = "MULTIPLY"
+        nt.links.new(mask.outputs[0], k.inputs[0])
+        nt.links.new(low.outputs[0], k.inputs[1])
+        nt.links.new(base, bsdf.inputs["Emission Color"])
+        nt.links.new(k.outputs[0], bsdf.inputs["Emission Strength"])
+        k2 = nt.nodes.new("ShaderNodeMath")
+        k2.operation = "MULTIPLY"
+        k2.inputs[1].default_value = strength
+        nt.links.new(k.outputs[0], k2.inputs[0])
+        nt.links.new(k2.outputs[0], bsdf.inputs["Emission Strength"])
+    light = bpy.data.objects.new("Glow", bpy.data.lights.new("Glow", "POINT"))
+    bpy.context.scene.collection.objects.link(light)
+    light.data.color = (r, g, b)
+    light.data.energy = hover.get("light", 40.0) * length ** 2
+    light.data.shadow_soft_size = 0.3 * length
+    light.location = (0, 0, lift * 0.35)
+    return light
+
+
 def render_vehicle(vid, cfg):
     if cfg.get("rig"):
         bpy.ops.wm.open_mainfile(filepath=os.path.join("art", "models", "tripo", cfg["rig"]), load_ui=False)
@@ -76,7 +151,12 @@ def render_vehicle(vid, cfg):
     else:
         bpy.ops.wm.read_factory_settings(use_empty=True)
         sc, sun = setup_scene()
-        bpy.ops.import_scene.gltf(filepath=os.path.join("art", "models", "tripo", f"{vid}.glb"))
+        bpy.ops.import_scene.gltf(filepath=os.path.join("art", "models", "tripo", cfg.get("model", f"{vid}.glb")))
+    # `hide`: rig handles whose parts are left out of the renders (the harvester's `ore`: it renders empty); still
+    # measured, so its canvas and anchor are the full one's
+    for h in cfg.get("hide", []):
+        for o in bpy.data.objects[h].children_recursive:
+            o.hide_render = True
     parts = [o for o in bpy.data.objects if o.type == "MESH"]
     rig_wheels = sorted((o for o in bpy.data.objects if o.type == "EMPTY" and o.name.startswith("wheel_")), key=lambda o: o.name)
     head = bpy.data.objects.get("turret") if cfg.get("rig") else None
@@ -99,7 +179,7 @@ def render_vehicle(vid, cfg):
     wheels = []
     if rig_wheels:
         wheels = [o for w in rig_wheels for o in w.children_recursive if o.type == "MESH"]
-    elif cfg.get("wheels", True):
+    elif cfg.get("wheels", True) and not cfg.get("hover"):
         for o in parts:
             p = [o.matrix_world @ Vector(c) for c in o.bound_box]
             olo = Vector([min(v[i] for v in p) for i in range(3)])
@@ -117,13 +197,16 @@ def render_vehicle(vid, cfg):
             o.parent = root
             o.matrix_parent_inverse = Matrix.Identity(4)
     bpy.context.view_layer.update()
-    root.matrix_world = Matrix.Scale(scale, 4) @ Matrix.Translation(-centre)
+    hover = cfg.get("hover")
+    lift = hover["height"] * tile if hover else 0.0
+    root.matrix_world = Matrix.Translation((0, 0, lift)) @ Matrix.Scale(scale, 4) @ Matrix.Translation(-centre)
     holder = bpy.data.objects.new("Turn", None)
     sc.collection.objects.link(holder)
     root.parent = holder
     bpy.context.view_layer.update()
     length = cfg["length_tiles"] * tile
-    height = (hi.z - lo.z) * scale
+    height = (hi.z - lo.z) * scale + lift
+    glow_light = glow(parts, hover, lift, height - lift, length) if hover else None
 
     ppu = TILE_PX / (tile * math.sqrt(2))
     bpy.ops.mesh.primitive_plane_add(size=length * 8)
@@ -171,6 +254,7 @@ def render_vehicle(vid, cfg):
         sc.render.border_max_y = min(1.0, 1 - (min(vs) - m) / geo["h"])
 
     out = os.path.join("tools", "blender", "frames", "vehicles", vid)
+    width = ((hi.y - lo.y) if not along_y else (hi.x - lo.x)) * scale
     os.makedirs(out, exist_ok=True)
     nose = math.radians(cfg.get("nose_deg", -90 if along_y else 0))
 
@@ -181,6 +265,22 @@ def render_vehicle(vid, cfg):
     w, h, anchor = frame_canvas(1)
     p = geo["p"]
     catcher = [o for o in sc.objects if o.type == "MESH" and o.is_shadow_catcher][0]
+    if STILL:
+        # just one direction, STILL[1] x the game's canvas and without its shadow: a still to make a video from
+        d, k = STILL
+        frame_canvas(k)
+        face(d)
+        catcher.hide_render = True
+        # HIDE=<handle>,...: leave out the parts under these rig handles (`ore`: the harvester empty)
+        hide = [h for h in os.environ.get("HIDE", "").split(",") if h]
+        for h in hide:
+            for o in bpy.data.objects[h].children_recursive:
+                o.hide_render = True
+        sc.cycles.samples = 128
+        sc.render.filepath = os.path.join(out, f"still_{d}_x{k}{''.join('_no_' + h for h in hide)}.png")
+        bpy.ops.render.render(write_still=True)
+        print("STILL", sc.render.filepath)
+        return
 
     def screen(q):
         """Frame pixels of a world offset from the vehicle's ground centre, relative to the anchor."""
@@ -204,10 +304,35 @@ def render_vehicle(vid, cfg):
         tip_pts = [q for q in head_pts if (q - pivot).dot(ahead) > reach - 0.01 * length]
         tip = sum(tip_pts, Vector()) / len(tip_pts)
         turret = {"directions": TURRET_DIRECTIONS, "pivot": [], "muzzle": []}
+    # its guns' tips, in the model's frame with the nose along world +X (forward, left, up)
+    muzzles = [Vector((m[0] * length, m[1] * width, lift + m[2] * (height - lift))) for m in cfg.get("muzzle", [])]
+    muzzle_px = []
     for d in range(DIRS):
         face(d)
-        sc.render.filepath = os.path.join(out, f"dir_{d}.png")
-        bpy.ops.render.render(write_still=True)
+        if hover:
+            # the unit alone (the game bobs it), then its shadow alone, without the light under it
+            catcher.hide_render = True
+            sc.render.filepath = os.path.join(out, f"dir_{d}.png")
+            bpy.ops.render.render(write_still=True)
+            catcher.hide_render = False
+            glow_light.hide_render = True
+            for o in parts:
+                o.visible_camera = False
+            # its shadow from a sun almost overhead: right under it, so you can tell where it is (the low sun the
+            # rest share would throw a floating unit's shadow far off to one side)
+            sun_rot = sun.rotation_euler.copy()
+            sun.rotation_euler = (math.radians(HOVER_SUN_DEG), 0, sun_rot.z)
+            sc.render.filepath = os.path.join(out, f"shadow_{d}.png")
+            bpy.ops.render.render(write_still=True)
+            sun.rotation_euler = sun_rot
+            for o in parts:
+                o.visible_camera = True
+            glow_light.hide_render = False
+        else:
+            sc.render.filepath = os.path.join(out, f"dir_{d}.png")
+            bpy.ops.render.render(write_still=True)
+        turn = Matrix.Rotation(d * 2 * math.pi / DIRS, 3, "Z")
+        muzzle_px.append([screen(turn @ m) for m in muzzles])
         if head:
             # the hull without its head (the game draws the head over it, aimed on its own)
             for o in head_parts:
@@ -269,14 +394,37 @@ def render_vehicle(vid, cfg):
         for o in parts:
             o.hide_render = False
         catcher.hide_render = False
-    # the card view: bigger and cleaner
+    # its clips: the whole vehicle (and its shadow) on the same canvas, `frames` steps through each marked range
+    clips = {}
+    for name, c in cfg.get("clips", {}).items():
+        marks = {m.name: m.frame for m in sc.timeline_markers}
+        start, end = marks[name], marks[f"{name}_end"]
+        n, loop = c["frames"], c.get("loop", False)
+        clips[name] = {"frames": n, "fps": round(n * sc.render.fps / sc.render.fps_base / (end - start + 1), 3), "loop": loop}
+        step = (end - start + 1) / n if loop else (end - start) / (n - 1)
+        catcher.hide_render = bool(hover)      # a hovering unit's clips are it alone, as its directions
+        for d in range(DIRS):
+            face(d)
+            for f in range(n):
+                t = start + f * step
+                sc.frame_set(int(t), subframe=t - int(t))
+                sc.render.filepath = os.path.join(out, f"clip_{name}_{d}_{f}.png")
+                bpy.ops.render.render(write_still=True)
+        sc.frame_set(sc.frame_start)
+        catcher.hide_render = False
+    # the card view: bigger and cleaner (a hovering unit's shadow from the sun overhead, as in its frames)
+    if hover:
+        sun.rotation_euler = (math.radians(HOVER_SUN_DEG), 0, sun.rotation_euler.z)
     frame_canvas(CARD_SCALE)
     sc.cycles.samples = 128
     face(CARD_DIR)
     sc.render.filepath = os.path.join(out, "card.png")
     bpy.ops.render.render(write_still=True)
     json.dump({"w": w, "h": h, "anchor": anchor, "res": RES, "directions": DIRS, "length_tiles": cfg["length_tiles"],
-               **({"wheel_frames": WHEEL_FRAMES} if wheels else {}), **({"turret": turret} if turret else {})},
+               **({"wheel_frames": WHEEL_FRAMES} if wheels else {}), **({"turret": turret} if turret else {}),
+               **({"clips": clips} if clips else {}),
+               **({"hover": {"height_px": round(lift * p, 1), "glow": hover["glow"]}} if hover else {}),
+               **({"muzzle": muzzle_px} if muzzles else {})},
               open(os.path.join(out, "frames.json"), "w"), indent=1)
     print("DONE vehicle", vid, f"{w}x{h}")
 

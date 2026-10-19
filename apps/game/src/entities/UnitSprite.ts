@@ -1,10 +1,12 @@
 import Phaser from 'phaser';
 import type { HarvesterActivity, TeamId, UnitView } from '@gravity-harvest/shared';
 import { anchorOrigin, meta } from '../assets/manifest';
-import { INFANTRY_TURN_MS_PER_STEP, RUN_CYCLE_TILES, TURRET_TURN_MS_PER_STEP } from '../config/game';
+import { HARVESTER_DOCK_FACING, HARVESTER_UNLOAD_MS, HOVER, INFANTRY_TURN_MS_PER_STEP, RAMP_TILES_PER_SEC, RUN_CYCLE_TILES, TILE_W, TURRET_TURN_MS_PER_STEP } from '../config/game';
 import { alongBarrel, iso, type Point } from '../core/geometry';
+import { FX, ensureFxTextures } from '../render/fxTextures';
 import { TEAMS } from '../data/teams';
-import { UNIT_ART, WHEEL_FRAMES_PER_TILE } from '../data/art';
+import { UNIT_ART, factionOf, unitArt } from '../data/art';
+import { rampOf } from '../render/Boarding';
 import type { DoorExit } from '../render/DoorExit';
 import type { GameScene } from '../scenes/GameScene';
 
@@ -33,6 +35,11 @@ export abstract class UnitSprite {
   alive = true;
   /** Reported as moving by the server. */
   moving = false;
+  /** Your transports: how many ride in it, and how many can. */
+  passengers = 0;
+  seats = 0;
+  /** A Medic or Engineer healing or repairing right now (its arms work). */
+  working = false;
   private from = { gx: 0, gy: 0 };
   private to = { gx: 0, gy: 0 };
   private t0 = 0;
@@ -42,6 +49,11 @@ export abstract class UnitSprite {
    * has caught up. `speed` is how fast the server is moving it (tiles/s), `dir` the way the server has it facing.
    */
   private exit: { door: DoorExit; cleared: () => void; speed: number; dir: number } | null = null;
+  /**
+   * Coming down a transport's ramp (downRamp): drawn from its doorway (world px) to where the server has it, fading in,
+   * over `ms`, in front of or behind the transport (`depth`).
+   */
+  private ramp: { from: Point; t: number; ms: number; tiles: number; depth: number } | null = null;
 
   constructor(protected readonly world: GameScene, v: UnitView, now: number) {
     this.id = v.id;
@@ -71,6 +83,9 @@ export abstract class UnitSprite {
     this.hp = v.hp;
     this.maxHp = v.maxHp;
     this.moving = v.moving;
+    this.passengers = v.passengers ?? 0;
+    this.seats = v.seats ?? 0;
+    this.working = !!v.work;
   }
 
   /** Advance the drawn position; returns the distance moved this frame. */
@@ -81,12 +96,40 @@ export abstract class UnitSprite {
     const a = Phaser.Math.Clamp((now - this.t0) / viewMs, 0, 1);
     const gx = this.from.gx + (this.to.gx - this.from.gx) * a;
     const gy = this.from.gy + (this.to.gy - this.from.gy) * a;
-    const moved = Math.hypot(gx - this.gx, gy - this.gy);
+    let moved = Math.hypot(gx - this.gx, gy - this.gy);
     const back = backing(gx - this.gx, gy - this.gy, this.dir);
     this.gx = gx;
     this.gy = gy;
+    const r = this.ramp;
+    if (r) {
+      // down the ramp: its legs keep going while it does
+      r.t += deltaMs;
+      moved = Math.max(moved, (r.tiles * deltaMs) / r.ms);
+    }
     this.refresh(back ? -moved : moved);
+    if (r) this.dressRamp(r);
     return moved;
+  }
+
+  /** It came out of transport `t` through its door on `side`: drawn coming down the ramp (it can't be clicked meanwhile). */
+  downRamp(t: VehicleSprite, side: 1 | -1): void {
+    const ramp = rampOf(this.world, t, side);
+    const near = ramp.foot.y > t.sprite.y;
+    this.ramp = { from: ramp.door, t: 0, ms: (ramp.tiles / RAMP_TILES_PER_SEC) * 1000, tiles: ramp.tiles, depth: t.sprite.depth + (near ? 0.01 : -0.01) };
+    this.sprite.disableInteractive();
+    this.dressRamp(this.ramp);
+  }
+
+  private dressRamp(r: NonNullable<UnitSprite['ramp']>): void {
+    const k = Math.min(1, r.t / r.ms);
+    const p = iso(this.gx, this.gy);
+    for (const s of this.parts()) {
+      s.setPosition(r.from.x + (p.x - r.from.x) * k, r.from.y + (p.y - r.from.y) * k).setAlpha(k);
+      if (k < 1) s.setDepth(r.depth);
+    }
+    if (k < 1) return;
+    this.ramp = null;
+    if (this.alive) this.sprite.setInteractive();
   }
 
   /** `moved`: how far it went this frame (tiles), negative while it reverses (backing onto a refinery's ramp). */
@@ -98,6 +141,11 @@ export abstract class UnitSprite {
   /** Its sprites, body first (a vehicle's wheels and turret are layers over it). */
   parts(): Phaser.GameObjects.Sprite[] {
     return [this.sprite];
+  }
+
+  /** The sprites a hit flashes: itself, not what's on the ground under it (a hovering one's shadow and glow). */
+  hitParts(): Phaser.GameObjects.Sprite[] {
+    return this.parts();
   }
 
   /** It came out of a building through its door: drawn coming out (it can't be clicked until it's out), then as normal. */
@@ -114,7 +162,7 @@ export abstract class UnitSprite {
 
   /** Still in the doorway of the building it came out of. */
   get inside(): boolean {
-    return !!this.exit?.door.inside;
+    return !!this.exit?.door.inside || !!this.ramp;
   }
 
   /** Coming out: straight out of the door, then after where the server has it by now, a little faster than it drives. */
@@ -164,23 +212,38 @@ export abstract class UnitSprite {
   }
 }
 
+/**
+ * The harvester (render_vehicle.py, from its rig): 16 directions with its wheels turning in a layer over it while it
+ * drives, its front drums turning (the `harvest` clip, its own atlas) while it scoops ore, its bed empty while it
+ * carries nothing (`v_harvester_empty`), and tipping its load out at a refinery's dock (`v_harvester_unload`).
+ */
 export class HarvesterSprite extends UnitSprite {
   readonly sprite: Phaser.GameObjects.Sprite;
   cargo = 0;
   capacity = 0;
   activity: HarvesterActivity = 'idle';
-  private wheel = 0;
+  private readonly key = UNIT_ART.harvester.sprite;
+  private readonly wheels: Phaser.GameObjects.Sprite;
+  private wheelPhase = 0;
+  /** How far through the drums' turning it is (frames of the harvest clip). */
+  private drumPhase = 0;
+  /** When it started tipping its load out at the dock (scene ms), or -1. */
+  private unloadAt = -1;
   /** The direction drawn: it turns step by step towards `dir` (turning round in front of a refinery's ramp, say). */
   private shown: number;
   private turnAt = 0;
 
   constructor(world: GameScene, v: UnitView, now: number) {
     super(world, v, now);
+    const m = meta(this.key);
     this.shown = v.dir;
-    this.sprite = world.add.sprite(0, 0, UNIT_ART.harvester.sprite, 'harv_00_0')
-      .setOrigin(...anchorOrigin(meta('harvester')))
+    this.sprite = world.add.sprite(0, 0, this.key, `${this.key}_${this.shown}`)
+      .setOrigin(...anchorOrigin(m))
+      .setScale(1 / (m.res ?? 1))
       .setInteractive({ pixelPerfect: true, useHandCursor: true });
     this.sprite.setData('entity', this);
+    this.wheels = world.add.sprite(0, 0, this.key, `${this.key}_w${this.shown}_0`)
+      .setOrigin(...anchorOrigin(m)).setScale(1 / (m.res ?? 1)).setVisible(false);
     this.apply(v, now);
     this.refresh(0);
   }
@@ -192,21 +255,57 @@ export class HarvesterSprite extends UnitSprite {
     this.activity = v.activity ?? 'idle';
   }
 
+  override destroy(): void {
+    super.destroy();
+    this.wheels.destroy();
+  }
+
+  override parts(): Phaser.GameObjects.Sprite[] {
+    return [this.sprite, this.wheels];
+  }
+
   protected snapFacing(dir: number): void {
     this.shown = dir;
   }
 
   protected refresh(moved: number): void {
-    this.wheel += moved * WHEEL_FRAMES_PER_TILE; // backwards while it reverses
-    if (this.activity === 'harvest') this.wheel += 0.08; // creeping forward while it scoops
+    const m = meta(this.key);
     const now = this.world.time.now;
     if (this.shown !== this.dir && now >= this.turnAt) {
       this.shown = turnToward(this.shown, ((this.dir % 16) + 16) % 16, 16);
       this.turnAt = now + INFANTRY_TURN_MS_PER_STEP * 1.6; // as vehicles turn
     }
     const p = iso(this.gx, this.gy);
-    this.sprite.setPosition(p.x, p.y).setDepth(this.world.map.depthAt(this.gx, this.gy) + 0.5);
-    this.sprite.setFrame(`harv_${String(this.shown).padStart(2, '0')}_${cycle(this.wheel, 8)}`);
+    const depth = this.world.map.depthAt(this.gx, this.gy) + 0.5;
+    this.sprite.setPosition(p.x, p.y).setDepth(depth);
+    // at the dock, facing out: its bed tips its load out, then stays empty until it drives off
+    const unload = `${this.key}_unload`;
+    if (this.activity === 'unload' && this.shown === HARVESTER_DOCK_FACING && this.world.textures.exists(unload)) {
+      if (this.unloadAt < 0) this.unloadAt = now;
+      const n = meta(unload).frames ?? 1;
+      this.sprite.setTexture(unload, `${unload}_${Math.min(n - 1, Math.floor(((now - this.unloadAt) / HARVESTER_UNLOAD_MS) * n))}`);
+      this.wheels.setVisible(false);
+      return;
+    }
+    this.unloadAt = -1;
+    const scooping = this.activity === 'harvest';
+    const clip = `${this.key}_harvest`;
+    if (scooping && this.world.textures.exists(clip)) {
+      // the whole harvester with its drums turning (its wheels creep along with it, inside the clip's frames)
+      const c = meta(clip);
+      this.drumPhase += (this.world.game.loop.delta / 1000) * (c.fps ?? 12);
+      this.sprite.setTexture(clip, `${clip}_${this.shown}_${cycle(this.drumPhase, c.frames ?? 12)}`);
+      this.wheels.setVisible(false);
+      return;
+    }
+    // nothing in its bed: the empty one (same canvas and wheels)
+    const empty = `${this.key}_empty`;
+    const body = this.cargo <= 0 && this.world.textures.exists(empty) ? empty : this.key;
+    this.sprite.setTexture(body, `${body}_${this.shown}`);
+    const frames = m.wheel_frames ?? 6;
+    this.wheelPhase += (moved / WHEEL_TURN_TILES) * frames; // backwards while it reverses
+    this.wheels.setPosition(p.x, p.y).setDepth(depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
+    this.wheels.setFrame(`${this.key}_w${this.shown}_${cycle(this.wheelPhase, frames)}`);
   }
 }
 
@@ -222,7 +321,7 @@ export class InfantrySprite extends UnitSprite {
 
   constructor(world: GameScene, v: UnitView, now: number) {
     super(world, v, now);
-    this.key = UNIT_ART[v.type]?.sprite ?? 'rifleman';
+    this.key = unitArt(v.type, factionOf(v.team, world.faction))?.sprite ?? 'rifleman';
     const m = meta(this.key);
     this.shown = v.dir;
     this.sprite = world.add.sprite(0, 0, this.key, `inf_${v.dir}_idle`)
@@ -297,7 +396,8 @@ export function turnToward(shown: number, target: number, n: number): number {
  */
 export class VehicleSprite extends UnitSprite {
   readonly sprite: Phaser.GameObjects.Sprite;
-  private readonly key: string;
+  /** Its atlas (its side's design, for the units each side builds its own way). */
+  readonly key: string;
   private shown: number;
   private turnAt = 0;
   /** Its wheels turning while it drives (a layer over it), and how far round they are. */
@@ -307,10 +407,27 @@ export class VehicleSprite extends UnitSprite {
   private readonly turret: Phaser.GameObjects.Sprite | null;
   private turretShown = 0;
   private turretTurnAt = 0;
+  /** A transport's side doors (its `<key>_door` clip, closed → open), if it has them. */
+  readonly doorKey: string | null;
+  /** How far open they're drawn (frames of the clip), and whether they're opening or shutting. */
+  private doorPhase = 0;
+  private doorOpen = false;
+  /** A hovering one: its shadow on the ground (it bobs over it), the glow of its lights under it, and its bob's phase. */
+  private readonly shadow: Phaser.GameObjects.Sprite | null;
+  private readonly glow: Phaser.GameObjects.Sprite | null;
+  private readonly bobAt = Math.random() * HOVER.periodMs;
+  /** Which of its guns fires next (one without a turret, `meta.muzzles`). */
+  private gun = 0;
+  /** Its working clip (UNIT_ART `clip`: a Medic's arms healing, an Engineer's arm at work), and how far through it. */
+  private readonly clipKey: string | null;
+  private clipPhase = 0;
 
   constructor(world: GameScene, v: UnitView, now: number) {
     super(world, v, now);
-    this.key = UNIT_ART[v.type].sprite;
+    const art = unitArt(v.type, factionOf(v.team, world.faction))!;
+    this.key = art.sprite;
+    this.clipKey = art.clip && world.textures.exists(`${this.key}_${art.clip}`) ? `${this.key}_${art.clip}` : null;
+    this.doorKey = world.textures.exists(`${this.key}_door`) ? `${this.key}_door` : null;
     const m = meta(this.key);
     this.shown = v.dir % (m.directions ?? 16);
     this.sprite = world.add.sprite(0, 0, this.key, this.hullFrame())
@@ -330,6 +447,16 @@ export class VehicleSprite extends UnitSprite {
       ? world.add.sprite(0, 0, this.key, `${this.key}_t${this.turretShown}`).setOrigin(...anchorOrigin(m)).setScale(1 / (m.res ?? 1))
       : null;
     if (this.turret && tint !== null) this.turret.setTint(tint);
+    const hv = m.hover;
+    if (hv) ensureFxTextures(world);
+    this.shadow = hv
+      ? world.add.sprite(0, 0, this.key, `${this.key}_s${this.shown}`).setOrigin(...anchorOrigin(m)).setScale(1 / (m.res ?? 1))
+      : null;
+    this.glow = hv
+      ? world.add.sprite(0, 0, FX.dot).setBlendMode(Phaser.BlendModes.ADD)
+        .setTint(Phaser.Display.Color.GetColor(...hv.glow.map((c) => Math.round(255 * Math.min(1, c))) as [number, number, number]))
+        .setDisplaySize(TILE_W * HOVER.glowTiles, TILE_W * HOVER.glowTiles * 0.5)
+      : null;
     this.refresh(0);
   }
 
@@ -337,10 +464,32 @@ export class VehicleSprite extends UnitSprite {
     super.destroy();
     this.wheels?.destroy();
     this.turret?.destroy();
+    this.shadow?.destroy();
+    this.glow?.destroy();
   }
 
   override parts(): Phaser.GameObjects.Sprite[] {
-    return [this.sprite, ...(this.wheels ? [this.wheels] : []), ...(this.turret ? [this.turret] : [])];
+    return [this.sprite, ...(this.wheels ? [this.wheels] : []), ...(this.turret ? [this.turret] : []),
+      ...(this.shadow ? [this.shadow] : []), ...(this.glow ? [this.glow] : [])];
+  }
+
+  override hitParts(): Phaser.GameObjects.Sprite[] {
+    return this.parts().filter((s) => s !== this.shadow && s !== this.glow);
+  }
+
+  /** It hovers (render_vehicle.py `hover`): it takes the soldiers' place, boarding transports as they do. */
+  get hovering(): boolean {
+    return !!meta(this.key).hover;
+  }
+
+  /** The direction it's drawn facing. */
+  get shownDir(): number {
+    return this.shown;
+  }
+
+  /** Its side doors open (played forwards) or shut (backwards), for passengers going in or out. */
+  hatch(open: boolean): void {
+    this.doorOpen = open;
   }
 
   /** The hull's frame: without its turret when that's a layer of its own. */
@@ -372,7 +521,28 @@ export class VehicleSprite extends UnitSprite {
     const p = iso(this.gx, this.gy);
     const depth = this.world.map.depthAt(this.gx, this.gy) + 0.5;
     this.sprite.setPosition(p.x, p.y).setDepth(depth);
-    this.sprite.setFrame(this.hullFrame());
+    if (this.shadow && this.glow) {
+      // hovering: it bobs over its shadow, and its lights pulse on the ground under it, brightest when it's lowest
+      const s = Math.sin(((now + this.bobAt) / HOVER.periodMs) * Math.PI * 2);
+      this.sprite.y -= (s + 1) * 0.5 * HOVER.bob;
+      this.shadow.setPosition(p.x, p.y).setDepth(depth - 0.002).setFrame(`${this.key}_s${this.shown}`);
+      this.glow.setPosition(p.x, p.y).setDepth(depth - 0.001).setAlpha(HOVER.glowMin + (HOVER.glowMax - HOVER.glowMin) * (1 - s) * 0.5);
+    }
+    const dk = this.doorKey;
+    if (dk) {
+      const dm = meta(dk);
+      const step = (this.world.game.loop.delta / 1000) * (dm.fps ?? 16);
+      this.doorPhase = Phaser.Math.Clamp(this.doorPhase + (this.doorOpen ? step : -step), 0, (dm.frames ?? 8) - 1);
+    }
+    // its doors (the clip is the whole vehicle, on the same canvas) while they're anything but shut
+    const ck = this.clipKey;
+    if (ck && this.working) {
+      // its arms at work: the clip (the whole unit, on the same canvas) loops while it heals or repairs
+      const cm = meta(ck);
+      this.clipPhase += (this.world.game.loop.delta / 1000) * (cm.fps ?? 10);
+      this.sprite.setTexture(ck, `${ck}_${this.shown}_${cycle(this.clipPhase, cm.frames ?? 12)}`);
+    } else if (dk && (this.doorOpen || this.doorPhase > 0)) this.sprite.setTexture(dk, `${dk}_${this.shown}_${Math.round(this.doorPhase)}`);
+    else this.sprite.setTexture(this.key, this.hullFrame());
     if (this.wheels) {
       const frames = meta(this.key).wheel_frames ?? 6;
       this.wheelPhase += (moved / WHEEL_TURN_TILES) * frames; // backwards while it reverses
@@ -416,8 +586,24 @@ export class VehicleSprite extends UnitSprite {
   }
 
   /** Where its gun fires from: the turret's barrel tip, or about the top of its hull. */
+  /** All its guns' tips (world px), for weapons that fire from every one at once; else its one muzzle. */
+  guns(): Point[] {
+    const m = meta(this.key);
+    const guns = m.muzzles?.[this.shown];
+    if (!guns?.length) return [this.muzzle()];
+    const k = 1 / (m.res ?? 1);
+    return guns.map((g) => ({ x: this.sprite.x + g.x * k, y: this.sprite.y + g.y * k }));
+  }
+
   muzzle(): Point {
     const m = meta(this.key);
+    const guns = m.muzzles?.[this.shown];
+    if (guns?.length) {
+      // its guns take turns
+      const g = guns[this.gun++ % guns.length];
+      const k = 1 / (m.res ?? 1);
+      return { x: this.sprite.x + g.x * k, y: this.sprite.y + g.y * k };
+    }
     if (!m.turret_layer) return { x: this.sprite.x, y: this.sprite.y - 34 };
     const at = this.turretAt();
     const mz = m.turret_layer.muzzle[this.turretShown] ?? { x: 0, y: -34 * (m.res ?? 1) };
@@ -452,6 +638,11 @@ export function fallDead(world: GameScene, type: string, gx: number, gy: number,
   if (tint !== null) body.setTint(tint);
   body.play(key);
   world.tweens.add({ targets: body, alpha: 0, delay: (n / (m.fps ?? 8)) * 1000 + BODY_MS, duration: 1000, onComplete: () => body.destroy() });
+}
+
+/** Whether it can get into a transport: a soldier, or a hovering unit (they took the soldiers' place). */
+export function canBoard(u: UnitSprite): boolean {
+  return u instanceof InfantrySprite || (u instanceof VehicleSprite && u.hovering);
 }
 
 /** Sprite class for a unit type. */

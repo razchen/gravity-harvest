@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
-import type { ClientMessage, SaveKind, ServerMessage, StartMatch } from '@gravity-harvest/shared';
-import { SNAPSHOT_VERSION, Sim, TICK_MS, VIEW_EVERY_TICKS, type SimSnapshot } from '@gravity-harvest/sim';
+import { AI_VIEW_EVERY_TICKS, ComputerPlayer } from '@gravity-harvest/ai';
+import { DEFAULT_DIFFICULTY, type ClientMessage, type SaveKind, type ServerMessage, type StartMatch } from '@gravity-harvest/shared';
+import { SNAPSHOT_VERSION, Sim, TEAMS, TICK_MS, VIEW_EVERY_TICKS, type SimSnapshot } from '@gravity-harvest/sim';
 import { randomInt } from 'node:crypto';
 import type { WebSocket } from 'ws';
 import type { SavesService } from '../saves/saves.service.js';
@@ -12,11 +13,14 @@ const MAX_CATCH_UP = 10;
 
 /**
  * One browser connection: at most one match at a time, run at a fixed tick. The human is always 'player';
- * the computer plays 'enemy'. Sends that player a view every few ticks with only what it may see.
+ * each computer side (`human: false` in the scenario) gets a ComputerPlayer that sees only its own view and gives
+ * orders through the same Sim.command a human's go through. Sends the player a view every few ticks with only what
+ * it may see.
  */
 export class MatchSession {
   private readonly log = new Logger('Match');
   private sim: Sim | null = null;
+  private computers: ComputerPlayer[] = [];
   private timer: NodeJS.Timeout | null = null;
   private paused = false;
   private ended = false;
@@ -83,8 +87,12 @@ export class MatchSession {
       const { state } = await this.saves.getState(m.saveId);
       this.sim = Sim.restore(state as SimSnapshot);
     } else {
-      this.sim = Sim.create(m.scenario!, randomInt(2 ** 31), m.faction); // a fresh forest, ore and spread every match
+      // a fresh forest, ore and spread every match
+      this.sim = Sim.create(m.scenario!, randomInt(2 ** 31), m.faction, { difficulty: m.difficulty ?? DEFAULT_DIFFICULTY });
     }
+    const sim = this.sim;
+    this.computers = TEAMS.filter((t) => !sim.players[t].human)
+      .map((t) => new ComputerPlayer({ hello: sim.hello(t), difficulty: sim.players[t].difficulty, seed: randomInt(2 ** 31) }));
     this.autosaveOnLeave = m.autosaveOnLeave;
     this.paused = false;
     this.ended = false;
@@ -104,9 +112,15 @@ export class MatchSession {
     if (now - this.lastStep > MAX_CATCH_UP * TICK_MS) this.lastStep = now; // fell far behind: drop the backlog
     while (steps-- > 0) {
       sim.step();
+      if (sim.tick % AI_VIEW_EVERY_TICKS === 0) this.playComputers(sim);
       if (sim.tick % VIEW_EVERY_TICKS === 0) this.sendView();
       if (sim.winner) return void this.finish(sim);
     }
+  }
+
+  /** Each computer side looks at its view and gives its orders, the way a player's arrive. */
+  private playComputers(sim: Sim): void {
+    for (const ai of this.computers) for (const cmd of ai.update(sim.view(ai.team))) sim.command(ai.team, cmd);
   }
 
   private sendView(): void {

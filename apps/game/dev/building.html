@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,70 +10,45 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./dev.css">
-  <style>
-    html, body { height: 100%; }
-    body { display: flex; flex-direction: column; }
-    .tabs { display: flex; gap: 4px; margin-left: 8px; }
-    .tabs a { padding: 3px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-weight: 600; }
-    .tabs a:hover { text-decoration: none; border-color: var(--gold); }
-    .tabs a.on { background: var(--gold); border-color: var(--gold); color: #1a1406; }
-    #view { position: relative; flex: 1; min-height: 320px; margin: 0 16px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-    #view canvas { display: block; }
-    .labels { position: absolute; inset: 0; pointer-events: none; }
-    .label { position: absolute; transform: translate(-50%, 0); padding: 2px 8px; border-radius: 4px; background: rgba(18, 19, 21, 0.75); font-weight: 600; white-space: nowrap; }
-    .label small { color: var(--muted); font-weight: 500; margin-left: 6px; }
-    footer { padding: 10px 16px 14px; display: grid; gap: 8px; }
-    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
-    [hidden] { display: none !important; }
-    header p.about { flex-basis: 100%; color: var(--text); }
-    header p.about span { color: var(--muted); }
-    #scrub { flex: 1; min-width: 200px; accent-color: var(--gold); }
-    #pct { min-width: 44px; text-align: right; font-variant-numeric: tabular-nums; }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); }
-    .chip.done { color: var(--text); }
-    .chip.now { color: #1a1406; background: var(--gold); border-color: var(--gold); }
-    button.chip { font-weight: 500; }
-  </style>
 </head>
-<body>
-  <header>
-    <h1 id="title">Building</h1>
-    <nav class="tabs" id="tabs"><a data-mode="model" hidden>3D model</a><a data-mode="picture" hidden>Picture</a><a data-mode="idle" hidden>Animation</a><a data-mode="construction">Construction</a><a data-mode="destruction">Destruction</a><a data-mode="turret" hidden>Turret</a></nav>
-    <p id="blurb"></p>
-    <p id="about" class="about"></p>
+<body class="bg-bg text-[15px]/[1.4] text-text h-full">
+  <header class="flex flex-wrap items-baseline gap-x-4 gap-y-1.5 px-4 pb-2 pt-3">
+    <h1 id="title" class="text-[22px] font-bold tracking-[0.02em]">Building</h1>
+    <nav class="ml-2 flex gap-1" id="tabs"><a class="rounded-full border border-line px-3.5 py-[3px] font-semibold text-muted hover:border-gold [&.on]:border-gold [&.on]:bg-gold [&.on]:text-ink" data-mode="model" hidden>3D model</a><a class="rounded-full border border-line px-3.5 py-[3px] font-semibold text-muted hover:border-gold [&.on]:border-gold [&.on]:bg-gold [&.on]:text-ink" data-mode="picture" hidden>Picture</a><a class="rounded-full border border-line px-3.5 py-[3px] font-semibold text-muted hover:border-gold [&.on]:border-gold [&.on]:bg-gold [&.on]:text-ink" data-mode="idle" hidden>Animation</a><a class="rounded-full border border-line px-3.5 py-[3px] font-semibold text-muted hover:border-gold [&.on]:border-gold [&.on]:bg-gold [&.on]:text-ink" data-mode="construction">Construction</a><a class="rounded-full border border-line px-3.5 py-[3px] font-semibold text-muted hover:border-gold [&.on]:border-gold [&.on]:bg-gold [&.on]:text-ink" data-mode="destruction">Destruction</a><a class="rounded-full border border-line px-3.5 py-[3px] font-semibold text-muted hover:border-gold [&.on]:border-gold [&.on]:bg-gold [&.on]:text-ink" data-mode="turret" hidden>Turret</a></nav>
+    <p id="blurb" class="text-muted"></p>
+    <p id="about" class="basis-full [&_span]:text-muted"></p>
   </header>
-  <div id="view"><div class="labels" id="labels"></div></div>
-  <section id="info" class="info" hidden></section>
-  <footer>
-    <div class="row">
-      <button class="primary" id="play">Pause</button>
-      <button id="restart" title="Start again (R)">Restart</button>
-      <span class="row" data-mode="construction">
-        <button id="prev" title="Previous stage (←)">◀ Stage</button>
-        <button id="next" title="Next stage (→)">Stage ▶</button>
+  <div id="view" class="relative mx-4 flex-1 overflow-hidden rounded-[6px] border border-line min-h-[320px]"><div class="pointer-events-none absolute inset-0" id="labels"></div></div>
+  <section id="info" class="mx-4 mb-6 mt-1 flex flex-wrap items-start gap-5" hidden></section>
+  <footer class="grid gap-2 px-4 pb-3.5 pt-2.5">
+    <div class="flex flex-wrap items-center gap-x-3.5 gap-y-2">
+      <button class="cursor-pointer rounded-[4px] border border-line bg-panel px-3 py-1 font-semibold text-text hover:border-gold [&.primary]:min-w-[72px] [&.primary]:border-gold [&.primary]:bg-gold [&.primary]:text-ink primary" id="play">Pause</button>
+      <button class="cursor-pointer rounded-[4px] border border-line bg-panel px-3 py-1 font-semibold text-text hover:border-gold [&.primary]:min-w-[72px] [&.primary]:border-gold [&.primary]:bg-gold [&.primary]:text-ink" id="restart" title="Start again (R)">Restart</button>
+      <span class="flex flex-wrap items-center gap-x-3.5 gap-y-2" data-mode="construction">
+        <button class="cursor-pointer rounded-[4px] border border-line bg-panel px-3 py-1 font-semibold text-text hover:border-gold [&.primary]:min-w-[72px] [&.primary]:border-gold [&.primary]:bg-gold [&.primary]:text-ink" id="prev" title="Previous stage (←)">◀ Stage</button>
+        <button class="cursor-pointer rounded-[4px] border border-line bg-panel px-3 py-1 font-semibold text-text hover:border-gold [&.primary]:min-w-[72px] [&.primary]:border-gold [&.primary]:bg-gold [&.primary]:text-ink" id="next" title="Next stage (→)">Stage ▶</button>
       </span>
-      <input id="scrub" data-mode="construction" type="range" min="0" max="1000" value="0" aria-label="Build progress">
-      <span id="pct" data-mode="construction">0%</span>
+      <input class="m-0.5 min-w-[200px] flex-1 accent-gold" id="scrub" data-mode="construction" type="range" min="0" max="1000" value="0" aria-label="Build progress">
+      <span class="min-w-[44px] text-right tabular-nums" id="pct" data-mode="construction">0%</span>
     </div>
-    <div class="row">
-      <label data-mode="construction">Build time <select id="time"><option value="5">5 s</option><option value="10" selected>10 s</option><option value="20">20 s</option><option value="40">40 s</option></select></label>
-      <label data-mode="construction">Speed <select id="speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
-      <label>Zoom <select id="zoom"><option value="0.5">far</option><option value="1">game default</option><option value="2" selected>close</option><option value="3">closest</option></select></label>
-      <label data-mode="turret">Turn <select id="turn"><option value="sweep" selected>sweep round</option><option value="scan">scan side to side</option><option value="mouse">follow the mouse</option></select></label>
-      <label data-mode="turret">Speed <select id="turnspeed"><option value="45">45°/s</option><option value="90" selected>90°/s</option><option value="180">180°/s</option></select></label>
-      <label data-mode="construction destruction"><input type="checkbox" id="loop" checked> Loop</label>
-      <label data-mode="idle"><input type="checkbox" id="powered" checked> Powered</label>
-      <label data-mode="idle"><input type="checkbox" id="working" checked> Working</label>
-      <label data-mode="idle"><input type="checkbox" id="dooropen"> Door open</label>
-      <span class="row" id="traffic" data-mode="idle">
-        <label>Unit <select id="tripunit"></select></label>
-        <button id="send" title="Send the unit again">Send</button>
-        <label><input type="checkbox" id="repeat" checked> Repeat</label>
+    <div class="flex flex-wrap items-center gap-x-3.5 gap-y-2">
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="construction">Build time <select class="rounded-[4px] border border-line bg-panel px-1.5 py-[3px] text-text" id="time"><option value="5">5 s</option><option value="10" selected>10 s</option><option value="20">20 s</option><option value="40">40 s</option></select></label>
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="construction">Speed <select class="rounded-[4px] border border-line bg-panel px-1.5 py-[3px] text-text" id="speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
+      <label class="inline-flex items-center gap-1.5 text-muted">Zoom <select class="rounded-[4px] border border-line bg-panel px-1.5 py-[3px] text-text" id="zoom"><option value="0.5">far</option><option value="1" selected>game (start)</option><option id="zoommax">game (closest)</option><option value="2">close</option><option value="3">closest</option></select></label>
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="turret">Turn <select class="rounded-[4px] border border-line bg-panel px-1.5 py-[3px] text-text" id="turn"><option value="sweep" selected>sweep round</option><option value="scan">scan side to side</option><option value="mouse">follow the mouse</option></select></label>
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="turret">Speed <select class="rounded-[4px] border border-line bg-panel px-1.5 py-[3px] text-text" id="turnspeed"><option value="45">45°/s</option><option value="90" selected>90°/s</option><option value="180">180°/s</option></select></label>
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="construction destruction"><input type="checkbox" class="m-[3px_3px_3px_4px]" id="loop" checked> Loop</label>
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="idle"><input type="checkbox" class="m-[3px_3px_3px_4px]" id="powered" checked> Powered</label>
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="idle"><input type="checkbox" class="m-[3px_3px_3px_4px]" id="working" checked> Working</label>
+      <label class="inline-flex items-center gap-1.5 text-muted" data-mode="idle"><input type="checkbox" class="m-[3px_3px_3px_4px]" id="dooropen"> Door open</label>
+      <span class="flex flex-wrap items-center gap-x-3.5 gap-y-2" id="traffic" data-mode="idle">
+        <label class="inline-flex items-center gap-1.5 text-muted">Unit <select class="rounded-[4px] border border-line bg-panel px-1.5 py-[3px] text-text" id="tripunit"></select></label>
+        <button class="cursor-pointer rounded-[4px] border border-line bg-panel px-3 py-1 font-semibold text-text hover:border-gold [&.primary]:min-w-[72px] [&.primary]:border-gold [&.primary]:bg-gold [&.primary]:text-ink" id="send" title="Send the unit again">Send</button>
+        <label class="inline-flex items-center gap-1.5 text-muted"><input type="checkbox" class="m-[3px_3px_3px_4px]" id="repeat" checked> Repeat</label>
       </span>
-      <label><input type="checkbox" id="footprint"> Footprint</label>
+      <label class="inline-flex items-center gap-1.5 text-muted"><input type="checkbox" class="m-[3px_3px_3px_4px]" id="footprint"> Footprint</label>
     </div>
-    <div class="chips" id="chips"></div>
+    <div class="flex flex-wrap gap-1.5" id="chips"></div>
   </footer>
   <script type="module" src="/src/dev/nav.ts"></script>
 </body>

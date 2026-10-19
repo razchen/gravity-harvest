@@ -1,0 +1,7 @@
+{
+ "length_tiles": 1.0,
+ "model": "hover/lancer_sable.glb",
+ "nose_deg": -90,
+ "hover": {"height": 0.28, "glow": [1.0, 0.08, 0.04]},
+ "muzzle": [[0.2, 0.38, 0.71], [0.2, -0.38, 0.71]]
+}

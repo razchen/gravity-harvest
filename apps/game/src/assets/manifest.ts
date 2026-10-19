@@ -13,21 +13,38 @@ export interface AtlasEntry {
 
 export const ATLASES: AtlasEntry[] = [
   { key: 'scenery', file: 'scenery', firstFrame: 'olive' },
-  { key: 'harvester', file: 'harvester', firstFrame: 'harv_00_0' },
+  // the harvester (a vehicle rig, tools/blender/render_vehicle.py) and its drums turning while it scoops ore
+  { key: 'v_harvester', file: 'v_harvester', firstFrame: 'v_harvester_0' },
+  { key: 'v_harvester_harvest', file: 'v_harvester_harvest', firstFrame: 'v_harvester_harvest_0_0' },
+  // ... empty (no ore in its bed), and tipping its bed out at a refinery's dock (a generated video's frames, keyed out:
+  // tools/sprites/key_video.py vehicle; facing HARVESTER_DOCK_FACING only)
+  { key: 'v_harvester_empty', file: 'v_harvester_empty', firstFrame: 'v_harvester_empty_0' },
+  { key: 'v_harvester_unload', file: 'v_harvester_unload', firstFrame: 'v_harvester_unload_0' },
   { key: 'rifleman', file: 'rifleman', firstFrame: 'inf_0_idle' },
   { key: 'rifleman_death', file: 'rifleman_death', firstFrame: 'inf_0_die_0' },
-  { key: 'medic', file: 'medic', firstFrame: 'inf_0_idle' },
-  { key: 'medic_death', file: 'medic_death', firstFrame: 'inf_0_die_0' },
-  { key: 'raider', file: 'raider', firstFrame: 'inf_0_idle' },
-  { key: 'raider_death', file: 'raider_death', firstFrame: 'inf_0_die_0' },
-  { key: 'infiltrator', file: 'infiltrator', firstFrame: 'inf_0_idle' },
-  { key: 'infiltrator_death', file: 'infiltrator_death', firstFrame: 'inf_0_die_0' },
   // vehicles: 16 directions each (tools/blender/render_vehicle.py + tools/sprites/pack_vehicles.py)
   { key: 'v_skimmer', file: 'v_skimmer', firstFrame: 'v_skimmer_0' },
   { key: 'v_jackal', file: 'v_jackal', firstFrame: 'v_jackal_0' },
   { key: 'v_ram', file: 'v_ram', firstFrame: 'v_ram_0' },
   { key: 'v_spire', file: 'v_spire', firstFrame: 'v_spire_0' },
   { key: 'v_carrier', file: 'v_carrier', firstFrame: 'v_carrier_0' },
+  { key: 'v_lancer_ordan', file: 'v_lancer_ordan', firstFrame: 'v_lancer_ordan_0' },
+  { key: 'v_lancer_sable', file: 'v_lancer_sable', firstFrame: 'v_lancer_sable_0' },
+  { key: 'v_operator_ordan', file: 'v_operator_ordan', firstFrame: 'v_operator_ordan_0' },
+  { key: 'v_operator_sable', file: 'v_operator_sable', firstFrame: 'v_operator_sable_0' },
+  { key: 'v_infiltrator', file: 'v_infiltrator', firstFrame: 'v_infiltrator_0' },
+  { key: 'v_grenadier', file: 'v_grenadier', firstFrame: 'v_grenadier_0' },
+  { key: 'v_breaker', file: 'v_breaker', firstFrame: 'v_breaker_0' },
+  { key: 'v_raider', file: 'v_raider', firstFrame: 'v_raider_0' },
+  { key: 'v_medic', file: 'v_medic', firstFrame: 'v_medic_0' },
+  { key: 'v_engineer_ordan', file: 'v_engineer_ordan', firstFrame: 'v_engineer_ordan_0' },
+  { key: 'v_engineer_sable', file: 'v_engineer_sable', firstFrame: 'v_engineer_sable_0' },
+  { key: 'v_hound', file: 'v_hound', firstFrame: 'v_hound_0' },
+  { key: 'v_medic_heal', file: 'v_medic_heal', firstFrame: 'v_medic_heal_0_0' },
+  { key: 'v_engineer_ordan_work', file: 'v_engineer_ordan_work', firstFrame: 'v_engineer_ordan_work_0_0' },
+  { key: 'v_engineer_sable_work', file: 'v_engineer_sable_work', firstFrame: 'v_engineer_sable_work_0_0' },
+  // ... its side doors dropping into ramps (a rig clip, closed → open; played backwards to shut), for its passengers
+  { key: 'v_carrier_door', file: 'v_carrier_door', firstFrame: 'v_carrier_door_0_0' },
   { key: 'v_watcher', file: 'v_watcher', firstFrame: 'v_watcher_0' },
   { key: 'v_shroud', file: 'v_shroud', firstFrame: 'v_shroud_0' },
   { key: 'v_seeder', file: 'v_seeder', firstFrame: 'v_seeder_0' },
@@ -88,6 +105,13 @@ export interface SpriteMeta {
    * (frame pixels from the hull's anchor, per hull direction); its gun fires from `muzzle[t]` (from the turret's anchor).
    */
   turret_layer?: { directions: number; pivot: { x: number; y: number }[]; muzzle: { x: number; y: number }[] };
+  /**
+   * Hovering units (render_vehicle.py `hover`): it floats `height_px` (frame pixels) over its ground centre, its shadow
+   * alone in `<key>_s<d>`, and its lights glow `glow` (linear RGB, 0..1) on the ground under it.
+   */
+  hover?: { height_px: number; glow: [number, number, number] };
+  /** Units with guns but no turret (render_vehicle.py `muzzle`): their tips per direction, frame pixels from the anchor. */
+  muzzles?: { x: number; y: number }[][];
   /** Art rendered at `res` x the game's art scale; draw at 1 / res. */
   res?: number;
   /** Ore and tree atlases: one anchor per frame. */

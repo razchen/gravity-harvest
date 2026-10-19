@@ -1,0 +1,6 @@
+{
+ "length_tiles": 0.95,
+ "model": "hover/grenadier.glb",
+ "hover": {"height": 0.28, "glow": [1.0, 0.08, 0.04]},
+ "muzzle": [[0.01, 0.0, 0.78]]
+}

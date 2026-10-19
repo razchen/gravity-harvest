@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import type { BuildingView, TeamId } from '@gravity-harvest/shared';
+import { serviceBayPad } from '@gravity-harvest/sim/layout';
 import { DEPTH } from '../config/game';
 import { iso } from '../core/geometry';
 import { BUILDING_ART, type BuildingArt } from '../data/art';
@@ -22,13 +23,27 @@ export const DOOR_OPEN_MS = 1600;
 const AFTERMATH_MS = 4500;
 
 /**
- * Whether a point at (gx, gy) draws over a building: in front of its two front sides, or (a refinery) on its ramp.
+ * Whether a point at (gx, gy) draws over a building: in front of its two front sides, on a refinery's ramp, or on a
+ * Service Bay's pad (or backing onto it).
  */
 export function inFrontOf(b: { type: string; tx: number; ty: number; size: number }, gx: number, gy: number): boolean {
   const front = gx >= b.tx + b.size || gy >= b.ty + b.size;
-  if (b.type !== 'refinery') return front;
-  const onRamp = gy > b.ty + b.size - 1 && gx > b.tx && gx < b.tx + b.size;
-  return front || onRamp;
+  if (b.type === 'refinery') return front || (gy > b.ty + b.size - 1 && gx > b.tx && gx < b.tx + b.size);
+  if (b.type === 'service_bay') {
+    const pad = serviceBayPad(b.tx, b.ty).pad;
+    return front || (Math.abs(gx - pad.gx) < 0.75 && gy > pad.gy - 0.75);
+  }
+  return front;
+}
+
+/**
+ * A Service Bay's roof arms reach down over a vehicle on its pad: the depth that draws them (and their sparks) just
+ * over it, for a building drawn at `depth` whose sprite sits at world y `y` (units sort against it as GameMap.depthAt).
+ */
+export function armsDepth(b: { type: string; tx: number; ty: number }, depth: number, y: number): number | null {
+  if (b.type !== 'service_bay') return null;
+  const pad = serviceBayPad(b.tx, b.ty).pad;
+  return depth + Math.max(iso(pad.gx, pad.gy).y - y, 1) + 0.6;
 }
 
 /**
@@ -52,6 +67,8 @@ export class BuildingSprite implements Occluder {
   maxHp: number;
   progress: number;
   built = false;
+  /** Busy (producing, a Service Bay repairing the vehicle on its pad): its working sound plays. */
+  working = false;
   powered = true;
   alive = true;
   private readonly view: ConstructionView;
@@ -87,6 +104,8 @@ export class BuildingSprite implements Occluder {
     this.depth = c.y;
     this.view = new ConstructionView(world, this.art.sprite, c.x, c.y, this.depth, { layer: world.shadows, id: this.id });
     this.damage = new BuildingDamage(world, this.art.sprite, c.x, c.y, this.depth);
+    const lift = armsDepth(v, this.depth, c.y);
+    if (lift !== null) this.view.liftMoving(lift);
     this.sprite = this.view.base.setInteractive({ pixelPerfect: true });
     this.sprite.setData('entity', this);
     this.view.setTint(TEAMS[this.team].tint);
@@ -116,7 +135,8 @@ export class BuildingSprite implements Occluder {
     if (this.built) this.showDamage();
     if (v.facing !== undefined) this.aim = v.facing;
     this.setRepairing(!!v.repairing);
-    this.view.setWorking(!!v.working);
+    this.working = !!v.working;
+    this.view.setWorking(this.working);
   }
 
   /** A blinking badge above the building (the power bolt, the repair wrench); `slot` places it left or right. */

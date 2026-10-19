@@ -16,13 +16,23 @@ export interface GridPoint {
 // --- Orders (browser → server) -------------------------------------------------------------------
 
 export type Command =
-  /** Move each unit to its own point (the client spreads a group around the click). */
+  /**
+   * Move each unit to its point. Units sent to the same point move as a group: the server gives each a tile of its own
+   * around it, in formation.
+   */
   | { c: 'move'; orders: { id: number; gx: number; gy: number }[] }
+  /**
+   * Attack-move: as `move` (same formation), but on the way each armed unit stops to fight any enemy, unit or building,
+   * it comes across, then carries on to its point. Harvesters and unarmed units just move.
+   */
+  | { c: 'attackMove'; orders: { id: number; gx: number; gy: number }[] }
   | { c: 'attack'; units: number[]; target: number }
   /** Harvesters: mine this ore tile. */
   | { c: 'harvest'; units: number[]; tx: number; ty: number }
   /** Harvesters: unload at this refinery. */
   | { c: 'dock'; units: number[]; refinery: number }
+  /** Vehicles: back onto this Service Bay's pad to be repaired, one at a time (the others wait by it). */
+  | { c: 'service'; units: number[]; bay: number }
   | { c: 'stop'; units: number[] }
   | { c: 'place'; building: string; tx: number; ty: number }
   /** Queue a unit; `near` picks which producer it comes out of (the one nearest the camera). */
@@ -34,8 +44,14 @@ export type Command =
   | { c: 'cancelBuild'; building: number }
   /** An Assembler unpacks into an Assembly Yard where it stands (anywhere it fits). */
   | { c: 'deploy'; unit: number }
+  /** Medics and Engineers: see to this damaged unit or building of yours (heal it, or repair it for free). */
+  | { c: 'support'; units: number[]; target: number }
   /** Start or stop repairing one of your buildings (it costs as it heals). */
-  | { c: 'repair'; building: number; on: boolean };
+  | { c: 'repair'; building: number; on: boolean }
+  /** Infantry: walk to this transport of yours and get in through its nearer side door, one by one, while it has room. */
+  | { c: 'board'; units: number[]; transport: number }
+  /** A transport stops, opens its doors and lets its passengers out one by one. */
+  | { c: 'unload'; transport: number };
 
 /** Development / test only: rejected unless the server runs with debug commands enabled. */
 export type DebugCommand =
@@ -51,12 +67,22 @@ export type DebugCommand =
 
 export type PlayableFaction = 'ordan' | 'sable';
 
+/**
+ * How well the computer plays. Every level plays by the same rules, sees only its own fog-limited view and gives the
+ * same orders a player does; they differ only in how many mistakes it makes (packages/ai profiles).
+ */
+export type Difficulty = 'easy' | 'normal' | 'hard';
+export const DIFFICULTIES: readonly Difficulty[] = ['easy', 'normal', 'hard'];
+export const DEFAULT_DIFFICULTY: Difficulty = 'normal';
+
 export interface StartMatch {
   /** New match on a scenario, or resume a saved game. */
   scenario?: string;
   saveId?: string;
   /** New match: the side you play (the computer takes the other). Default: the scenario's. */
   faction?: PlayableFaction;
+  /** New match: how well the computer plays. Default: DEFAULT_DIFFICULTY. A save keeps its own. */
+  difficulty?: Difficulty;
   /** Write the autosave slot when the connection closes mid-match. */
   autosaveOnLeave: boolean;
 }
@@ -90,7 +116,7 @@ export interface BuildingView {
   powered: boolean;
   /** Yours, being repaired. */
   repairing?: boolean;
-  /** Busy: producing (the producer of what its side is making), repairing (a Service Bay), or building (an Assembly Yard while its side builds). */
+  /** Busy: producing (the producer of what its side is making), repairing the vehicle on its pad (a Service Bay), or building (an Assembly Yard while its side builds). */
   working?: boolean;
   /** Defences: which way the head points (32 directions, 0 = +gx, counter-clockwise); absent while at rest. */
   facing?: number;
@@ -115,6 +141,11 @@ export interface UnitView {
   cargo?: number;
   capacity?: number;
   activity?: HarvesterActivity;
+  /** Your transports only: how many it carries, and how many it can. */
+  passengers?: number;
+  seats?: number;
+  /** A Medic or Engineer healing or repairing right now (its arms work). */
+  work?: boolean;
 }
 
 export interface RockView {
@@ -190,6 +221,15 @@ export type MatchEvent =
   | { e: 'door'; refinery: number; open: boolean }
   | { e: 'unloaded'; refinery: number; credits: number }
   | { e: 'unitReady'; id: number; type: string }
+  /** A transport's side doors (the ramps) open or close. */
+  | { e: 'hatch'; unit: number; open: boolean }
+  /**
+   * A soldier went into a transport from (gx, gy), through the door on `side` (1: left of the way it faces, -1: right)
+   * and is gone from the views until he comes out.
+   */
+  | { e: 'boarded'; unit: number; type: string; transport: number; gx: number; gy: number; side: 1 | -1 }
+  /** A passenger came out of a transport through the door on `side`, down its ramp to where the view has him. */
+  | { e: 'disembarked'; unit: number; transport: number; side: 1 | -1 }
   | { e: 'toast'; text: string };
 
 /** Everything one team is allowed to know right now. */
@@ -202,9 +242,9 @@ export interface TeamView {
   power: PowerView;
   radar: 'none' | 'offline' | 'online';
   units: UnitView[];
-  /** Own buildings, plus enemy buildings this team has discovered. */
+  /** Own buildings, plus enemy buildings this team has discovered: in sight as they are, otherwise as last seen. */
   buildings: BuildingView[];
-  /** Unit production queue, in order. */
+  /** Unit production queue, in order (each lane builds its first: CatalogUnit.lane). */
   queue: QueueItemView[];
   unitCap: number;
   /** Fog per tile (row-major, y * width + x): '0' unexplored, '1' explored, '2' visible. Only sent when it changed. */
@@ -243,6 +283,8 @@ export interface CatalogUnit {
   buildTimeSec: number;
   producedAt: string[];
   prerequisites: string[][];
+  /** Its production queue: each kind of factory has its own, and they build side by side. */
+  lane: 'infantry' | 'vehicle' | 'air' | 'naval';
   /** For its info card: what it does (one line), its role, and its health. */
   description: string;
   role: string;
@@ -256,6 +298,7 @@ export interface MatchCatalog {
   assumeOwned: string[];
   /** Display names for prerequisite IDs. */
   names: Record<string, string>;
+  /** Units queued at once, per production lane. */
   queueMax: number;
 }
 
@@ -273,6 +316,8 @@ export interface MatchHello {
   debug: boolean;
   /** The side you're playing. */
   faction: PlayableFaction;
+  /** How well the computer opponent plays. */
+  difficulty: Difficulty;
 }
 
 export type ServerMessage =

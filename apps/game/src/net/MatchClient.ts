@@ -15,12 +15,25 @@ export interface MatchHandlers {
 }
 
 const SAVE_TIMEOUT_MS = 15_000;
+/** How many view arrivals the link stats remember. */
+const ARRIVALS = 64;
+
+/** Read-only numbers about the connection, for the Dev info panel (ui/DevInfo.ts). */
+export interface LinkStats {
+  /** Views received this match. */
+  views: number;
+  /** Bytes of messages received (as text). */
+  bytes: number;
+  /** performance.now() of the last views (oldest first, at most ARRIVALS). */
+  arrivals: number[];
+}
 
 export class MatchClient {
   private ws: WebSocket | null = null;
   private started = false;
   private req = 0;
   private readonly pending = new Map<number, { resolve(s: SaveGameSummary): void; reject(e: Error): void }>();
+  readonly stats: LinkStats = { views: 0, bytes: 0, arrivals: [] };
 
   constructor(private readonly on: MatchHandlers) {}
 
@@ -31,7 +44,11 @@ export class MatchClient {
     const ws = (this.ws = new WebSocket(`${proto}://${location.host}${MATCH_PATH}`));
     this.started = false;
     ws.onopen = () => this.send({ t: 'start', ...m });
-    ws.onmessage = (e) => this.receive(JSON.parse(String(e.data)) as ServerMessage);
+    ws.onmessage = (e) => {
+      const text = String(e.data);
+      this.stats.bytes += text.length;
+      this.receive(JSON.parse(text) as ServerMessage);
+    };
     ws.onclose = () => {
       if (this.ws !== ws) return; // replaced by a newer match
       this.ws = null;
@@ -47,6 +64,9 @@ export class MatchClient {
         this.started = true;
         return this.on.hello(m);
       case 'view':
+        this.stats.views++;
+        this.stats.arrivals.push(performance.now());
+        if (this.stats.arrivals.length > ARRIVALS) this.stats.arrivals.shift();
         return this.on.view(m);
       case 'gameOver':
         return this.on.gameOver(m.result, m.stats);
@@ -61,6 +81,11 @@ export class MatchClient {
         } else if (!this.started) this.on.failed(m.message);
         else this.on.error(m.message);
     }
+  }
+
+  /** The socket's state: connecting, open, closing or closed. */
+  get state(): string {
+    return ['connecting', 'open', 'closing', 'closed'][this.ws?.readyState ?? WebSocket.CLOSED];
   }
 
   private send(m: ClientMessage): void {

@@ -11,11 +11,14 @@ export const TILE_H = 64;
 export const DPR = Math.min((typeof window !== 'undefined' && window.devicePixelRatio) || 1, 2);
 
 export const CAMERA = {
-  /** Default scale: tiles at 64 x 32 CSS px. */
-  startZoom: 0.5,
+  /** Default scale: tiles at about 85 x 43 CSS px, close enough to tell soldiers apart. */
+  startZoom: 0.67,
   minZoom: 0.25,
-  /** No zooming in past the default: the sprites are drawn pixel for pixel there (closer would only stretch them). */
-  maxZoom: 0.5,
+  /**
+   * The closest zoom. The art is drawn pixel for pixel at 0.5 (on a Retina screen; 1.0 on others), so past that it is
+   * stretched a little: soft rather than blocky, the sprites being rendered, not pixel art.
+   */
+  maxZoom: 0.75,
   /** Keyboard pan speed in CSS px per second. */
   panSpeed: 900,
   /** Keyboard zoom while + / − is held: the zoom changes by e^speed per second (about 3x per second). */
@@ -62,7 +65,24 @@ export const FOG = {
 
 /** Infantry: one run cycle (all its frames) covers this many tiles at infantry scale. */
 export const RUN_CYCLE_TILES = 0.89;
+/** A soldier going up or down a transport's ramp moves about as fast as he runs (the rules' rifleman: 1.4 tiles/s). */
+export const RAMP_TILES_PER_SEC = 1.4;
 /** Infantry turn through the in-between directions at this many ms a step, instead of snapping round. */
 export const INFANTRY_TURN_MS_PER_STEP = 28;
+
+/**
+ * Hovering units (render_vehicle.py `hover`): they bob this far up and down (world px) over their shadow, once every
+ * `periodMs`; their lights glow on the ground under them, pulsing between `glowMin` and `glowMax` (alpha), in a pool
+ * `glowTiles` wide.
+ */
+export const HOVER = { bob: 3, periodMs: 2200, glowMin: 0.35, glowMax: 0.55, glowTiles: 0.8 };
+/**
+ * A harvester at a refinery's dock tips its bed out over this long (its `v_harvester_unload` clip, sped up to fit):
+ * the sim keeps it docked at least as long (packages/sim ENGINE.dockMinMs). It holds the clip's last frame, the bed
+ * empty, until it drives off.
+ */
+export const HARVESTER_UNLOAD_MS = 3000;
+/** The direction a docked harvester faces (packages/sim DOCK_FACING): the unload clip is drawn facing it. */
+export const HARVESTER_DOCK_FACING = 12;
 /** A vehicle's turret turns through its directions (32) at this many ms a step: a whole turn in under a second. */
 export const TURRET_TURN_MS_PER_STEP = 25;

@@ -4,19 +4,19 @@
 // render/DoorExit.ts for coming out of a door).
 import Phaser from 'phaser';
 import { ECONOMY, UNITS, speedToTilesPerSec } from '@gravity-harvest/rules';
-import { DOCK_FACING, ENGINE, Grid, MATCH_CATALOG, facing, findPath, refineryDock } from '@gravity-harvest/sim';
+import { DOCK_FACING, ENGINE, Grid, MATCH_CATALOG, facing, findPath, refineryDock, serviceBayPad } from '@gravity-harvest/sim';
 import type { GridPoint } from '@gravity-harvest/shared';
 import { anchorOrigin, meta } from '../assets/manifest';
-import { INFANTRY_TURN_MS_PER_STEP, RUN_CYCLE_TILES } from '../config/game';
+import { HARVESTER_DOCK_FACING, HARVESTER_UNLOAD_MS, INFANTRY_TURN_MS_PER_STEP, RUN_CYCLE_TILES } from '../config/game';
 import { iso } from '../core/geometry';
-import { BUILDING_ART, UNIT_ART, WHEEL_FRAMES_PER_TILE } from '../data/art';
+import { BUILDING_ART, UNIT_ART } from '../data/art';
 import { TEAMS } from '../data/teams';
 import { DOOR_OPEN_MS, inFrontOf } from '../entities/BuildingSprite';
 import { WHEEL_TURN_TILES, turnToward } from '../entities/UnitSprite';
 import type { ConstructionView } from '../render/Construction';
 import { DoorExit } from '../render/DoorExit';
 
-/** Out of the building (it produces the unit), docking at it (a refinery) or parked by it to be repaired (a Service Bay). */
+/** Out of the building (it produces the unit), docking at it (a refinery) or on its pad to be repaired (a Service Bay). */
 export type TripKind = 'out' | 'dock' | 'service';
 
 export interface Trip {
@@ -39,12 +39,20 @@ const WITH_ART = Object.keys(UNIT_ART).filter((u) => MATCH_CATALOG.units[u]);
 export function tripsFor(building: string): Trip[] {
   const out: Trip[] = WITH_ART.filter((u) => MATCH_CATALOG.units[u].producedAt.includes(building)).map((unit) => ({ unit, kind: 'out' }));
   if (building === 'refinery') out.push({ unit: 'harvester', kind: 'dock' });
-  if (building === 'service_bay') for (const u of WITH_ART) if (UNIT_ART[u].kind !== 'infantry') out.push({ unit: u, kind: 'service' });
+  if (building === 'service_bay') {
+    // the vehicles that use its pad in matches (not the harvester); the Jackal first, so it's the one shown
+    const vehicles = WITH_ART.filter((u) => UNIT_ART[u].kind === 'vehicle').sort((a, b) => +(b === 'jackal') - +(a === 'jackal'));
+    for (const u of vehicles) out.push({ unit: u, kind: 'service' });
+  }
   return out;
 }
 
 /** The atlases a building's traffic draws from. */
-export const tripAtlases = (trips: Trip[]): string[] => [...new Set(trips.map((t) => UNIT_ART[t.unit].sprite))];
+export const tripAtlases = (trips: Trip[]): string[] => [...new Set(trips.flatMap((t) => {
+  const key = UNIT_ART[t.unit].sprite;
+  // the harvester also drives off empty, and tips its load out at a refinery's dock
+  return UNIT_ART[t.unit].kind === 'harvester' ? [key, `${key}_empty`, `${key}_unload`] : [key];
+}))];
 
 /** Frame `f` of a cycle of `n` (counting backwards too). */
 const cycle = (f: number, n: number) => ((Math.floor(f) % n) + n) % n;
@@ -63,25 +71,25 @@ class UnitLook {
   private turnAt = 0;
   private wheel = 0;
   private runPhase = Math.random() * 12;
+  /** The harvester: when it started tipping its load out (page ms, -1: not), and whether its bed is empty. */
+  private unloadAt = -1;
+  private empty = false;
 
   constructor(scene: Phaser.Scene, type: string, dir: number) {
     const art = UNIT_ART[type];
     this.kind = art.kind;
     this.key = art.sprite;
     const tint = TEAMS.player.tint;
-    if (this.kind === 'harvester') {
-      this.shown = dir;
-      this.sprite = scene.add.sprite(0, 0, this.key, 'harv_00_0').setOrigin(...anchorOrigin(meta('harvester')));
-      return;
-    }
     const m = this.meta();
     this.shown = dir % (m.directions ?? 16);
     const first = this.kind === 'infantry' ? `inf_${this.shown}_idle` : `${this.key}_${this.shown}`;
     this.sprite = scene.add.sprite(0, 0, this.key, first).setOrigin(...anchorOrigin(m)).setScale(1 / (m.res ?? 1));
-    if (tint !== null) this.sprite.setTint(tint);
-    if (this.kind === 'vehicle' && m.wheel_frames) {
+    // the harvester isn't in team colours (as in the game)
+    const tinted = tint !== null && this.kind !== 'harvester';
+    if (tinted) this.sprite.setTint(tint);
+    if (this.kind !== 'infantry' && m.wheel_frames) {
       this.wheels = scene.add.sprite(0, 0, this.key, `${this.key}_w${this.shown}_0`).setOrigin(...anchorOrigin(m)).setScale(1 / (m.res ?? 1)).setVisible(false);
-      if (tint !== null) this.wheels.setTint(tint);
+      if (tinted) this.wheels.setTint(tint);
     }
   }
 
@@ -92,6 +100,16 @@ class UnitLook {
   /** Its sprites, body first. */
   get parts(): Phaser.GameObjects.Sprite[] {
     return this.wheels ? [this.sprite, this.wheels] : [this.sprite];
+  }
+
+  /** The harvester at the dock: tip its load out (as GameScene's HarvesterSprite), and drive off empty after. */
+  unload(now: number): void {
+    this.unloadAt = now;
+  }
+
+  unloaded(): void {
+    this.unloadAt = -1;
+    this.empty = true;
   }
 
   /** Face `dir` at once (coming out of a door). */
@@ -113,12 +131,6 @@ class UnitLook {
       this.shown = turnToward(this.shown, target, n);
       this.turnAt = now + stepMs;
     }
-    if (this.kind === 'harvester') {
-      this.wheel += moved * WHEEL_FRAMES_PER_TILE;
-      this.sprite.setPosition(p.x, p.y).setDepth(depth + 0.5).setAlpha(alpha);
-      this.sprite.setFrame(`harv_${String(this.shown).padStart(2, '0')}_${cycle(this.wheel, 8)}`);
-      return;
-    }
     const m = this.meta();
     if (this.kind === 'infantry') {
       const frames = m.run_frames ?? 12;
@@ -128,7 +140,15 @@ class UnitLook {
       return;
     }
     this.sprite.setPosition(p.x, p.y).setDepth(depth + 0.5).setAlpha(alpha);
-    this.sprite.setFrame(`${this.key}_${this.shown}`);
+    const unload = `${this.key}_unload`;
+    if (this.unloadAt >= 0 && this.shown === HARVESTER_DOCK_FACING && this.sprite.scene.textures.exists(unload)) {
+      const n = meta(unload).frames ?? 1;
+      this.sprite.setTexture(unload, `${unload}_${Math.min(n - 1, Math.floor(((now - this.unloadAt) / HARVESTER_UNLOAD_MS) * n))}`);
+      this.wheels?.setVisible(false);
+      return;
+    }
+    const body = this.empty && this.sprite.scene.textures.exists(`${this.key}_empty`) ? `${this.key}_empty` : this.key;
+    this.sprite.setTexture(body, `${body}_${this.shown}`);
     if (this.wheels) {
       const frames = m.wheel_frames ?? 6;
       this.wheel += (moved / WHEEL_TURN_TILES) * frames;
@@ -247,18 +267,17 @@ export class Traffic {
       from = this.free(tx + size / 2 - 1, ty + size + FROM_TILES);
       legs = [
         { go: () => this.goTo(d.dock.gx, d.dock.gy, d.front) },
-        { start: () => { this.mover!.dir = DOCK_FACING; this.doorOpen = true; }, ms: ENGINE.doorMs },
+        { start: () => { this.mover!.dir = DOCK_FACING; this.doorOpen = true; this.mover!.look.unload(this.clock); }, ms: ENGINE.doorMs },
         { ms: ECONOMY.harvesterCapacity * ENGINE.unloadMsPerUnit },
-        { start: () => { this.doorOpen = false; }, ms: ENGINE.doorMs },
-        { go: () => this.goTo(away.gx, away.gy) },
+        // sim.ts: the door closes, but it stays docked until its bed has tipped out (ENGINE.dockMinMs)
+        { start: () => { this.doorOpen = false; }, ms: Math.max(ENGINE.doorMs, ENGINE.dockMinMs - ENGINE.doorMs - ECONOMY.harvesterCapacity * ENGINE.unloadMsPerUnit) },
+        { start: () => this.mover!.look.unloaded(), go: () => this.goTo(away.gx, away.gy) },
         fadeAway,
       ];
     } else {
-      // sim.ts repair(): parked within ENGINE.repairRangeTiles of the bay, on the tile out from the middle of its
-      // lower-left face; it backs in from a tile out (nose out, as at a refinery), is repaired to full, then drives
-      // straight off and away
-      const spot = this.free(tx + size / 2, ty + size + 0.5);
-      const front = { gx: spot.gx, gy: spot.gy + 1 };
+      // sim.ts toBay and updateService: to just out in front of the bay, backs straight onto its pad (nose out, as at a
+      // refinery), is repaired to full, then drives straight off and away
+      const { pad: spot, front } = serviceBayPad(tx, ty);
       from = this.free(tx + size / 2 - 1, ty + size + FROM_TILES);
       legs = [
         { go: () => [...this.goTo(front.gx, front.gy), { ...spot, back: true }] },
@@ -382,8 +401,9 @@ export class Traffic {
   /** sim.ts leadOut: a harvester on the refinery's ramp drives straight off it to in front of it first. */
   private leadOut(at: GridPoint): GridPoint | null {
     const u = this.mover!;
-    if (!u.harvester || this.b.type !== 'refinery' || !this.grid.isBlocked(Math.floor(at.gx), Math.floor(at.gy))) return null;
-    return refineryDock(this.b.tx, this.b.ty).front;
+    if (!u.harvester || this.b.type !== 'refinery') return null;
+    const d = refineryDock(this.b.tx, this.b.ty);
+    return Math.hypot(at.gx - d.dock.gx, at.gy - d.dock.gy) < 0.5 ? d.front : null;
   }
 
   /**

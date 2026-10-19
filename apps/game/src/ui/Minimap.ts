@@ -81,8 +81,9 @@ export class Minimap {
       return;
     }
     for (const b of s.buildings) poly(tile(b.tx, b.ty, b.size), b.team === 'player' && !b.built ? '#8a8576' : TEAMS[b.team].minimapBuilding);
-    // trees dark green, rocks grey, wrecks dark grey, rubble grey and small (grass and other decoration isn't shown)
-    const colour: Record<string, string> = { rock: '#8d887c', wreck: '#4f4d49', debris: '#7a766d' };
+    // trees dark green, rocks grey, wrecks dark grey, rubble grey and small, gravity vents gold (grass and other
+    // decoration isn't shown)
+    const colour: Record<string, string> = { rock: '#8d887c', wreck: '#4f4d49', debris: '#7a766d', vent: '#d9a21b' };
     for (const t of s.scenery) {
       const k = sceneryKind(t.kind);
       if (!k.blocks) continue;

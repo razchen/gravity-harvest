@@ -20,7 +20,14 @@ tools/blender/frames
 .turbo
 test-results
 playwright-report
+# simulator reports (npm run simulate)
+tools/simulator/out
 
 # Private notes for Claude (never committed)
 CLAUDE.md
 .playwright-mcp
+
+# local secrets (API keys): never committed; .env.example lists them
+.env
+.env.*
+!.env.example
