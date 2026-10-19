@@ -5,8 +5,8 @@ import { anchorOrigin, meta } from '../assets/manifest';
 import { HARVESTER_DOCK_FACING, HARVESTER_UNLOAD_MS, HOVER, INFANTRY_TURN_MS_PER_STEP, RAMP_TILES_PER_SEC, RUN_CYCLE_TILES, TILE_W, TURRET_TURN_MS_PER_STEP } from '../config/game';
 import { alongBarrel, iso, type Point } from '../core/geometry';
 import { FX, ensureFxTextures } from '../render/fxTextures';
-import { TEAMS } from '../data/teams';
-import { UNIT_ART, factionOf, unitArt } from '../data/art';
+import { colourOf, factionOfTeam } from '../data/teams';
+import { UNIT_ART, unitArt } from '../data/art';
 import { rampOf } from '../render/Boarding';
 import type { DoorExit } from '../render/DoorExit';
 import type { GameScene } from '../scenes/GameScene';
@@ -322,14 +322,14 @@ export class InfantrySprite extends UnitSprite {
 
   constructor(world: GameScene, v: UnitView, now: number) {
     super(world, v, now);
-    this.key = unitArt(v.type, factionOf(v.team, world.faction))?.sprite ?? 'rifleman';
+    this.key = unitArt(v.type, factionOfTeam(v.team))?.sprite ?? 'rifleman';
     const m = meta(this.key);
     this.shown = v.dir;
     this.sprite = world.add.sprite(0, 0, this.key, `inf_${v.dir}_idle`)
       .setOrigin(...anchorOrigin(m))
       .setScale(1 / (m.res ?? 1))
       .setInteractive({ useHandCursor: true });
-    const tint = TEAMS[v.team].tint;
+    const tint = colourOf(v.team).tint;
     if (tint !== null) this.sprite.setTint(tint);
     this.sprite.setData('entity', this);
     this.refresh(0);
@@ -420,7 +420,7 @@ export class VehicleSprite extends UnitSprite {
 
   constructor(world: GameScene, v: UnitView, now: number) {
     super(world, v, now);
-    const art = unitArt(v.type, factionOf(v.team, world.faction))!;
+    const art = unitArt(v.type, factionOfTeam(v.team))!;
     this.key = art.sprite;
     this.clipKey = art.clip && world.textures.exists(`${this.key}_${art.clip}`) ? `${this.key}_${art.clip}` : null;
     this.doorKey = world.textures.exists(`${this.key}_door`) ? `${this.key}_door` : null;
@@ -430,7 +430,7 @@ export class VehicleSprite extends UnitSprite {
       .setOrigin(...anchorOrigin(m))
       .setScale(1 / (m.res ?? 1))
       .setInteractive({ pixelPerfect: true, useHandCursor: true });
-    const tint = TEAMS[v.team].tint;
+    const tint = colourOf(v.team).tint;
     if (tint !== null) this.sprite.setTint(tint);
     this.sprite.setData('entity', this);
     this.wheels = m.wheel_frames
@@ -630,7 +630,7 @@ export function fallDead(world: GameScene, type: string, gx: number, gy: number,
     .setOrigin(...anchorOrigin(m))
     .setScale(1 / (m.res ?? 1))
     .setDepth(world.map.depthAt(gx, gy) + 0.4);
-  const tint = TEAMS[team].tint;
+  const tint = colourOf(team).tint;
   if (tint !== null) body.setTint(tint);
   body.play(key);
   world.tweens.add({ targets: body, alpha: 0, delay: (n / (m.fps ?? 8)) * 1000 + BODY_MS, duration: 1000, onComplete: () => body.destroy() });

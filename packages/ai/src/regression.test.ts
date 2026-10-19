@@ -1,6 +1,6 @@
-import type { Difficulty, TeamId } from '@gravity-harvest/shared';
+import { TEAMS, type Difficulty, type TeamId } from '@gravity-harvest/shared';
 import type { Faction } from '@gravity-harvest/rules';
-import { Sim, TEAMS } from '@gravity-harvest/sim';
+import { Sim } from '@gravity-harvest/sim';
 import { describe, expect, it } from 'vitest';
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer } from './computer.js';
 
@@ -19,7 +19,7 @@ interface Fixture {
 
 /** Play a computer-only match and fingerprint it: every order given (tick, side, order) hashed, and where it ended. */
 function fingerprint(f: Fixture): string {
-  const sim = Sim.create('skirmish', f.seed, f.factions[0], { enemyFaction: f.factions[1], computerOnly: true });
+  const sim = Sim.create('skirmish', f.seed, f.factions[0], { otherFaction: f.factions[1], computerOnly: true });
   const ais = TEAMS.map((t, i) => new ComputerPlayer({ hello: sim.hello(t), difficulty: f.difficulties[i], seed: f.seed * 7919 + i + 1 }));
   let hash = 0x811c9dc5;
   let orders = 0;
@@ -42,17 +42,17 @@ function fingerprint(f: Fixture): string {
 // change is meant, play a few matches in the simulator to check it plays as well as before, then update the prints.
 describe('the computer plays exactly as before', () => {
   it('normal Sable against hard Ordan', () => {
-    expect(fingerprint({ seed: 9, factions: ['sable', 'ordan'], difficulties: ['normal', 'hard'], minutes: 14 })).toBe('orders=899 credits=1490/675 units=31 buildings=17 hash=d2f6aee8');
+    expect(fingerprint({ seed: 9, factions: ['sable', 'ordan'], difficulties: ['normal', 'hard'], minutes: 14 })).toBe('orders=899 credits=1490/675 units=31 buildings=17 hash=956084de');
   });
 
   it('easy Ordan against normal Sable', () => {
-    expect(fingerprint({ seed: 4, factions: ['ordan', 'sable'], difficulties: ['easy', 'normal'], minutes: 14 })).toBe('orders=432 credits=11774/10140 units=25 buildings=14 hash=f6b626c6');
+    expect(fingerprint({ seed: 4, factions: ['ordan', 'sable'], difficulties: ['easy', 'normal'], minutes: 14 })).toBe('orders=432 credits=11774/10140 units=25 buildings=14 hash=99d9d4ea');
   });
 });
 
 describe('the computer saved and restored', () => {
   it('plays on exactly as the one it was saved from', () => {
-    const sim = Sim.create('skirmish', 6, 'ordan', { enemyFaction: 'sable', computerOnly: true });
+    const sim = Sim.create('skirmish', 6, 'ordan', { otherFaction: 'sable', computerOnly: true });
     const opts = TEAMS.map((t, i) => ({ hello: sim.hello(t), difficulty: 'hard' as const, seed: 100 + i }));
     const ais = opts.map((o) => new ComputerPlayer(o));
     let copies: ComputerPlayer[] = [];

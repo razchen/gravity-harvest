@@ -4,6 +4,7 @@ import { anchorOrigin, finishedFrames, meta } from '../assets/manifest';
 import { DEPTH } from '../config/game';
 import { diamond, iso, toGrid } from '../core/geometry';
 import { BUILDING_ART } from '../data/art';
+import { isMine } from '../data/teams';
 import type { GameScene } from '../scenes/GameScene';
 import { getCatalog, missingFor } from './availability';
 
@@ -64,7 +65,7 @@ export class Placement {
       isBlocked: (x, y) => w.map.isBlocked(x, y),
       hasOre: (x, y) => w.ore.hasOre(x, y),
       unitOn: (x, y) => units.some((u) => Math.floor(u.gx) === x && Math.floor(u.gy) === y),
-      ownBuildings: [...w.buildings.values()].filter((b) => b.team === 'player'),
+      ownBuildings: [...w.buildings.values()].filter((b) => isMine(b.team)),
     });
   }
 

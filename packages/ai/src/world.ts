@@ -73,7 +73,7 @@ export class World {
   constructor(hello: MatchHello) {
     this.width = hello.map.width;
     this.height = hello.map.height;
-    this.team = hello.team;
+    this.team = hello.you;
     for (const s of hello.scenery) {
       const k = sceneryKind(s.kind);
       if (k.category === 'vent') this.vents.push({ gx: s.tx + k.size / 2, gy: s.ty + k.size / 2 });

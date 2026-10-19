@@ -1,4 +1,4 @@
-import type { PlayableFaction, TeamId } from '@gravity-harvest/shared';
+import type { PlayableFaction } from '@gravity-harvest/shared';
 
 // How each enabled entity looks. Keyed by the rules ID (design/balance.xlsx). Gameplay numbers are not here:
 // the server owns them, and sends the browser only the roster's names, costs and prerequisites (MatchCatalog).
@@ -54,12 +54,6 @@ export function unitArt(type: string, faction: PlayableFaction | null | undefine
 
 /** Each side's energy colour: its hovering units' lights and their lasers, beams and energy balls. */
 export const SIDE_GLOW: Readonly<Record<PlayableFaction, number>> = { ordan: 0xa04cff, sable: 0xff2a1a };
-
-/** Which side a team plays: yours, and the computer the other. */
-export function factionOf(team: TeamId, yours: PlayableFaction | null | undefined): PlayableFaction {
-  const mine = yours ?? 'ordan';
-  return team === 'player' ? mine : mine === 'ordan' ? 'sable' : 'ordan';
-}
 
 export const BUILDING_ART: Readonly<Record<string, BuildingArt>> = {
   assembly_yard: { sprite: 'b_assembly_build', card: 'assets/ui/assembly_yard.png' },

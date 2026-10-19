@@ -26,9 +26,9 @@ export class Brain {
   state: LiveState;
 
   constructor(hello: MatchHello, readonly profile: AiProfile, seed: number) {
-    this.team = hello.team;
+    this.team = hello.you;
     this.world = new World(hello);
-    this.tech = new Tech(hello.catalog, hello.faction as Faction);
+    this.tech = new Tech(hello.catalog, hello.factions[hello.you] as Faction);
     this.rng = new Rng(seed >>> 0 || 1);
     this.state = startState(profile);
   }

@@ -8,7 +8,17 @@ import type { SaveGameSummary, SaveKind } from './saves.js';
 
 export const MATCH_PATH = '/api/match';
 
-export type TeamId = 'player' | 'enemy';
+/**
+ * The two sides of a match, by seat: `a` starts in the scenario's first base, `b` in the second. Neither is "you": the
+ * hello says which seat a connection plays (`MatchHello.you`), so a human can sit on either side and the computer
+ * takes the other.
+ */
+export type TeamId = 'a' | 'b';
+export const TEAMS: readonly TeamId[] = ['a', 'b'];
+/** The other side. */
+export const opponentOf = (t: TeamId): TeamId => (t === 'a' ? 'b' : 'a');
+/** One value per side, made by `make` (instead of writing out `{ a: ..., b: ... }`). */
+export const perTeam = <T>(make: (t: TeamId) => T): Record<TeamId, T> => ({ a: make('a'), b: make('b') });
 
 export interface GridPoint {
   gx: number;
@@ -81,8 +91,10 @@ export interface StartMatch {
   /** New match on a scenario, or resume a saved game. */
   scenario?: string;
   saveId?: string;
-  /** New match: the side you play (the computer takes the other). Default: the scenario's. */
+  /** New match: the faction you play (the computer takes the other). Default: the scenario's. */
   faction?: PlayableFaction;
+  /** New match: the seat you play, i.e. which start (the computer takes the other). Default: the scenario's. A save keeps its own. */
+  seat?: TeamId;
   /** New match: how well the computer plays. Default: DEFAULT_DIFFICULTY. A save keeps its own. */
   difficulty?: Difficulty;
   /** Write the autosave slot when the connection closes mid-match. */
@@ -315,7 +327,8 @@ export interface MatchCatalog {
 
 export interface MatchHello {
   scenario: string;
-  team: TeamId;
+  /** The seat this connection plays. */
+  you: TeamId;
   map: { width: number; height: number };
   /** Where the camera starts. */
   camera: GridPoint;
@@ -325,8 +338,8 @@ export interface MatchHello {
   scenery: SceneryView[];
   catalog: MatchCatalog;
   debug: boolean;
-  /** The side you're playing. */
-  faction: PlayableFaction;
+  /** Each side's faction (both can be the same). */
+  factions: Record<TeamId, PlayableFaction>;
   /** How well the computer opponent plays. */
   difficulty: Difficulty;
 }

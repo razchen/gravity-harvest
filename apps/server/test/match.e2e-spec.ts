@@ -108,16 +108,42 @@ describe('Match socket (e2e)', () => {
     const c = await Client.open(url);
     c.send({ t: 'start', scenario: 'skirmish', autosaveOnLeave: false });
     const hello = await c.next(is('hello'));
-    expect(hello).toMatchObject({ scenario: 'skirmish', team: 'player', map: { width: 88, height: 48 }, debug: true });
+    expect(hello).toMatchObject({ scenario: 'skirmish', you: 'a', factions: { a: 'ordan', b: 'sable' }, map: { width: 88, height: 48 }, debug: true });
     expect(hello.ore.rocks.length).toBeGreaterThan(50);
     const first = await c.view();
     expect(first.credits).toBe(15000);
     expect(first.fog).toHaveLength(88 * 48);
-    expect(first.units.filter((u) => u.team === 'enemy')).toEqual([]);
+    expect(first.units.filter((u) => u.team === 'b')).toEqual([]);
     const later = await c.view();
     expect(later.tick).toBeGreaterThan(first.tick);
     await c.close();
   });
+
+  it('the human can play the second seat: their own view and orders, and the computer plays the first', async () => {
+    const c = await Client.open(url);
+    c.send({ t: 'start', scenario: 'skirmish', seat: 'b', faction: 'ordan', autosaveOnLeave: false });
+    const hello = await c.next(is('hello'));
+    expect(hello).toMatchObject({ you: 'b', factions: { a: 'sable', b: 'ordan' }, camera: { gx: 77, gy: 9 } });
+    expect(hello.catalog.buildings.sentry).toBeDefined(); // their own faction's catalog
+    const first = await c.view();
+    expect(first.units.length).toBeGreaterThan(0);
+    expect(first.units.every((u) => u.team === 'b')).toBe(true);
+    expect(first.buildings.every((b) => b.team === 'b')).toBe(true);
+
+    // an order for one of their units is carried out
+    const rifleman = first.units.find((u) => u.type === 'rifleman')!;
+    c.send({ t: 'cmd', cmd: { c: 'move', orders: [{ id: rifleman.id, gx: rifleman.gx - 3, gy: rifleman.gy + 4 }] } });
+    await expect.poll(async () => (await c.view()).units.find((u) => u.id === rifleman.id)!.gy, { timeout: 5000 }).toBeGreaterThan(rifleman.gy + 2);
+
+    // the computer builds up the other base (seen with the fog lifted)
+    c.send({ t: 'debug', cmd: { d: 'reveal', on: true } });
+    await expect.poll(async () => (await c.view()).buildings.filter((b) => b.team === 'a').length, { timeout: 20_000, interval: 250 }).toBeGreaterThan(3);
+
+    // and the match is won from this seat
+    c.send({ t: 'debug', cmd: { d: 'destroyTeam', team: 'a', units: true, buildings: true } });
+    expect(await c.next(is('gameOver'))).toMatchObject({ result: 'victory', stats: { buildingsDestroyed: expect.any(Number) } });
+    await c.close();
+  }, 30_000);
 
   it('accepts orders and rejects malformed or unknown messages', async () => {
     const c = await Client.open(url);
@@ -204,7 +230,7 @@ describe('Match socket (e2e)', () => {
     await c.next(is('hello'));
     c.send({ t: 'save', req: 1, name: '', kind: 'auto', thumbnail: null });
     await c.next(is('saved'));
-    c.send({ t: 'debug', cmd: { d: 'destroyTeam', team: 'enemy', units: true, buildings: true } });
+    c.send({ t: 'debug', cmd: { d: 'destroyTeam', team: 'b', units: true, buildings: true } });
     const over = await c.next(is('gameOver'));
     expect(over).toMatchObject({ result: 'victory', stats: { buildingsDestroyed: 3 } });
     await expect.poll(async () => (await saves().get('/api/saves').query({ kind: 'auto' })).body).toEqual([]);

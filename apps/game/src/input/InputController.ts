@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { DEPTH } from '../config/game';
 import { iso, toGrid } from '../core/geometry';
+import { isMine } from '../data/teams';
 import type { BuildingSprite } from '../entities/BuildingSprite';
 import { HarvesterSprite, VehicleSprite, canBoard, type UnitSprite } from '../entities/UnitSprite';
 import { isBuilding, isUnit, type Entity } from '../entities/types';
@@ -155,7 +156,7 @@ export class InputController {
     if (w.mode) {
       const over = w.input.hitTestPointer(p).some((o) => {
         const e = o.getData('entity') as Entity | undefined;
-        return !!e && isBuilding(e) && e.team === 'player' && (w.mode === 'sell' || e.built);
+        return !!e && isBuilding(e) && isMine(e.team) && (w.mode === 'sell' || e.built);
       });
       w.game.canvas.style.cursor = over ? MODE_CURSOR[w.mode] : 'not-allowed';
       return;
@@ -173,7 +174,7 @@ export class InputController {
 
   /** The selected Medics that would heal `u`: it's yours, damaged, one they mend (not a vehicle), and not one of them. */
   private medicsFor(u: UnitSprite | null): UnitSprite[] {
-    if (!u || u.team !== 'player' || u.hp >= u.maxHp || !canBoard(u)) return [];
+    if (!u || !isMine(u.team) || u.hp >= u.maxHp || !canBoard(u)) return [];
     return [...this.world.selection].filter((s) => s.type === 'medic' && s !== u);
   }
 
@@ -186,18 +187,18 @@ export class InputController {
   /** Your finished, damaged building among `over`, if any. */
   private damagedBuilding(over: Phaser.GameObjects.GameObject[]): BuildingSprite | null {
     return over.map((o) => o.getData('entity') as Entity | undefined)
-      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.team === 'player' && e.hp < e.maxHp) ?? null;
+      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && isMine(e.team) && e.hp < e.maxHp) ?? null;
   }
 
   /** The selected vehicles that a Service Bay would repair: yours, and damaged. */
   private damagedVehicles(): UnitSprite[] {
-    return [...this.world.selection].filter((u) => u instanceof VehicleSprite && u.team === 'player' && u.hp < u.maxHp);
+    return [...this.world.selection].filter((u) => u instanceof VehicleSprite && isMine(u.team) && u.hp < u.maxHp);
   }
 
   /** Your finished Service Bay among `over`, if damaged vehicles are selected (a click on it sends them to be repaired). */
   private bayFor(over: Phaser.GameObjects.GameObject[]): BuildingSprite | null {
     const bay = over.map((o) => o.getData('entity') as Entity | undefined)
-      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.type === 'service_bay' && e.team === 'player');
+      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.type === 'service_bay' && isMine(e.team));
     return bay && this.damagedVehicles().length ? bay : null;
   }
 
@@ -211,7 +212,7 @@ export class InputController {
 
   /** `u`, if it's your transport and soldiers are selected (a click on it sends them in). */
   private transportFor(u: UnitSprite | null): UnitSprite | null {
-    if (!u || u.team !== 'player' || !u.seats || u.selected) return null;
+    if (!u || !isMine(u.team) || !u.seats || u.selected) return null;
     return [...this.world.selection].some(canBoard) ? u : null;
   }
 
@@ -240,7 +241,7 @@ export class InputController {
     // sell / repair mode: a click on one of your buildings sells (or cancels) or repairs it; the mode stays on
     if (w.mode) {
       if (dragged) return;
-      const b = over.map((o) => o.getData('entity') as Entity | undefined).find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.team === 'player');
+      const b = over.map((o) => o.getData('entity') as Entity | undefined).find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && isMine(e.team));
       if (b) {
         if (w.mode === 'sell') w.sellOrCancel(b);
         else w.toggleRepair(b);
@@ -254,7 +255,7 @@ export class InputController {
     const shift = (p.event as MouseEvent | undefined)?.shiftKey ?? false;
     if (dragged && start) {
       const b = this.boxRect(p, start);
-      w.selection.set([...w.units.values()].filter((u) => u.team === 'player' && !u.inside && b.contains(u.sprite.x, u.sprite.y - 20)), shift);
+      w.selection.set([...w.units.values()].filter((u) => isMine(u.team) && !u.inside && b.contains(u.sprite.x, u.sprite.y - 20)), shift);
       if (w.selection.size) w.sounds.answer([`ack_${leadType(w.selection)}_select`]);
       return;
     }
@@ -271,7 +272,7 @@ export class InputController {
       w.orders.answer(medics, 'move');
       return w.orders.mark({ kind: 'move', tx: Math.floor(hitUnit.gx), ty: Math.floor(hitUnit.gy) });
     }
-    if (hitUnit?.team === 'player') {
+    if (hitUnit && isMine(hitUnit.team)) {
       w.selection.set([hitUnit], shift);
       w.sounds.answer([`ack_${leadType(w.selection)}_select`]);
       return;
@@ -279,9 +280,9 @@ export class InputController {
     if (!w.selection.size) return;
     const hitBuilding = hits.filter(isBuilding).find((b) => b.built);
     // (own units returned above, so any unit hit here is hostile)
-    const enemy: Entity | null = hitUnit ?? (hitBuilding && hitBuilding.team !== 'player' ? hitBuilding : null);
-    const ownRefinery = hitBuilding?.type === 'refinery' && hitBuilding.team === 'player' ? hitBuilding : null;
-    const ownBay = hitBuilding?.type === 'service_bay' && hitBuilding.team === 'player' ? hitBuilding : null;
+    const enemy: Entity | null = hitUnit ?? (hitBuilding && !isMine(hitBuilding.team) ? hitBuilding : null);
+    const ownRefinery = hitBuilding?.type === 'refinery' && isMine(hitBuilding.team) ? hitBuilding : null;
+    const ownBay = hitBuilding?.type === 'service_bay' && isMine(hitBuilding.team) ? hitBuilding : null;
     // your damaged building with Engineers selected: they go and repair it (the rest move there)
     const fixers = this.fixersFor(over);
     const broken = this.damagedBuilding(over);
@@ -326,8 +327,8 @@ export class InputController {
     this.ctrlClickAt = performance.now();
     const hits = over.map((o) => o.getData('entity') as Entity | undefined).filter((e): e is Entity => !!e && e.alive);
     const hitUnit = this.unitAt(p.worldX, p.worldY) ?? hits.find(isUnit);
-    const hitBuilding = hits.filter(isBuilding).find((b) => b.built && b.team !== 'player');
-    const enemy: Entity | null = hitUnit && hitUnit.team !== 'player' ? hitUnit : hitBuilding ?? null;
+    const hitBuilding = hits.filter(isBuilding).find((b) => b.built && !isMine(b.team));
+    const enemy: Entity | null = hitUnit && !isMine(hitUnit.team) ? hitUnit : hitBuilding ?? null;
     const g = toGrid(p.worldX, p.worldY);
     if (enemy) return this.issueOrders(enemy, null, null, null, g);
     // all to the clicked point, in the same formation as a move

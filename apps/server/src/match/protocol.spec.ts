@@ -119,6 +119,9 @@ describe('parseClientMessage', () => {
     expect(ok({ t: 'start', scenario: 'skirmish', saveId: 'x', autosaveOnLeave: false })).toBe(false);
     expect(ok({ t: 'start', scenario: 'skirmish' })).toBe(false);
     expect(ok({ t: 'start', scenario: 'skirmish', autosaveOnLeave: true, difficulty: 'insane' })).toBe(false);
+    expect(ok({ t: 'start', scenario: 'skirmish', autosaveOnLeave: true, seat: 'b' })).toBe(true);
+    expect(ok({ t: 'start', scenario: 'skirmish', autosaveOnLeave: true, seat: 'player' })).toBe(false);
+    expect(ok({ t: 'debug', cmd: { d: 'spawn', unit: 'rifleman', team: 'enemy', gx: 1, gy: 1 } })).toBe(false);
     expect(ok({ t: 'save', req: 1, name: 'a', kind: 'manual', thumbnail: null })).toBe(true);
     expect(ok({ t: 'save', req: 1, name: 'a', kind: 'other', thumbnail: null })).toBe(false);
     expect(ok({ t: 'debug', cmd: { d: 'credits', amount: 5 } })).toBe(true);

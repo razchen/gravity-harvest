@@ -1,6 +1,6 @@
 import { BUILDINGS } from '@gravity-harvest/rules';
-import type { Command, Difficulty, TeamId, TeamView } from '@gravity-harvest/shared';
-import { Sim, TEAMS, type Harvester } from '@gravity-harvest/sim';
+import { TEAMS, perTeam, type Command, type Difficulty, type TeamId, type TeamView } from '@gravity-harvest/shared';
+import { Sim, type Harvester } from '@gravity-harvest/sim';
 import { describe, expect, it } from 'vitest';
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer } from './computer.js';
 import { PROFILES } from './profiles.js';
@@ -30,32 +30,32 @@ const computer = (sim: Sim, team: TeamId, difficulty: Difficulty = 'hard', seed 
 describe('the computer player', () => {
   it('builds power when it runs low', () => {
     const sim = Sim.create('skirmish', 3);
-    for (const b of [...sim.buildings.values()]) if (b.team === 'enemy' && b.type === 'power_plant') sim.destroyBuilding(b);
-    expect(sim.powerOf('enemy').low).toBe(true);
+    for (const b of [...sim.buildings.values()]) if (b.team === 'b' && b.type === 'power_plant') sim.destroyBuilding(b);
+    expect(sim.powerOf('b').low).toBe(true);
     const placed: string[] = [];
-    play(sim, [computer(sim, 'enemy')], 20_000, (_, c) => c.c === 'place' && placed.push(c.building));
+    play(sim, [computer(sim, 'b')], 20_000, (_, c) => c.c === 'place' && placed.push(c.building));
     expect(placed.length).toBeGreaterThan(0);
     expect(BUILDINGS[placed[0]].power).toBeGreaterThan(0); // power first
-    play(sim, [computer(sim, 'enemy')], 30_000);
-    expect(sim.powerOf('enemy').low).toBe(false);
+    play(sim, [computer(sim, 'b')], 30_000);
+    expect(sim.powerOf('b').low).toBe(false);
   });
 
   it('keeps its harvesters busy', () => {
     const sim = Sim.create('skirmish', 3);
-    const ai = computer(sim, 'enemy', 'normal');
+    const ai = computer(sim, 'b', 'normal');
     play(sim, [ai], 2000);
-    const h = [...sim.units.values()].find((u) => u.team === 'enemy' && u.kind === 'harvester') as Harvester;
-    sim.command('enemy', { c: 'stop', units: [h.id] });
+    const h = [...sim.units.values()].find((u) => u.team === 'b' && u.kind === 'harvester') as Harvester;
+    sim.command('b', { c: 'stop', units: [h.id] });
     expect(h.state).toBe('idle');
     play(sim, [ai], 15_000);
     expect(h.state).not.toBe('idle');
   });
 
   it('only orders its own units, and only attacks what its side has been shown', () => {
-    const sim = Sim.create('skirmish', 4, 'ordan', { enemyFaction: 'sable', computerOnly: true });
-    const ais = TEAMS.map((t) => computer(sim, t, 'hard', t === 'player' ? 1 : 2));
-    const owned: Record<TeamId, Set<number>> = { player: new Set(), enemy: new Set() };
-    const shown: Record<TeamId, Set<number>> = { player: new Set(), enemy: new Set() };
+    const sim = Sim.create('skirmish', 4, 'ordan', { otherFaction: 'sable', computerOnly: true });
+    const ais = TEAMS.map((t) => computer(sim, t, 'hard', t === 'a' ? 1 : 2));
+    const owned: Record<TeamId, Set<number>> = perTeam(() => new Set());
+    const shown: Record<TeamId, Set<number>> = perTeam(() => new Set());
     let attacks = 0;
     play(sim, ais, 12 * 60_000, (team, c) => {
       for (const u of sim.units.values()) owned[u.team].add(u.id);
@@ -74,9 +74,9 @@ describe('the computer player', () => {
 
   it('plays the same match for the same seed', () => {
     const run = () => {
-      const sim = Sim.create('skirmish', 9, 'sable', { enemyFaction: 'ordan', computerOnly: true });
+      const sim = Sim.create('skirmish', 9, 'sable', { otherFaction: 'ordan', computerOnly: true });
       const log: string[] = [];
-      const ais = TEAMS.map((t) => computer(sim, t, 'normal', t === 'player' ? 11 : 12));
+      const ais = TEAMS.map((t) => computer(sim, t, 'normal', t === 'a' ? 11 : 12));
       play(sim, ais, 6 * 60_000, (team, c) => log.push(`${sim.tick} ${team} ${JSON.stringify(c)}`));
       return { log, credits: TEAMS.map((t) => sim.players[t].credits) };
     };
@@ -88,11 +88,11 @@ describe('the computer player', () => {
   it('adds harvesters by cash flow, not cash in hand: buying a factory early is no reason for one', () => {
     // Ordan's army comes from a Motor Works ($3,000), which takes it well under its starting money in the first
     // minutes; its one harvester still earns more than its queues can spend, so it keeps building the army
-    const sim = Sim.create('skirmish', 2, 'sable', { enemyFaction: 'ordan', computerOnly: true });
+    const sim = Sim.create('skirmish', 2, 'sable', { otherFaction: 'ordan', computerOnly: true });
     const trained: { ms: number; unit: string }[] = [];
     let lowest = Infinity;
-    play(sim, [computer(sim, 'enemy', 'normal')], 4 * 60_000, (_, c) => c.c === 'train' && trained.push({ ms: sim.timeMs, unit: c.unit }), (team, v) => {
-      if (team === 'enemy') lowest = Math.min(lowest, v.credits);
+    play(sim, [computer(sim, 'b', 'normal')], 4 * 60_000, (_, c) => c.c === 'train' && trained.push({ ms: sim.timeMs, unit: c.unit }), (team, v) => {
+      if (team === 'b') lowest = Math.min(lowest, v.credits);
     });
     expect(lowest).toBeLessThan(12_000); // the old rule (cash in hand under $12,000) would have bought one here
     expect(trained.length).toBeGreaterThan(5);
@@ -100,18 +100,18 @@ describe('the computer player', () => {
   });
 
   it('puts the army first under attack: no harvester holds the queue, and the lost one comes back once safe', () => {
-    const sim = Sim.create('skirmish', 3, 'sable', { enemyFaction: 'ordan', computerOnly: true });
-    const ai = computer(sim, 'enemy', 'hard');
+    const sim = Sim.create('skirmish', 3, 'sable', { otherFaction: 'ordan', computerOnly: true });
+    const ai = computer(sim, 'b', 'hard');
     play(sim, [ai], 3 * 60_000);
-    expect([...sim.buildings.values()].some((b) => b.team === 'enemy' && b.type === 'motor_works' && b.built)).toBe(true);
+    expect([...sim.buildings.values()].some((b) => b.team === 'b' && b.type === 'motor_works' && b.built)).toBe(true);
     // its harvester is lost, and a raid is in its base
-    for (const u of [...sim.units.values()]) if (u.team === 'enemy' && u.kind === 'harvester') sim.killUnit(u);
-    for (let i = 0; i < 8; i++) sim.debug('player', { d: 'spawn', unit: 'rifleman', team: 'player', gx: 55.5 + (i % 4), gy: 11.5 + Math.floor(i / 4) });
+    for (const u of [...sim.units.values()]) if (u.team === 'b' && u.kind === 'harvester') sim.killUnit(u);
+    for (let i = 0; i < 8; i++) sim.debug('a', { d: 'spawn', unit: 'rifleman', team: 'a', gx: 55.5 + (i % 4), gy: 11.5 + Math.floor(i / 4) });
     // they push in (riflemen only go for what their side can see)
-    const raid = [...sim.units.values()].filter((u) => u.team === 'player' && u.type === 'rifleman' && u.gx > 50);
-    sim.command('player', { c: 'attackMove', orders: raid.map((u) => ({ id: u.id, gx: 70.5, gy: 8.5 })) });
-    sim.players.enemy.credits = 20_000;
-    sim.command('enemy', { c: 'train', unit: 'harvester' }); // as if it had asked for one just before
+    const raid = [...sim.units.values()].filter((u) => u.team === 'a' && u.type === 'rifleman' && u.gx > 50);
+    sim.command('a', { c: 'attackMove', orders: raid.map((u) => ({ id: u.id, gx: 70.5, gy: 8.5 })) });
+    sim.players.b.credits = 20_000;
+    sim.command('b', { c: 'train', unit: 'harvester' }); // as if it had asked for one just before
     const trained: string[] = [];
     let cancelled = false;
     play(sim, [ai], 8000, (_, c) => {
@@ -120,9 +120,9 @@ describe('the computer player', () => {
     });
     expect(cancelled).toBe(true);
     expect(trained).not.toContain('harvester');
-    expect(sim.players.enemy.queue.some((q) => q.unit === 'harvester')).toBe(false);
+    expect(sim.players.b.queue.some((q) => q.unit === 'harvester')).toBe(false);
     // once the raid is over, it replaces the harvester
-    for (const u of [...sim.units.values()]) if (u.team === 'player' && u.type === 'rifleman') sim.killUnit(u);
+    for (const u of [...sim.units.values()]) if (u.team === 'a' && u.type === 'rifleman') sim.killUnit(u);
     let replaced = false;
     play(sim, [ai], 60_000, (_, c) => c.c === 'train' && c.unit === 'harvester' && (replaced = true));
     expect(replaced).toBe(true);

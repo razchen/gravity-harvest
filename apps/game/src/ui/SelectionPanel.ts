@@ -1,5 +1,6 @@
 import { assetUrl } from '../assets/url';
-import { factionOf, unitArt } from '../data/art';
+import { unitArt } from '../data/art';
+import { factionOfTeam, isMine, type TeamId } from '../data/teams';
 import { getCatalog } from '../systems/availability';
 import { $ } from './dom';
 import type { GroupView, HudBridge, SelectedUnit } from './HudBridge';
@@ -17,6 +18,8 @@ interface TypeTile {
   avg: number;
   low: number;
   enemy: boolean;
+  /** Whose they are (the other side's, if any are). */
+  team: TeamId;
 }
 
 const pct = (f: number) => `${Math.round(f * 100)}%`;
@@ -89,11 +92,11 @@ export class SelectionPanel {
     const by = new Map<string, TypeTile & { sum: number }>();
     for (const u of sel) {
       const f = u.maxHp > 0 ? Math.max(0, u.hp / u.maxHp) : 1;
-      const t = by.get(u.type) ?? { type: u.type, count: 0, avg: 0, low: 1, enemy: false, sum: 0 };
+      const t = by.get(u.type) ?? { type: u.type, count: 0, avg: 0, low: 1, enemy: false, team: u.team, sum: 0 };
       t.count++;
       t.sum += f;
       t.low = Math.min(t.low, f);
-      t.enemy ||= u.team !== 'player';
+      if (!isMine(u.team)) Object.assign(t, { enemy: true, team: u.team });
       by.set(u.type, t);
     }
     const order = Object.keys(getCatalog().units);
@@ -106,7 +109,7 @@ export class SelectionPanel {
   }
 
   private tileHtml(t: TypeTile): string {
-    const img = unitArt(t.type, factionOf(t.enemy ? 'enemy' : 'player', this.game.faction))?.card;
+    const img = unitArt(t.type, factionOfTeam(t.team))?.card;
     return `<button class="sel-tile${t.enemy ? ' enemy' : ''}" data-type="${esc(t.type)}">` +
       (img ? `<img src="${assetUrl(img)}" alt="">` : `<span class="sel-noimg">${esc(this.name(t.type).slice(0, 3))}</span>`) +
       '<span class="sel-count"></span><span class="sel-hp"><i></i></span></button>';
@@ -127,10 +130,10 @@ export class SelectionPanel {
 
   private cardHtml(u: SelectedUnit): string {
     const d = getCatalog().units[u.type];
-    const img = unitArt(u.type, factionOf(u.team, this.game.faction))?.card;
+    const img = unitArt(u.type, factionOfTeam(u.team))?.card;
     const row = (k: string) => `<div class="sel-row"><span>${k}</span><b class="sel-${k.toLowerCase()}"></b></div>`;
     return (img ? `<img src="${assetUrl(img)}" alt="">` : '') +
-      `<div class="sel-info"><div class="sel-name">${esc(this.name(u.type))}${u.team !== 'player' ? ' <em>Enemy</em>' : ''}</div>` +
+      `<div class="sel-info"><div class="sel-name">${esc(this.name(u.type))}${!isMine(u.team) ? ' <em>Enemy</em>' : ''}</div>` +
       (d?.role ? `<div class="sel-role">${esc(d.role)}</div>` : '') +
       '<div class="sel-row"><span>Health</span><b class="sel-health"></b></div><span class="sel-hp big"><i></i></span>' +
       (u.cargo ? row('Ore') : '') + (u.seats ? row('Passengers') : '') + '</div>';

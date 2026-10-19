@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { MusicStats } from '../audio/Music';
 import { MIX, soundLimit, soundStats } from '../audio/Sounds';
 import { toGrid } from '../core/geometry';
+import { factionOfTeam, isMine } from '../data/teams';
 import type { BuildingSprite } from '../entities/BuildingSprite';
 import { HarvesterSprite, type UnitSprite } from '../entities/UnitSprite';
 import { isBuilding, type Entity } from '../entities/types';
@@ -168,7 +169,7 @@ export class DevInfoCollector {
     const v = s.view;
     const h = s.hello;
     const lines = [
-      `socket ${net.state}${h ? ` · ${h.scenario} as ${h.faction} · debug commands ${h.debug ? 'yes' : 'no'}` : ' · waiting for the hello'}`,
+      `socket ${net.state}${h ? ` · ${h.scenario} as ${factionOfTeam(h.you)} in seat ${h.you} · debug commands ${h.debug ? 'yes' : 'no'}` : ' · waiting for the hello'}`,
       `last view ${a.length ? `${ago(now - a.at(-1)!)} ago` : 'none yet'} · ${recent.length} views/s${h ? ` (expected ${(1000 / h.viewMs).toFixed(0)})` : ''} · worst gap ${Math.round(gap)}ms`,
       `received ${net.stats.views} views, ${bytes(net.stats.bytes)} · ${bytes(Math.round(this.rate('bytes', net.stats.bytes, now)))}/s`,
     ];
@@ -182,10 +183,10 @@ export class DevInfoCollector {
     const v = s.view!;
     const units = [...s.units.values()];
     const buildings = [...s.buildings.values()];
-    const mine = units.filter((u) => u.team === 'player');
-    const myB = buildings.filter((b) => b.team === 'player');
-    const enemyU = units.filter((u) => u.team !== 'player');
-    const enemyB = buildings.filter((b) => b.team !== 'player');
+    const mine = units.filter((u) => isMine(u.team));
+    const myB = buildings.filter((b) => isMine(b.team));
+    const enemyU = units.filter((u) => !isMine(u.team));
+    const enemyB = buildings.filter((b) => !isMine(b.team));
     const enemyBSeen = enemyB.filter((b) => s.fog.at(Math.floor(b.gx), Math.floor(b.gy)) === 2);
     const pop = s.population();
     const going = myB.filter((b) => !b.built);

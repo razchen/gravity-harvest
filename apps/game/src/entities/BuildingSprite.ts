@@ -4,7 +4,7 @@ import { serviceBayPad } from '@gravity-harvest/sim/layout';
 import { DEPTH } from '../config/game';
 import { iso } from '../core/geometry';
 import { BUILDING_ART, type BuildingArt } from '../data/art';
-import { TEAMS } from '../data/teams';
+import { colourOf, isMine } from '../data/teams';
 import { getCatalog } from '../systems/availability';
 import { ConstructionView } from '../render/Construction';
 import { BuildingDamage, damageLevel } from '../render/Destruction';
@@ -108,7 +108,7 @@ export class BuildingSprite implements Occluder {
     if (lift !== null) this.view.liftMoving(lift);
     this.sprite = this.view.base.setInteractive({ pixelPerfect: true });
     this.sprite.setData('entity', this);
-    this.view.setTint(TEAMS[this.team].tint);
+    this.view.setTint(colourOf(this.team).tint);
     // one already part-built (seen for the first time, or a loaded save) shows its stage without the arrival effects
     if (v.built) this.finish(false);
     else this.showProgress(false);
@@ -224,7 +224,7 @@ export class BuildingSprite implements Occluder {
   setPowered(on: boolean): void {
     this.powered = on;
     this.view.setIdle(on); // an idle animation (the Gravity Lab's gyroscope) stops without power
-    const show = !on && this.built && this.alive && this.team === 'player' && (getCatalog().buildings[this.type]?.power ?? 0) < 0;
+    const show = !on && this.built && this.alive && isMine(this.team) && (getCatalog().buildings[this.type]?.power ?? 0) < 0;
     if (show && !this.noPower) {
       const bolt = [{ x: 4, y: -22 }, { x: -12, y: 3 }, { x: -1, y: 3 }, { x: -6, y: 22 }, { x: 12, y: -4 }, { x: 1, y: -4 }];
       this.noPower = this.badge((g) => g.fillStyle(0xffd34d, 1).fillPoints(bolt, true), this.wrench ? -1 : 0);
