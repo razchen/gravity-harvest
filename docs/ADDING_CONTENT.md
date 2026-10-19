@@ -24,7 +24,8 @@ the **roster** (`packages/sim/src/layout.ts`); everything else stays on the serv
 
 ## Checklist: a new building
 
-Example: the Motor Works (`motor_works` in the spreadsheet).
+Example: the Motor Works (`motor_works` in the spreadsheet). Four edits: its stage config, its registry entry, its
+footprint and the roster (plus, if you like, a line for its dev page).
 
 1. **Model and render.** Get a Tripo model exported **with parts and textures** and put it in `art/models/tripo/`
    (gitignored). Write its stage config `tools/blender/construction/motor_works.json` (model path, atlas name
@@ -36,43 +37,59 @@ Example: the Motor Works (`motor_works` in the spreadsheet).
    This writes `apps/game/public/assets/sprites/b_motor_works_build.{png,json}`: every construction stage, the parts
    that arrive at each, each stage's shadow mask, and the roof spots where it smokes and burns. Check it on the dev
    server at `/dev/building.html?b=motor_works`. Render its preview (see `tools/blender/README.md`), then
-   `python3 tools/sprites/pack_previews.py` and `python3 tools/sprites/make_cards.py` (add it to `CARDS` there) for
-   its dev-page picture and its build card `apps/game/public/assets/ui/motor_works.png`. A defence whose head turns
-   gets a `turret` section in its config (see `render_construction.py`); the game then aims it. One with moving
-   parts (rings, fans, dishes) gets an `idle` section: groups of parts that turn while it runs.
-2. **Load the atlas:** add it to `ATLASES` in `apps/game/src/assets/manifest.ts`.
-3. **Describe its look:** add `motor_works` to `BUILDING_ART` in `apps/game/src/data/art.ts` (its atlas and card).
-4. **Footprint:** add its size to `FOOTPRINT` in `packages/sim/src/layout.ts`.
-5. **Turn it on:** add `motor_works` to `ROSTER.buildings` in the same file.
+   `python3 tools/sprites/pack_previews.py` and `python3 tools/sprites/make_cards.py` (it finds the building from its
+   stage config) for its dev-page picture and its build card `apps/game/public/assets/ui/motor_works.png`. A defence
+   whose head turns gets a `turret` section in its config (see `render_construction.py`); the game then aims it. One
+   with moving parts (rings, fans, dishes) gets an `idle` section: groups of parts that turn while it runs.
+2. **Register its art:** add `motor_works` to `BUILDING_REGISTRY` in `apps/game/src/data/registry.ts`. An empty
+   entry (`motor_works: {}`) is enough when its atlas is `b_<id>_build` and its card `ui/<id>.png`; add a `door` (the
+   doorway units come out of) or a `video` (its generated running loop or door) if it has one. The atlases the game
+   loads, its card and the art tables are all derived from this, and so is its dev page.
+3. **Footprint:** add its size to `FOOTPRINT` in `packages/sim/src/layout.ts` (the same number as in its stage config;
+   a test checks they agree, and `footprint()` throws for a building that has none).
+4. **Turn it on:** add `motor_works` to `ROSTER.buildings` in the same file.
+5. *Optional:* its model's part count and a line about it in `NOTES` in `apps/game/src/dev/buildings.ts` (the dev
+   page works without). Its release is already in `MILESTONE_OF` there, as is every building in the spreadsheet.
 6. **Behaviour:** anything that isn't data yet goes in the sim (defences shoot by their rules weapons on their own;
    the Service Bay's repairs are in `Sim.repair`). Remove any `STAND_INS` entry it replaces.
 7. `npm run check`, then `npm run assets:push` and commit `apps/game/assets.json` (the new art goes to S3, not git).
-   The content tests fail until every roster entry has art, a card and a footprint; the scenario
-   tests check every map still fits.
+   The content tests fail until the roster, the registry, the footprints and the stage configs all list the same
+   buildings, its footprint agrees with its stage config, and its atlases and card are on disk; the scenario tests
+   check every map still fits.
 
 Costs, HP, power, build time and prerequisites come from the spreadsheet automatically, and the build panel shows the
 card (locked until its prerequisites are built).
 
 ## Checklist: a new unit
 
-Example: the Lancer (`lancer`).
+Example: the Lancer (`lancer`). Three edits: its render config, its registry entry and the roster (plus a set in the
+sim if it hovers, aims a turret or repairs, a shot look if it fires something new, and a line for its dev page).
 
-1. **Model and render** with a script in `tools/blender` (infantry: add it to `UNITS` in `make_infantry.py`, 16
-   directions × stance + run, and its death; then `python3 tools/sprites/pack_infantry.py <id>`, which also makes its
-   card; `render_vehicle.py` for vehicles: 16 directions × wheel frames). The packers lighten its baked shadow to the
-   18% of everything else. A vehicle with a turret that should turn on its own: add empties to its model in Blender
-   (`wheel_<n>` at each axle and `turret` at the turret's pivot, its parts parented to them), save it as
-   `art/models/tripo/<id>.blend`, set `rig` in `vehicles.json`, and add it to `TURRET_UNITS` (`sim/layout.ts`).
-2. **Load the atlas** in `assets/manifest.ts`.
-3. **Describe its look** in `UNIT_ART` (`data/art.ts`): atlas, card, `kind: 'infantry' | 'vehicle'`.
-4. **Turn it on:** add `lancer` to `ROSTER.units`.
-5. If it needs a behaviour the sim doesn't have yet (see below), add it in `packages/sim/src/sim.ts` with tests.
-6. `npm run check`, then `npm run assets:push` and commit `apps/game/assets.json`.
+1. **Model and render** with a script in `tools/blender` (`render_vehicle.py` for vehicles, from their entry in
+   `vehicles.json`: 16 directions × wheel frames; then `python3 tools/sprites/pack_vehicles.py`, which also makes its
+   card. Infantry: add it to `UNITS` in `make_infantry.py`, 16 directions × stance + run, and its death; then
+   `python3 tools/sprites/pack_infantry.py <id>`). The packers lighten its baked shadow to the 18% of everything else.
+   A vehicle with a turret that should turn on its own: add empties to its model in Blender (`wheel_<n>` at each axle
+   and `turret` at the turret's pivot, its parts parented to them), save it as `art/models/tripo/<id>.blend` and set
+   `rig` in `vehicles.json`.
+2. **Register its art:** add `lancer` to `UNIT_REGISTRY` in `apps/game/src/data/registry.ts`: its `kind`
+   (`'vehicle'`, `'infantry'` or `'harvester'`) and, if it has them, its own shot look (`fire`), its working loop
+   (`clip`), one design per side (`sides`: atlases `v_<id>_<side>`, cards `ui/<id>_<side>.png`), more rig clips
+   (`clips`, like the carrier's `door`) or other renders (`variants`). The atlases the game loads (`v_<id>`, its clips),
+   its card and the art tables are all derived from this, and so is its dev page.
+3. **Turn it on:** add `lancer` to `ROSTER.units` in `packages/sim/src/layout.ts`.
+4. *If it applies,* in the same file: `HOVER_UNITS` if it hovers (a test checks this against its art), `TURRET_UNITS`
+   if its turret should aim on its own (it needs a turret layer), `FIXERS` if it repairs buildings. A new `fire` look
+   needs an entry in `apps/game/src/data/shots.ts` (a test says which).
+5. *Optional:* a line about it in `NOTES` in `apps/game/src/dev/unitData.ts`, with its rig clips' frames and speed so
+   its page can play them, or `turret: true` to show its turret turning.
+6. If it needs a behaviour the sim doesn't have yet (see below), add it in `packages/sim/src/sim.ts` with tests.
+7. `npm run check`, then `npm run assets:push` and commit `apps/game/assets.json`.
 
 What already works for any unit from the sheet: movement (speed), sight, HP and armor, its weapons (damage, burst,
 fire interval, range, damage class against the target's armor), production at the right building with its
 prerequisites, the queue, refunds, and carrying infantry (a unit with `passengers`; its doors are a `v_<id>_door`
-clip, closed → open, in the manifest). Abilities, ammo, aircraft, naval units, cloaking, decoys and the trait
+clip, closed → open, listed in its registry `clips`). Abilities, ammo, aircraft, naval units, cloaking, decoys and the trait
 notes in the spreadsheet are **not** implemented yet; they come with the units that need them.
 
 ## Scenery: trees, rocks, bushes, logs, rubble, wrecks, grass, decals

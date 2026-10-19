@@ -14,7 +14,7 @@ export default function mount(): void {
     picture: b.picture,
     preview: b.preview,
     body: `
-      <h2 class="${CARD_TITLE}">${b.name}<small>${b.footprint}×${b.footprint}</small></h2>
+      <h2 class="${CARD_TITLE}">${b.name}${b.footprint ? `<small>${b.footprint}×${b.footprint}</small>` : ''}</h2>
       ${tagsHtml(b, b.role)}
       <p class="${CARD_DESC}">${b.description}</p>
       ${statsHtml(b)}

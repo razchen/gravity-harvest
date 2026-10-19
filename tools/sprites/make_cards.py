@@ -3,7 +3,7 @@
 Run from the repo root (needs Python 3 with Pillow):
     python3 tools/sprites/make_cards.py
 
-For each building in CARDS, its preview (apps/game/public/assets/previews/<atlas>.webp) is cropped to the building
+For each building with a stage config (tools/blender/construction/<id>.json), its preview (apps/game/public/assets/previews/<atlas>.webp) is cropped to the building
 itself (previews.json), centred in a transparent square with a small margin and written to
 apps/game/public/assets/ui/<id>.png.
 """
@@ -18,13 +18,12 @@ OUT = os.path.join(ROOT, "apps", "game", "public", "assets", "ui")
 SIZE = 320
 MARGIN = 0.06
 
-# building id -> construction atlas
+CONSTRUCTION = os.path.join(ROOT, "tools", "blender", "construction")
+
+# building id -> construction atlas, read from each building's stage config, so a new building needs no line here
 CARDS = {
-    "assembly_yard": "b_assembly_build",
-    **{b: f"b_{b}_build" for b in [
-        "power_plant", "reactor_plant", "refinery", "barracks", "radar", "motor_works", "service_bay", "gravity_lab",
-        "gravity_forge", "sentry", "lance_battery", "incinerator", "anchor", "hound_kennel",
-    ]},
+    f[:-5]: json.load(open(os.path.join(CONSTRUCTION, f)))["atlas"]
+    for f in sorted(os.listdir(CONSTRUCTION)) if f.endswith(".json")
 }
 
 

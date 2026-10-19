@@ -1,4 +1,4 @@
-// How every shot looks and sounds, keyed by what it fires: a unit's own UNIT_ART `fire` (data/art.ts), else the rules'
+// How every shot looks and sounds, keyed by what it fires: a unit's own `fire` (data/registry.ts), else the rules'
 // projectile (and the sim's own two: an Engineer's 'repair', a heal's 'beam'). The server decides hits and damage; this
 // is only the look. Every projectile the rules have needs an entry (data/content.test.ts).
 

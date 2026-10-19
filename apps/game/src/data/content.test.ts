@@ -1,16 +1,20 @@
 // Content integrity: everything in the match roster has art, and the art exists on disk.
 // (Scenario maps are checked in packages/sim.)
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { ATLASES, TERRAIN } from '../assets/manifest';
-import { MATCH_PUBLIC_CATALOG, FOOTPRINT, ROSTER, SCENERY_KINDS } from '@gravity-harvest/sim';
+import { HOVER_UNITS, MATCH_PUBLIC_CATALOG, FOOTPRINT, ROSTER, SCENERY_KINDS, TURRET_UNITS } from '@gravity-harvest/sim';
 import { WEAPONS } from '@gravity-harvest/rules';
 import { BUILDING_ART, UNIT_ART } from './art';
+import { BUILDING_REGISTRY, UNIT_REGISTRY, buildingAtlas, unitSprites } from './registry';
 import { SHOTS } from './shots';
 
 const PUBLIC = join(import.meta.dirname, '..', '..', 'public');
+const CONSTRUCTION = join(import.meta.dirname, '..', '..', '..', '..', 'tools', 'blender', 'construction');
 const atlasKeys = new Set(ATLASES.map((a) => a.key));
+const atlasMeta = (key: string) =>
+  (JSON.parse(readFileSync(join(PUBLIC, 'assets', 'sprites', `${key}.json`), 'utf8')) as { meta: Record<string, unknown> }).meta;
 
 describe('asset manifest', () => {
   it.each(ATLASES)('atlas $key has a png and a json that contains its first frame', (a) => {
@@ -31,9 +35,9 @@ describe('roster art', () => {
     const art = BUILDING_ART[id];
     expect(MATCH_PUBLIC_CATALOG.buildings[id]).toBeDefined();
     expect(FOOTPRINT[id]).toBeGreaterThan(0);
-    expect(art, `add ${id} to data/art.ts`).toBeDefined();
+    expect(art, `add ${id} to data/registry.ts`).toBeDefined();
     expect(atlasKeys.has(art.sprite)).toBe(true);
-    expect(existsSync(join(PUBLIC, art.card))).toBe(true);
+    expect(existsSync(join(PUBLIC, art.card)), art.card).toBe(true);
     // a construction atlas (tools/sprites/pack_construction.py): every stage, its arriving parts and its shadow mask
     const atlas = JSON.parse(readFileSync(join(PUBLIC, 'assets', 'sprites', `${art.sprite}.json`), 'utf8')) as
       { frames: Record<string, unknown>; meta: { construction?: { stages: unknown[] }; damage?: { spots: unknown[] } } };
@@ -45,17 +49,55 @@ describe('roster art', () => {
     expect(atlas.meta.damage?.spots.length, `${art.sprite} has no roof spots for smoke and fire`).toBeGreaterThan(0);
   });
 
-  it.each(ROSTER.units.map((id) => [id]))('unit %s has rules, a loaded atlas and a card', (id) => {
+  it.each(ROSTER.units.map((id) => [id]))('unit %s has rules, a loaded atlas and a card for each of its designs', (id) => {
     const art = UNIT_ART[id];
     expect(MATCH_PUBLIC_CATALOG.units[id]).toBeDefined();
-    expect(art, `add ${id} to data/art.ts`).toBeDefined();
-    expect(atlasKeys.has(art.sprite)).toBe(true);
-    expect(existsSync(join(PUBLIC, art.card))).toBe(true);
+    expect(art, `add ${id} to data/registry.ts`).toBeDefined();
+    for (const look of unitSprites(id)) {
+      expect(atlasKeys.has(look.sprite)).toBe(true);
+      expect(existsSync(join(PUBLIC, look.card)), look.card).toBe(true);
+    }
   });
 
-  it('art only exists for roster entries', () => {
+  it('the registry has exactly the roster: nothing missing, nothing left over', () => {
+    expect(Object.keys(BUILDING_REGISTRY).sort()).toEqual([...ROSTER.buildings].sort());
+    expect(Object.keys(UNIT_REGISTRY).sort()).toEqual([...ROSTER.units].sort());
     expect(Object.keys(BUILDING_ART).sort()).toEqual([...ROSTER.buildings].sort());
     expect(Object.keys(UNIT_ART).sort()).toEqual([...ROSTER.units].sort());
+  });
+
+  it('no atlas is loaded twice', () => {
+    expect(new Set(ATLASES.map((a) => a.key)).size).toBe(ATLASES.length);
+  });
+
+  it('hovering and turret units in the sim match their art', () => {
+    for (const id of ROSTER.units) {
+      for (const { sprite } of unitSprites(id)) {
+        // a hovering unit's atlas floats it over its own shadow (render_vehicle.py `hover`); nothing else's does
+        expect(!!atlasMeta(sprite).hover, `${sprite}: HOVER_UNITS and its art disagree`).toBe(HOVER_UNITS.has(id));
+        // a unit can only aim a turret its art has (not every turret layer aims yet)
+        if (TURRET_UNITS.has(id)) expect(atlasMeta(sprite).turret_layer, `${sprite} has no turret layer`).toBeDefined();
+      }
+    }
+  });
+});
+
+describe('footprints', () => {
+  // each building's model is rendered to fill its footprint (render_construction.py), so the sim's size has to agree
+  const configs = Object.fromEntries(readdirSync(CONSTRUCTION).filter((f) => f.endsWith('.json')).map((f) => [
+    f.replace(/\.json$/, ''),
+    JSON.parse(readFileSync(join(CONSTRUCTION, f), 'utf8')) as { atlas: string; footprint: number },
+  ]));
+
+  it.each(ROSTER.buildings.map((id) => [id]))('%s: its Blender config renders the atlas the game loads at the sim\'s footprint', (id) => {
+    const config = configs[id];
+    expect(config, `add tools/blender/construction/${id}.json`).toBeDefined();
+    expect(config.footprint, `FOOTPRINT.${id} in packages/sim/src/layout.ts and construction/${id}.json disagree`).toBe(FOOTPRINT[id]);
+    expect(config.atlas).toBe(buildingAtlas(id));
+  });
+
+  it('every Blender config is for a building in the roster', () => {
+    expect(Object.keys(configs).sort()).toEqual([...ROSTER.buildings].sort());
   });
 });
 

@@ -42,7 +42,11 @@ export const FACTION_COUNTERPART: Readonly<Record<string, string>> = {
   gravity_lab: 'gravity_forge', gravity_forge: 'gravity_lab',
 };
 
-/** Footprint (size x size tiles) of each building. Art-driven, so it lives here rather than in the spreadsheet. */
+/**
+ * Footprint (size x size tiles) of each building. Art-driven, so it lives here rather than in the spreadsheet; its
+ * model is rendered to fill the same size (tools/blender/construction/<id>.json `footprint`, checked by the game's
+ * content tests).
+ */
 export const FOOTPRINT: Readonly<Record<string, number>> = {
   assembly_yard: 4,
   power_plant: 3,
@@ -61,7 +65,12 @@ export const FOOTPRINT: Readonly<Record<string, number>> = {
   hound_kennel: 2,
 };
 
-export const footprint = (type: string): number => FOOTPRINT[type] ?? 3;
+/** A building's footprint. One without a size is a mistake (a new building missed here), not a 3 x 3 to guess at. */
+export function footprint(type: string): number {
+  const n = FOOTPRINT[type];
+  if (n === undefined) throw new Error(`No footprint for building "${type}" (add it to FOOTPRINT in packages/sim/src/layout.ts)`);
+  return n;
+}
 
 /**
  * Vehicles whose turret turns on its own (their art has a turret layer): they aim it at what they shoot instead of

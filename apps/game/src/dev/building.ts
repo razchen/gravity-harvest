@@ -40,7 +40,7 @@ export default function mount(): void {
     : asked === 'construction' ? 'construction' : asked === 'picture' && known?.picture ? 'picture'
     : asked === 'idle' && known?.idle ? 'idle' : known?.model ? 'model' : 'construction';
   const BUILDINGS = DEV_BUILDINGS.filter((b) => b.construction && (wanted === 'all' || b.id === wanted))
-    .map((b) => ({ id: b.id, atlas: b.construction!, label: b.name, footprint: b.footprint, video: !!b.video }));
+    .map((b) => ({ id: b.id, atlas: b.construction!, label: b.name, footprint: b.footprint!, video: !!b.video }));
   /** Animation: the units that come out of the building and come to it (none: no traffic controls). */
   const TRIPS: Trip[] = mode === 'idle' && known ? tripsFor(known.id) : [];
   /** Repeat: the next unit goes this long after the last one has gone (ms). */
