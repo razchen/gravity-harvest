@@ -3,6 +3,7 @@
 import { CAMERA } from '../config/game';
 import { SHADOW_ALPHA } from '../world/ShadowLayer';
 import { mountPicture } from './picture';
+import { BAR, BUTTON, STATUS } from './ui';
 
 const KEY = 'gh-dev-picture-view';
 
@@ -12,16 +13,16 @@ const KEY = 'gh-dev-picture-view';
  */
 export function mountPictureViews(host: HTMLElement, file: string, frame: string, preview?: string, inGame = true): void {
   const stage = document.createElement('div');
-  stage.className = 'pic-stage';
+  stage.className = 'relative grid min-h-[320px] flex-1 place-items-center overflow-hidden [&>img]:max-w-none';
   const bar = document.createElement('div');
-  bar.className = 'model-bar';
+  bar.className = `${BAR} gap-x-3.5 gap-y-1.5`;
   const views = [
     ...(preview ? [{ id: 'hires', label: 'High-res picture' }] : []),
     ...(inGame ? [{ id: 'game', label: 'In game' }] : []),
   ];
-  bar.innerHTML = `<span class="group">${views.map((v) => `<button data-v="${v.id}">${v.label}</button>`).join('')}</span><span class="model-status"></span>`;
+  bar.innerHTML = `<span class="inline-flex gap-1">${views.map((v) => `<button class="${BUTTON}" data-v="${v.id}">${v.label}</button>`).join('')}</span><span class="${STATUS}"></span>`;
   host.replaceChildren(stage, bar);
-  const status = bar.querySelector<HTMLElement>('.model-status')!;
+  const status = bar.lastElementChild as HTMLElement;
   const show = async (id: string) => {
     for (const b of bar.querySelectorAll<HTMLElement>('[data-v]')) b.classList.toggle('primary', b.dataset.v === id);
     try { localStorage.setItem(KEY, id); } catch { /* not kept */ }
@@ -34,7 +35,7 @@ export function mountPictureViews(host: HTMLElement, file: string, frame: string
     }
     const { canvas, res } = await gameSprite(file, frame);
     const k = CAMERA.startZoom / res;
-    canvas.className = 'game-size';
+    canvas.className = 'h-auto';
     canvas.style.width = `${canvas.width * k}px`;
     stage.append(canvas);
     status.textContent = `sprite ${canvas.width} × ${canvas.height} px, shown at ${Math.round(canvas.width * k)} × ${Math.round(canvas.height * k)} CSS px, as in the game (pixel for pixel on a Retina screen)`;

@@ -1,6 +1,6 @@
 import type { MatchStats } from '../../core/EventBus';
 import type { SaveGameSummary } from '../../save/SaveApi';
-import type { PlayableFaction, ScenarioSummary } from '@gravity-harvest/shared';
+import type { Difficulty, PlayableFaction, ScenarioSummary } from '@gravity-harvest/shared';
 import type { Settings } from '../../app/settings';
 import { $ } from '../dom';
 import { gameOverScreen } from './gameOver';
@@ -9,7 +9,9 @@ import { mainMenu, newGameScreen, pauseMenu, settingsScreen } from './menus';
 
 /** What the screens can ask the app to do. Implemented by GameFlow. */
 export interface ScreenActions {
-  newGame(scenarioId: string, faction?: PlayableFaction): void;
+  newGame(scenarioId: string, faction?: PlayableFaction, difficulty?: Difficulty): void;
+  /** How well the computer plays in the running match (null outside one). */
+  difficulty(): Difficulty | null;
   continueGame(): void;
   loadSave(id: string): void;
   deleteSave(id: string): Promise<void>;

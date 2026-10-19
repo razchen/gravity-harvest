@@ -1,0 +1,1372 @@
+{
+ "_about": "Voice lines made with ElevenLabs text to speech (tools/audio/elevenlabs.py voice). Each slot: the voice (a name from voices), its lines (each line one file, the game plays one at random), and radio: true to give it the vehicle crews' radio sound when packed. Voices are ElevenLabs' premade ones, by id. A slot can set its own voice settings (settings: ElevenLabs voice_settings, over the defaults in elevenlabs.py); the announcer's are steady and flat, so a line ends evenly. Slots starting sable_ are the Sable side's voices (Irish, from ElevenLabs' voice library); the game plays them when the player is Sable, else the plain slot.",
+ "voices": {
+  "Alice": "Xb7hH8MSUJpSbSDYk0k2",
+  "Harry": "SOYHLrjzK2X1ezoPC6cr",
+  "Callum": "N2lVS1w4EtoT3dr4eOWO",
+  "Lily": "pFZP5JQG7iQjIQuC4Bku",
+  "Liam": "TX3LPaxmHKxFdv7VOQHJ",
+  "Charlie": "IKne3meq5aSn9XLyUdCD",
+  "Roger": "CwhRBWXzGAHq8TQ4Fs17",
+  "Adam": "pNInz6obpgDQGcFmaJgB",
+  "Brian": "nPczCjzI2devNBz1zQrb",
+  "Chris": "iP95p4xoKVk53GoZ742B",
+  "Matilda": "XrExE9yKIg1WjnnlVkGX",
+  "River": "SAz9YHcvj6GT2YYXdXww",
+  "Will": "bIHbv24MWmeRgasZH58o",
+  "George": "JBFqnCBsd6RMkjVDRZzb",
+  "Bill": "pqHfZKP75CvOlQylNhV4",
+  "Sheena (Irish)": "PhnmFMcb2ADtpau0iYi6",
+  "Fin (Irish)": "MjEQaRiSe6jP1b0vagRU",
+  "Paddy (Irish)": "1yDXKNtyiAtDljYHKmZy",
+  "Daniel (Irish)": "4W8xz6cmN5JMnmmVA3is",
+  "Dan (Irish)": "thYWTC3ObLUgoeN0sEv3",
+  "Eric": "cjVigY5qzO86Huf0OWal",
+  "Laura": "FGY2WhTYpPnrIDTdsKH5",
+  "Sarah": "EXAVITQu4vr4xnSDxMaL",
+  "Mick (Irish)": "2GErPEnQqbyeqhZQPM6r",
+  "Thomas (Irish)": "5OgOMFAcpSKqVQHHQHrU",
+  "Jordan (Irish)": "cMnMwhoOlFYOQDBWBwU1",
+  "Ronan (Irish)": "xyY1A1culQEvzoU6aS0N",
+  "Jimmy (Irish)": "Jot7IsvC9VkWPLPjLDKw",
+  "Kevin (Irish)": "ZyYWFWAQ8NqzJGWzpBvJ",
+  "Cormac (Irish)": "tEo3d4j7gzVojBL5Z4Pt",
+  "John (Irish)": "7uDxvtPDB7zMehaRUyXh"
+ },
+ "slots": {
+  "announce_construction_complete": {
+   "voice": "Alice",
+   "lines": [
+    "Construction complete."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_unit_ready": {
+   "voice": "Alice",
+   "lines": [
+    "Unit ready."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_low_power": {
+   "voice": "Alice",
+   "lines": [
+    "Low power."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_power_restored": {
+   "voice": "Alice",
+   "lines": [
+    "Power restored."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_base_attack": {
+   "voice": "Alice",
+   "lines": [
+    "Our base is under attack!"
+   ],
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_unit_lost": {
+   "voice": "Alice",
+   "lines": [
+    "Unit lost."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_building_lost": {
+   "voice": "Alice",
+   "lines": [
+    "Building lost."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_insufficient_funds": {
+   "voice": "Alice",
+   "lines": [
+    "Insufficient funds."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "ack_rifleman_select": {
+   "voice": "Harry",
+   "lines": [
+    "Rifleman, ready.",
+    "Standing by.",
+    "Yes, commander?",
+    "Orders?",
+    "Rifle's loaded.",
+    "What do you need?",
+    "Right here, sir.",
+    "Ready for action.",
+    "Awaiting orders."
+   ]
+  },
+  "ack_rifleman_move": {
+   "voice": "Harry",
+   "lines": [
+    "Moving out.",
+    "On my way.",
+    "Copy that.",
+    "Moving.",
+    "Heading there now.",
+    "Roger that.",
+    "Double time!",
+    "Got it.",
+    "On the way."
+   ]
+  },
+  "ack_rifleman_attack": {
+   "voice": "Harry",
+   "lines": [
+    "Engaging!",
+    "Open fire!",
+    "Target in sight!",
+    "Taking them down!",
+    "Contact!",
+    "Weapons free!",
+    "Light them up!",
+    "Firing!",
+    "Hostiles spotted!"
+   ]
+  },
+  "ack_medic_select": {
+   "voice": "Liam",
+   "lines": [
+    "Medic here.",
+    "Who's hurt?",
+    "Ready to patch them up.",
+    "Need a medic?",
+    "Bandages ready.",
+    "Anyone hurt?",
+    "I've got you covered.",
+    "Medic standing by.",
+    "Let's keep them breathing."
+   ]
+  },
+  "ack_medic_move": {
+   "voice": "Liam",
+   "lines": [
+    "On my way.",
+    "Coming through.",
+    "Moving.",
+    "Hang in there, I'm coming.",
+    "Moving up.",
+    "Right behind you.",
+    "Got it.",
+    "Heading to them.",
+    "Heading over."
+   ]
+  },
+  "ack_raider_select": {
+   "voice": "Callum",
+   "lines": [
+    "Raider, ready.",
+    "What's the job?",
+    "Quick and quiet.",
+    "Yeah?",
+    "Got something for me?",
+    "Raider here.",
+    "Easy pickings?",
+    "Ready to slip in.",
+    "Let's make it quick."
+   ]
+  },
+  "ack_raider_move": {
+   "voice": "Callum",
+   "lines": [
+    "Slipping through.",
+    "On the move.",
+    "Keeping it quiet.",
+    "Nobody sees me.",
+    "In and out.",
+    "Moving.",
+    "Through the shadows.",
+    "On it, boss.",
+    "Quietly does it."
+   ]
+  },
+  "ack_infiltrator_select": {
+   "voice": "Lily",
+   "lines": [
+    "Infiltrator here.",
+    "Need a way in?",
+    "Ready when you are.",
+    "Yes?",
+    "Silent and ready.",
+    "Who's the target?",
+    "I'm listening.",
+    "Unseen, as always.",
+    "Your move."
+   ]
+  },
+  "ack_infiltrator_move": {
+   "voice": "Lily",
+   "lines": [
+    "Going dark.",
+    "Moving unseen.",
+    "On it.",
+    "Slipping away.",
+    "Out of sight.",
+    "Leaving no trace.",
+    "As you wish.",
+    "Moving in.",
+    "Gone."
+   ]
+  },
+  "ack_harvester_select": {
+   "voice": "Bill",
+   "radio": true,
+   "lines": [
+    "Harvester ready.",
+    "Hopper's empty.",
+    "Ready to dig.",
+    "Ready to haul.",
+    "Scoops are clean.",
+    "Harvester standing by.",
+    "Where's the ore?",
+    "Ready to load up.",
+    "Let's fill her up."
+   ]
+  },
+  "ack_harvester_move": {
+   "voice": "Bill",
+   "radio": true,
+   "lines": [
+    "Heading out.",
+    "Moving.",
+    "On my way.",
+    "Rolling.",
+    "Off we go.",
+    "Right away.",
+    "Moving the rig.",
+    "Heading over.",
+    "On it."
+   ]
+  },
+  "ack_skimmer_select": {
+   "voice": "Charlie",
+   "radio": true,
+   "lines": [
+    "Skimmer online.",
+    "Fast and ready.",
+    "Skimmer here.",
+    "Ready to fly.",
+    "Skimmer, standing by.",
+    "Let's move!",
+    "Engines hot.",
+    "What's the target?",
+    "Speed is life."
+   ]
+  },
+  "ack_skimmer_move": {
+   "voice": "Charlie",
+   "radio": true,
+   "lines": [
+    "Full throttle!",
+    "Moving fast.",
+    "On it.",
+    "Zooming in!",
+    "Gone in a flash.",
+    "Moving out fast.",
+    "Copy, moving.",
+    "Hang on!",
+    "Racing there now."
+   ]
+  },
+  "ack_skimmer_attack": {
+   "voice": "Charlie",
+   "radio": true,
+   "lines": [
+    "Lighting them up!",
+    "Guns hot!",
+    "Engaging target!",
+    "Strafing run!",
+    "Hitting them fast!",
+    "Taking the shot!",
+    "Opening fire!",
+    "Hit and run!",
+    "Target engaged!"
+   ]
+  },
+  "ack_jackal_select": {
+   "voice": "Roger",
+   "radio": true,
+   "lines": [
+    "Jackal crew, standing by.",
+    "Jackal ready.",
+    "Turret's warm.",
+    "Jackal online.",
+    "Crew's ready.",
+    "What's the plan?",
+    "Gun's loaded.",
+    "Standing by.",
+    "Jackal, at your service."
+   ]
+  },
+  "ack_jackal_move": {
+   "voice": "Roger",
+   "radio": true,
+   "lines": [
+    "Rolling out.",
+    "Moving.",
+    "On our way.",
+    "Moving out.",
+    "Wheels turning.",
+    "Copy that.",
+    "Heading there.",
+    "Advancing.",
+    "Roger, moving."
+   ]
+  },
+  "ack_jackal_attack": {
+   "voice": "Roger",
+   "radio": true,
+   "lines": [
+    "Weapons hot.",
+    "Firing!",
+    "Target locked.",
+    "Fire at will!",
+    "Gun away!",
+    "Engaging target.",
+    "Shell loaded, firing!",
+    "Locked and firing.",
+    "Taking the shot."
+   ]
+  },
+  "ack_ram_select": {
+   "voice": "Adam",
+   "radio": true,
+   "lines": [
+    "Ram, ready to roll.",
+    "Heavy armor here.",
+    "Say the word.",
+    "Ram here.",
+    "Armor's thick.",
+    "Nothing stops us.",
+    "Main gun ready.",
+    "Waiting on you.",
+    "Ram, standing by."
+   ]
+  },
+  "ack_ram_move": {
+   "voice": "Adam",
+   "radio": true,
+   "lines": [
+    "Rolling.",
+    "Moving up.",
+    "Coming through.",
+    "Plowing through.",
+    "Advancing.",
+    "Moving out.",
+    "Nothing in our way.",
+    "Rolling forward.",
+    "Copy, moving."
+   ]
+  },
+  "ack_ram_attack": {
+   "voice": "Adam",
+   "radio": true,
+   "lines": [
+    "Main gun, fire!",
+    "Crushing them.",
+    "Target acquired.",
+    "Flatten them!",
+    "Fire the main gun!",
+    "Smash through!",
+    "Engaging!",
+    "They won't last.",
+    "Hammer them!"
+   ]
+  },
+  "ack_spire_select": {
+   "voice": "Brian",
+   "radio": true,
+   "lines": [
+    "Spire battery, ready.",
+    "Give me coordinates.",
+    "Long guns standing by.",
+    "Battery online.",
+    "Range to target?",
+    "Spire, standing by.",
+    "Guns elevated.",
+    "Ready to bombard.",
+    "Awaiting coordinates."
+   ]
+  },
+  "ack_spire_move": {
+   "voice": "Brian",
+   "radio": true,
+   "lines": [
+    "Repositioning.",
+    "Moving the battery.",
+    "Relocating.",
+    "Displacing.",
+    "New firing position.",
+    "Moving the guns.",
+    "Copy, relocating.",
+    "Battery moving.",
+    "On the move."
+   ]
+  },
+  "ack_spire_attack": {
+   "voice": "Brian",
+   "radio": true,
+   "lines": [
+    "Firing for effect.",
+    "Shells away!",
+    "Target marked.",
+    "Rounds downrange.",
+    "Bombarding!",
+    "Shot out!",
+    "Fire mission!",
+    "Splash incoming.",
+    "Barrage away!"
+   ]
+  },
+  "ack_carrier_select": {
+   "voice": "Chris",
+   "radio": true,
+   "lines": [
+    "Carrier here.",
+    "Room for the squad.",
+    "Carrier, ready.",
+    "All aboard?",
+    "Carrier standing by.",
+    "Ready to transport.",
+    "Doors are open.",
+    "Need a ride?",
+    "Carrier, online."
+   ]
+  },
+  "ack_carrier_move": {
+   "voice": "Chris",
+   "radio": true,
+   "lines": [
+    "Moving out.",
+    "Hold on back there.",
+    "On our way.",
+    "Moving.",
+    "Transporting now.",
+    "Rolling out.",
+    "Copy that.",
+    "Heading there.",
+    "Keep your heads down."
+   ]
+  },
+  "ack_carrier_attack": {
+   "voice": "Chris",
+   "radio": true,
+   "lines": [
+    "Covering fire!",
+    "Engaging!",
+    "Guns up!",
+    "Suppressing fire!",
+    "Opening up!",
+    "Firing!",
+    "Clear them out!",
+    "Hold them back!",
+    "Weapons hot!"
+   ]
+  },
+  "ack_watcher_select": {
+   "voice": "Matilda",
+   "radio": true,
+   "lines": [
+    "Watcher online.",
+    "Eyes on.",
+    "Scanning.",
+    "Sensors online.",
+    "I see everything.",
+    "Watcher, standing by.",
+    "Scopes are clear.",
+    "Monitoring.",
+    "Watching."
+   ]
+  },
+  "ack_watcher_move": {
+   "voice": "Matilda",
+   "radio": true,
+   "lines": [
+    "Relocating.",
+    "Moving to position.",
+    "Sensors on the move.",
+    "Moving the array.",
+    "New vantage point.",
+    "Copy, relocating.",
+    "On my way.",
+    "Moving.",
+    "Shifting position."
+   ]
+  },
+  "ack_shroud_select": {
+   "voice": "River",
+   "radio": true,
+   "lines": [
+    "Shroud, ready.",
+    "Keeping us hidden.",
+    "Shroud here.",
+    "Hidden and ready.",
+    "Cloak's up.",
+    "Shroud online.",
+    "We stay unseen.",
+    "Waiting in the dark.",
+    "Standing by."
+   ]
+  },
+  "ack_shroud_move": {
+   "voice": "River",
+   "radio": true,
+   "lines": [
+    "Moving quietly.",
+    "Stay close to me.",
+    "Relocating.",
+    "Unseen, moving.",
+    "Cloaking the move.",
+    "Slipping through.",
+    "Copy, moving.",
+    "Quiet now.",
+    "In the shadows."
+   ]
+  },
+  "ack_seeder_select": {
+   "voice": "Will",
+   "radio": true,
+   "lines": [
+    "Seeder ready.",
+    "Mines loaded.",
+    "Seeder here.",
+    "Seeder online.",
+    "Ready to plant.",
+    "Mines are armed.",
+    "Where do we seed?",
+    "Standing by.",
+    "Payload ready."
+   ]
+  },
+  "ack_seeder_move": {
+   "voice": "Will",
+   "radio": true,
+   "lines": [
+    "Moving.",
+    "Heading out.",
+    "On the way.",
+    "Setting off.",
+    "Rolling out.",
+    "Copy that.",
+    "Heading there now.",
+    "On the move.",
+    "Moving the payload."
+   ]
+  },
+  "ack_assembler_select": {
+   "voice": "George",
+   "radio": true,
+   "lines": [
+    "Assembler, ready to deploy.",
+    "Where do we build?",
+    "Assembler here.",
+    "Ready to build.",
+    "Point me to a site.",
+    "Assembler standing by.",
+    "Tools are ready.",
+    "Let's put down roots.",
+    "Ready to unpack."
+   ]
+  },
+  "ack_assembler_move": {
+   "voice": "George",
+   "radio": true,
+   "lines": [
+    "Moving out.",
+    "Finding a site.",
+    "On the way.",
+    "Heading to the site.",
+    "Moving.",
+    "Copy, moving out.",
+    "Rolling.",
+    "On my way.",
+    "Looking for ground."
+   ]
+  },
+  "sable_announce_construction_complete": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Construction complete."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_unit_ready": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Unit ready."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_low_power": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Low power."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_power_restored": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Power restored."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_base_attack": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Our base is under attack!",
+    "We're under attack!",
+    "The base is under attack, now!"
+   ],
+   "settings": {
+    "stability": 0.2,
+    "similarity_boost": 0.8,
+    "style": 0.95,
+    "use_speaker_boost": true,
+    "speed": 1.15
+   }
+  },
+  "sable_announce_unit_lost": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Unit lost."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_building_lost": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Building lost."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_insufficient_funds": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Insufficient funds."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_ack_rifleman_select": {
+   "voice": "Fin (Irish)",
+   "lines": [
+    "Ready when you are.",
+    "What's the story, commander?",
+    "Rifle's loaded, so.",
+    "Go on, so.",
+    "Yes, boss?",
+    "I'm here, I'm here.",
+    "Say the word.",
+    "Right so, orders?",
+    "Sable rifle, ready."
+   ]
+  },
+  "sable_ack_rifleman_move": {
+   "voice": "Fin (Irish)",
+   "lines": [
+    "Right so.",
+    "On me way.",
+    "Grand, moving.",
+    "Off we go, lads.",
+    "Leg it!",
+    "Sure, I'm going.",
+    "Heading over now.",
+    "No bother.",
+    "Moving out, so."
+   ]
+  },
+  "sable_ack_rifleman_attack": {
+   "voice": "Fin (Irish)",
+   "lines": [
+    "Have at them!",
+    "Give 'em hell, lads!",
+    "Firing now!",
+    "Ah, here we go!",
+    "Light 'em up!",
+    "Contact, contact!",
+    "They're for it now!",
+    "Open up on them!",
+    "Take them down!"
+   ]
+  },
+  "sable_ack_harvester_select": {
+   "voice": "Paddy (Irish)",
+   "radio": true,
+   "lines": [
+    "Harvester here, boss.",
+    "Hopper's empty, so.",
+    "Ready to dig.",
+    "Where's the good stuff?",
+    "She's ready to haul.",
+    "Scoops are clean.",
+    "Grand day for digging.",
+    "What'll we fill her with?",
+    "Harvester standing by."
+   ]
+  },
+  "sable_ack_harvester_move": {
+   "voice": "Paddy (Irish)",
+   "radio": true,
+   "lines": [
+    "Heading out.",
+    "Off we go.",
+    "Right you are.",
+    "Rolling, so.",
+    "No bother.",
+    "Moving the rig.",
+    "Sure, why not.",
+    "On me way.",
+    "Away we go."
+   ]
+  },
+  "sable_ack_assembler_select": {
+   "voice": "Daniel (Irish)",
+   "radio": true,
+   "lines": [
+    "Assembler, ready to set up.",
+    "Where'll we build?",
+    "Assembler here.",
+    "Show me the site.",
+    "Tools are ready, so.",
+    "Grand bit of ground, is it?",
+    "Ready to unpack.",
+    "Assembler standing by.",
+    "Let's put down roots."
+   ]
+  },
+  "sable_ack_assembler_move": {
+   "voice": "Daniel (Irish)",
+   "radio": true,
+   "lines": [
+    "Moving out.",
+    "Off to find a site.",
+    "Right so, going.",
+    "On the way.",
+    "Heading to the site.",
+    "Grand, rolling.",
+    "Looking for good ground.",
+    "No bother.",
+    "Away we go."
+   ]
+  },
+  "sable_ack_seeder_select": {
+   "voice": "Dan (Irish)",
+   "radio": true,
+   "lines": [
+    "Seeder ready.",
+    "Mines are loaded, so.",
+    "Seeder here.",
+    "Where'll we sow them?",
+    "Ready to plant.",
+    "Mines are armed.",
+    "Payload's ready.",
+    "What'll it be?",
+    "Seeder standing by."
+   ]
+  },
+  "sable_ack_seeder_move": {
+   "voice": "Dan (Irish)",
+   "radio": true,
+   "lines": [
+    "Moving.",
+    "Off we go.",
+    "On the way.",
+    "Right you are.",
+    "Rolling out.",
+    "Grand, moving.",
+    "Heading there now.",
+    "Mind the payload.",
+    "On the move, so."
+   ]
+  },
+  "ack_lancer_select": {
+   "voice": "Eric",
+   "lines": [
+    "Lancer, ready.",
+    "Launcher's loaded.",
+    "Anti-armor, standing by.",
+    "What's the target?",
+    "Lancer here.",
+    "Ready to fire.",
+    "Missiles primed.",
+    "Point me at armor.",
+    "Awaiting orders."
+   ]
+  },
+  "ack_lancer_move": {
+   "voice": "Eric",
+   "lines": [
+    "Moving.",
+    "On my way.",
+    "Relocating.",
+    "Copy, moving.",
+    "Heading out.",
+    "Changing position.",
+    "Got it.",
+    "Moving up.",
+    "On the way."
+   ]
+  },
+  "ack_lancer_attack": {
+   "voice": "Eric",
+   "lines": [
+    "Missile away!",
+    "Locking on!",
+    "Target locked!",
+    "Firing missile!",
+    "Armor in sight!",
+    "Taking the shot!",
+    "Launching!",
+    "Bring it down!",
+    "Fire!"
+   ]
+  },
+  "ack_engineer_select": {
+   "voice": "Laura",
+   "lines": [
+    "Engineer here.",
+    "Tools ready.",
+    "Need something fixed?",
+    "What needs doing?",
+    "Engineer, standing by.",
+    "Got my kit.",
+    "Ready to work.",
+    "Show me the building.",
+    "At your service."
+   ]
+  },
+  "ack_engineer_move": {
+   "voice": "Laura",
+   "lines": [
+    "On my way.",
+    "Moving.",
+    "Heading over.",
+    "Got it.",
+    "Be right there.",
+    "Copy that.",
+    "Moving out.",
+    "I'm going.",
+    "On it."
+   ]
+  },
+  "ack_operator_select": {
+   "voice": "Sarah",
+   "lines": [
+    "Operator.",
+    "Ready.",
+    "Charges set to go.",
+    "Quiet and ready.",
+    "What's the job?",
+    "Specialist standing by.",
+    "Name the target.",
+    "I'm listening.",
+    "Operator, online."
+   ]
+  },
+  "ack_operator_move": {
+   "voice": "Sarah",
+   "lines": [
+    "Moving quietly.",
+    "On it.",
+    "Understood.",
+    "Going in.",
+    "Moving.",
+    "Consider it done.",
+    "On my way.",
+    "Copy.",
+    "Slipping through."
+   ]
+  },
+  "ack_operator_attack": {
+   "voice": "Sarah",
+   "lines": [
+    "Target acquired.",
+    "Taking them out.",
+    "Engaging.",
+    "Clean shot.",
+    "Eliminating.",
+    "Weapon hot.",
+    "They won't see me.",
+    "Neutralizing.",
+    "Going loud."
+   ]
+  },
+  "sable_ack_lancer_select": {
+   "voice": "Mick (Irish)",
+   "lines": [
+    "Lancer, ready.",
+    "Launcher's loaded, so.",
+    "What'll I hit?",
+    "Lancer here.",
+    "Ready to fire.",
+    "Show me the armor.",
+    "Missiles are primed.",
+    "Grand, what's the target?",
+    "Waiting on you."
+   ]
+  },
+  "sable_ack_lancer_move": {
+   "voice": "Mick (Irish)",
+   "lines": [
+    "Moving.",
+    "On me way.",
+    "Right so.",
+    "Grand, moving.",
+    "Heading out.",
+    "Changing spot.",
+    "No bother.",
+    "Moving up.",
+    "Off I go."
+   ]
+  },
+  "sable_ack_lancer_attack": {
+   "voice": "Mick (Irish)",
+   "lines": [
+    "Missile away!",
+    "Locked on her!",
+    "Have that!",
+    "Firing now!",
+    "Armor, there!",
+    "Taking the shot!",
+    "Launching!",
+    "Bring it down!",
+    "Away she goes!"
+   ]
+  },
+  "sable_ack_engineer_select": {
+   "voice": "Thomas (Irish)",
+   "lines": [
+    "Engineer here.",
+    "Tools are ready.",
+    "What's broke?",
+    "What needs doing?",
+    "Engineer, standing by.",
+    "Got me kit.",
+    "Ready to work.",
+    "Show me the building.",
+    "At your service."
+   ]
+  },
+  "sable_ack_engineer_move": {
+   "voice": "Thomas (Irish)",
+   "lines": [
+    "On me way.",
+    "Moving.",
+    "Heading over.",
+    "Right so.",
+    "Be there in a minute.",
+    "Grand.",
+    "Moving out.",
+    "I'm going.",
+    "No bother."
+   ]
+  },
+  "sable_ack_operator_select": {
+   "voice": "Jordan (Irish)",
+   "lines": [
+    "Operator.",
+    "Ready.",
+    "Charges are set.",
+    "Quiet as you like.",
+    "What's the job?",
+    "Standing by.",
+    "Name the target.",
+    "I'm listening.",
+    "Operator, here."
+   ]
+  },
+  "sable_ack_operator_move": {
+   "voice": "Jordan (Irish)",
+   "lines": [
+    "Moving quiet.",
+    "On it.",
+    "Grand.",
+    "Going in.",
+    "Moving.",
+    "Leave it with me.",
+    "On me way.",
+    "Right so.",
+    "Slipping through."
+   ]
+  },
+  "sable_ack_operator_attack": {
+   "voice": "Jordan (Irish)",
+   "lines": [
+    "Got them.",
+    "Taking them out.",
+    "Engaging.",
+    "Clean shot.",
+    "Lights out.",
+    "They won't see me.",
+    "Sorted.",
+    "Going loud.",
+    "Ah, here we go."
+   ]
+  },
+  "ack_grenadier_select": {
+   "voice": "Ronan (Irish)",
+   "side": "sable",
+   "lines": [
+    "Grenadier here.",
+    "Got a bag of them.",
+    "Who's for a bang?",
+    "Pins are in, for now.",
+    "Grenadier, ready.",
+    "What'll I blow up?",
+    "Standing by.",
+    "Ready to throw.",
+    "Point me at them."
+   ]
+  },
+  "ack_grenadier_move": {
+   "voice": "Ronan (Irish)",
+   "side": "sable",
+   "lines": [
+    "Moving.",
+    "On me way.",
+    "Right so.",
+    "Off we go.",
+    "Grand.",
+    "Heading over.",
+    "Careful with the bag.",
+    "Moving out.",
+    "No bother."
+   ]
+  },
+  "ack_grenadier_attack": {
+   "voice": "Ronan (Irish)",
+   "side": "sable",
+   "lines": [
+    "Fire in the hole!",
+    "Catch!",
+    "Grenade out!",
+    "Have that!",
+    "Heads down!",
+    "Boom, so!",
+    "Throwing!",
+    "Get back!",
+    "Here's one for ye!"
+   ]
+  },
+  "ack_breaker_select": {
+   "voice": "Jimmy (Irish)",
+   "side": "sable",
+   "lines": [
+    "Breaker.",
+    "Tank's full.",
+    "Who wants warming?",
+    "Ready to burn.",
+    "Breaker, here.",
+    "Pilot light's on.",
+    "What's the job?",
+    "Standing by.",
+    "Let's get hot."
+   ]
+  },
+  "ack_breaker_move": {
+   "voice": "Jimmy (Irish)",
+   "side": "sable",
+   "lines": [
+    "Moving.",
+    "Aye, going.",
+    "On me way.",
+    "Heading in.",
+    "Right.",
+    "Moving up.",
+    "Close in, aye.",
+    "Off we go.",
+    "Getting closer."
+   ]
+  },
+  "ack_breaker_attack": {
+   "voice": "Jimmy (Irish)",
+   "side": "sable",
+   "lines": [
+    "Burn it!",
+    "Torch them!",
+    "Feel that!",
+    "Light them up!",
+    "Roast them!",
+    "Going in hot!",
+    "Burning!",
+    "Smoke them out!",
+    "Too hot for ye?"
+   ]
+  },
+  "ack_goliath_select": {
+   "voice": "Kevin (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Goliath.",
+    "Twin guns ready.",
+    "Heavy armor, standing by.",
+    "Goliath here.",
+    "She's a big one.",
+    "Both barrels loaded.",
+    "What'll we flatten?",
+    "Ready to roll.",
+    "Waiting on orders."
+   ]
+  },
+  "ack_goliath_move": {
+   "voice": "Kevin (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Rolling.",
+    "Moving out.",
+    "On the way.",
+    "Right so.",
+    "Advancing.",
+    "Heavy armor moving.",
+    "Clear the road.",
+    "Off we go.",
+    "Grand, rolling."
+   ]
+  },
+  "ack_goliath_attack": {
+   "voice": "Kevin (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Both guns, fire!",
+    "Engaging!",
+    "Flatten them!",
+    "Target in sight!",
+    "Firing!",
+    "Give them both barrels!",
+    "Open up!",
+    "Taking them!",
+    "Have at them!"
+   ]
+  },
+  "ack_anvil_select": {
+   "voice": "Cormac (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Anvil.",
+    "Anvil, standing.",
+    "Nothing gets through us.",
+    "Ready to hammer.",
+    "Anvil here.",
+    "Armor's holding.",
+    "What'll we break?",
+    "Steady as a rock.",
+    "Waiting on you."
+   ]
+  },
+  "ack_anvil_move": {
+   "voice": "Cormac (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Moving.",
+    "Advancing.",
+    "On we go.",
+    "Right so.",
+    "Rolling forward.",
+    "Anvil moving.",
+    "Steady now.",
+    "Heading in.",
+    "Off we go."
+   ]
+  },
+  "ack_anvil_attack": {
+   "voice": "Cormac (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Hammer them!",
+    "Engaging!",
+    "Break them!",
+    "Firing!",
+    "Missiles and shells!",
+    "Bring it all!",
+    "Down they go!",
+    "Open fire!",
+    "Crush them!"
+   ]
+  },
+  "ack_salvo_select": {
+   "voice": "John (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Salvo.",
+    "Missile's ready.",
+    "One big one loaded.",
+    "Salvo here.",
+    "Long range, standing by.",
+    "Give me a target.",
+    "Ready to launch.",
+    "Waiting on coordinates.",
+    "She's armed."
+   ]
+  },
+  "ack_salvo_move": {
+   "voice": "John (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Moving.",
+    "Relocating.",
+    "On the way.",
+    "Right so.",
+    "Rolling.",
+    "Finding a spot.",
+    "Moving the launcher.",
+    "Off we go.",
+    "Grand."
+   ]
+  },
+  "ack_salvo_attack": {
+   "voice": "John (Irish)",
+   "radio": true,
+   "side": "sable",
+   "lines": [
+    "Missile away!",
+    "Launching!",
+    "Coordinates set!",
+    "Fire!",
+    "Here she goes!",
+    "Long range strike!",
+    "Stand clear!",
+    "Away with her!",
+    "Incoming, for them!"
+   ]
+  },
+  "announce_victory": {
+   "voice": "Alice",
+   "lines": [
+    "Victory. The enemy has been eliminated."
+   ],
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.3,
+    "use_speaker_boost": true
+   }
+  },
+  "announce_defeat": {
+   "voice": "Alice",
+   "lines": [
+    "Defeat. Our base has fallen."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_victory": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "Victory! The enemy is broken."
+   ],
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.3,
+    "use_speaker_boost": true
+   }
+  },
+  "sable_announce_defeat": {
+   "voice": "Sheena (Irish)",
+   "lines": [
+    "We've been defeated. Our base is lost."
+   ],
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "use_speaker_boost": true
+   }
+  }
+ }
+}

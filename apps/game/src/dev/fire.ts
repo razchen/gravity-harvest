@@ -9,6 +9,7 @@ import type { GameMap } from '../world/GameMap';
 import { ShadowLayer } from '../world/ShadowLayer';
 import { TERRAIN_COPY_PX } from '../world/Terrain';
 import { onLeave } from './page';
+import { BUTTON, SELECT } from './ui';
 
 /** Set up the page in the markup the sidebar has just put in (nav.ts). */
 export default function mount(): void {
@@ -202,30 +203,33 @@ export default function mount(): void {
   for (const c of CONTROLS) {
     if (c.group !== group) {
       group = c.group;
-      panel.insertAdjacentHTML('beforeend', `<h2>${group}</h2>`);
+      panel.insertAdjacentHTML('beforeend', `<h2 class="mb-1.5 mt-3 text-[16px] font-bold text-gold first:mt-0">${group}</h2>`);
     }
     const row = document.createElement('label');
-    row.className = 'ctl';
+    // the name and its value (or a list or colour) on a line, a slider under them
+    row.className = 'my-1.5 grid grid-cols-[1fr_auto] items-center gap-x-2 text-muted';
     row.innerHTML = `<span>${c.label}</span>`;
     if (c.options) {
       const sel = document.createElement('select');
+      sel.className = `${SELECT} col-start-2`;
       sel.innerHTML = c.options.map((o) => `<option${o === settings[c.key] ? ' selected' : ''}>${o}</option>`).join('');
       sel.onchange = () => { settings[c.key] = sel.value; changed(); };
       row.append(sel);
     } else if (c.color) {
-      const inp = Object.assign(document.createElement('input'), { type: 'color', value: str(c.key) });
+      // with the browser's own border and padding (the reset takes them away)
+      const inp = Object.assign(document.createElement('input'), { type: 'color', value: str(c.key), className: 'col-start-2 border border-[#767676] bg-[#efefef] px-0.5 py-px' });
       inp.oninput = () => { settings[c.key] = inp.value; changed(); };
       row.append(inp);
     } else {
-      const out = document.createElement('output');
+      const out = Object.assign(document.createElement('output'), { className: 'min-w-[44px] text-right tabular-nums' });
       out.textContent = String(settings[c.key]);
-      const inp = Object.assign(document.createElement('input'), { type: 'range', min: String(c.min), max: String(c.max), step: String(c.step), value: String(settings[c.key]) });
+      const inp = Object.assign(document.createElement('input'), { type: 'range', min: String(c.min), max: String(c.max), step: String(c.step), value: String(settings[c.key]), className: 'col-span-full m-0.5 w-full accent-gold' });
       inp.oninput = () => { settings[c.key] = Number(inp.value); out.textContent = inp.value; changed(); };
       row.append(out, inp);
     }
     panel.append(row);
   }
-  panel.insertAdjacentHTML('beforeend', `<div class="buttons"><button class="primary" id="copy">Copy settings</button><button id="reset">Reset</button><button id="again">Restart effects</button></div><p id="copied"></p>`);
+  panel.insertAdjacentHTML('beforeend', `<div class="mt-3 flex flex-wrap gap-1.5"><button class="${BUTTON} primary" id="copy">Copy settings</button><button class="${BUTTON}" id="reset">Reset</button><button class="${BUTTON}" id="again">Restart effects</button></div><p class="my-[1em] text-[13px] text-muted" id="copied"></p>`);
   document.getElementById('copy')!.onclick = async () => {
     const text = JSON.stringify(settings, null, 1);
     try {

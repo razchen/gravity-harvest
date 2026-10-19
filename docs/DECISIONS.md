@@ -10,8 +10,11 @@ otherwise undo by accident. Newest first within each section.
   as cheap sprites, so very heavy models (Meshy exports are 1–3 million faces) cost nothing at runtime and
   hundreds of units stay fast.
 - **Engine: Phaser 3** (pinned 3.90.0). Mature 2D framework with sprites, animation, input, cameras, loading.
-- **Projection: 2:1 isometric diamonds.** One tile is 64 × 32 px on screen at the default zoom.
-  Art is rendered at 2× (128 × 64 per tile) and shown at zoom 0.5 so it stays sharp when zoomed in.
+- **Projection: 2:1 isometric diamonds.** One tile is 64 × 32 px on screen at zoom 0.5.
+  Art is rendered at 2× (128 × 64 per tile), so it's pixel for pixel at zoom 0.5 on a Retina screen.
+- **Default zoom 0.67 (a tile about 85 × 43 on screen), closest 0.75.** At 0.5 soldiers were too small to tell
+  apart; the sprites stretch a little past 0.5, which reads as slightly soft, not blocky. If that bothers, re-render
+  the art larger rather than zoom back out.
 - **Sprite camera: orthographic, 45° yaw, 30° down.** That angle produces exact 2:1 diamonds. Every sprite must
   use it, plus the same sun and world lighting, so everything matches.
 - **Retina:** the canvas renders at the device pixel ratio (capped at 2) so full-resolution art is shown rather
@@ -30,16 +33,70 @@ otherwise undo by accident. Newest first within each section.
 
 ## Gameplay
 
-- **Skirmish layout:** 64 × 64 map, your base in the top corner (refinery, harvester, 2 riflemen, $2,500), the enemy
-  base in the bottom corner (refinery, barracks, radar, 2 power plants, 6 guards).
-- **Enemy is passive for now:** guards defend their base (chase up to 9 tiles, then return); raids are off
-  (`AI.raids` in `config/game.ts`). Attacks every minute felt too aggressive.
+- **The computer plays fair, at every difficulty** (`packages/ai`). It sees only its own side's fog-limited view and
+  the events the sim already sends that side, and acts only by giving the same orders a player gives (place, train,
+  move, attack, harvest, dock, service, repair, deploy...). No bonus income, no map reveal, no reading the Sim, no
+  spawning units. *Why:* an opponent that cheats feels unfair once noticed, and a fair one can be measured against
+  itself (the simulator). The old raids that spawned riflemen from nothing are gone.
+- **Difficulties are Easy, Normal and Hard, and differ only in mistakes:** one profile of tunable rates per level
+  (`packages/ai/src/profiles.ts`): how often it thinks, reaction delay, orders per minute, forgetting production,
+  buildings, power or idle harvesters, slow rebuilds and repairs, careless placement, unit mix and counter-picking,
+  attacking too small or blind, focus fire, retreats, defending late, scouting, and chances to skip a decision. Same
+  code paths, rules and income for all; a seeded RNG keeps matches reproducible. Normal is the default. Tuned with the
+  simulator so Hard beats Normal and Normal beats Easy most of the time in both factions.
+- **The AI never names a unit.** It chooses its army from its side's catalog by role and stats (damage × health per
+  credit against what it has seen of the enemy, what its weapons can hit), so the roster can change (infantry is being
+  replaced by flying units) without touching it. It only knows the IDs the sim itself gives behaviours to.
+- **A careful AI doesn't attack blind:** without a recent look at the enemy's army it assumes the enemy has kept up
+  with it, so Hard waits for scouting (or a won defence) before sending a wave; Easy attacks on the timer with
+  whatever it has.
+- **What the simulator taught the AI:** production (one queue per side) is the limit, not money, so the careful
+  levels add harvesters only when money will run short: when the ore it knows of can keep another busy, each one
+  earns its price back within 3 minutes, and at full production its money would run out within its look-ahead
+  (`economyLookaheadMin`: Easy 1, Normal 3, Hard 5 minutes). *Why not cash in hand:* the old rule (one more below
+  $12,000 at Normal) fired whenever a side bought a factory, so Ordan, whose army comes from a $3,000 Motor Works,
+  put a harvester in its queue at minute 2 and met the first wave with a smaller army; it lost three Normal matches
+  in four to Sable and won at Hard, where the threshold was $5,000. Under attack or far behind (its army under half
+  the enemy's it saw in the last minute), the army comes first (`armyFirst`): no harvesters, and one waiting in the
+  queue is cancelled; lost harvesters are replaced once it's safe. Spare money goes into defences (one goes up beside
+  the building under way). Out of ore and money, they sell what they can spare and attack with what they have, so matches end
+  instead of stalling.
+- **Skirmish layout:** 88 × 48 map (about the old 64 × 64's area), the bases in the top and right-hand corners along
+  the same edge, mirror images left to right (tile tx ↔ 87 − tx), each with its own ore field next to its refinery
+  (the second field is the first's mirror image, tile for tile and density for density), the landscape grown on the
+  left half and mirrored onto the right (`mirrorX`), and a gravity vent on the mirror line between them. The yards are
+  82 tiles apart and the vent 42 from each, as before. Both sides start alike: an Assembly Yard, a Power Plant, a
+  Refinery with its harvester, two riflemen and the spreadsheet's starting credits. *Why this mirror:* the sprites
+  face one way, so every refinery ramp and every building's exit faces +gy. Mirrored through the middle (top corner
+  against bottom corner, as it was), the bottom base's ramps and exits faced the map edge: its harvesters drove 25%
+  further to their ore and the vent, its units came out the back, it had less room, and its 5-minute income was 86%
+  of the top's. Drawing the bottom base's buildings mirrored isn't possible: their light, shadows and the harvester's
+  unload clip are rendered for one side. *Why 88 wide:* mirrored this way on 64 × 64 the bases were 58 tiles apart,
+  and as they grew towards each other the armies' gathering points came within reach of each other's defences: they
+  wore each other down in the middle instead of attacking, and Hard Ordan won 16% against Hard Sable. The computer
+  guesses the enemy is by the ore field farthest from it, and scouts there first.
+- **A headless simulator** (`npm run simulate`) plays AI against AI as fast as the CPU allows and answers: is the
+  pacing right, is it fair (factions, start positions), is it fun (lead changes, comebacks, fights, variety), how far
+  up the tech tree they get, what limits them, and whether the ore makes sense; plus a verdict per map. The targets
+  are one editable file (`tools/simulator/src/targets.ts`). Who is ahead is army plus defences (cost × health
+  share), not the whole base: base value was 70% of the old measure and hardly moves with the fights that decide
+  matches. It's judged from the first real fight on, and the fun numbers (lead changes, comebacks, lock-in) come
+  from same-level matches only, since a level against the one below is meant to be one-sided. A comeback is a win
+  by the side behind just after the first big fight ($3,000 lost), not at a fixed minute 10.
 - **Fog of war, three states:** black = unexplored, dimmed = explored, clear = in sight. Enemy units only show while in
   sight; enemy buildings stay on the map once discovered.
 - **Power:** 500 base supply, +100 per power plant; other buildings draw power. Low power doubles refinery unload
   time and takes the radar offline.
 - **Radar is required for the minimap.** **Storage:** 3,000 base, plus 2,000 per refinery and 3,000 per silo.
 - **Rocks disappear quickly when mined** (kept fast on purpose for now, to see the loop working).
+
+- **No soldiers: small hovering units instead.** Every unit that was a soldier is a hovering craft (render_vehicle.py
+  `hover`; `HOVER_UNITS` in the sim). They keep the soldiers' rules and balance: they board transports, a Service Bay
+  doesn't repair them, and their spreadsheet numbers are unchanged; only their bodies are bigger (`hoverRadius`). The
+  units both sides share are built to each side's own design (`sides` in the game's art), buildings are not.
+- **Medics heal, Engineers repair.** A Medic heals its side's damaged soldiers and hovering units nearby (its heal is
+  the rules' negative-damage weapon), an Engineer repairs its side's damaged buildings from outside, for free; both look
+  for work on their own and can be sent to it, and their arms work while they do (`work` in the view).
 
 ## Menus and saves
 
@@ -95,6 +152,12 @@ otherwise undo by accident. Newest first within each section.
   explicit stand-ins (`STAND_INS`) for missing tech-tree links, now empty: every base starts with a real Assembly Yard
   and harvesters come from the Motor Works. The rest stay in the spreadsheet and are never sent to players.
 - **Every model goes into matches when it's rendered**, with whatever behaviour it needs, not only onto the dev pages.
+- **Each shot uses the weapon that reaches the target** (`weaponFor` in `rules/calc.ts`): the first of the unit's
+  or building's weapons whose rules targeting covers the target's layer (aircraft are in the air, everything else,
+  buildings too, on the ground). A Lancer fires its anti-armour missile at vehicles and its anti-air one at aircraft;
+  something with no weapon for a target doesn't pick it, and an order to attack it is dropped. Range is that
+  weapon's. *Why:* before, the first weapon fired at anything, so anti-air missiles hit tanks. The qualifiers in the
+  targeting text ("personnel", "armor", "light targets") don't restrict anything yet; only ground or air does.
 - **Defences** shoot the nearest enemy unit in range with their rules weapon (those that need power hold fire when
   it's low) and turn their head to face it (16 directions, sent as `facing`). Shots (units' too) carry the weapon's
   projectile, so each looks different: bullets, a shell, a fireball, a discharge bolt. Shells and fireballs burst
@@ -111,12 +174,24 @@ otherwise undo by accident. Newest first within each section.
   its heading. The Jackal is the first. Units' sheets are trimmed and packed tightly (`tools/sprites/trim_pack.py`),
   which keeps 16 directions in the memory 8 used to take. Units turn through the in-between directions rather than
   snapping. Abilities so far: combat vehicles fight with their rules weapons, and the Assembler deploys (E) into an
-  Assembly Yard anywhere it fits; the Watcher's radar disruption, the Shroud's concealment, the Seeder's mines and
-  the Carrier's passengers aren't in yet.
+  Assembly Yard anywhere it fits, and the Carrier carries infantry (below); the Watcher's radar disruption, the
+  Shroud's concealment and the Seeder's mines aren't in yet.
+- **Transports** (any unit with `passengers` in the rules; the Carrier holds 5): click (or right-click) your
+  transport with soldiers selected and they walk to its nearer side door, following it if it drives off, and get in
+  one at a time; when it's full the rest stop by it. Inside they're off the map (not drawn, seen, selected or
+  targeted, and they don't see), kept with their health in the transport (and in saves, snapshot version 6), and
+  count towards the unit cap. Unload (the HUD button that shows while one is selected, or E) stops it, opens its doors
+  and lets them out one by one onto free tiles by the door on the camera's side (the other if there's no room). If it's
+  destroyed they die with it, counted as losses and kills. The sim decides who goes in or out and when (`hatch`,
+  `boarded`, `disembarked` events); the game plays its door clip (`v_carrier_door`) and draws each soldier running up
+  the ramp into the doorway, fading out, or coming down it, fading in. The ramps' feet and doorways are read from the
+  clip's shut and open frames per direction (`render/ramps.ts`, shared with the dev unit page).
 - **Buildings animate from their own parts:** a construction config's `anims` name groups of parts that spin (whole
-  turns per loop), swing, or (a `door`) slide or swing open. The finished building is rendered once without them, and
+  turns per loop), swing, or (a `door`) slide or swing open. Motion that needs real joints is keyframed in Blender
+  instead: with `rig` the model is loaded from its `.blend` (empties carrying the parts, as the Service Bay's roof
+  arms), and an anim naming those empties samples that timeline. The finished building is rendered once without them, and
   each animation's parts alone per frame with the rest holding them out, so the frames are small and trimmed. An
-  animation runs `always` (while powered), while `working` (the server sends `working`: producing, repairing, or the
+  animation runs `always` (while powered), while `working` (the server sends `working`: producing, repairing a vehicle on its pad, or the
   Assembly Yard while its side builds), or is a `door` (opens on `unitOut`, when a unit comes out). Its `effects`
   (steam, flames, glows, blinking lights, sparks and dust while working) are points rendered from the model and drawn
   by the game (`render/BuildingFx.ts`). Which parts move was mapped per building from the models (only real separate
@@ -129,7 +204,28 @@ otherwise undo by accident. Newest first within each section.
   `unitFullRepairFraction` (vehicles at a Service Bay) of the price, and stops when the money runs out. A building
   goes from nothing to full in `ENGINE.repairSecondsForFull`; the HUD's Sell and Repair buttons are modes, as in the
   classics: they stay on until right-click or Esc.
-- **Service Bays** repair their side's vehicles parked next to them (`ENGINE.repairSharePerSec`).
+- **Service Bays** repair only the vehicle parked on their pad (`ENGINE.repairSharePerSec`: 4% of their health a
+  second, paid as `unitFullRepairFraction` of the price for a full repair, the same rule as buildings). Clicking or
+  right-clicking your bay with damaged vehicles selected (the cursor turns into the repair wrench) sends them onto its
+  pad (`serviceBayPad` in `sim/layout.ts`), one at a time: it backs on nose out, as onto a refinery's ramp, is repaired
+  to full (or until the money runs out) and drives straight off; the others wait by the bay, each on a tile of its own
+  (not repaired while they wait), and take the pad in turn. Undamaged vehicles in the selection just
+  drive to the bay. The spreadsheet says the bay doesn't need power to work (`requiresPower` is false) but it draws
+  150, so on low power it repairs at half speed, as other buildings slow down. Harvesters can't be sent onto the pad yet, so
+  they aren't repaired. The pad needs open ground in front.
+- **Units keep apart and move in groups.** Units sent to one point get a tile each around it (`Sim.formation`): as
+  compact as the ground allows, keeping their places in the group (a group spread wider than
+  `ENGINE.formationSpread` × √size from its middle closes up), skipping blocked tiles, tiles cut off from the point and
+  tiles others stand on or are heading to. The browser sends the clicked point for every unit; the server decides. A
+  single unit still goes exactly where it's sent. Bodies are circles (`ENGINE.vehicleRadius` 0.45 tiles, about a tile
+  across; soldiers 0.3): a unit driving into one that won't give way (on the move, at work, held in place) steers round
+  it to its right, and keeps its distance behind one going the same way, so a group drives as a block; overlaps are
+  eased apart, the idle unit giving way most, so a unit driving through nudges an idle one aside, and that one goes
+  back to where it stopped once the spot is free. Units on a ramp or pad, unloading, or at a transport's door hold
+  their place; soldiers boarding a transport pass through others, as before (infantry is on its way out). A unit that
+  makes no headway for `ENGINE.stuckMs` paths round whoever is in its way (`ENGINE.detours` times), then settles on the
+  nearest free tile, so a crowd in a choke point waits its turn instead of shoving. All of it is transient (nothing
+  new in saves). There's no attack-move order yet; when there is, it should use the same formation.
 - **The spreadsheet is committed** (private repo; the concern is players, not the repo). The reader is a small
   script on `fflate`, because the workbook's namespaced XML breaks common xlsx libraries.
 
@@ -148,14 +244,29 @@ otherwise undo by accident. Newest first within each section.
 - **Debug commands** (set credits, reveal, teleport, spawn, destroy a side, fast-forward, finish builds) exist for
   development and tests only: on unless `NODE_ENV=production`, forced with `DEBUG_COMMANDS`.
 - **Spreadsheet numbers in play:** $15,000 start, full loads worth 1,050, no storage cap (the Silo is gone), real
-  build times, a production queue, 50% refunds on cancel / sell, low power slows building and unloading and turns the
+  build times, a production queue, 50% refunds on cancel / sell (a queued unit that hasn't started yet gives all
+  its money back: nothing of it was built), low power slows building and unloading and turns the
   radar off. The skirmish now starts with a Power Plant, since the Assembly Yard that would power the base has no art.
   Riflemen see 4 tiles and fire 3 (was 6 and 4). The enemy's guards are riflemen (the spreadsheet's Raider is a
   different, unarmed infiltrator).
-- **Units pick their own fights.** Idle units notice enemies within their weapon range + 3 tiles (or their sight, if
-  larger; a rifleman reacts at 6) and move in. A unit on a move order stops to fight anything that comes within
+- **Units pick their own fights**, but only with what their side can see (any of its units or buildings): idle units
+  notice enemies within their weapon range + 3 tiles (or their sight, if larger; a rifleman reacts at 6, once
+  something of its side sees the enemy) and move in. Units whose guns outrange their sight (the Spire, the Anchor)
+  need a spotter. Defences fire only on what their side sees. A unit on a move order stops to fight anything that comes within
   weapon range, or that shoots it, then carries on to where it was sent. (A "force move" that ignores enemies, for
   retreating, can come later as a modifier key.)
+- **Build slots and production lanes (2026-10-18).** Buildings go up from an Assembly Yard, one at a time, and one
+  defence at a time beside it; with no yard, nothing new can be placed and what's going up stops until there is one
+  again (a yard an Assembler is unpacking carries on, and doesn't take the slot). Units queue per kind of factory
+  (soldiers, vehicles, aircraft, ships: `laneOf` in the sim), up to 5 each, and the lanes build side by side. Every
+  weapon a unit or defence has fires on its own reload, as the rules' damage per second assumes. *Note:* in this
+  build Sable's roster is nearly all soldiers, so separate lanes help Ordan (vehicles and soldiers at once) more:
+  the simulator went from Ordan winning 40% to 85% at Normal (47% with one lane). That's the roster, not the rule.
+- **Enemy buildings are seen as they were last seen.** Each side keeps a picture of the enemy buildings it has
+  discovered (health, construction, power, facing) taken whenever they're in sight, and is sent that while they're
+  out of it. One destroyed or sold out of sight stays in the picture until the spot is seen again. A building is
+  discovered when it's in sight, not when an explored tile it stands on is. The computer gets the same views.
+- **One loss rule for both sides:** a side is out when it has no buildings and no units left.
 - **Esc is handled once, by the app** (`GameFlow`), not by the Phaser scene: a paused scene replays its key events
   on resume, which reopened the pause menu. The camera doesn't capture W / A / S / D, so they can be typed in fields.
 
@@ -213,7 +324,14 @@ otherwise undo by accident. Newest first within each section.
 
 ## Controls
 
-- **Zoom is on the keyboard:** hold + / − (or the numpad keys), 0 resets. The mouse wheel doesn't zoom.
+- **Attack-move is Ctrl+right-click; build panel hotkeys are Tab and Alt+number.** WASD stays camera panning, so
+  attack-move has no letter key: Ctrl+right-click on the ground (Ctrl+click on macOS, where it is the right-click;
+  over an enemy it's a plain attack), with a red sight cursor while Ctrl is held. The sim's `attackMove` order uses
+  the move formation; on the way armed units look as far as idle ones (sight, or range + margin), buildings too
+  when no unit is near, stop to fight, let go of what gets out of that reach, and carry on. Tab / Shift+Tab cycle
+  the panel's tabs; Alt+1 … Alt+0 press its first ten cards like a click, read from `e.code` (Option+digit types a
+  character on macOS); plain digits stay control groups.
+- **Zoom is on the keyboard:** hold + / − (or the numpad keys), Z resets (0 was taken by control group 10). The mouse wheel doesn't zoom.
 - **A debug and shortcuts panel** (` key or the gear button) lists every shortcut with its state: fog of war (dev
   servers only), tile grid, performance readout, zoom. Items can be clicked.
 - **Clicks prefer units over buildings:** Phaser only reports the top-most object under the cursor, which hid a
@@ -249,6 +367,23 @@ otherwise undo by accident. Newest first within each section.
   Now it has ~470 units (~17 loads; the fields are a little bigger, radius 4.3): one harvester thins it over ~8
   minutes, leaves for a full field, and the home field grows back to full in ~12 more; two harvesters earn ~60% more
   over 25 minutes. Measured in `packages/sim/src/ore.test.ts`.
+- **Gravity vents keep the late game fed.** Before them every simulated match's economy died: Skirmish's two home
+  fields (about $36,600 of ore against $15,000 starting credits) ran dry at 6.5–8 minutes and median income was $0
+  from minute 10. A vent (`ScenarioDef.vents`, the `gravity_vent` scenery kind, 2 × 2, blocks) rings itself with a
+  field of its own (`ENGINE.ventOreRadius` 3.6: about 34 tiles) that follows its own rules (`Ore.feedVents`): every
+  growth tick each tile below full gains a unit with `ENGINE.ventGrowthChance` (20%), emptied ones too, and an emptied
+  tile touching the vent always starts again; the normal growth, roots and spread rules skip it. One harvester working
+  it from a home refinery 30 tiles away earns about $1,260 a minute for 20 minutes and more (a fresh home field gives
+  one about $2,100); a second adds only about $180, as they share what it seeds (`ore.test.ts`). In the simulator the
+  median side's income from minute 15 to 30 went from $0 to $600–950 a minute, and matches got longer (median 15.3 →
+  18.5 minutes, timeouts 4 → 7 of 160). The ring is the same on opposite sides of the vent, so a vent between mirrored
+  bases is fair. The numbers are engine constants in `layout.ts` for now; they could move to the spreadsheet's Economy
+  sheet. *Why a map feature, not a rules change:* the late game needs a reason to fight over the middle; more ore at
+  home would only make the snowball slower.
+- **The computer sends its army to a gravity vent the enemy is harvesting** (an enemy harvester seen within 6 tiles of
+  it in the last 30 s; the army gathers there instead of in front of its base). It harvests the vent like any ore it
+  has seen once its home field runs low. Gathering at a vent its own harvesters work as well was tried and dropped:
+  armies parked in the middle and more matches ran out of time.
 - **Harvesters go for tiles worth the trip** (at least half full), in their own field first, then any field; only
   crumbs if nothing else is left. Otherwise they'd scrape single regrown units off an exhausted field forever.
 - **Ore is drawn flat on the ground** (browser only; the server's model is unchanged): one decal per tile from the
@@ -280,3 +415,35 @@ otherwise undo by accident. Newest first within each section.
   textures made in code (`fxTextures.ts`); smoke drifts with a light wind to the right.
 - Review pages on the dev server: `/dev/` lists the buildings, each opens `/dev/building.html?b=<id>` with a
   Construction and a Destruction tab (not part of the game build).
+
+## Sound
+
+- **Sounds are made with ElevenLabs** (sound effects from prompts, `tools/audio/elevenlabs.py` with the prompt sheet
+  `tools/audio/sfx_prompts.json`), with Kenney's CC0 interface sounds for clicks. Candidates go in `art/audio/`; the
+  `/dev/sounds.html` page picks them for the game's slots (`tools/audio/picks.json`), and `tools/audio/pack_audio.py`
+  packs the picks into `public/assets/audio` at each slot's loudness. **The ElevenLabs sounds so far were made on the
+  free plan, which may not ship:** each has its prompt saved beside it, so they're made again on a paid plan before a
+  release. Music needs a paid plan (the free one has no music API).
+- **In matches** (`audio/Sounds.ts`): a slot plays one of its files at random, slightly higher or lower each time; a sound
+  in the world is as loud as it is near the middle of the screen (fading out past its edges, silent well off it) and
+  panned to its side; each slot caps how many play at once and how soon after each other. Loops follow what's going
+  on: the ambience, busy Service Bays, buildings going up and the nearest few vehicles' engines. Harvesters at work
+  have no loop (they run all match long, so it was constant background noise); their unloading is heard instead.
+  The sound volume is in Settings.
+- **Voices** (ElevenLabs text to speech, `tools/audio/voice_lines.json`): an announcer says what matters to you
+  (construction complete, unit ready, low power and power restored, base under attack, a unit or building lost,
+  insufficient funds), one line at a time, never twice in quick succession; each unit type answers in its own voice
+  when selected or ordered (vehicle crews over a radio filter), in the voice of most of the selection, the latest
+  answer cutting off the last.
+
+## Each unit fires its own shot
+
+- Every armed unit's shot looks different, so a fight reads at a glance: a unit's UNIT_ART `fire` names its look
+  (`data/art.ts`), one file per look in `render/shots/` (the Skimmer's rapid tracers, the Carrier's heavy rounds, the
+  Jackal's light shell, the Ram's battle shell, the Spire's heavy artillery, the Hound's twin plasma, the Operator's
+  arc bolt, the Grenadier's frag grenade, the Breaker's column of light). The Lancer fires two homing missiles, one
+  from each pod. Projectiles without a look of their own (the defences', the rules' other weapons) keep
+  `render/Effects.ts`'s older ones. Only the look: the rules' weapons, damage and balance are unchanged (the Skimmer
+  and the Carrier share one weapon in the rules but look different).
+- Energy weapons take their side's colour; guns and shells don't. Everything is drawn in code from the shared effect
+  sheets, no new art. `/dev/weapons.html` and each armed unit's page show the shots as a match draws them.

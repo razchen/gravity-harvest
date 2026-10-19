@@ -3,7 +3,7 @@ import { CAMERA, DPR } from '../config/game';
 import { iso, type GridPoint } from '../core/geometry';
 
 /**
- * Camera: start position, keyboard zoom (+ / − held, 0 resets) between limits, WASD / arrow keys and right-drag
+ * Camera: start position, keyboard zoom (+ / − held, Z resets) between limits, WASD / arrow keys and right-drag
  * panning. The centre of the view is held inside the field's bounding box (the ground around it is scenery), so
  * panning stops at the edge, straight, from any direction.
  */

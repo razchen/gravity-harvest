@@ -1,5 +1,7 @@
 import type Phaser from 'phaser';
-import type { PlayableFaction, ScenarioSummary } from '@gravity-harvest/shared';
+import type { Difficulty, PlayableFaction, ScenarioSummary } from '@gravity-harvest/shared';
+import { Music } from '../audio/Music';
+import { MIX, playUi } from '../audio/Sounds';
 import type { MatchStats } from '../core/EventBus';
 import { SaveApi } from '../save/SaveApi';
 import { SaveService } from '../save/SaveService';
@@ -28,12 +30,25 @@ export class GameFlow implements ScreenActions {
   private lastAutosaveAt = 0;
   private autosaving = false;
   private prefs: Settings = loadSettings();
+  private readonly music = new Music();
   private scenarioList: ScenarioSummary[] = [];
   private toast: (msg: string) => void = () => {};
 
   constructor(private readonly game: Phaser.Game) {
     this.saves = new SaveService(game);
     this.screens = new Screens(this);
+    this.applySound();
+    // browsers keep sound off until the page is used: the first click or key turns it on, and the game doesn't pause
+    // its sounds when the tab is hidden (the match runs on the server either way)
+    game.sound.pauseOnBlur = false;
+    // the interface's sounds: a click on any button or build card, a tick as the pointer comes onto a build card
+    document.addEventListener('click', (e) => {
+      if ((e.target as Element | null)?.closest?.('button, .card, .menu-btn, [role="button"]')) playUi(game.sound, 'ui_click', 0.8);
+    }, true);
+    document.addEventListener('mouseover', (e) => {
+      const card = (e.target as Element | null)?.closest?.('.card');
+      if (card && !card.contains(e.relatedTarget as Node | null)) playUi(game.sound, 'ui_hover', 0.6);
+    }, true);
     game.events.on('booted', () => this.showMainMenu());
     game.events.on('world-ready', (scene: GameScene) => this.onMatchReady(scene));
     game.events.on('match-failed', (msg: string) => this.onMatchFailed(msg));
@@ -50,6 +65,7 @@ export class GameFlow implements ScreenActions {
   private showMainMenu(): void {
     this.inMatch = false;
     this.hudEl.hidden = true;
+    this.music.set('menu');
     this.screens.show('main', { inGame: false, gameOver: undefined });
   }
 
@@ -74,8 +90,10 @@ export class GameFlow implements ScreenActions {
     this.inMatch = true;
     this.over = false;
     this.lastAutosaveAt = scene.gameTimeMs;
+    this.music.set('match');
     if (!this.hud) {
       this.hud = new Hud(scene);
+      scene.musicStats = () => this.music.stats();
       this.toast = (msg) => scene.bus.emit('toast', msg);
       // the scene instance (and its bus) is reused for every match, so subscribe once
       scene.bus.on('menu', () => this.togglePause());
@@ -93,13 +111,18 @@ export class GameFlow implements ScreenActions {
     void this.quitToMenu(false);
   }
 
-  newGame(scenarioId: string, faction?: PlayableFaction): void {
-    this.startMatch({ scenario: scenarioId, faction, autosaveOnLeave: this.prefs.autosave });
+  newGame(scenarioId: string, faction?: PlayableFaction, difficulty?: Difficulty): void {
+    this.startMatch({ scenario: scenarioId, faction, difficulty, autosaveOnLeave: this.prefs.autosave });
   }
 
-  /** Same scenario, same side. */
+  /** Same scenario, same side, same difficulty. */
   restart(): void {
-    this.newGame(this.scene?.scenarioId || this.scenarioList[0]?.id || 'skirmish', this.scene?.faction ?? undefined);
+    this.newGame(this.scene?.scenarioId || this.scenarioList[0]?.id || 'skirmish', this.scene?.faction ?? undefined, this.scene?.difficulty ?? undefined);
+  }
+
+  /** How well the computer plays in the match running now. */
+  difficulty(): Difficulty | null {
+    return this.inMatch ? (this.scene?.difficulty ?? null) : null;
   }
 
   async loadSave(id: string): Promise<void> {
@@ -148,6 +171,7 @@ export class GameFlow implements ScreenActions {
 
   private onGameOver(result: 'victory' | 'defeat', stats: MatchStats): void {
     this.over = true; // the server clears this scenario's autosave: a finished match can't be continued
+    this.music.set(result, this.scene?.faction ?? 'ordan');   // the player's side's sting, over the match's music fading out
     window.setTimeout(() => {
       if (!this.inMatch) return;
       this.game.scene.pause('game');
@@ -219,7 +243,15 @@ export class GameFlow implements ScreenActions {
 
   updateSettings(s: Settings): void {
     this.prefs = { ...s };
+    this.applySound();
     saveSettings(this.prefs);
+  }
+
+  /** The player's mute and volumes onto the game's sound (loops follow the new levels within a few frames). */
+  private applySound(): void {
+    this.game.sound.mute = this.prefs.muted;
+    MIX.effects = this.prefs.effects;
+    this.music.setVolume(this.prefs.music, this.prefs.muted);
   }
 
   scenarios(): ScenarioSummary[] {

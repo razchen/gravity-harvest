@@ -11,7 +11,18 @@ export interface ScenarioDef {
   map: { width: number; height: number };
   /** `credits: 'rules'` starts with the spreadsheet's starting credits. */
   players: Record<TeamId, { credits: number | 'rules'; human: boolean; faction: Faction }>;
-  oreFields: { centre: Tile; radius: number; seed: number }[];
+  /**
+   * Ore fields. One with `mirrorOf` copies that (earlier) field tile for tile and density for density, mirrored
+   * left to right (tile tx <-> width - 1 - tx), so two mirrored bases get the same field.
+   */
+  oreFields: { centre: Tile; radius: number; seed: number; mirrorOf?: number }[];
+  /** The map's halves mirror each other left to right: the landscape is grown on the left and mirrored (scenery.ts). */
+  mirrorX?: boolean;
+  /**
+   * Gravity vents: the top-left tile of each one's 2 x 2 footprint. Each seeds a ring of ore around itself that never
+   * runs out (ore.ts); `seed` shapes the ring's edge.
+   */
+  vents?: (Tile & { seed: number })[];
   buildings: { type: string; team: TeamId; tx: number; ty: number }[];
   units: { type: string; team: TeamId; gx: number; gy: number; guard?: boolean }[];
   /** Where the human's camera starts. */
@@ -19,44 +30,55 @@ export interface ScenarioDef {
 }
 
 /**
- * 1v1 skirmish on a 64 x 64 map: your base in the top corner (assembly yard, power plant, refinery, a harvester, two riflemen),
- * the enemy base in the bottom corner, guarded and hidden by fog of war.
+ * 1v1 skirmish on an 88 x 48 map: your base in the top corner, the computer's in the right-hand corner, along the same
+ * edge, hidden by fog of war. The two bases are mirror images of each other left to right (tile tx <-> 87 - tx), each with its own ore field
+ * next to its refinery, and start alike: an assembly yard, a power plant, a refinery with its harvester, two riflemen
+ * and the spreadsheet's starting credits. A gravity vent on the mirror line, between them and as far from both, keeps
+ * ore coming once the home fields run dry. The yards are 82 tiles apart and the vent 42 from each, as on the old
+ * 64 x 64 map (about as many tiles, too).
+ *
+ * *Why this mirror and not one through the middle (top corner against bottom corner, as it was):* the sprites are
+ * rendered from one camera, so every refinery ramp and every building's exit faces the same way (+gy, down-left on
+ * screen). Mirrored through the middle, the bottom base's ramps and exits faced the map edge: its harvesters drove 25%
+ * further to their ore and to the vent, its units came out of the back of its buildings, and it had less room to
+ * build. Mirrored left to right, both bases' ramps and exits face into the map. (The sprites can't
+ * be drawn mirrored instead: their light and shadows, and the harvester's unload clip at the ramp, are rendered for one
+ * side.) The ramp and the unit exits sit within 0.2 tiles of the middle of their buildings' fronts, so their mirror
+ * images are as good as theirs. *Why 88 wide:* on the 64 x 64 map mirrored this way the bases were only 58 tiles apart;
+ * as they grew towards each other their armies' gathering points came within reach of each other's defences, and the
+ * armies wore each other down in the middle instead of attacking.
  */
 export const SKIRMISH: ScenarioDef = {
   id: 'skirmish',
   name: 'Skirmish',
-  description: 'Your base in the north, the enemy entrenched in the south. Scout through the fog, build up, and destroy every enemy building.',
-  map: { width: 64, height: 64 },
+  description: 'Your base in the north, the enemy in the east, both starting alike, with a gravity vent between them. Scout through the fog, build up, and destroy every enemy building.',
+  map: { width: 88, height: 48 },
   players: {
     player: { credits: 'rules', human: true, faction: 'ordan' },
-    enemy: { credits: 0, human: false, faction: 'sable' },
+    enemy: { credits: 'rules', human: false, faction: 'sable' },
   },
   oreFields: [
     { centre: { tx: 15, ty: 9 }, radius: 4.3, seed: 100 },
-    { centre: { tx: 44, ty: 42 }, radius: 4.3, seed: 101 },
+    { centre: { tx: 72, ty: 9 }, radius: 4.3, seed: 100, mirrorOf: 0 },
   ],
+  mirrorX: true,
+  // on the mirror line (tiles 43-44 across), between the bases
+  vents: [{ tx: 43, ty: 10, seed: 102 }],
   buildings: [
     { type: 'assembly_yard', team: 'player', tx: 1, ty: 1 },
     { type: 'refinery', team: 'player', tx: 5, ty: 5 },
     { type: 'power_plant', team: 'player', tx: 10, ty: 1 },
-    { type: 'refinery', team: 'enemy', tx: 54, ty: 51 },
-    { type: 'barracks', team: 'enemy', tx: 49, ty: 56 },
-    { type: 'power_plant', team: 'enemy', tx: 58, ty: 46 },
-    { type: 'power_plant', team: 'enemy', tx: 54, ty: 46 },
-    { type: 'radar', team: 'enemy', tx: 46, ty: 50 },
-    { type: 'assembly_yard', team: 'enemy', tx: 59, ty: 55 },
-    { type: 'incinerator', team: 'enemy', tx: 51, ty: 47 },
+    { type: 'assembly_yard', team: 'enemy', tx: 83, ty: 1 },
+    { type: 'refinery', team: 'enemy', tx: 79, ty: 5 },
+    { type: 'power_plant', team: 'enemy', tx: 75, ty: 1 },
   ],
   units: [
     { type: 'harvester', team: 'player', gx: 7.2, gy: 11.6 },
     { type: 'rifleman', team: 'player', gx: 9.2, gy: 12.2 },
     { type: 'rifleman', team: 'player', gx: 10.0, gy: 12.8 },
-    { type: 'rifleman', team: 'enemy', gx: 52, gy: 49, guard: true },
-    { type: 'rifleman', team: 'enemy', gx: 55, gy: 49.5, guard: true },
-    { type: 'rifleman', team: 'enemy', gx: 50, gy: 54, guard: true },
-    { type: 'rifleman', team: 'enemy', gx: 57, gy: 55, guard: true },
-    { type: 'rifleman', team: 'enemy', gx: 47, gy: 48.5, guard: true },
-    { type: 'rifleman', team: 'enemy', gx: 52, gy: 58, guard: true },
+    { type: 'harvester', team: 'enemy', gx: 80.8, gy: 11.6 },
+    { type: 'rifleman', team: 'enemy', gx: 78.8, gy: 12.2 },
+    { type: 'rifleman', team: 'enemy', gx: 78.0, gy: 12.8 },
   ],
   camera: { gx: 11, gy: 9 },
 };

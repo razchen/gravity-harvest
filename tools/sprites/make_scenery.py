@@ -55,6 +55,7 @@ OUT = os.path.join(ROOT, "apps", "game", "public", "assets", "sprites")
 # `contact_width` px wide (bushes: about half the bush, as the stems are thin but the whole bush shades the ground).
 # `contact` (low objects): add a contact shadow this fraction of the object's width at the ground.
 # `shadow_scale`: shorten the cast shadow, as if the object were this fraction of its height (grass).
+# `shadow_rows`: only the lowest this fraction of the object casts a shadow (what floats above it doesn't).
 # `decal`: a flat ground decal, scaled to `width` (art px) and squashed vertically by `squash` (1 = as drawn).
 # `feather` (art px): fade the alpha in over this distance from the edge (for hard cut-outs); `tone`: shift the
 # decal's mean colour this fraction of the way to the ground texture's; `sat`: scale its saturation; `opacity`;
@@ -111,6 +112,9 @@ SCENERY = [
     {"kind": "wreck_pump", "file": "wreck_pump.png", "height": 212, "low": True, "contact": 0.75},
     {"kind": "wreck_drill", "file": "wreck_drill.png", "height": 246, "low": True, "contact": 0.75},
     {"kind": "wreck_unit", "file": "wreck_unit.png", "height": 201, "low": True, "contact": 0.85},
+    # the gravity vent (2 x 2 tiles, placed by the scenario): a rock cone with golden ore floating up out of it. Only
+    # the cone casts a shadow; the floating stones would throw loose blobs far off to the right
+    {"kind": "gravity_vent", "file": "gravity_vent.png", "height": 290, "low": True, "contact": 0.85, "shadow_rows": 0.72},
     # grass tufts and patches
     {"kind": "grass_1", "file": "grass_1.png", "height": 57, "low": True, "shadow_scale": 0.5},
     {"kind": "grass_2", "file": "grass_2.png", "height": 66, "low": True, "shadow_scale": 0.5},
@@ -268,14 +272,14 @@ def footprint_centre(alpha: np.ndarray):
     return float(bx.mean()), float(ay), int(ay)
 
 
-def cast_shadow(rgba: np.ndarray, ax: float, ay: float, patch_top: int, scale=1.0):
+def cast_shadow(rgba: np.ndarray, ax: float, ay: float, patch_top: int, scale=1.0, from_row=0):
     """Project the tree onto the ground. Returns (canvas, new_anchor).
 
     A cut-out has no depth, so each horizontal run of the silhouette is treated as a disc (a round crown seen from
     the side): a disc of radius r lying h pixels up casts a disc of radius r on the ground, which the 2:1 camera
     shows as an ellipse r wide and r / 2 tall, shifted by the sun's offset. Thin branches stay thin; a crown gets a
     proper blob. The ground patch itself lies on the ground and casts nothing. `scale` < 1 shortens the shadow (and
-    thins it a little), for grass.
+    thins it a little), for grass. Rows above `from_row` cast nothing (things floating over the object).
     """
     from PIL import ImageDraw
 
@@ -288,7 +292,7 @@ def cast_shadow(rgba: np.ndarray, ax: float, ay: float, patch_top: int, scale=1.
     ox, oy = 0, reach_y                                          # where the tree sits on the new canvas
     mask = Image.new("L", (W, H), 0)
     draw = ImageDraw.Draw(mask)
-    for y in range(0, min(patch_top, h), 2):
+    for y in range(from_row, min(patch_top, h), 2):
         row = solid[y]
         if not row.any():
             continue
@@ -450,7 +454,8 @@ def build(entry):
         xs = np.where(solid)[1]
         ground_w = float(np.percentile(xs, 98) - np.percentile(xs, 2)) if xs.size else rgba.shape[1]
         contact = (f"{entry['kind']}_contact", *contact_shadow(0, entry["contact"] * ground_w))
-    tree, shadow, (ax, ay) = cast_shadow(rgba, ax, ay, top, entry.get("shadow_scale", 1.0))
+    from_row = int(rgba.shape[0] * (1 - entry.get("shadow_rows", 1.0)))
+    tree, shadow, (ax, ay) = cast_shadow(rgba, ax, ay, top, entry.get("shadow_scale", 1.0), from_row)
     frames = []
     if entry.get("contact"):
         frames.append(contact)

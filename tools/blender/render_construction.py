@@ -9,6 +9,11 @@ An `anims` list (and `door`, see the animations section below) also renders `ani
 without its moving parts) and `anim_<name>_<f>.png` (only that animation's parts, the rest holding them out); its
 `effects` become pixel points for the game's steam, flames, glows, lights and sparks.
 
+With `rig` (a .blend of the model in art/models/, the Tripo import plus empties) the model is loaded from it instead, and
+an anim with `rig` (the names of its empties) is that .blend's own keyframed animation: `frames` samples of the scene's
+frame range (a loop), moving every part under those empties; the stages show it at its first frame. An effect's `frame`
+puts its point where that part is at that frame of the .blend's timeline (sparks on an arm while it works).
+
 `hide` lists parts to leave out altogether. `turn` (0, 90, 180 or 270) spins the model first, so its entrance faces left like every building's (see
 docs/ADDING_CONTENT.md). The config lists which parts (`tripo_part_<n>`) arrive in each stage; a stage without a `parts` list is filled
 automatically (see `auto_stages`), and the grouping used is written to frames.json, to copy into the config and adjust. Every stage is rendered from the same camera,
@@ -43,10 +48,18 @@ C = json.load(open(CONFIG))
 OUT = os.path.join("tools", "blender", "frames", "construction", C["atlas"])
 os.makedirs(OUT, exist_ok=True)
 
-bpy.ops.wm.read_factory_settings(use_empty=True)
-scene = bpy.context.scene
+if C.get("rig"):
+    # the model with its rig (empties carrying the moving parts) and their keyframes, at rest on its first frame
+    bpy.ops.wm.open_mainfile(filepath=C["rig"], load_ui=False)
+    for o in [o for o in bpy.data.objects if o.type in ("CAMERA", "LIGHT")]:
+        bpy.data.objects.remove(o)
+    scene = bpy.context.scene
+    scene.frame_set(scene.frame_start)
+else:
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    scene = bpy.context.scene
+    bpy.ops.import_scene.gltf(filepath=C["model"])
 col = scene.collection
-bpy.ops.import_scene.gltf(filepath=C["model"])
 parts = [o for o in bpy.data.objects if o.type == "MESH"]
 # `hide`: parts left out altogether (what the game shows another way, like the Motor Works' rover in its bay)
 if C.get("hide"):
@@ -214,6 +227,29 @@ def face(d):
 
 
 face(rest)
+
+
+def rig_frame(anim, f):
+    """The .blend timeline frame for frame f (of anim's `frames`) of a keyframed anim: one loop of the scene's range."""
+    span = scene.frame_end - scene.frame_start + 1
+    return scene.frame_start + f * span / anim["frames"]
+
+
+def set_frame(t):
+    scene.frame_set(int(t), subframe=t - int(t))
+
+
+def rig_parts(anim):
+    return {o for name in anim["rig"] for o in bpy.data.objects[name].children_recursive if o.type == "MESH"}
+
+
+# keyframed anims: the framing covers everywhere their parts go
+for a in C.get("anims", []):
+    if a.get("rig"):
+        for f in range(a["frames"]):
+            set_frame(rig_frame(a, f))
+            swept += bounds(list(rig_parts(a)))[2]
+        set_frame(scene.frame_start)
 TILE = max(hi.x - lo.x, hi.y - lo.y) / (C["footprint"] * 0.95)    # model fills ~95% of its footprint
 PPU = 128 / (TILE * math.sqrt(2))
 ANCHOR = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, lo.z))
@@ -528,7 +564,8 @@ anim_meta = []
 if ANIMS and not want("anims"):
     anim_meta = [{"name": a["name"], "when": a["when"], "frames": a["frames"], "fps": a["fps"]} for a in ANIMS]
 if ANIMS and want("anims"):
-    moving = {by_no[n] for a in ANIMS for g in a["groups"] for n in g["parts"]}
+    anim_parts = lambda a: rig_parts(a) if a.get("rig") else {by_no[n] for g in a["groups"] for n in g["parts"]}
+    moving = {o for a in ANIMS for o in anim_parts(a)}
     for o, st, deck in items:
         o.hide_render, o.is_holdout = False, False
         deck.hide_render = True
@@ -541,7 +578,7 @@ if ANIMS and want("anims"):
     # an empty per group, at its pivot, carrying its parts
     rigs = []
     for a in ANIMS:
-        for g in a["groups"]:
+        for g in a.get("groups", []):
             e = bpy.data.objects.new("Move", None)
             col.objects.link(e)
             pv = g.get("pivot")
@@ -557,7 +594,9 @@ if ANIMS and want("anims"):
     ease = lambda t: t * t * (3 - 2 * t)
 
     def pose(anim, f):
-        """Put `anim`'s groups at frame f (the others at rest)."""
+        """Put `anim`'s groups at frame f (the others at rest); a keyframed anim plays the .blend's timeline."""
+        if C.get("rig"):
+            set_frame(rig_frame(anim, f) if anim is not None and anim.get("rig") else scene.frame_start)
         for a, g, e, home in rigs:
             k = f if a is anim else 0
             F = a["frames"]
@@ -579,7 +618,7 @@ if ANIMS and want("anims"):
     samples = scene.cycles.samples
     scene.cycles.samples = 24                       # the layers are small and move: fewer samples don't show
     for a in ANIMS:
-        mine = {by_no[n] for g in a["groups"] for n in g["parts"]}
+        mine = anim_parts(a)
         # only this anim's parts; everything else hides them where it's in front (and still shades them)
         for o in parts:
             o.is_holdout = o not in mine
@@ -600,7 +639,17 @@ if ANIMS and want("anims"):
         o.is_holdout = False
     catcher.hide_render = False
     scene.cycles.samples = samples
-effects_meta = [{"kind": fx["kind"], **px(point(fx["part"], fx.get("at", "centre"))), **({"color": fx["color"]} if fx.get("color") else {})} for fx in EFFECTS]
+def effect_point(fx):
+    """An effect's pixel; with `frame`, where its part is at that frame of the .blend's timeline."""
+    if fx.get("frame") is not None:
+        set_frame(fx["frame"])
+    p = px(point(fx["part"], fx.get("at", "centre")))
+    if fx.get("frame") is not None:
+        set_frame(scene.frame_start)
+    return p
+
+
+effects_meta = [{"kind": fx["kind"], **effect_point(fx), **({"color": fx["color"]} if fx.get("color") else {})} for fx in EFFECTS]
 
 json.dump({"anchor": anchor, "size": {"w": w, "h": h}, "footprint_tiles": C["footprint"], "tile_px": 128,
            "stages": [st["name"] for st in C["stages"]],

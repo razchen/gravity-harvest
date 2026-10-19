@@ -56,7 +56,6 @@ svg .light { fill: #d9d4c7; }
 .sq:hover { filter: brightness(1.25); }
 .sq.active { background: linear-gradient(180deg, #ffc61a, var(--yellow-deep)); color: #1a1406; }
 #sysbtns { position: fixed; top: 10px; right: 12px; z-index: 10; display: flex; gap: 6px; }
-#cats { position: fixed; top: 64px; left: 12px; z-index: 10; display: flex; flex-direction: column; gap: 5px; }
 
 /* --- Minimap ------------------------------------------------------------------------ */
 #minimap-frame { left: 12px; bottom: 12px; padding: 9px; --chamfer: 12px; }
@@ -100,6 +99,12 @@ svg .light { fill: #d9d4c7; }
 }
 .card .queue-bar { position: absolute; left: 0; bottom: 0; height: 4px; width: 0; background: var(--yellow); }
 .card.locked .name, .card.locked .price { opacity: 0.55; }
+/* the card's hotkey (Alt+number), in the bottom-left corner of its picture */
+.card .hotkey {
+  position: absolute; top: 78px; left: 7px; padding: 1px 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  line-height: 14px; color: var(--muted); background: rgba(10, 11, 12, 0.75); box-shadow: inset 0 0 0 1px var(--edge);
+  pointer-events: none;
+}
 /* sell / repair mode buttons, over the tabs */
 .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
 .modes button {
@@ -108,6 +113,9 @@ svg .light { fill: #d9d4c7; }
   box-shadow: inset 0 0 0 1px var(--edge); cursor: pointer;
 }
 .modes button svg { width: 18px; height: 18px; }
+/* unit commands for the selection (Unload): one wide button, only while it applies */
+#unit-cmds { grid-template-columns: 1fr; }
+#unit-cmds[hidden] { display: none; }
 .modes button:hover { filter: brightness(1.2); }
 .modes button.active { background: linear-gradient(180deg, #ffc61a, var(--yellow-deep)); color: #1a1406; box-shadow: none; }
 .modes button.active svg .gold { fill: #1a1406; }
@@ -178,6 +186,7 @@ svg .light { fill: #d9d4c7; }
 @media (max-width: 760px) {
   #build { width: 200px; }
   .card img { height: 60px; }
+  .card .hotkey { top: 46px; }
   #minimap-frame { transform: scale(0.75); transform-origin: bottom left; }
   #topbar .res { padding: 0 10px; font-size: 16px; }
 }
@@ -232,7 +241,98 @@ svg .light { fill: #d9d4c7; }
 #debug-menu .debug-label { flex: 1; }
 #debug-menu .debug-state { color: var(--muted); font-variant-numeric: tabular-nums; }
 
+/* --- Dev info (I) ----------------------------------------------------------------------- */
+/* left, under the wordmark, clear of the minimap (bottom left) and the build panel (right) */
+#dev-info {
+  top: 64px; left: 12px; width: min(520px, calc(100vw - 340px)); max-height: calc(100vh - 64px - 190px); overflow-y: auto;
+  padding: 6px 10px 8px; --chamfer: 8px; background: rgba(10, 11, 10, 0.78);
+  font: 11px/1.35 ui-monospace, Menlo, monospace; color: #cfe8c2;
+}
+#dev-info[hidden] { display: none; }
+#dev-info .dev-title {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;
+  font-size: 12px; font-weight: 700; line-height: 1.6; letter-spacing: 1.2px; text-transform: uppercase; color: var(--yellow);
+}
+#dev-info kbd { padding: 0 4px; border-radius: 3px; font: 700 10px/1.5 ui-monospace, Menlo, monospace; color: #1a1406; background: #c9c2b0; }
+#dev-info .dev-close { border: 0; background: none; color: var(--muted); font-size: 16px; line-height: 1; cursor: pointer; }
+#dev-info .dev-close:hover { color: var(--text); }
+#dev-info summary { cursor: pointer; padding: 2px 0; color: #fff4d0; font-weight: 700; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+#dev-info pre { margin: 0 0 4px; font: inherit; white-space: pre-wrap; word-break: break-word; font-variant-numeric: tabular-nums; }
+
 /* --- Loading screen and wordmark ------------------------------------------------------- */
 /* the game's name, small, top left of the HUD (hidden where it would crowd the resource bar) */
 #hud-wordmark { position: fixed; top: 12px; left: 14px; z-index: 9; width: 170px; height: auto; pointer-events: none; user-select: none; opacity: 0.92; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8)); }
 @media (max-width: 1100px) { #hud-wordmark { display: none; } }
+
+/* --- Selection panel and control groups -------------------------------------------------- */
+/* bottom centre, in the gap between the minimap (bottom left) and the build panel (right); grows up, wraps, scrolls */
+#selection {
+  position: fixed; z-index: 10; left: 274px; right: 310px; bottom: 12px;
+  display: flex; justify-content: center; pointer-events: none;
+}
+#selection[hidden] { display: none; }
+/* the performance readout sits at the bottom centre too: stand on it */
+#perf:not([hidden]) ~ #selection { bottom: 46px; }
+#sel-panel { position: relative; max-width: 100%; box-sizing: border-box; padding: 6px 10px 8px; --chamfer: 8px; pointer-events: auto; }
+#sel-groups { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 6px; }
+#sel-groups::before {
+  content: attr(data-total); margin-right: auto; padding-right: 10px;
+  font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
+}
+.sel-grp {
+  display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border: 0; line-height: 1;
+  font-size: 13px; color: var(--muted); background: #1b1c1d; box-shadow: inset 0 0 0 1px var(--edge);
+}
+.sel-grp b { color: var(--yellow); }
+.sel-grp span { color: var(--muted); font-variant-numeric: tabular-nums; }
+.sel-grp span:empty { display: none; }
+.sel-grp:hover { filter: brightness(1.25); }
+.sel-grp.current { background: linear-gradient(180deg, #ffc61a, var(--yellow-deep)); box-shadow: none; }
+.sel-grp.current, .sel-grp.current b, .sel-grp.current span { color: #1a1406; }
+.sel-grp.empty { opacity: 0.45; }
+#sel-body { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-height: 176px; overflow-y: auto; }
+/* several selected: one tile per type (icon, count, health) */
+.sel-tile {
+  position: relative; flex: none; width: 54px; height: 54px; padding: 2px 2px 8px; border: 0;
+  background: linear-gradient(180deg, #202224, #121314); box-shadow: inset 0 0 0 1px var(--edge);
+}
+.sel-tile:hover { filter: brightness(1.18); box-shadow: inset 0 0 0 1px var(--yellow); }
+.sel-tile.enemy { box-shadow: inset 0 0 0 1px var(--red); }
+.sel-tile img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.sel-noimg { font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--muted); }
+.sel-count:not(:empty) {
+  position: absolute; top: 2px; right: 2px; min-width: 12px; padding: 0 4px;
+  font-size: 12px; font-weight: 700; line-height: 16px; color: #1a1406; background: var(--yellow);
+}
+.sel-hp { position: absolute; left: 3px; right: 3px; bottom: 3px; height: 4px; background: rgba(0, 0, 0, 0.65); }
+.sel-hp i { display: block; height: 100%; background: #6fd34a; }
+.sel-hp i.hurt { background: var(--yellow); }
+.sel-hp i.bad { background: var(--red); }
+/* one selected: a card (icon, name, health, cargo or passengers) */
+#sel-body.one { flex-wrap: nowrap; justify-content: flex-start; align-items: center; gap: 10px; width: 270px; max-width: 100%; }
+#sel-body.one > img { flex: none; width: 64px; height: 64px; object-fit: contain; }
+.sel-info { flex: 1; min-width: 0; }
+.sel-name { font-size: 16px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
+.sel-name em { margin-left: 4px; padding: 0 5px; font-size: 11px; font-style: normal; letter-spacing: 1px; color: #fff; background: var(--red); vertical-align: middle; }
+.sel-role { font-size: 13px; color: var(--yellow); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sel-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.sel-row span { color: var(--muted); }
+.sel-row b { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.sel-hp.big { position: static; display: block; height: 5px; margin: 2px 0 3px; }
+/* small screens: the side panels shrink, and so do the tiles */
+@media (max-width: 760px) {
+  #selection { left: 206px; right: 224px; }
+  .sel-tile { width: 44px; height: 44px; }
+  #sel-body.one > img { width: 48px; height: 48px; }
+}
+/* too narrow for a gap between them: sit above the minimap instead */
+@media (max-width: 600px) {
+  #selection { left: 12px; bottom: 130px; }
+  #perf:not([hidden]) ~ #selection { bottom: 130px; }
+}
+/* the controls list grew: let it scroll on a short window */
+#help { max-height: calc(100vh - 32px); overflow-y: auto; }
+/* shortcut rows that only list keys (no click action), and room for two keys */
+#debug-menu .debug-row.keys-only { cursor: default; }
+#debug-menu .debug-row.keys-only:hover { background: none; }
+#debug-menu .debug-keys { min-width: 64px; }

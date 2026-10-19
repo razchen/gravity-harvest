@@ -97,10 +97,35 @@ Flame03, SmallFlame01, WispySmoke01, Cloud02, Explosion01, Explosion02), `sheets
 
 | Folder | Contents |
 |---|---|
-| `buildings/` | Refinery, Power Plant, Silo, Barracks, Radar concept sheets |
+| `buildings/` | Concepts for every building in the game (see below) |
 | `units/` | Harvester, Rifleman, Rocket Trooper, Engineer, Faction Specialist (the last three aren't in the game yet) |
 | `environment/` | Trees: pine, broadleaf, cypress, dead, scrub (not in the game yet) |
 | `ui/` | `hud_mockup.png`: the HUD design the in-game interface is built from |
+
+### concepts/buildings/
+
+`<id>.png` is the image the building's 3D model was made from. `_sheet` files are multi-view concept sheets.
+`_neutral` files are the first versions in the shared look (blue energy), made before the building became Ordan or
+Sable. They are kept for reference only.
+
+| Building | Side | Files |
+|---|---|---|
+| Assembly Yard | shared | `assembly_yard.png`, `assembly_yard_sheet.png` |
+| Power Plant | shared | `power_plant.png` (sheet) |
+| Reactor Plant | shared | `reactor_plant.png`, `reactor_plant_sheet.png` |
+| Refinery | shared | `refinery.png` (sheet) |
+| Barracks | shared | `barracks.png` (sheet) |
+| Radar | shared | `radar.png` (sheet) |
+| Motor Works | shared | `motor_works.png`, `motor_works_sheet.png` |
+| Service Bay | shared | `service_bay.png` (current, with the arms), `service_bay_v1.png`, `service_bay_sheet.png` |
+| Gravity Lab | Ordan | `gravity_lab.png`; earlier: `gravity_lab_neutral.png`, `gravity_lab_neutral_sheet.png` |
+| Sentry | Ordan | `sentry.png`; earlier: `sentry_neutral.png`, `sentry_neutral_sheet.png` |
+| Lance Battery | Ordan | `lance_battery.png`; earlier: `lance_battery_neutral.png`, `lance_battery_neutral_sheet.png` |
+| Gravity Forge | Sable | `gravity_forge.png`; earlier: `gravity_forge_neutral.png`, `gravity_forge_neutral_sheet.png` |
+| Incinerator | Sable | `incinerator.png` |
+| Anchor | Sable | `anchor.png` |
+| Hound Kennel | Sable | `hound_kennel.png` |
+| (none) | shared | `silo.png`: resource storage silo sheet, from before storage was dropped |
 
 ## textures/
 

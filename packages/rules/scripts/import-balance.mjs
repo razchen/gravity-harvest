@@ -27,7 +27,8 @@ function emit(path, content) {
 }
 
 const wb = readWorkbook(XLSX);
-const COLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+/** Column letters A, B, ... Z, AA, AB, ... (enough for every sheet). */
+const COLS = Array.from({ length: 78 }, (_, i) => (i < 26 ? '' : String.fromCharCode(64 + Math.floor(i / 26))) + String.fromCharCode(65 + (i % 26)));
 
 /** Rows of a sheet as objects keyed by the header row (row 3 in this workbook). */
 function table(sheetName, headerRow = 3) {
@@ -57,6 +58,8 @@ const num = (v, what) => {
   return n;
 };
 const bool = (v) => v === true || String(v).toLowerCase() === 'true';
+/** Optional yes/no column: blank stays null. */
+const flag = (v) => (v === null || v === undefined || v === '' ? null : bool(v));
 const list = (v, sep = ',') => (str(v) ? String(v).split(sep).map((s) => s.trim()).filter(Boolean) : []);
 const faction = (v) => {
   const f = str(v)?.toLowerCase();
@@ -130,6 +133,11 @@ for (const r of table('Damage Matrix')) {
       heavy: num(r['Heavy Armor'], `${id} heavy`),
       fortified: num(r.Fortified, `${id} fortified`),
     },
+    falloffStepTiles: num(r['Falloff Step (tiles)'], `${id} falloff step`),
+    damagesWalls: flag(r['Damages Walls']),
+    damagesWoodenWalls: flag(r['Damages Wooden Walls']),
+    damagesOre: flag(r['Damages Ore']),
+    ruleNotes: str(r['Rule Notes']),
   };
 }
 
@@ -149,6 +157,18 @@ for (const r of table('Weapons')) {
     projectile: str(r['Projectile / Effect']),
     targeting: str(r.Targeting),
     notes: str(r.Notes),
+    projectileSpeedTilesPerSec: num(r['Projectile Speed (tiles/s)'], `${id} projectile speed`),
+    instantHit: flag(r['Instant Hit']),
+    homingTurnDegPerSec: num(r['Homing Turn (deg/s)'], `${id} homing turn`),
+    inaccurate: flag(r.Inaccurate),
+    arcing: flag(r.Arcing),
+    fliesOverWalls: flag(r['Flies Over Walls']),
+    hitsAir: flag(r['Hits Air']),
+    hitsGround: flag(r['Hits Ground']),
+    hitsSubmerged: flag(r['Hits Submerged']),
+    fasterVsAircraft: flag(r['Faster vs Aircraft']),
+    chargeUp: flag(r['Charge-Up']),
+    ruleNotes: str(r['Rule Notes']),
   };
 }
 
@@ -182,6 +202,19 @@ for (const r of table('Buildings')) {
     weapons: [str(r['Primary Weapon']), str(r['Secondary Weapon'])].filter(Boolean),
     notes: str(r.Notes),
     description: str(r.Description),
+    capturable: flag(r.Capturable),
+    survivors: num(r.Survivors, `${id} survivors`),
+    repairable: flag(r.Repairable),
+    placementAdjacency: num(r['Placement Adjacency'], `${id} placement adjacency`),
+    extendsBase: flag(r['Extends Base']),
+    waterPlacement: flag(r['Water Placement']),
+    turretTurnDegPerSec: num(r['Turret Turn Rate (deg/s)'], `${id} turret turn`),
+    ammo: num(r.Ammo, `${id} ammo`),
+    wallDamageLevels: num(r['Wall Damage Levels'], `${id} wall levels`),
+    wallDamagePerLevel: num(r['Wall Damage per Level'], `${id} wall damage per level`),
+    crushableWall: flag(r['Crushable Wall']),
+    blocksLowShots: flag(r['Blocks Low Shots']),
+    ruleNotes: str(r['Rule Notes']),
   };
 }
 
@@ -211,6 +244,19 @@ for (const r of table('Units')) {
     passengers: num(r.Passengers, `${id} passengers`) ?? 0,
     notes: str(r['Traits / Notes']),
     description: str(r.Description),
+    turnDegPerSec: num(r['Turn Rate (deg/s)'], `${id} turn rate`),
+    crushable: flag(r.Crushable),
+    crushes: flag(r.Crushes),
+    survivorChance: num(r['Survivor Chance'], `${id} survivor chance`),
+    selfHeals: flag(r['Self-Heals']),
+    explodesOnDeath: flag(r['Explodes on Death']),
+    deathExplosionDamage: num(r['Death Explosion Damage'], `${id} death explosion damage`),
+    deathExplosionRadiusTiles: num(r['Death Explosion Radius (tiles)'], `${id} death explosion radius`),
+    cloaks: flag(r.Cloaks),
+    detectsCloaked: flag(r['Detects Cloaked']),
+    cantFireMoving: flag(r["Can't Fire Moving"]),
+    guardRangeTiles: num(r['Guard Range (tiles)'], `${id} guard range`),
+    ruleNotes: str(r['Rule Notes']),
   };
 }
 
@@ -224,6 +270,44 @@ for (const r of table('Abilities')) {
   abilities[id] = {
     id, name: str(r.Name), faction: faction(r.Faction), grantedBy: str(r['Granted By']),
     rechargeSec: num(r.Recharge, `${id} recharge`) * 60, notes: str(r.Notes),
+    targets: str(r.Targets),
+    damage: num(r.Damage, `${id} damage`),
+    damageClass: str(r['Damage Class']),
+    radiusTiles: num(r['Radius (tiles)'], `${id} radius`),
+    durationSec: num(r['Duration (sec)'], `${id} duration`),
+    arrives: str(r.Arrives),
+    count: num(r.Count, `${id} count`),
+    delaySec: num(r['Delay (sec)'], `${id} delay`),
+    warnsOpponent: flag(r['Warns Opponent']),
+    pausesOnLowPower: flag(r['Pauses on Low Power']),
+    ruleNotes: str(r['Rule Notes']),
+  };
+  if (abilities[id].damageClass && !(abilities[id].damageClass in damageMatrix)) throw new Error(`Ability ${id}: unknown damage class ${abilities[id].damageClass}`);
+}
+
+// --- Engine rules, crates (data only for now: the simulation does not read them yet) -------------------
+
+const IN_GAME = ['In game', 'Ours differs (kept)', 'Ours differs (not changed)', 'Not in game yet', 'Proposed'];
+const engineRules = {};
+for (const r of table('Engine Rules')) {
+  const id = str(r.ID);
+  if (id in engineRules) throw new Error(`Engine Rules: duplicate ${id}`);
+  const inGame = str(r['In Our Game']);
+  if (!IN_GAME.includes(inGame)) throw new Error(`Engine rule ${id}: unknown status "${inGame}"`);
+  const v = r.Value;
+  engineRules[id] = {
+    id, topic: str(r.Topic), rule: str(r.Rule),
+    value: v === null || v === undefined ? null : typeof v === 'string' ? v.trim() : v,
+    unit: str(r.Unit), inGame, notes: str(r.Notes),
+  };
+}
+
+const crates = {};
+for (const r of table('Crates')) {
+  const id = str(r.ID);
+  crates[id] = {
+    id, name: str(r.Crate), shares: num(r.Shares, `${id} shares`), chance: num(r.Chance, `${id} chance`),
+    effect: str(r.Effect), value: num(r.Value, `${id} value`), unit: str(r.Unit), notes: str(r.Notes),
   };
 }
 
@@ -239,7 +323,7 @@ const HEADER = '// GENERATED from design/balance.xlsx by scripts/import-balance.
 const json = (v) => JSON.stringify(v, null, 2);
 
 emit(join(GEN, 'balance.ts'), `${HEADER}/* eslint-disable */
-import type { AbilityDef, BuildingDef, DamageClassDef, EconomyRules, UnitDef, WeaponDef } from '../types.js';
+import type { AbilityDef, BuildingDef, CrateDef, DamageClassDef, EconomyRules, EngineRuleDef, UnitDef, WeaponDef } from '../types.js';
 
 export const ECONOMY: EconomyRules = ${json(economy)};
 
@@ -254,6 +338,12 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = ${json(buildings
 export const UNITS: Readonly<Record<string, UnitDef>> = ${json(units)};
 
 export const ABILITIES: Readonly<Record<string, AbilityDef>> = ${json(abilities)};
+
+/** How the rules behave (formulas, rates, effects). Data only for now: the simulation does not read it yet. */
+export const ENGINE_RULES: Readonly<Record<string, EngineRuleDef>> = ${json(engineRules)};
+
+/** Crate pick-ups. Not in the game yet. */
+export const CRATES: Readonly<Record<string, CrateDef>> = ${json(crates)};
 
 export const FACTION_NAMES = ${json(factionNames)} as const;
 `);
@@ -285,6 +375,8 @@ const fmt = (n, d = 2) => (n === null || n === undefined ? '' : Number.isInteger
 const fac = (f) => (f === 'both' ? 'Both' : f[0].toUpperCase() + f.slice(1));
 const nameOf = (id) => buildings[id]?.name ?? units[id]?.name ?? id;
 const write = (file, title, body) => emit(join(DOCS, file), `${DOC_HEADER}# ${title}\n\n${body.trim()}\n`);
+const yn = (v) => (v === true ? 'yes' : v === false ? '' : '');
+const notesList = (rows) => rows.filter((r) => r.ruleNotes).map((r) => `- **${r.name}:** ${r.ruleNotes}`).join('\n');
 
 write('economy.md', 'Economy', mdTable([['Setting', (r) => r[0]], ['Value', (r) => r[1], 'r'], ['Notes', (r) => r[2]]], [
   ['Starting credits', fmt(economy.startingCredits), ''],
@@ -341,6 +433,20 @@ ${bRows.filter((b) => b.description).map((b) => `- **${b.name}:** ${b.descriptio
 ## Notes
 
 ${bRows.filter((b) => b.notes).map((b) => `- **${b.name}:** ${b.notes}`).join('\n')}
+
+## Rules
+
+Data only for now (the simulation does not read these yet). See engine-rules.md for the rules behind them.
+
+${mdTable([
+  ['Name', (b) => b.name], ['Capturable', (b) => yn(b.capturable)], ['Survivors', (b) => b.survivors ?? '', 'r'], ['Repairable', (b) => yn(b.repairable)],
+  ['Adjacency', (b) => b.placementAdjacency ?? '', 'r'], ['Extends base', (b) => yn(b.extendsBase)], ['Water', (b) => yn(b.waterPlacement)],
+  ['Turret °/s', (b) => b.turretTurnDegPerSec ?? '', 'r'], ['Ammo', (b) => b.ammo ?? '', 'r'],
+  ['Wall levels', (b) => b.wallDamageLevels ?? '', 'r'], ['Wall dmg/level', (b) => b.wallDamagePerLevel ?? '', 'r'],
+  ['Crushable wall', (b) => yn(b.crushableWall)], ['Blocks low shots', (b) => yn(b.blocksLowShots)],
+], bRows)}
+
+${notesList(bRows)}
 `);
 
 const uRows = Object.values(units);
@@ -362,6 +468,20 @@ ${uRows.filter((u) => u.description).map((u) => `- **${u.name}:** ${u.descriptio
 ## Traits
 
 ${uRows.filter((u) => u.notes).map((u) => `- **${u.name}:** ${u.notes}`).join('\n')}
+
+## Rules
+
+Data only for now (the simulation does not read these yet). See engine-rules.md for the rules behind them.
+
+${mdTable([
+  ['Name', (u) => u.name], ['Turn °/s', (u) => u.turnDegPerSec ?? '', 'r'], ['Crushable', (u) => yn(u.crushable)], ['Crushes', (u) => yn(u.crushes)],
+  ['Survivor', (u) => (u.survivorChance ? `${u.survivorChance * 100}%` : ''), 'r'], ['Self-heals', (u) => yn(u.selfHeals)],
+  ['Death blast', (u) => (u.explodesOnDeath ? `${fmt(u.deathExplosionDamage)} / ${u.deathExplosionRadiusTiles} t` : '')],
+  ['Cloaks', (u) => yn(u.cloaks)], ['Detects cloaked', (u) => yn(u.detectsCloaked)], ["Can't fire moving", (u) => yn(u.cantFireMoving)],
+  ['Guard range', (u) => u.guardRangeTiles ?? '', 'r'],
+], uRows)}
+
+${notesList(uRows)}
 `);
 
 const wRows = Object.values(weapons);
@@ -373,6 +493,19 @@ ${mdTable([
   ['Burst', (w) => w.burst, 'r'], ['Raw DPS', (w) => fmt((w.damage * w.burst) / w.fireIntervalSec), 'r'], ['Range', (w) => w.rangeTiles, 'r'],
   ['Damage class', (w) => w.damageClass], ['Effect', (w) => w.projectile], ['Targets', (w) => w.targeting],
 ], wRows)}
+
+## Projectiles
+
+Data only for now (the simulation does not read these yet). Speed in tiles per second; homing turn in degrees per second.
+
+${mdTable([
+  ['Name', (w) => w.name], ['Speed', (w) => (w.instantHit ? 'instant' : w.projectileSpeedTilesPerSec ?? ''), 'r'], ['Homing °/s', (w) => w.homingTurnDegPerSec ?? '', 'r'],
+  ['Inaccurate', (w) => yn(w.inaccurate)], ['Arcing', (w) => yn(w.arcing)], ['Over walls', (w) => yn(w.fliesOverWalls)],
+  ['Air', (w) => yn(w.hitsAir)], ['Ground', (w) => yn(w.hitsGround)], ['Submerged', (w) => yn(w.hitsSubmerged)],
+  ['Faster vs air', (w) => yn(w.fasterVsAircraft)], ['Charge-up', (w) => yn(w.chargeUp)],
+], wRows)}
+
+${notesList(wRows)}
 `);
 
 write('damage-matrix.md', 'Damage matrix', `
@@ -383,12 +516,57 @@ ${mdTable([
   ['Damage class', (r) => `${r[1].name} (\`${r[0]}\`)`], ['Unarmored', (r) => r[1].vs.unarmored, 'r'], ['Structure', (r) => r[1].vs.structure, 'r'],
   ['Light', (r) => r[1].vs.light, 'r'], ['Heavy', (r) => r[1].vs.heavy, 'r'], ['Fortified', (r) => r[1].vs.fortified, 'r'],
 ], Object.entries(damageMatrix))}
+
+## Splash and walls
+
+Data only for now. Damage at distance r from a blast = damage ÷ (r ÷ falloff step), up to ÷16, within 1.5 tiles (engine-rules.md).
+
+${mdTable([
+  ['Damage class', (r) => r[1].name], ['Falloff step (tiles)', (r) => r[1].falloffStepTiles ?? '', 'r'], ['Walls', (r) => yn(r[1].damagesWalls)],
+  ['Wooden walls', (r) => yn(r[1].damagesWoodenWalls)], ['Ore', (r) => yn(r[1].damagesOre)],
+], Object.entries(damageMatrix))}
 `);
 
 write('abilities.md', 'Abilities', mdTable([
   ['ID', (a) => `\`${a.id}\``], ['Name', (a) => a.name], ['Faction', (a) => fac(a.faction)], ['Granted by', (a) => nameOf(a.grantedBy)],
   ['Recharge', (a) => `${a.rechargeSec / 60} min`, 'r'], ['Notes', (a) => a.notes],
-], Object.values(abilities)) + '\n\nDo not invent extra abilities during implementation.');
+], Object.values(abilities)) + `
+
+## Parameters
+
+Data only for now. Damage is already ×4; radius in tiles.
+
+${mdTable([
+  ['Name', (a) => a.name], ['Targets', (a) => a.targets], ['Damage', (a) => (a.damage ? `${fmt(a.damage)} ${a.damageClass ?? ''}` : '')],
+  ['Radius', (a) => a.radiusTiles ?? '', 'r'], ['Duration (s)', (a) => a.durationSec ?? '', 'r'], ['Arrives', (a) => (a.arrives ? `${a.count ?? ''} × ${a.arrives}` : '')],
+  ['Delay (s)', (a) => a.delaySec ?? '', 'r'], ['Warns', (a) => (a.warnsOpponent === null ? '?' : yn(a.warnsOpponent))], ['Pauses on low power', (a) => yn(a.pausesOnLowPower)],
+], Object.values(abilities))}
+
+${notesList(Object.values(abilities))}
+
+Do not invent extra abilities during implementation.`);
+
+const erRows = Object.values(engineRules);
+const erTopics = [...new Set(erRows.map((r) => r.topic))];
+const erValue = (v) => (v === true ? 'yes' : v === false ? 'no' : typeof v === 'number' ? fmt(v, 4) : v ?? '');
+write('engine-rules.md', 'Engine rules', `
+How the rules behave: formulas, rates and effects. **Data only for now: the simulation does not read these yet.**
+Scaled like the rest of the workbook (credits ×1.5, HP and damage ×4, distances in tiles, times in seconds).
+"In our game" says whether our game already works this way.
+
+${erTopics.map((t) => `## ${t}\n\n${mdTable([
+  ['ID', (r) => `\`${r.id}\``], ['Rule', (r) => r.rule], ['Value', (r) => erValue(r.value), 'r'], ['Unit', (r) => r.unit], ['In our game', (r) => r.inGame], ['Notes', (r) => r.notes],
+], erRows.filter((r) => r.topic === t))}`).join('\n\n')}
+`);
+
+write('crates.md', 'Crates', `
+Crate pick-ups. **Not in the game yet.** Chance = shares ÷ total shares; spawning rules are in engine-rules.md (Crates).
+
+${mdTable([
+  ['ID', (c) => `\`${c.id}\``], ['Crate', (c) => c.name], ['Shares', (c) => c.shares, 'r'], ['Chance', (c) => `${fmt(c.chance * 100, 1)}%`, 'r'],
+  ['Effect', (c) => c.effect], ['Value', (c) => (c.value === null ? '' : `${fmt(c.value)} ${c.unit ?? ''}`)], ['Notes', (c) => c.notes],
+], Object.values(crates))}
+`);
 
 // Tech tree: stages + a dependency graph (buildings → what they unlock; producers → units)
 const stageOrder = ['establish', 'economy', 'warfare', 'advanced', 'strategic'];
@@ -464,6 +642,7 @@ Generated from \`design/balance.xlsx\`, the source of truth. To change a number,
 - [Buildings](buildings.md) and [Units](units.md)
 - [Weapons](weapons.md) and the [damage matrix](damage-matrix.md)
 - [Abilities](abilities.md)
+- [Engine rules](engine-rules.md): formulas, rates and effects (data only for now) and [crates](crates.md)
 - [Tech tree](tech-tree.md): stages and the dependency graph
 - [Calculations](calculations.md): every formula and the function that implements it
 - [Design decisions](decisions.md)
@@ -479,4 +658,5 @@ if (CHECK) {
   }
   console.log('Generated rules and docs are up to date.');
 } else console.log(`Imported ${Object.keys(buildings).length} buildings, ${Object.keys(units).length} units, ${Object.keys(weapons).length} weapons, ` +
-  `${Object.keys(damageMatrix).length} damage classes, ${Object.keys(abilities).length} abilities, ${decisions.length} decisions.`);
+  `${Object.keys(damageMatrix).length} damage classes, ${Object.keys(abilities).length} abilities, ${Object.keys(engineRules).length} engine rules, ` +
+  `${Object.keys(crates).length} crates, ${decisions.length} decisions.`);

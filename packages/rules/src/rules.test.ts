@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  BUILDINGS, CATALOG, ECONOMY, UNITS, WEAPONS, buildOrder, canBuild, creditsFor, damageMultiplier, dependentsOf, directlyUnlocks,
+  ABILITIES, BUILDINGS, CATALOG, CRATES, DAMAGE_MATRIX, ECONOMY, ENGINE_RULES, UNITS, WEAPONS, buildOrder, canBuild, creditsFor, damageMultiplier, dependentsOf, directlyUnlocks,
   effectiveDps, fullLoadCredits, hitDamage, isOperational, loadoutDps, missingRequirements, powerBalance, prerequisiteClosure,
   producersOf, productionOf, rawDps, refundFor, repairCost, speedToTilesPerSec, timeToKillSec, validateCatalog, validateCombat,
 } from './index.js';
@@ -25,6 +25,26 @@ describe('imported data', () => {
     expect(UNITS.rifleman).toMatchObject({ cost: 150, hp: 200, armor: 'unarmored', weapons: ['service_rifle'] });
     expect(UNITS.operator.prerequisites).toEqual([['gravity_lab', 'gravity_forge']]);
     expect(UNITS.lander.producedAt).toEqual(['harbor', 'sub_dock']);
+  });
+});
+
+describe('rule data (not read by the simulation yet)', () => {
+  it('imports the rule columns and sheets', () => {
+    expect(WEAPONS.sky_missile).toMatchObject({ hitsAir: true, hitsGround: false, instantHit: false, projectileSpeedTilesPerSec: 7.5 });
+    expect(WEAPONS.service_rifle).toMatchObject({ instantHit: true, projectileSpeedTilesPerSec: null });
+    expect(DAMAGE_MATRIX.high_explosive).toMatchObject({ damagesWalls: true, falloffStepTiles: 0.1172 });
+    expect(UNITS.anvil).toMatchObject({ selfHeals: true, crushes: true });
+    expect(UNITS.grenadier).toMatchObject({ explodesOnDeath: true, deathExplosionDamage: UNITS.grenadier.hp });
+    expect(BUILDINGS.concrete_barrier).toMatchObject({ wallDamageLevels: 3, blocksLowShots: true, crushableWall: false });
+    expect(ABILITIES.strategic_missile).toMatchObject({ damage: 800, radiusTiles: 3, warnsOpponent: true, pausesOnLowPower: true });
+    expect(ENGINE_RULES.storage_cap.inGame).toBe('Ours differs (kept)');
+  });
+
+  it('is consistent with the rest of the workbook', () => {
+    const perCredit = ENGINE_RULES.build_seconds_per_credit.value as number;
+    for (const e of [...Object.values(BUILDINGS), ...Object.values(UNITS)]) expect(e.buildTimeSec).toBeCloseTo(e.cost * perCredit, 2);
+    for (const a of Object.values(ABILITIES)) if (a.damageClass) expect(DAMAGE_MATRIX).toHaveProperty(a.damageClass);
+    expect(Object.values(CRATES).reduce((sum, c) => sum + (c.chance ?? 0), 0)).toBeCloseTo(1, 2);
   });
 });
 

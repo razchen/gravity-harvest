@@ -1,5 +1,6 @@
 {
-  "model": "art/models/tripo/service_bay.glb",
+  "model": "art/models/tripo/service_bay_v2.glb",
+  "rig": "art/models/tripo/service_bay_v2.blend",
   "atlas": "b_service_bay_build",
   "footprint": 3,
   "deck_min_area": 0.01,
@@ -22,38 +23,37 @@
   ],
   "anims": [
     {
-      "name": "arm",
+      "name": "arms",
       "when": "working",
-      "frames": 48,
-      "fps": 10,
-      "groups": [
-        {
-          "parts": [
-            2
-          ],
-          "axis": "x",
-          "pivot": {
-            "part": 26,
-            "at": "top",
-            "xy": [
-              0.163,
-              0.03
-            ]
-          },
-          "swing": 12
-        }
+      "frames": 40,
+      "fps": 8,
+      "rig": [
+        "arm_left_base",
+        "arm_right_base"
       ]
     }
   ],
   "effects": [
     {
       "kind": "sparks",
-      "part": 2,
-      "at": "bottom"
+      "part": 191,
+      "at": "bottom",
+      "frame": 60
+    },
+    {
+      "kind": "sparks",
+      "part": 46,
+      "at": "bottom",
+      "frame": 66
     },
     {
       "kind": "light",
-      "part": 25,
+      "part": 64,
+      "at": "top"
+    },
+    {
+      "kind": "light",
+      "part": 121,
       "at": "top"
     }
   ]

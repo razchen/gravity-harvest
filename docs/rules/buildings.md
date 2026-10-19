@@ -101,3 +101,60 @@
 - **Anchor:** Stops functioning without adequate power.
 - **Airfield:** Provides aircraft and air-support abilities.
 - **Strategic Silo:** Strategic support structure.
+
+## Rules
+
+Data only for now (the simulation does not read these yet). See engine-rules.md for the rules behind them.
+
+| Name | Capturable | Survivors | Repairable | Adjacency | Extends base | Water | Turret °/s | Ammo | Wall levels | Wall dmg/level | Crushable wall | Blocks low shots |
+|---|---|---:|---|---:|---|---|---:|---:|---:|---:|---|---|
+| Assembly Yard | yes | 5 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Power Plant | yes | 1 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Reactor Plant | yes | 2 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Refinery | yes | 2 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Barracks | yes | 1 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Motor Works | yes | 5 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Service Bay | yes | 4 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Radar | yes | 4 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Flight Pad | yes | 1 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Concrete Barrier |  | 0 |  | 1 | yes |  |  |  | 3 | 280 |  | yes |
+| Gravity Lab | yes | 5 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Phase Array | yes | 5 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Harbor | yes | 0 | yes | 8 |  | yes |  |  |  |  |  |  |
+| Sentry |  | 1 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Hidden Sentry |  | 2 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Lance Battery |  | 2 | yes | 1 | yes |  | 253.1 |  |  |  |  |  |
+| Flak Array |  | 2 | yes | 1 | yes |  | 316.4 |  |  |  |  |  |
+| Veil Generator | yes | 2 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Sandbag Barrier |  | 0 |  | 1 | yes |  |  |  | 1 | 80 | yes |  |
+| Decoy Yard | yes | 0 | yes | 1 |  |  |  |  |  |  |  |  |
+| Decoy Motor Works | yes | 0 | yes | 1 |  |  |  |  |  |  |  |  |
+| Decoy Harbor | yes | 0 | yes | 8 |  | yes |  |  |  |  |  |  |
+| Decoy Radar | yes | 0 | yes | 1 |  |  |  |  |  |  |  |  |
+| Gravity Forge | yes | 5 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Lock Field | yes | 5 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Sub Dock | yes | 0 | yes | 8 |  | yes |  |  |  |  |  |  |
+| Incinerator |  | 2 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Anchor |  | 5 | yes | 1 | yes |  |  | 3 |  |  |  |  |
+| Sky Lance |  | 3 | yes | 1 | yes |  | 632.8 |  |  |  |  |  |
+| Airfield | yes | 2 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Hound Kennel |  | 0 | yes | 1 | yes |  |  |  |  |  |  |  |
+| Wire Barrier |  | 0 |  | 1 | yes |  |  |  | 2 | 40 | yes |  |
+| Strategic Silo |  | 5 | yes | 1 | yes |  |  |  |  |  |  |  |
+
+- **Refinery:** Survivors and sell refund use its cost minus the bundled Harvester.
+- **Radar:** An enemy Watcher nearby jams it (Engine Rules: watcher_jam_radius).
+- **Flight Pad:** Survivors and sell refund use its cost minus the bundled aircraft.
+- **Concrete Barrier:** Sold for the usual refund share. Walls may chain off your other walls when placed.
+- **Harbor:** Its own placement range on water.
+- **Veil Generator:** Hides the ground within 10 tiles from enemies (Engine Rules: veil_*); only at full power.
+- **Sandbag Barrier:** Sold for the usual refund share. Walls may chain off your other walls when placed.
+- **Decoy Yard:** An enemy Infiltrator sees it is a decoy.
+- **Decoy Motor Works:** An enemy Infiltrator sees it is a decoy.
+- **Decoy Harbor:** An enemy Infiltrator sees it is a decoy. Its own placement range on water.
+- **Decoy Radar:** An enemy Infiltrator sees it is a decoy.
+- **Sub Dock:** Its own placement range on water.
+- **Anchor:** Charges only at full power, whatever Requires Power says.
+- **Sky Lance:** Cannot fire while jammed by an enemy Watcher. Ignores landed aircraft.
+- **Hound Kennel:** No survivors; a destroyed kennel never leaves any.
+- **Wire Barrier:** Sold for the usual refund share. Walls may chain off your other walls when placed.

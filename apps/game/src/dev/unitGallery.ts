@@ -1,5 +1,5 @@
 // Dev page (/dev/units.html): a card per unit, linking to its page. Not part of the game build.
-import { mountGallery, tagsHtml } from './cards';
+import { CARD_DESC, CARD_NOTE, CARD_TITLE, mountGallery, tagsHtml } from './cards';
 import { unitStatsHtml } from './details';
 import { DEV_UNITS, UNIT_KINDS } from './unitData';
 
@@ -13,10 +13,10 @@ export default function mount(): void {
     ready: Boolean(u.picture),
     picture: u.picture,
     body: `
-      <h2>${u.name}<small>${u.category}</small></h2>
+      <h2 class="${CARD_TITLE}">${u.name}<small>${u.category}</small></h2>
       ${tagsHtml(u, u.role)}
-      <p class="desc">${u.description}</p>
+      <p class="${CARD_DESC}">${u.description}</p>
       ${unitStatsHtml(u)}
-      <p class="note">${u.note}</p>`,
+      <p class="${CARD_NOTE}">${u.note}</p>`,
   })), 'unit', UNIT_KINDS);
 }

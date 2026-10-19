@@ -67,7 +67,8 @@ export class MenuScene extends Phaser.Scene {
     })));
     // A harvester at work in the ore field
     const h = iso(16.5, 11.2);
-    this.add.sprite(h.x, h.y, 'harvester', 'harv_10_0').setOrigin(...anchorOrigin(meta('harvester'))).setDepth(map.depthAt(16.5, 11.2) + 0.5);
+    const hm = meta('v_harvester');
+    this.add.sprite(h.x, h.y, 'v_harvester', 'v_harvester_10').setOrigin(...anchorOrigin(hm)).setScale(1 / (hm.res ?? 1)).setDepth(map.depthAt(16.5, 11.2) + 0.5);
 
     this.centre = iso(12, 10);
     const cam = this.cameras.main;

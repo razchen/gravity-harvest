@@ -1,4 +1,4 @@
-import type { PowerView, QueueItemView } from '@gravity-harvest/shared';
+import type { PowerView, QueueItemView, PlayableFaction } from '@gravity-harvest/shared';
 import type { EventBus, GameEvents } from '../core/EventBus';
 import type { Point } from '../core/geometry';
 import type { TeamId } from '../data/teams';
@@ -20,12 +20,41 @@ export interface MinimapSnapshot {
   iso(gx: number, gy: number): Point;
 }
 
+/** A selected unit, for the selection panel. */
+export interface SelectedUnit {
+  id: number;
+  type: string;
+  team: TeamId;
+  hp: number;
+  maxHp: number;
+  /** Harvesters: ore carried, how much fits, and what it's doing. */
+  cargo?: { load: number; capacity: number; activity: string };
+  /** Transports: soldiers inside, and seats. */
+  seats?: { used: number; total: number };
+}
+
+/** A control group in use: how many of its units are on the map, and whether it's exactly the selection. */
+export interface GroupView {
+  n: number;
+  count: number;
+  /** How many of the selected units are in it. */
+  selected: number;
+  current: boolean;
+}
+
+/** The Dev info panel's sections (I key; ui/DevInfo.ts). */
+export type DevInfoSection = 'sounds' | 'perf' | 'link' | 'match' | 'camera' | 'selection';
+
 /**
  * The only way the HUD talks to the game. Keeps the DOM UI independent of game internals, so
  * either side can be rewritten (or the HUD moved to a framework) without touching the other.
  */
 export interface HudBridge {
   readonly bus: EventBus<GameEvents>;
+  /** A message is shown: its sound, if it has one (a refusal's error, a warning's alarm). */
+  toastSound(text: string): void;
+  /** The side you play (each side builds the shared units to its own design). */
+  readonly faction: PlayableFaction | null;
   credits(): number;
   power(): PowerView;
   population(): { units: number; cap: number };
@@ -34,16 +63,31 @@ export interface HudBridge {
   /** Finished building types the human owns (prerequisites). */
   ownedTypes(): string[];
   placingType(): string | null;
-  startPlacement(type: string): 'ok' | 'poor';
+  /** Start placing a building; a string says why it can't be started now (see buildBlocker). */
+  startPlacement(type: string): 'ok' | 'poor' | string;
   buyUnit(type: string): BuyResult;
   /** Remove the last queued unit of a type (right-click on its card, or its ×). */
   cancelUnit(type: string): void;
   /** Sell or repair mode: the next clicks on your buildings sell (or cancel) or repair them. */
   readonly mode: 'sell' | 'repair' | null;
   setMode(mode: 'sell' | 'repair' | null): void;
+  /** A transport of yours with passengers is selected; unload them (E, or the Unload button). */
+  canUnload(): boolean;
+  unloadSelected(): void;
+  /** The selection, for the selection panel; `selectionVersion` goes up whenever it changes. */
+  selected(): SelectedUnit[];
+  readonly selectionVersion: number;
+  /** Narrow the selection to one unit type, or (`drop`) take that type out of it. */
+  selectType(type: string, drop: boolean): void;
+  /** Control groups in use (Ctrl+number saves one, the number selects it). */
+  controlGroups(): GroupView[];
+  /** Select group `n` (`add`: add it to the selection); a double tap also centres the camera on it. */
+  tapGroup(n: number, add: boolean): void;
   minimap(): MinimapSnapshot;
   centerOnWorld(x: number, y: number): void;
   perfText(): string;
+  /** The Dev info panel's text for the sections that are open (skipped: closed ones, and match ones before the first view). */
+  devInfo(open: ReadonlySet<DevInfoSection>): Partial<Record<DevInfoSection, string>>;
   /** Open the in-game menu (pause, save, load, quit). */
   requestMenu(): void;
   // debug and shortcuts panel

@@ -2,7 +2,7 @@
 export * from './layout.js';
 export * from './scenarios.js';
 export * from './snapshot.js';
-export { Sim, MATCH_CATALOG, MATCH_PUBLIC_CATALOG, catalogFor, TEAMS, opponent, distTo, type Building, type Entity, type Fighter, type Harvester, type Unit } from './sim.js';
+export { Sim, type CreateOptions, MATCH_CATALOG, MATCH_PUBLIC_CATALOG, catalogFor, TEAMS, opponent, distTo, type Building, type Entity, type Fighter, type Harvester, type Unit } from './sim.js';
 export { Ore, ROCK_SHAPES } from './ore.js';
 export { Grid } from './grid.js';
 export { findPath } from './pathfinder.js';

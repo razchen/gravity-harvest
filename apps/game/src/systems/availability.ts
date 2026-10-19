@@ -25,11 +25,24 @@ export function missingFor(id: string, owned: string[]): string | null {
   return miss.length ? miss[0].map(name).join(' or ') : null;
 }
 
-export function trainResult(type: string, credits: number, owned: string[], pop: { units: number; cap: number }, queued: number): BuyResult {
+/** `queue`: the whole production queue (every lane counts towards the cap; only the unit's own lane can be full). */
+export function trainResult(type: string, credits: number, owned: string[], pop: { units: number; cap: number }, queue: readonly { unit: string }[]): BuyResult {
   const needs = missingFor(type, owned);
   if (needs) return { needs };
   if (credits < catalog.units[type].cost) return 'poor';
-  if (pop.units + queued >= pop.cap) return 'cap';
-  if (queued >= catalog.queueMax) return 'queue';
+  if (pop.units + queue.length >= pop.cap) return 'cap';
+  const lane = catalog.units[type].lane;
+  if (queue.filter((q) => catalog.units[q.unit]?.lane === lane).length >= catalog.queueMax) return 'queue';
   return 'ok';
+}
+
+/**
+ * Why a building can't be started now, besides money and prerequisites: buildings go up from an Assembly Yard, one at a
+ * time, and one defence at a time beside it. `own`: the human's buildings (a yard still unpacking doesn't count).
+ */
+export function buildBlocker(type: string, own: readonly { type: string; built: boolean }[]): string | null {
+  if (!assumeOwned.has('assembly_yard') && !own.some((b) => b.type === 'assembly_yard' && b.built)) return 'Needs an Assembly Yard';
+  const defence = !!catalog.buildings[type]?.defense;
+  const busy = own.find((b) => !b.built && b.type !== 'assembly_yard' && !!catalog.buildings[b.type]?.defense === defence);
+  return busy ? `Already building a ${name(busy.type)}` : null;
 }

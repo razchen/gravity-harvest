@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { DEPTH } from '../config/game';
 import { iso, toGrid } from '../core/geometry';
 import type { BuildingSprite } from '../entities/BuildingSprite';
-import { HarvesterSprite, type UnitSprite } from '../entities/UnitSprite';
+import { HarvesterSprite, VehicleSprite, canBoard, type UnitSprite } from '../entities/UnitSprite';
 import { isBuilding, isUnit, type Entity } from '../entities/types';
 import type { GameScene } from '../scenes/GameScene';
 import { $ } from '../ui/dom';
@@ -16,19 +16,56 @@ const MODE_CURSOR = {
   repair: svgCursor("<path d='M26.5 22.6 17.7 13.8a6.4 6.4 0 0 0-8.2-8.2l3.8 3.8-3.3 3.3-3.8-3.8a6.4 6.4 0 0 0 8.2 8.2l8.8 8.8a2.3 2.3 0 0 0 3.3-3.3z' fill='#ffc61a' stroke='#1a1406' stroke-width='2'/>"),
 };
 
+/** Over your Service Bay with damaged vehicles selected: they'll go to be repaired (the repair wrench). */
+const SERVICE_CURSOR = MODE_CURSOR.repair;
+
+/** Over your damaged unit with a Medic selected: it'll go and heal it (a green cross). */
+const HEAL_CURSOR = svgCursor("<path d='M12 4h8v8h8v8h-8v8h-8v-8H4v-8h8z' fill='#5be38a' stroke='#0d2414' stroke-width='2.5' stroke-linejoin='round'/>");
+
+/** Over your damaged building with Engineers selected: they'll go and repair it (the repair wrench). */
+const FIX_CURSOR = MODE_CURSOR.repair;
+
+/** Over your transport with soldiers selected: they'll get in (an arrow down into a hatch). */
+const BOARD_CURSOR = svgCursor("<rect x='5' y='17' width='22' height='10' rx='2' fill='#ffc61a' stroke='#1a1406' stroke-width='2'/><path d='M16 3v14m-6-6 6 6 6-6' fill='none' stroke='#1a1406' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 3v14m-6-6 6 6 6-6' fill='none' stroke='#ffc61a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/>");
+
+/** Ctrl held with units selected: a click attack-moves (a red sight with a dot). */
+const ATTACK_MOVE_CURSOR = svgCursor(
+  "<g fill='none' stroke-linecap='round'><g stroke='#1a1406' stroke-width='5'><circle cx='16' cy='16' r='9'/><path d='M16 2v6M16 24v6M2 16h6M24 16h6'/></g>" +
+  "<g stroke='#ff4a3a' stroke-width='2.5'><circle cx='16' cy='16' r='9'/><path d='M16 2v6M16 24v6M2 16h6M24 16h6'/></g></g>" +
+  "<circle cx='16' cy='16' r='2.5' fill='#ff4a3a' stroke='#1a1406' stroke-width='1.5'/>",
+);
+
 /** How close (world px) a click must be to a unit's body to pick it. */
 const UNIT_PICK_RADIUS = 56;
+
+/** Keys for the game, not a field being typed in or a menu or screen over it. */
+export const inGame = () => !typingInField() && $('#screens').hidden;
+
+/** The unit type most of a selection is (the first of them on a tie): whose voice answers for the group. */
+export function leadType(units: Iterable<UnitSprite>): string {
+  const n = new Map<string, number>();
+  for (const u of units) n.set(u.type, (n.get(u.type) ?? 0) + 1);
+  let best = '';
+  for (const [type, c] of n) if (c > (n.get(best) ?? 0)) best = type;
+  return best;
+}
 
 /**
  * Mouse and keyboard for the human player, classic RTS controls:
  * left-click selects (shift adds), left-drag box-selects, left-click with a selection gives an order
- * (ore = harvest, own refinery = unload there, enemy = attack, ground = move), right-click deselects.
+ * (ore = harvest, own refinery = unload there, own transport with soldiers selected = get in, own Service Bay with damaged
+ * vehicles selected = repair there, enemy = attack, ground = move), right-click deselects (or, over your transport with
+ * soldiers selected or your Service Bay with damaged vehicles selected, gives that order too). Ctrl+click (right or left)
+ * with a selection attack-moves to the ground there, or attacks the enemy there.
  * While placing a building, left-click places and right-click / Esc cancels (Esc is handled in GameFlow).
  * Orders are sent to the server; markers show up straight away so the round trip isn't felt.
  */
 export class InputController {
   private boxStart: { x: number; y: number } | null = null;
   private readonly boxGfx: Phaser.GameObjects.Graphics;
+  /** Ctrl is held; and when (performance.now()) a Ctrl+click last gave an order. */
+  private ctrl = false;
+  private ctrlClickAt = -Infinity;
 
   constructor(private readonly world: GameScene) {
     this.boxGfx = world.add.graphics().setDepth(DEPTH.ui + 1);
@@ -36,21 +73,81 @@ export class InputController {
     input.mouse?.disableContextMenu();
     const kb = input.keyboard!;
     // Esc (cancel placement / open the menu) is handled by GameFlow on the page, so it works while paused too.
-    // Phaser keeps key events from while the scene was paused, so ignore anything typed into a field or a menu.
-    const inGame = () => !typingInField() && $('#screens').hidden;
+    // Phaser keeps key events from while the scene was paused, so ignore anything typed into a field or a menu (inGame).
     kb.on('keydown-F', () => inGame() && world.toggleFog());
     kb.on('keydown-G', () => inGame() && world.toggleGrid());
     kb.on('keydown-T', () => inGame() && world.cycleFast());
-    kb.on('keydown-E', () => inGame() && world.deploySelected());
+    // E: Assemblers deploy, transports let their passengers out
+    kb.on('keydown-E', () => {
+      if (!inGame()) return;
+      world.deploySelected();
+      world.unloadSelected();
+    });
     kb.on('keydown-P', () => inGame() && world.bus.emit('perf', null));
-    kb.on('keydown-ZERO', () => inGame() && world.resetZoom());
-    kb.on('keydown-NUMPAD_ZERO', () => inGame() && world.resetZoom());
+    kb.on('keydown-I', () => inGame() && world.bus.emit('devInfo', null));
+    // Z resets the zoom (0 is control group 10, and Ctrl+0 saves it)
+    kb.on('keydown-Z', (e: KeyboardEvent) => !e.ctrlKey && !e.metaKey && inGame() && world.resetZoom());
+    // Control groups, on the page rather than through Phaser so Ctrl+number's browser default (zoom reset on Ctrl+0,
+    // tab switching on Cmd+number where the browser lets a page have it) is stopped before it happens
+    const onKey = (e: KeyboardEvent) => this.groupKey(e, () => !!inGame());
+    document.addEventListener('keydown', onKey);
+    // Ctrl held: the attack-move cursor (with units selected)
+    const onCtrl = (e: KeyboardEvent | FocusEvent) => {
+      const ctrl = e instanceof KeyboardEvent && e.ctrlKey;
+      if (ctrl === this.ctrl) return;
+      this.ctrl = ctrl;
+      this.onMove(input.activePointer);
+    };
+    document.addEventListener('keydown', onCtrl);
+    document.addEventListener('keyup', onCtrl);
+    window.addEventListener('blur', onCtrl);
+    // macOS: Ctrl+click is the system's right-click. Should a browser report it only as a context menu, with no click on
+    // the map to follow, the attack-move is given from that (never twice: a click handled just before or after wins)
+    const canvas = world.game.canvas;
+    const onMenu = (e: MouseEvent) => {
+      e.preventDefault();
+      if (!e.ctrlKey) return;
+      const at = performance.now();
+      window.setTimeout(() => {
+        const p = input.activePointer;
+        if (this.ctrlClickAt > at - 300 || p.isDown || !inGame() || !world.scene.isActive()) return;
+        if (world.selection.size && !world.placement.active && !world.mode) this.ctrlOrder(p, input.hitTestPointer(p));
+      }, 250);
+    };
+    canvas.addEventListener('contextmenu', onMenu);
+    world.events.once('shutdown', () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('keydown', onCtrl);
+      document.removeEventListener('keyup', onCtrl);
+      window.removeEventListener('blur', onCtrl);
+      canvas.removeEventListener('contextmenu', onMenu);
+    });
     kb.on('keydown-BACKTICK', () => inGame() && world.bus.emit('debugMenu', null));
     input.on('pointerdown', (p: Phaser.Input.Pointer) => {
       if (p.leftButtonDown() && !world.placement.active) this.boxStart = { x: p.worldX, y: p.worldY };
     });
-    input.on('pointermove', (p: Phaser.Input.Pointer) => this.onMove(p));
+    input.on('pointermove', (p: Phaser.Input.Pointer) => {
+      if (p.event instanceof MouseEvent) this.ctrl = p.event.ctrlKey; // Ctrl pressed while the page had no focus
+      this.onMove(p);
+    });
     input.on('pointerup', (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => this.onUp(p, over));
+  }
+
+  /**
+   * 1 to 9 and 0 (top row or keypad): select that control group (twice quickly: and centre on it), shift adds it to
+   * the selection, Ctrl (or Cmd) saves the selection as it.
+   */
+  private groupKey(e: KeyboardEvent, inGame: () => boolean): void {
+    const m = /^(?:Digit|Numpad)(\d)$/.exec(e.code);
+    if (!m || e.altKey || !inGame() || this.world.isOver || !this.world.ready) return;
+    const n = Number(m[1]);
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      if (!e.repeat) this.world.saveGroup(n);
+      return;
+    }
+    if (e.repeat) return;
+    this.world.tapGroup(n, e.shiftKey);
   }
 
   private onMove(p: Phaser.Input.Pointer): void {
@@ -71,8 +168,59 @@ export class InputController {
       w.game.canvas.style.cursor = over ? MODE_CURSOR[w.mode] : 'not-allowed';
       return;
     }
+    if (this.ctrl && w.selection.size) return void (w.game.canvas.style.cursor = ATTACK_MOVE_CURSOR);
+    const under = this.unitAt(p.worldX, p.worldY);
+    if (this.transportFor(under)) return void (w.game.canvas.style.cursor = BOARD_CURSOR);
+    if (this.medicsFor(under).length) return void (w.game.canvas.style.cursor = HEAL_CURSOR);
+    const hit = w.input.hitTestPointer(p);
+    if (this.fixersFor(hit).length) return void (w.game.canvas.style.cursor = FIX_CURSOR);
+    if (this.bayFor(hit)) return void (w.game.canvas.style.cursor = SERVICE_CURSOR);
     const harvesterSelected = [...w.selection].some((u) => u instanceof HarvesterSprite);
     w.game.canvas.style.cursor = harvesterSelected && w.ore.under(p.worldX, p.worldY) ? 'crosshair' : 'default';
+  }
+
+  /** The selected Medics that would heal `u`: it's yours, damaged, one they mend (not a vehicle), and not one of them. */
+  private medicsFor(u: UnitSprite | null): UnitSprite[] {
+    if (!u || u.team !== 'player' || u.hp >= u.maxHp || !canBoard(u)) return [];
+    return [...this.world.selection].filter((s) => s.type === 'medic' && s !== u);
+  }
+
+  /** The selected Engineers that would repair the building among `over`: yours, finished and damaged. */
+  private fixersFor(over: Phaser.GameObjects.GameObject[]): UnitSprite[] {
+    const b = this.damagedBuilding(over);
+    return b ? [...this.world.selection].filter((s) => s.type === 'engineer') : [];
+  }
+
+  /** Your finished, damaged building among `over`, if any. */
+  private damagedBuilding(over: Phaser.GameObjects.GameObject[]): BuildingSprite | null {
+    return over.map((o) => o.getData('entity') as Entity | undefined)
+      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.team === 'player' && e.hp < e.maxHp) ?? null;
+  }
+
+  /** The selected vehicles that a Service Bay would repair: yours, and damaged. */
+  private damagedVehicles(): UnitSprite[] {
+    return [...this.world.selection].filter((u) => u instanceof VehicleSprite && u.team === 'player' && u.hp < u.maxHp);
+  }
+
+  /** Your finished Service Bay among `over`, if damaged vehicles are selected (a click on it sends them to be repaired). */
+  private bayFor(over: Phaser.GameObjects.GameObject[]): BuildingSprite | null {
+    const bay = over.map((o) => o.getData('entity') as Entity | undefined)
+      .find((e): e is BuildingSprite => !!e && isBuilding(e) && e.alive && e.built && e.type === 'service_bay' && e.team === 'player');
+    return bay && this.damagedVehicles().length ? bay : null;
+  }
+
+  /** The selected damaged vehicles go onto your Service Bay's pad to be repaired, one at a time. */
+  private sendToBay(bay: BuildingSprite): void {
+    const w = this.world;
+    const vehicles = this.damagedVehicles();
+    w.net.command({ c: 'service', units: vehicles.map((u) => u.id), bay: bay.id });
+    w.sounds.answer([`ack_${leadType(vehicles)}_move`]);
+  }
+
+  /** `u`, if it's your transport and soldiers are selected (a click on it sends them in). */
+  private transportFor(u: UnitSprite | null): UnitSprite | null {
+    if (!u || u.team !== 'player' || !u.seats || u.selected) return null;
+    return [...this.world.selection].some(canBoard) ? u : null;
   }
 
   private onUp(p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]): void {
@@ -82,10 +230,17 @@ export class InputController {
     this.boxGfx.clear();
     if (p.event && p.event.target !== w.game.canvas) return; // released over the HUD, not the map
     const dragged = p.getDistance() > 6;
+    // Ctrl+click with units selected, right button or left (on macOS Ctrl+click is the right-click): attack-move
+    const ctrl = (p.event as MouseEvent | undefined)?.ctrlKey ?? false;
+    if (ctrl && !dragged && w.selection.size && !w.placement.active && !w.mode) return this.ctrlOrder(p, over);
     if (p.rightButtonReleased()) {
       if (!dragged) {
+        const transport = !w.placement.active && !w.mode ? this.transportFor(this.unitAt(p.worldX, p.worldY)) : null;
+        const bay = !w.placement.active && !w.mode && !transport ? this.bayFor(over) : null;
         if (w.placement.active) w.placement.cancel();
         else if (w.mode) w.setMode(null);
+        else if (transport) w.boardSelected(transport);
+        else if (bay) this.sendToBay(bay);
         else w.selection.clear();
       }
       return;
@@ -108,42 +263,87 @@ export class InputController {
     if (dragged && start) {
       const b = this.boxRect(p, start);
       w.selection.set([...w.units.values()].filter((u) => u.team === 'player' && !u.inside && b.contains(u.sprite.x, u.sprite.y - 20)), shift);
+      if (w.selection.size) w.sounds.answer([`ack_${leadType(w.selection)}_select`]);
       return;
     }
     const hits = over.map((o) => o.getData('entity') as Entity | undefined).filter((e): e is Entity => !!e && e.alive);
     // units win over buildings: a soldier standing in front of (or behind) a building is what you meant
     const hitUnit = this.unitAt(p.worldX, p.worldY) ?? hits.find(isUnit);
-    if (hitUnit?.team === 'player') return w.selection.set([hitUnit], shift);
+    // your transport with soldiers selected: they get in
+    const transport = shift ? null : this.transportFor(hitUnit ?? null);
+    if (transport) return w.boardSelected(transport);
+    // your damaged unit with Medics selected: they go and heal it (rather than selecting it)
+    const medics = shift ? [] : this.medicsFor(hitUnit ?? null);
+    if (medics.length && hitUnit) {
+      w.net.command({ c: 'support', units: medics.map((u) => u.id), target: hitUnit.id });
+      w.sounds.answer([`ack_${leadType(medics)}_move`]);
+      return w.effects.moveMarker(Math.floor(hitUnit.gx), Math.floor(hitUnit.gy));
+    }
+    if (hitUnit?.team === 'player') {
+      w.selection.set([hitUnit], shift);
+      w.sounds.answer([`ack_${leadType(w.selection)}_select`]);
+      return;
+    }
     if (!w.selection.size) return;
     const hitBuilding = hits.filter(isBuilding).find((b) => b.built);
     // (own units returned above, so any unit hit here is hostile)
     const enemy: Entity | null = hitUnit ?? (hitBuilding && hitBuilding.team !== 'player' ? hitBuilding : null);
     const ownRefinery = hitBuilding?.type === 'refinery' && hitBuilding.team === 'player' ? hitBuilding : null;
+    const ownBay = hitBuilding?.type === 'service_bay' && hitBuilding.team === 'player' ? hitBuilding : null;
+    // your damaged building with Engineers selected: they go and repair it (the rest move there)
+    const fixers = this.fixersFor(over);
+    const broken = this.damagedBuilding(over);
+    if (fixers.length && broken) {
+      w.net.command({ c: 'support', units: fixers.map((u) => u.id), target: broken.id });
+      w.sounds.answer([`ack_${leadType(fixers)}_move`]);
+    }
     const ore = w.ore.under(p.worldX, p.worldY);
-    this.issueOrders(enemy, ownRefinery, ore, toGrid(p.worldX, p.worldY));
+    this.issueOrders(enemy, ownRefinery, ownBay, ore, toGrid(p.worldX, p.worldY), new Set(fixers));
   }
 
-  private issueOrders(enemy: Entity | null, ownRefinery: BuildingSprite | null, ore: OreTileSprite | null, g: { gx: number; gy: number }): void {
+  private issueOrders(
+    enemy: Entity | null, ownRefinery: BuildingSprite | null, ownBay: BuildingSprite | null, ore: OreTileSprite | null, g: { gx: number; gy: number },
+    busy: ReadonlySet<UnitSprite> = new Set(),
+  ): void {
     const w = this.world;
     const harvesters = [...w.selection].filter((u) => u instanceof HarvesterSprite).map((u) => u.id);
-    const others = [...w.selection].filter((u) => !(u instanceof HarvesterSprite));
+    // clicking your Service Bay sends your damaged vehicles onto its pad to be repaired (the rest just go there)
+    const toBay: UnitSprite[] = ownBay && !enemy ? this.damagedVehicles() : [];
+    const others = [...w.selection].filter((u) => !(u instanceof HarvesterSprite) && !toBay.includes(u) && !busy.has(u));
     const movers = [...(ownRefinery || ore ? [] : harvesters.map((id) => w.units.get(id)!)), ...(enemy ? [] : others)];
+    if (ownBay && toBay.length) w.net.command({ c: 'service', units: toBay.map((u) => u.id), bay: ownBay.id });
     if (ownRefinery && harvesters.length) w.net.command({ c: 'dock', units: harvesters, refinery: ownRefinery.id });
     else if (ore && harvesters.length) w.net.command({ c: 'harvest', units: harvesters, tx: ore.tx, ty: ore.ty });
     if (enemy && others.length) w.net.command({ c: 'attack', units: others.map((u) => u.id), target: enemy.id });
-    if (movers.length) {
-      // spread a group around the target
-      w.net.command({
-        c: 'move',
-        orders: movers.map((u, i) => {
-          const a = i * 2.4;
-          const r = i ? 0.9 * Math.sqrt(i) : 0;
-          return { id: u.id, gx: g.gx + Math.cos(a) * r, gy: g.gy + Math.sin(a) * r };
-        }),
-      });
-    }
+    // all to the clicked point: the server gives each a tile of its own around it, in formation
+    if (movers.length) w.net.command({ c: 'move', orders: movers.map((u) => ({ id: u.id, gx: g.gx, gy: g.gy })) });
     if (enemy) w.effects.targetMarker(enemy.gx, enemy.gy, isBuilding(enemy) ? enemy.size * 1.4 : 1);
-    else if (!ownRefinery && !ore) w.effects.moveMarker(Math.floor(g.gx), Math.floor(g.gy));
+    else if (!ownRefinery && !ore && !toBay.length) w.effects.moveMarker(Math.floor(g.gx), Math.floor(g.gy));
+    // the units answer, in the voice of the most of them (an unarmed one sent at an enemy says it's moving)
+    const lead = leadType(w.selection);
+    if (enemy && others.length) w.sounds.answer([`ack_${lead}_attack`, `ack_${lead}_move`]);
+    else if (w.selection.size) w.sounds.answer([`ack_${lead}_move`]);
+  }
+
+  /**
+   * Ctrl+click with units selected: an attack-move to the point (they fight whatever they meet on the way, then carry
+   * on; harvesters just go there). Over an enemy it's a plain attack on it.
+   */
+  private ctrlOrder(p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]): void {
+    const w = this.world;
+    this.ctrlClickAt = performance.now();
+    const hits = over.map((o) => o.getData('entity') as Entity | undefined).filter((e): e is Entity => !!e && e.alive);
+    const hitUnit = this.unitAt(p.worldX, p.worldY) ?? hits.find(isUnit);
+    const hitBuilding = hits.filter(isBuilding).find((b) => b.built && b.team !== 'player');
+    const enemy: Entity | null = hitUnit && hitUnit.team !== 'player' ? hitUnit : hitBuilding ?? null;
+    const g = toGrid(p.worldX, p.worldY);
+    if (enemy) return this.issueOrders(enemy, null, null, null, g);
+    // all to the clicked point, in the same formation as a move
+    w.net.command({ c: 'attackMove', orders: [...w.selection].map((u) => ({ id: u.id, gx: g.gx, gy: g.gy })) });
+    w.effects.attackMoveMarker(Math.floor(g.gx), Math.floor(g.gy));
+    // they answer as for an attack (an unarmed lead says it's moving)
+    const lead = leadType(w.selection);
+    w.sounds.answer([`ack_${lead}_attack`, `ack_${lead}_move`]);
   }
 
   /** The unit whose body is under (or nearest to) a world point, within a small radius. */

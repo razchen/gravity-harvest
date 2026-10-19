@@ -2,6 +2,7 @@
 // (?faction=ordan&shared=0&v=1). Used by /dev/ (buildings) and /dev/units.html.
 import { FACTIONS, MILESTONES, emblem, inFaction, type FactionScope, type Milestone } from './buildings';
 import { mountPicture } from './picture';
+import { BUTTON, CHECKBOX, NONE, PIC, ROLE, TAGS, TAG_V, ground, tagSide } from './ui';
 
 export interface CardItem {
   faction: FactionScope;
@@ -14,7 +15,7 @@ export interface CardItem {
   preview?: string;
   /** The card's text, under the picture. */
   body: string;
-  /** Its kind, for galleries with a kind filter (units: infantry or vehicle). */
+  /** Its kind, for galleries with a kind filter (units: infantry, vehicle, aircraft or naval). */
   kind?: string;
 }
 
@@ -28,9 +29,17 @@ const FILTERS: { id: Filter; label: string }[] = [
 
 export const factionName = (f: FactionScope) => FACTIONS.find((x) => x.id === f)!.name;
 
+/** A card's name, with what it is in small on the right. */
+export const CARD_TITLE = 'flex items-baseline justify-between gap-2 text-[18px] font-bold [&>small]:text-[14px] [&>small]:font-medium [&>small]:text-muted';
+export const CARD_DESC = 'text-[15px]';
+export const CARD_NOTE = 'text-[13px] italic text-muted';
+
 /** The tag row every card and info page starts with: release, side, then anything else. */
 export const tagsHtml = (item: { faction: FactionScope; milestone: Milestone }, ...more: string[]) =>
-  `<div class="tags"><span class="tag v">V${item.milestone}</span><span class="tag ${item.faction}">${emblem(item.faction)}${factionName(item.faction)}</span>${more.filter(Boolean).map((m) => `<span class="role">${m}</span>`).join('')}</div>`;
+  `<div class="${TAGS}"><span class="${TAG_V}">V${item.milestone}</span><span class="${tagSide(item.faction)}">${emblem(item.faction)}${factionName(item.faction)}</span>${more.filter(Boolean).map((m) => `<span class="${ROLE}">${m}</span>`).join('')}</div>`;
+
+/** A group of filter buttons. */
+const GROUP = 'mr-2.5 inline-flex flex-wrap items-center gap-1';
 
 /**
  * Put the cards in #grid and the filters in #filters. `noun` counts them ("building"). With `kinds`, there's also a
@@ -51,9 +60,12 @@ export function mountGallery(items: CardItem[], noun: string, kinds: { id: strin
 
   const cards = items.map((item) => {
     const card = document.createElement('a');
-    card.className = item.ready ? 'card' : 'card off';
+    card.className = 'flex flex-col rounded-[8px] border border-line bg-panel text-text hover:border-gold';
     card.href = item.href;
-    card.innerHTML = `<div class="pic">${item.picture ? '' : '<span class="none">No art yet</span>'}</div><div class="body">${item.body}</div>`;
+    // the ones without their full art dimmed
+    const pic = `${PIC} h-[170px] rounded-t-[7px] ${ground(256)}${item.ready ? '' : ' brightness-85 saturate-75'}`;
+    card.innerHTML = `<div class="pic ${pic}">${item.picture ? '' : `<span class="${NONE} text-white/75">No art yet</span>`}</div>`
+      + `<div class="relative z-[2] grid gap-1 px-3 pb-3 pt-2.5">${item.body}</div>`;
     grid.append(card);
     if (item.picture) {
       mountPicture(card.querySelector<HTMLElement>('.pic')!, item.picture.file, item.picture.frame, item.preview)
@@ -70,14 +82,15 @@ export function mountGallery(items: CardItem[], noun: string, kinds: { id: strin
       el.hidden = !on;
       if (on) shown++;
     }
-    bar.innerHTML = '<span class="group">' + FILTERS.map((f) => `<button class="${f.id === filter ? 'primary' : ''}" data-f="${f.id}">${f.id === 'ordan' || f.id === 'sable' ? emblem(f.id) : ''}${f.label}</button>`).join('') + '</span>'
+    const button = (on: boolean) => `${BUTTON}${on ? ' primary' : ''}`;
+    bar.innerHTML = `<span class="${GROUP}">` + FILTERS.map((f) => `<button class="${button(f.id === filter)}" data-f="${f.id}">${f.id === 'ordan' || f.id === 'sable' ? emblem(f.id) : ''}${f.label}</button>`).join('') + '</span>'
       + (filter === 'ordan' || filter === 'sable'
-        ? `<label class="group"><input type="checkbox" id="with-shared"${withShared ? ' checked' : ''}> Include shared</label>` : '')
-      + (kinds.length ? '<span class="group">' + [{ id: '', name: 'All kinds' }, ...kinds].map((k) =>
-        `<button class="${k.id === kind ? 'primary' : ''}" data-k="${k.id}">${k.name}</button>`).join('') + '</span>' : '')
-      + '<span class="group">' + [{ id: 0, name: 'All' }, ...MILESTONES].map((m) =>
-        `<button class="${m.id === version ? 'primary' : ''}" data-v="${m.id}" title="${m.name}">${m.id ? `V${m.id}` : 'All releases'}</button>`).join('') + '</span>'
-      + `<span class="count">${shown} ${noun}${shown === 1 ? '' : 's'}</span>`;
+        ? `<label class="${GROUP} text-muted"><input type="checkbox" class="${CHECKBOX}" id="with-shared"${withShared ? ' checked' : ''}> Include shared</label>` : '')
+      + (kinds.length ? `<span class="${GROUP}">` + [{ id: '', name: 'All kinds' }, ...kinds].map((k) =>
+        `<button class="${button(k.id === kind)}" data-k="${k.id}">${k.name}</button>`).join('') + '</span>' : '')
+      + `<span class="${GROUP}">` + [{ id: 0, name: 'All' }, ...MILESTONES].map((m) =>
+        `<button class="${button(m.id === version)}" data-v="${m.id}" title="${m.name}">${m.id ? `V${m.id}` : 'All releases'}</button>`).join('') + '</span>'
+      + `<span class="ml-1.5 text-muted">${shown} ${noun}${shown === 1 ? '' : 's'}</span>`;
     const url = new URL(location.href);
     if (filter === 'all') url.searchParams.delete('faction');
     else url.searchParams.set('faction', filter);

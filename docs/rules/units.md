@@ -106,3 +106,65 @@
 - **Warden:** Detects submerged units.
 - **Bastion:** Detects submerged units.
 - **Wraith:** Submerged / cloaked behavior.
+
+## Rules
+
+Data only for now (the simulation does not read these yet). See engine-rules.md for the rules behind them.
+
+| Name | Turn °/s | Crushable | Crushes | Survivor | Self-heals | Death blast | Cloaks | Detects cloaked | Can't fire moving | Guard range |
+|---|---:|---|---|---:|---|---|---|---|---|---:|
+| Rifleman |  | yes |  |  |  |  |  | yes | yes |  |
+| Lancer |  | yes |  |  |  |  |  | yes | yes |  |
+| Engineer |  | yes |  |  |  |  |  | yes | yes |  |
+| Operator |  | yes |  |  |  |  |  | yes | yes |  |
+| Harvester | 105.5 |  | yes | 50% | yes |  |  |  |  |  |
+| Assembler | 105.5 |  | yes | 50% |  |  |  |  |  |  |
+| Seeder | 105.5 |  | yes | 50% |  |  |  |  |  |  |
+| Lander | 210.9 |  |  |  |  |  |  | yes |  |  |
+| Medic |  | yes |  |  |  |  |  | yes | yes |  |
+| Infiltrator |  | yes |  |  |  |  |  | yes | yes |  |
+| Raider |  | yes |  |  |  |  |  | yes | yes |  |
+| Hound |  | yes |  |  |  |  |  | yes | yes | 7 |
+| Grenadier |  | yes |  |  |  | 200 / 1 t |  | yes | yes |  |
+| Breaker |  | yes |  |  |  | 160 / 1 t |  | yes | yes |  |
+| Skimmer | 210.9 |  |  | 50% |  |  |  |  |  |  |
+| Jackal | 105.5 |  | yes | 50% |  |  |  |  |  |  |
+| Ram | 105.5 |  | yes | 50% |  |  |  |  |  |  |
+| Carrier | 105.5 |  | yes |  |  |  |  |  |  |  |
+| Spire | 42.2 |  |  | 50% |  |  |  |  | yes |  |
+| Watcher | 105.5 |  | yes | 50% |  |  |  |  |  |  |
+| Shroud | 105.5 |  | yes | 50% |  |  |  |  |  |  |
+| Goliath | 105.5 |  | yes | 50% |  |  |  |  |  |  |
+| Anvil | 105.5 |  | yes | 50% | yes |  |  |  |  |  |
+| Salvo | 105.5 |  | yes | 50% |  |  |  |  | yes |  |
+| Drift | 84.4 |  |  | 90% |  |  |  |  |  | 30 |
+| Shrike | 105.5 |  |  | 90% |  |  |  |  |  | 30 |
+| Interceptor | 105.5 |  |  |  |  |  |  |  |  | 30 |
+| Lifter | 105.5 |  |  |  |  |  |  |  |  |  |
+| Hammer | 84.4 |  |  | 90% |  |  |  |  |  | 30 |
+| Cutter | 147.7 |  |  |  |  |  |  | yes |  |  |
+| Warden | 147.7 |  |  |  |  |  |  | yes |  |  |
+| Bastion | 105.5 |  |  |  |  |  |  | yes |  |  |
+| Wraith | 147.7 |  |  |  |  |  | yes | yes |  |  |
+
+- **Rifleman:** Infantry: never fires while moving; detects cloaked units next to it.
+- **Lancer:** Infantry: never fires while moving; detects cloaked units next to it.
+- **Engineer:** Infantry: never fires while moving; detects cloaked units next to it.
+- **Operator:** Infantry: never fires while moving; detects cloaked units next to it.
+- **Harvester:** Self-heals up to half health.
+- **Seeder:** Re-arms all mines free and at once at a Service Bay, before any repair.
+- **Lander:** Detects cloaked: default for ships.
+- **Medic:** Infantry: never fires while moving; detects cloaked units next to it.
+- **Infiltrator:** Infantry: never fires while moving; detects cloaked units next to it.
+- **Raider:** Infantry: never fires while moving; detects cloaked units next to it.
+- **Hound:** Infantry: never fires while moving; detects cloaked units next to it. Moves at double speed while chasing a target.
+- **Grenadier:** Infantry: never fires while moving; detects cloaked units next to it. Death blast uses its primary weapon's damage class (frag_grenade).
+- **Breaker:** Infantry: never fires while moving; detects cloaked units next to it. Death blast uses its primary weapon's damage class (thermal_projector).
+- **Skimmer:** Does not crush.
+- **Carrier:** Passengers get out when it is destroyed.
+- **Spire:** Does not crush (tracked, but too light).
+- **Drift:** Aircraft crew parachute out.
+- **Shrike:** Aircraft crew parachute out.
+- **Lifter:** Passengers die with it.
+- **Hammer:** Aircraft crew parachute out.
+- **Wraith:** Detects cloaked: default for ships.

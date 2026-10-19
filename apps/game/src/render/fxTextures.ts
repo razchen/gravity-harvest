@@ -6,6 +6,10 @@ export const FX = {
   dot: 'fx_dot',
   /** Lumpy soft puff: explosion smoke. */
   smoke: 'fx_smoke',
+  /** A soft band, bright along its middle and fading to nothing at its edges: stretched into laser beams. */
+  beam: 'fx_beam',
+  /** A small missile pointing along +x, in its own colours (not tinted): a pale body, a dark nose, fins at the back. */
+  missile: 'fx_missile',
 };
 
 /**
@@ -59,6 +63,33 @@ export function ensureFxTextures(scene: Phaser.Scene): void {
     g.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 64, 64);
+  });
+  canvas(scene, FX.beam, 16, 64, (ctx) => {
+    const g = ctx.createLinearGradient(0, 0, 0, 64);
+    g.addColorStop(0, 'rgba(255,255,255,0)');
+    g.addColorStop(0.3, 'rgba(255,255,255,0.35)');
+    g.addColorStop(0.5, 'rgba(255,255,255,1)');
+    g.addColorStop(0.7, 'rgba(255,255,255,0.35)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 16, 64);
+  });
+  canvas(scene, FX.missile, 64, 18, (ctx) => {
+    // fins, top and bottom, at the back
+    ctx.fillStyle = '#7d776e';
+    ctx.beginPath(); ctx.moveTo(2, 1); ctx.lineTo(14, 6); ctx.lineTo(14, 12); ctx.lineTo(2, 17); ctx.lineTo(6, 9); ctx.closePath(); ctx.fill();
+    // the body: lit along the top, shaded underneath
+    const g = ctx.createLinearGradient(0, 5, 0, 13);
+    g.addColorStop(0, '#f6f2ea');
+    g.addColorStop(0.45, '#d8d2c6');
+    g.addColorStop(1, '#8c867c');
+    ctx.fillStyle = g;
+    ctx.fillRect(6, 5, 44, 8);
+    // a band, and the nose cone
+    ctx.fillStyle = '#5a554e';
+    ctx.fillRect(36, 5, 3, 8);
+    ctx.fillStyle = '#3c3833';
+    ctx.beginPath(); ctx.moveTo(50, 5); ctx.quadraticCurveTo(62, 6.5, 63, 9); ctx.quadraticCurveTo(62, 11.5, 50, 13); ctx.closePath(); ctx.fill();
   });
   canvas(scene, FX.smoke, 128, 128, (ctx) => {
     // a cluster of soft blobs: reads as a billow, not a disc

@@ -1,0 +1,11 @@
+{
+ "length_tiles": 0.9,
+ "rig": "hover/engineer_ordan.blend",
+ "hover": {
+  "height": 0.28,
+  "glow": [0.55, 0.12, 1.0]
+ },
+ "clips": {
+  "work": {"frames": 12, "loop": true}
+ }
+}

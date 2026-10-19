@@ -1,0 +1,18 @@
+{
+ "length_tiles": 0.85,
+ "rig": "hover/medic.blend",
+ "hover": {
+  "height": 0.28,
+  "glow": [
+   0.55,
+   0.12,
+   1.0
+  ]
+ },
+ "clips": {
+  "heal": {
+   "frames": 12,
+   "loop": true
+  }
+ }
+}

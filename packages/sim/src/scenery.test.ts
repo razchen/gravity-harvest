@@ -5,7 +5,8 @@ import { SCENARIOS } from './scenarios.js';
 import { footprint } from './layout.js';
 
 const layout = (sim: Sim) => sim.scenery.map((t) => `${t.kind}@${t.tx},${t.ty}`).join(' ');
-const inField = (t: { tx: number; ty: number }) => t.tx >= 0 && t.ty >= 0 && t.tx < 64 && t.ty < 64;
+const { width: W, height: H } = SCENARIOS.skirmish.map;
+const inField = (t: { tx: number; ty: number }) => t.tx >= 0 && t.ty >= 0 && t.tx < W && t.ty < H;
 /** Scenery of a category inside the field (the landscape also carries on past the edge, as pure scenery). */
 const of = (sim: Sim, category: string) => sim.scenery.filter((t) => inField(t) && sceneryKind(t.kind).category === category);
 
@@ -42,7 +43,7 @@ describe('scenery', () => {
   it.each(seeds)('seed %i: a forest, rock outcrops, bushes and logs; blockers never overlap', (seed) => {
     const sim = Sim.create('skirmish', seed);
     expect(of(sim, 'tree').length).toBeGreaterThan(80);
-    expect(of(sim, 'tree').length).toBeLessThan(900);
+    expect(of(sim, 'tree').length).toBeLessThan(1200); // (a mirrored map doubles whichever its left half grew)
     expect(of(sim, 'rock').length).toBeGreaterThan(5);
     expect(of(sim, 'bush').length).toBeGreaterThan(10);
     const kinds = new Set(SCENERY_KINDS.map((k) => k.id));
@@ -68,11 +69,11 @@ describe('scenery', () => {
     for (const t of outside) {
       expect(t.tx).toBeGreaterThanOrEqual(-M);
       expect(t.ty).toBeGreaterThanOrEqual(-M);
-      expect(t.tx).toBeLessThan(64 + M);
-      expect(t.ty).toBeLessThan(64 + M);
+      expect(t.tx).toBeLessThan(W + M);
+      expect(t.ty).toBeLessThan(H + M);
     }
     // nothing outside blocks a tile of the field
-    const blockedTiles = [...Array(64 * 64).keys()].filter((i) => sim.map.isBlocked(Math.floor(i / 64), i % 64)).length;
+    const blockedTiles = [...Array(W * H).keys()].filter((i) => sim.map.isBlocked(Math.floor(i / H), i % H)).length;
     const insideBlockers = sim.scenery.filter((t) => sceneryKind(t.kind).blocks).reduce((n, t) => {
       const k = sceneryKind(t.kind);
       let c = 0;
@@ -90,7 +91,7 @@ describe('scenery', () => {
       const sim = Sim.create('skirmish', seed);
       const ring = (d0: number, d1: number) => sim.scenery.filter((t) => {
         if (sceneryKind(t.kind).category !== 'tree') return false;
-        const d = Math.max(-t.tx, -t.ty, t.tx - 63, t.ty - 63); // > 0 outside, <= 0 inside
+        const d = Math.max(-t.tx, -t.ty, t.tx - (W - 1), t.ty - (H - 1)); // > 0 outside, <= 0 inside
         return d > d0 && d <= d1;
       }).length;
       inner += ring(-4, 0);
@@ -133,6 +134,7 @@ describe('scenery', () => {
       for (let x = t.tx; x < t.tx + k.size; x++) {
         for (let y = t.ty; y < t.ty + k.size; y++) {
           expect(sim.map.isBlocked(x, y)).toBe(true);
+          if (k.category === 'vent') continue; // (the scenario's: its ore rings it)
           for (const b of sc.buildings) {
             const n = footprint(b.type);
             const gap = Math.max(b.tx - x, x - (b.tx + n - 1), b.ty - y, y - (b.ty + n - 1));
@@ -159,9 +161,12 @@ describe('scenery', () => {
   it.each(seeds)('seed %i: one to three abandoned sites in the field, far from the bases and the ore', (seed) => {
     const sim = Sim.create('skirmish', seed);
     const wrecks = of(sim, 'wreck');
-    expect(wrecks.length).toBeGreaterThanOrEqual(SCENERY.sites.fieldMin);
-    expect(wrecks.length).toBeLessThanOrEqual(SCENERY.sites.fieldMax);
-    expect(sim.scenery.filter((t) => !inField(t) && sceneryKind(t.kind).category === 'wreck').length).toBeLessThanOrEqual(1);
+    // (a left-right mirrored map grows them on its left half and mirrors them: twice as many, in pairs)
+    const m = SCENARIOS.skirmish.mirrorX ? 2 : 1;
+    expect(wrecks.length).toBeGreaterThanOrEqual(SCENERY.sites.fieldMin * m);
+    expect(wrecks.length).toBeLessThanOrEqual(SCENERY.sites.fieldMax * m);
+    expect(wrecks.length % m).toBe(0);
+    expect(sim.scenery.filter((t) => !inField(t) && sceneryKind(t.kind).category === 'wreck').length).toBeLessThanOrEqual(m);
     for (const w of wrecks) {
       for (const b of SCENARIOS.skirmish.buildings) {
         const n = footprint(b.type);

@@ -38,6 +38,12 @@ export interface SiteInfo {
   buildings: { tx: number; ty: number; size: number; team: string }[];
   /** Where units start: kept clear. */
   units: { gx: number; gy: number }[];
+  /**
+   * A map whose two halves mirror each other left to right (tile tx <-> width - 1 - tx): the landscape grown on the
+   * left half is mirrored onto the right, so neither side's paths or room to build are luckier. Whatever would sit
+   * across the middle is left out.
+   */
+  mirrorX?: boolean;
 }
 
 /** Smooth value noise on a lattice of `cell` tiles (random corner values, smoothstep interpolation). */
@@ -272,6 +278,7 @@ export function growScenery(map: Grid, ore: Ore, site: SiteInfo, rng: Rng, nextI
     const x1 = tx + 1 + S.radius;
     const y1 = ty + 1 + S.radius;
     if (sites.some((o) => Math.hypot(o.tx - tx, o.ty - ty) < S.spacing)) return false;
+    if (site.mirrorX && x1 >= W / 2) return false; // (on the left half: it's mirrored onto the right)
     for (const b of site.buildings) {
       const gap = Math.max(b.tx - x1, x0 - (b.tx + b.size - 1), b.ty - y1, y0 - (b.ty + b.size - 1));
       if (gap <= SCENERY.baseClearance + S.baseGapExtra) return false;
@@ -462,7 +469,7 @@ export function growScenery(map: Grid, ore: Ore, site: SiteInfo, rng: Rng, nextI
   const C = SCENERY.scars;
   const scar = (prefix: string, n: number) => {
     for (let placed = 0, tries = 0; placed < n && tries < 200; tries++) {
-      const x = rng.range(-M, W + M);
+      const x = rng.range(-M, site.mirrorX ? W / 2 - 1 : W + M); // (a mirrored map: on its left half, then mirrored)
       const y = rng.range(-M, H + M);
       const tx = Math.floor(x);
       const ty = Math.floor(y);
@@ -602,7 +609,13 @@ export function growScenery(map: Grid, ore: Ore, site: SiteInfo, rng: Rng, nextI
     });
     if (blocks) map.setFootprint(s.tx, s.ty, size, true); // (only the tiles inside the field)
   };
-  for (const [, s] of [...blockers].sort((a, b) => a[0] - b[0])) emit(s, true);
-  for (const s of [...decor, ...flats, ...grass]) emit(s, false);
+  // a mirrored map keeps what's wholly on the left half, and its mirror image on the right
+  const mirrored = (list: Spot[]) => {
+    if (!site.mirrorX) return list;
+    const left = list.filter((s) => s.tx + sceneryKind(s.kind).size <= W / 2);
+    return [...left, ...left.map((s) => ({ ...s, tx: W - s.tx - sceneryKind(s.kind).size, x: W - s.x }))];
+  };
+  for (const s of mirrored([...blockers].sort((a, b) => a[0] - b[0]).map(([, s]) => s))) emit(s, true);
+  for (const s of mirrored([...decor, ...flats, ...grass])) emit(s, false);
   return out;
 }

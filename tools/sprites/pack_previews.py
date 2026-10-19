@@ -1,7 +1,7 @@
 """Make the dev pages' building pictures from the preview renders (render_construction.py with PREVIEW=3).
 
 Run from the repo root (needs Python 3 with Pillow and NumPy):
-    python3 tools/sprites/pack_previews.py
+    python3 tools/sprites/pack_previews.py [atlas ...]    (only those, e.g. v_hound; the rest stay as they are)
 
 Each tools/blender/frames/construction/<atlas>/preview.png is cropped to the building and its shadow (lightened), scaled
 to at most WIDTH px wide and written to apps/game/public/assets/previews/<atlas>.webp (the gallery's), and at full size
@@ -10,6 +10,7 @@ building itself is in each picture: the dev pages size and centre the building b
 """
 import json
 import os
+import sys
 
 import numpy as np
 from PIL import Image
@@ -25,14 +26,16 @@ BLACK = 8
 
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
-    index = {}
+    only = set(sys.argv[1:])
+    listed = os.path.join(OUT, "previews.json")
+    index = json.load(open(listed)) if only and os.path.exists(listed) else {}
     # buildings' previews (render_construction.py with PREVIEW) and vehicles' card views (render_vehicle.py)
     sources = [(atlas, os.path.join(FRAMES, atlas, "preview.png")) for atlas in sorted(os.listdir(FRAMES))]
     vehicles = os.path.join(ROOT, "tools", "blender", "frames", "vehicles")
     if os.path.isdir(vehicles):
         sources += [(f"v_{v}", os.path.join(vehicles, v, "card.png")) for v in sorted(os.listdir(vehicles))]
     for atlas, src in sources:
-        if not os.path.exists(src):
+        if not os.path.exists(src) or (only and atlas not in only):
             continue
         a = np.array(Image.open(src).convert("RGBA"))
         shadow = (a[:, :, 3] > 0) & (a[:, :, 3] < 250) & (a[:, :, :3].max(axis=2) <= BLACK)

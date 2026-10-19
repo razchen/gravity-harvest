@@ -1,0 +1,25 @@
+{
+  "name": "@gravity-harvest/simulator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Headless AI-against-AI matches, as fast as the CPU allows: is the game well paced, fair and fun, and does each map work. Run with npm run simulate.",
+  "type": "module",
+  "bin": { "gh-simulate": "./dist/cli.js" },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "simulate": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@gravity-harvest/ai": "*",
+    "@gravity-harvest/rules": "*",
+    "@gravity-harvest/shared": "*",
+    "@gravity-harvest/sim": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

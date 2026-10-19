@@ -15,3 +15,18 @@ Multiplier applied to a weapon's damage depending on its damage class and the ta
 | Universal (`universal`) | 1 | 1 | 1 | 1 | 1 |
 | Organic (`organic`) | 1 | 0 | 0 | 0 | 0 |
 | Strategic (`strategic`) | 0.9 | 1 | 0.6 | 0.25 | 0.5 |
+
+## Splash and walls
+
+Data only for now. Damage at distance r from a blast = damage ÷ (r ÷ falloff step), up to ÷16, within 1.5 tiles (engine-rules.md).
+
+| Damage class | Falloff step (tiles) | Walls | Wooden walls | Ore |
+|---|---:|---|---|---|
+| Small Arms | 0.0586 |  |  |  |
+| High Explosive | 0.1172 | yes | yes |  |
+| Armor Piercing | 0.0586 | yes | yes |  |
+| Thermal | 0.1562 |  | yes |  |
+| Precision | 0.0195 |  |  |  |
+| Universal | 0.0195 |  |  |  |
+| Organic | 0.0078 |  |  |  |
+| Strategic | 0.1172 | yes | yes | yes |

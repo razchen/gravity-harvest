@@ -1,0 +1,256 @@
+{
+ "cannon_fire": {
+  "prompt": "A very loud, close-up shot from a tank's main cannon: a massive, deep, punchy BOOM with a heavy low-end thump and a sharp crack on top, then a short metallic recoil clank. Recorded close, powerful, loud and dry.",
+  "seconds": 1.5,
+  "influence": 0.7,
+  "variations": 3
+ },
+ "shell_hit": {
+  "prompt": "A tank shell exploding on impact against armored metal: a sharp crack and a crunchy, punchy explosion with a little debris. Short, outdoors.",
+  "seconds": 1.5,
+  "variations": 3
+ },
+ "rocket_launch": {
+  "prompt": "A rocket-propelled grenade launched from a shoulder launcher, recorded close: a sharp, loud launch bang, immediately followed by a long, loud, hissing and roaring rush of rocket exhaust that quickly travels away from the listener and fades into the distance. Realistic military sound, not sci-fi.",
+  "seconds": 2.5,
+  "influence": 0.75,
+  "variations": 3
+ },
+ "rocket_hit": {
+  "prompt": "A small guided missile hitting an armored vehicle: a punchy explosion with metallic shrapnel and a short fiery whoomp. Outdoors, short.",
+  "seconds": 1.5,
+  "variations": 3
+ },
+ "vehicle_explode": {
+  "prompt": "A sci-fi combat vehicle destroyed: a big deep explosion, metal tearing apart, a couple of secondary ammunition pops and debris clattering down.",
+  "seconds": 3,
+  "variations": 3
+ },
+ "building_place": {
+  "prompt": "A heavy prefabricated military building module set down onto the ground by machinery: a deep, heavy metal thud, a short crunch of gravel and dirt, and a brief hydraulic hiss as it settles. Realistic, outdoors, short.",
+  "seconds": 1.6,
+  "variations": 3
+ },
+ "rifle_fire": {
+  "prompt": "A short three-round burst from a futuristic military assault rifle: crisp, punchy gunshots with a slight electronic snap, outdoors, dry, no echo.",
+  "seconds": 0.8,
+  "variations": 3
+ },
+ "autocannon_fire": {
+  "prompt": "A very loud, close-up 30 mm autocannon firing a fast burst of three heavy rounds: hard, punchy thuds with deep bass and a sharp metallic crack on each round. Recorded close, powerful, loud and dry.",
+  "seconds": 1.0,
+  "influence": 0.7,
+  "variations": 3
+ },
+ "artillery_fire": {
+  "prompt": "A heavy self-propelled artillery gun firing one shell: a deep, powerful boom with a low rumble and a short mechanical reload clunk, outdoors.",
+  "seconds": 1.8,
+  "variations": 2
+ },
+ "flame_fire": {
+  "prompt": "A defensive turret launching a ball of fire: a whooshing roar of flame and a fiery burst, short.",
+  "seconds": 1.2,
+  "variations": 2
+ },
+ "discharge_fire": {
+  "prompt": "A high-voltage energy cannon discharging: a sharp electric crack and buzzing arc of lightning, sci-fi, short.",
+  "seconds": 1.0,
+  "variations": 2
+ },
+ "bullet_hit": {
+  "prompt": "Bullets hitting armored metal: a few quick ricochet pings and sharp metallic impacts, short, dry.",
+  "seconds": 0.7,
+  "variations": 3
+ },
+ "building_explode": {
+  "prompt": "A large military building exploding and collapsing: a huge deep blast, steel structure tearing and groaning, heavy debris crashing down, a long rumbling tail.",
+  "seconds": 4.5,
+  "variations": 2
+ },
+ "infantry_death": {
+  "prompt": "A soldier in heavy body armor is hit and collapses: one short, sharp grunt of pain, then the heavy thud of a body and gear hitting dirt with a rattle of equipment. Realistic war-film foley. No screaming, no echo.",
+  "seconds": 1.3,
+  "variations": 3
+ },
+ "construction": {
+  "prompt": "A futuristic building being constructed by machines: steady rhythmic hammering of steel, welding torch bursts, hydraulic lifts and servo whirs, constant.",
+  "seconds": 6,
+  "loop": true,
+  "variations": 2
+ },
+ "building_done": {
+  "prompt": "A military building's construction finishing: heavy steel bolts and locking clamps slamming shut, a short pneumatic hiss, and machinery winding down to a stop. Realistic industrial foley. No electronic tones, no beeps, no synth.",
+  "seconds": 1.8,
+  "variations": 3
+ },
+ "building_sold": {
+  "prompt": "A building being dismantled and sold: quick metal panels unbolting and folding, a ratchet, then a short bright credit chime.",
+  "seconds": 1.6,
+  "variations": 2
+ },
+ "door": {
+  "prompt": "A heavy sci-fi hangar door sliding open: a hydraulic hiss, a deep mechanical rumble of the door moving, and a clunk as it stops.",
+  "seconds": 1.6,
+  "variations": 2
+ },
+ "power_down": {
+  "prompt": "A base losing power: electrical generators winding down with a descending whine, a dull electric thunk and fading hum.",
+  "seconds": 1.6,
+  "variations": 2
+ },
+ "power_up": {
+  "prompt": "A military base's power grid coming back on: a heavy electrical clunk of breakers closing, then big generators spinning up with a rising hum that settles, and then fades out smoothly and gently at the end. Realistic, no beeps, no tones.",
+  "seconds": 2.6,
+  "influence": 0.6,
+  "variations": 3
+ },
+ "unit_ready": {
+  "prompt": "A short sci-fi military interface notification that a new unit is ready: a confident two-note rising synth chime with a soft radio click.",
+  "seconds": 0.9,
+  "variations": 2
+ },
+ "building_ready": {
+  "prompt": "A short sci-fi interface notification that construction is complete and ready to place: a clean three-note rising synth chime.",
+  "seconds": 0.9,
+  "variations": 2
+ },
+ "credits": {
+  "prompt": "A subtle short digital credit tick, like coins being counted electronically, soft and quick.",
+  "seconds": 0.5,
+  "variations": 2
+ },
+ "under_attack": {
+  "prompt": "A short military base alarm: two pulses of a low urgent electronic klaxon, sci-fi.",
+  "seconds": 1.6,
+  "variations": 2
+ },
+ "ambience": {
+  "prompt": "Ambient background of a frontier mining outpost on a dusty alien world: soft steady wind, a distant low hum of machinery and faint far-off industrial clanks, calm, constant.",
+  "seconds": 12,
+  "loop": true,
+  "variations": 2
+ },
+ "ui_hover": {
+  "prompt": "An extremely soft, subtle user-interface hover sound: a tiny muted mechanical tick, very short and quiet, barely there. No beep, no tone, no reverb.",
+  "seconds": 0.5,
+  "variations": 3
+ },
+ "sidearm_fire": {
+  "prompt": "Two quick precise shots from a suppressed military pistol: sharp, tight cracks with a metallic slide click. Realistic, dry, close.",
+  "seconds": 0.8,
+  "variations": 2
+ },
+ "heal_beam": {
+  "prompt": "A field medic's healing device working: a soft rising electronic hum with a gentle shimmering pulse. Calm, short, sci-fi medical.",
+  "seconds": 1.2,
+  "variations": 2
+ },
+ "grenade_throw": {
+  "prompt": "A soldier throws a hand grenade: a short grunt, the clink of the pin and a whoosh as it flies. Realistic, close, short.",
+  "seconds": 0.8,
+  "variations": 2
+ },
+ "grenade_explode": {
+  "prompt": "A hand grenade exploding on the ground: a sharp, loud blast with dirt and shrapnel scattering. Realistic, outdoors, short tail.",
+  "seconds": 1.2,
+  "variations": 2
+ },
+ "flamethrower_fire": {
+  "prompt": "A short burst from a flamethrower: a pressurized hiss and a roaring rush of fire, then a quick cut-off. Realistic, close.",
+  "seconds": 1.2,
+  "variations": 2
+ },
+ "heavy_missile_launch": {
+  "prompt": "A large tactical missile launching from a vehicle rail: a heavy ignition boom then a deep, powerful roar of rocket exhaust climbing away. Realistic military, not sci-fi.",
+  "seconds": 2.5,
+  "variations": 2
+ },
+ "heavy_missile_hit": {
+  "prompt": "A large missile warhead impacting: a huge, deep explosion with a shockwave thump, debris raining down and a long rumbling tail. Realistic, outdoors.",
+  "seconds": 2.5,
+  "variations": 2
+ },
+ "hound_strike": {
+  "prompt": "A big attack dog lunging and biting: a vicious snarl, a snap of jaws and a short struggle. Realistic, close.",
+  "seconds": 1.0,
+  "variations": 2
+ },
+ "ack_hound_select": {
+  "prompt": "A big military attack dog barking twice, alert and eager. Realistic, outdoors, close.",
+  "seconds": 0.8,
+  "variations": 3
+ },
+ "ack_hound_move": {
+  "prompt": "A big military dog giving one short eager bark and panting as it runs off. Realistic, outdoors.",
+  "seconds": 0.8,
+  "variations": 3
+ },
+ "ack_hound_attack": {
+  "prompt": "A big military attack dog snarling and growling aggressively. Realistic, close, short.",
+  "seconds": 1.0,
+  "variations": 3
+ },
+ "infantry_explode": {
+  "prompt": "A soldier carrying explosives is killed and their pack detonates: a violent fiery blast with a sharp crack, burning debris and a short roar of flame. Realistic, outdoors.",
+  "seconds": 1.5,
+  "variations": 2
+ },
+ "mine_lay": {
+  "prompt": "A vehicle dropping a land mine into the ground: a hydraulic clunk, a heavy metal thud on dirt and a short arming beep. Realistic, short.",
+  "seconds": 1.0,
+  "variations": 2
+ },
+ "mine_explode": {
+  "prompt": "A land mine exploding under a vehicle: a sudden, sharp, deep blast with dirt and metal flying. Realistic, outdoors.",
+  "seconds": 1.5,
+  "variations": 2
+ },
+ "assembler_deploy": {
+  "prompt": "A large mobile construction vehicle unfolding into a base building: heavy hydraulics pushing, steel panels unfolding and locking with big clunks, a rising machine whir. Realistic industrial foley.",
+  "seconds": 3.0,
+  "variations": 2
+ },
+ "infiltrate": {
+  "prompt": "A soldier slipping into a building through a side door: quick footsteps, a heavy door opening and closing with a soft latch click. Realistic, close.",
+  "seconds": 1.2,
+  "variations": 2
+ },
+ "demolition_charge": {
+  "prompt": "A demolition charge being planted: a magnetic clamp clank, a few quick rising electronic beeps, then a big explosive blast. Realistic military.",
+  "seconds": 2.5,
+  "variations": 2
+ },
+ "jammer_on": {
+  "prompt": "A mobile radar jamming vehicle switching on: a rising electronic whine into a buzzing, wavering static hum. Sci-fi military electronics, short.",
+  "seconds": 1.5,
+  "variations": 2
+ },
+ "cloak_field": {
+  "prompt": "A cloaking field switching on around vehicles: a deep low hum swelling, a soft warping whoosh and a fading shimmer. Sci-fi, short.",
+  "seconds": 1.5,
+  "variations": 2
+ },
+ "self_repair": {
+  "prompt": "A heavy tank repairing itself: whirring internal servos, a few quick ratchet clicks and a short welding crackle. Realistic industrial, short.",
+  "seconds": 1.5,
+  "variations": 2
+ },
+ "plasma_fire": {
+  "prompt": "A small hover craft firing two quick energy balls at once: a punchy, compact plasma shot with a short sizzling zap and a soft low thump. Short, dry, no echo, no music.",
+  "seconds": 0.7,
+  "influence": 0.6,
+  "variations": 3
+ },
+ "laser_fire": {
+  "prompt": "A heavy laser beam fired for a moment: a sharp rising energy charge snapping into a sustained, searing, buzzing beam that cuts off cleanly. Powerful, short, no music.",
+  "seconds": 0.9,
+  "influence": 0.6,
+  "variations": 3
+ },
+ "column_fire": {
+  "prompt": "A massive column of energy slamming down from the sky onto the ground: a brief rising charge whine, then a deep, booming, roaring blast of light and heat with a sizzling tail. Powerful, cinematic, no music.",
+  "seconds": 1.8,
+  "influence": 0.6,
+  "variations": 3
+ }
+}

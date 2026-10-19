@@ -1,0 +1,28 @@
+{
+  "name": "@gravity-harvest/ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The computer opponent: plays from its own side's view by giving the same orders a player does. Pure, deterministic, seeded. Server side only.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@gravity-harvest/rules": "*",
+    "@gravity-harvest/shared": "*",
+    "@gravity-harvest/sim": "*"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

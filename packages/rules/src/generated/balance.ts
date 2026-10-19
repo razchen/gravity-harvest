@@ -1,6 +1,6 @@
 // GENERATED from design/balance.xlsx by scripts/import-balance.mjs. Do not edit; edit the spreadsheet and re-run `npm run import`.
 /* eslint-disable */
-import type { AbilityDef, BuildingDef, DamageClassDef, EconomyRules, UnitDef, WeaponDef } from '../types.js';
+import type { AbilityDef, BuildingDef, CrateDef, DamageClassDef, EconomyRules, EngineRuleDef, UnitDef, WeaponDef } from '../types.js';
 
 export const ECONOMY: EconomyRules = {
   "startingCredits": 15000,
@@ -44,7 +44,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 0.6,
       "heavy": 0.25,
       "fortified": 0.25
-    }
+    },
+    "falloffStepTiles": 0.0586,
+    "damagesWalls": false,
+    "damagesWoodenWalls": false,
+    "damagesOre": false,
+    "ruleNotes": null
   },
   "high_explosive": {
     "name": "High Explosive",
@@ -54,7 +59,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 0.6,
       "heavy": 0.25,
       "fortified": 1
-    }
+    },
+    "falloffStepTiles": 0.1172,
+    "damagesWalls": true,
+    "damagesWoodenWalls": true,
+    "damagesOre": false,
+    "ruleNotes": null
   },
   "armor_piercing": {
     "name": "Armor Piercing",
@@ -64,7 +74,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 0.75,
       "heavy": 1,
       "fortified": 0.5
-    }
+    },
+    "falloffStepTiles": 0.0586,
+    "damagesWalls": true,
+    "damagesWoodenWalls": true,
+    "damagesOre": false,
+    "ruleNotes": null
   },
   "thermal": {
     "name": "Thermal",
@@ -74,7 +89,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 0.6,
       "heavy": 0.25,
       "fortified": 0.5
-    }
+    },
+    "falloffStepTiles": 0.1562,
+    "damagesWalls": false,
+    "damagesWoodenWalls": true,
+    "damagesOre": false,
+    "ruleNotes": null
   },
   "precision": {
     "name": "Precision",
@@ -84,7 +104,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 0.05,
       "heavy": 0.05,
       "fortified": 0.05
-    }
+    },
+    "falloffStepTiles": 0.0195,
+    "damagesWalls": false,
+    "damagesWoodenWalls": false,
+    "damagesOre": false,
+    "ruleNotes": null
   },
   "universal": {
     "name": "Universal",
@@ -94,7 +119,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 1,
       "heavy": 1,
       "fortified": 1
-    }
+    },
+    "falloffStepTiles": 0.0195,
+    "damagesWalls": false,
+    "damagesWoodenWalls": false,
+    "damagesOre": false,
+    "ruleNotes": null
   },
   "organic": {
     "name": "Organic",
@@ -104,7 +134,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 0,
       "heavy": 0,
       "fortified": 0
-    }
+    },
+    "falloffStepTiles": 0.0078,
+    "damagesWalls": false,
+    "damagesWoodenWalls": false,
+    "damagesOre": false,
+    "ruleNotes": "Falloff every 0.008 tiles: in effect direct hits only."
   },
   "strategic": {
     "name": "Strategic",
@@ -114,7 +149,12 @@ export const DAMAGE_MATRIX: Readonly<Record<string, DamageClassDef>> = {
       "light": 0.6,
       "heavy": 0.25,
       "fortified": 0.5
-    }
+    },
+    "falloffStepTiles": 0.1172,
+    "damagesWalls": true,
+    "damagesWoodenWalls": true,
+    "damagesOre": true,
+    "ruleNotes": null
   }
 };
 
@@ -129,7 +169,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "small_arms",
     "projectile": "bullet",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "sky_missile": {
     "id": "sky_missile",
@@ -141,7 +193,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "guided missile",
     "targeting": "air",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 7.5,
+    "instantHit": false,
+    "homingTurnDegPerSec": 421.9,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": true,
+    "hitsGround": false,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.2 s of flight (not against aircraft)."
   },
   "armor_missile": {
     "id": "armor_missile",
@@ -153,7 +217,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "guided missile",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 3.75,
+    "instantHit": false,
+    "homingTurnDegPerSec": 105.5,
+    "inaccurate": true,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": true,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft)."
   },
   "precision_sidearm": {
     "id": "precision_sidearm",
@@ -165,7 +241,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "precision",
     "projectile": "bullet",
     "targeting": "ground personnel",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "field_heal": {
     "id": "field_heal",
@@ -177,7 +265,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "organic",
     "projectile": "beam",
     "targeting": "friendly infantry",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Heals only within 0.03 tiles, unarmored targets only."
   },
   "hound_strike": {
     "id": "hound_strike",
@@ -189,7 +289,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "organic",
     "projectile": "leap",
     "targeting": "ground personnel",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 2.99,
+    "instantHit": false,
+    "homingTurnDegPerSec": 421.9,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "A leap, not a projectile: kills its infantry target outright and harms nothing else."
   },
   "frag_grenade": {
     "id": "frag_grenade",
@@ -201,7 +313,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "high_explosive",
     "projectile": "lobbed grenade",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 0.7,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": true,
+    "arcing": true,
+    "fliesOverWalls": true,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "thermal_projector": {
     "id": "thermal_projector",
@@ -213,7 +337,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "thermal",
     "projectile": "flame",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 1.76,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "light_autocannon": {
     "id": "light_autocannon",
@@ -225,7 +361,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "small_arms",
     "projectile": "bullet",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "light_cannon": {
     "id": "light_cannon",
@@ -237,7 +385,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "shell",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 5.98,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "battle_cannon": {
     "id": "battle_cannon",
@@ -249,7 +409,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "shell",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 5.98,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "heavy_cannon": {
     "id": "heavy_cannon",
@@ -261,7 +433,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "shell",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 5.98,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "anvil_cannon": {
     "id": "anvil_cannon",
@@ -273,7 +457,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "shell",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 5.98,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "support_missiles": {
     "id": "support_missiles",
@@ -285,7 +481,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "high_explosive",
     "projectile": "guided missile",
     "targeting": "air / light targets",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 4.45,
+    "instantHit": false,
+    "homingTurnDegPerSec": 105.5,
+    "inaccurate": true,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": true,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft)."
   },
   "siege_artillery": {
     "id": "siege_artillery",
@@ -297,7 +505,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "high_explosive",
     "projectile": "ballistic shell",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 1.76,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": true,
+    "arcing": true,
+    "fliesOverWalls": true,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "siege_missile": {
     "id": "siege_missile",
@@ -309,7 +529,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "high_explosive",
     "projectile": "heavy missile",
     "targeting": "ground / structure",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 3.75,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": true,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.67 s of flight (not against aircraft)."
   },
   "rotary_cannon": {
     "id": "rotary_cannon",
@@ -321,7 +553,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "small_arms",
     "projectile": "bullet",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "strike_missile": {
     "id": "strike_missile",
@@ -333,7 +577,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "guided missile",
     "targeting": "air / ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 4.45,
+    "instantHit": false,
+    "homingTurnDegPerSec": 105.5,
+    "inaccurate": true,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": true,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft)."
   },
   "attack_missile": {
     "id": "attack_missile",
@@ -345,7 +601,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "guided missile",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 4.45,
+    "instantHit": false,
+    "homingTurnDegPerSec": 105.5,
+    "inaccurate": true,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": true,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.13 s of flight (not against aircraft)."
   },
   "deck_cannon": {
     "id": "deck_cannon",
@@ -357,7 +625,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "shell",
     "targeting": "surface",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 3.75,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "depth_charge": {
     "id": "depth_charge",
@@ -369,7 +649,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "depth charge",
     "targeting": "submerged",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 0.7,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": true,
+    "arcing": true,
+    "fliesOverWalls": true,
+    "hitsAir": false,
+    "hitsGround": false,
+    "hitsSubmerged": true,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "naval_missile": {
     "id": "naval_missile",
@@ -381,7 +673,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "guided missile",
     "targeting": "surface / air",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 2.99,
+    "instantHit": false,
+    "homingTurnDegPerSec": 421.9,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": true,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": true,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.2 s of flight (not against aircraft)."
   },
   "heavy_naval_cannon": {
     "id": "heavy_naval_cannon",
@@ -393,7 +697,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "high_explosive",
     "projectile": "ballistic shell",
     "targeting": "surface / ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 0.88,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": true,
+    "arcing": true,
+    "fliesOverWalls": true,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "torpedo": {
     "id": "torpedo",
@@ -405,7 +721,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "torpedo",
     "targeting": "surface",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 2.23,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": true,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Runs under water; bursts on leaving water."
   },
   "sentry_autocannon": {
     "id": "sentry_autocannon",
@@ -417,7 +745,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "small_arms",
     "projectile": "bullet",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "lance_cannon": {
     "id": "lance_cannon",
@@ -429,7 +769,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "shell",
     "targeting": "ground armor",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 5.98,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "aa_autocannon": {
     "id": "aa_autocannon",
@@ -441,7 +793,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "aa projectile",
     "targeting": "air",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": true,
+    "hitsGround": false,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "thermal_turret": {
     "id": "thermal_turret",
@@ -453,7 +817,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "thermal",
     "projectile": "fireball",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 1.76,
+    "instantHit": false,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": null
   },
   "gravity_discharge": {
     "id": "gravity_discharge",
@@ -465,7 +841,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "universal",
     "projectile": "instant discharge",
     "targeting": "ground",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": null,
+    "instantHit": true,
+    "homingTurnDegPerSec": null,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": false,
+    "hitsAir": false,
+    "hitsGround": true,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": true,
+    "ruleNotes": null
   },
   "aa_missile": {
     "id": "aa_missile",
@@ -477,7 +865,19 @@ export const WEAPONS: Readonly<Record<string, WeaponDef>> = {
     "damageClass": "armor_piercing",
     "projectile": "guided missile",
     "targeting": "air",
-    "notes": null
+    "notes": null,
+    "projectileSpeedTilesPerSec": 7.5,
+    "instantHit": false,
+    "homingTurnDegPerSec": 421.9,
+    "inaccurate": false,
+    "arcing": false,
+    "fliesOverWalls": true,
+    "hitsAir": true,
+    "hitsGround": false,
+    "hitsSubmerged": false,
+    "fasterVsAircraft": false,
+    "chargeUp": false,
+    "ruleNotes": "Fuelled missile: scatters when fired at infantry or the ground. Arms after 0.2 s of flight (not against aircraft)."
   }
 };
 
@@ -499,7 +899,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Deploys from Assembler.",
-    "description": "The core of the base: every other structure is built from it. Deploys from an Assembler."
+    "description": "The core of the base: every other structure is built from it. Deploys from an Assembler.",
+    "capturable": true,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "power_plant": {
     "id": "power_plant",
@@ -520,7 +933,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": null,
-    "description": "Basic power (+500). Most buildings draw power; run short and they slow down or switch off."
+    "description": "Basic power (+500). Most buildings draw power; run short and they slow down or switch off.",
+    "capturable": true,
+    "survivors": 1,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "reactor_plant": {
     "id": "reactor_plant",
@@ -541,7 +967,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Higher-output power source.",
-    "description": "Advanced power (+1000): twice a Power Plant's output for less than twice the price."
+    "description": "Advanced power (+1000): twice a Power Plant's output for less than twice the price.",
+    "capturable": true,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "refinery": {
     "id": "refinery",
@@ -562,7 +1001,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Harvester unloads are converted directly into credits. No storage cap.",
-    "description": "Harvesters unload ore here; each load turns straight into credits, with no storage limit."
+    "description": "Harvesters unload ore here; each load turns straight into credits, with no storage limit.",
+    "capturable": true,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "Survivors and sell refund use its cost minus the bundled Harvester."
   },
   "barracks": {
     "id": "barracks",
@@ -583,7 +1035,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Shared gameplay role; faction visuals can diverge.",
-    "description": "Trains infantry."
+    "description": "Trains infantry.",
+    "capturable": true,
+    "survivors": 1,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "motor_works": {
     "id": "motor_works",
@@ -604,7 +1069,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": null,
-    "description": "Builds ground vehicles, including Harvesters and the Assembler."
+    "description": "Builds ground vehicles, including Harvesters and the Assembler.",
+    "capturable": true,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "service_bay": {
     "id": "service_bay",
@@ -625,7 +1103,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": null,
-    "description": "Repairs and services vehicles."
+    "description": "Repairs and services vehicles.",
+    "capturable": true,
+    "survivors": 4,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "radar": {
     "id": "radar",
@@ -646,7 +1137,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": true,
     "weapons": [],
     "notes": "Stops functioning without adequate power.",
-    "description": "Turns on the minimap and battlefield intelligence. Switches off on low power."
+    "description": "Turns on the minimap and battlefield intelligence. Switches off on low power.",
+    "capturable": true,
+    "survivors": 4,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "An enemy Watcher nearby jams it (Engine Rules: watcher_jam_radius)."
   },
   "flight_pad": {
     "id": "flight_pad",
@@ -667,7 +1171,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "First faction helicopter is bundled with the first pad.",
-    "description": "Builds and rearms helicopters; the first pad comes with a helicopter."
+    "description": "Builds and rearms helicopters; the first pad comes with a helicopter.",
+    "capturable": true,
+    "survivors": 1,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "Survivors and sell refund use its cost minus the bundled aircraft."
   },
   "concrete_barrier": {
     "id": "concrete_barrier",
@@ -686,7 +1203,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Special wall interaction; raw HP is not the whole durability model.",
-    "description": "Cheap, tough wall that blocks movement."
+    "description": "Cheap, tough wall that blocks movement.",
+    "capturable": false,
+    "survivors": 0,
+    "repairable": false,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": 3,
+    "wallDamagePerLevel": 280,
+    "crushableWall": false,
+    "blocksLowShots": true,
+    "ruleNotes": "Sold for the usual refund share. Walls may chain off your other walls when placed."
   },
   "gravity_lab": {
     "id": "gravity_lab",
@@ -708,7 +1238,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Unlocks high-tier Ordan systems.",
-    "description": "Advanced technology: unlocks the side's high-tier units and systems."
+    "description": "Advanced technology: unlocks the side's high-tier units and systems.",
+    "capturable": true,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "phase_array": {
     "id": "phase_array",
@@ -729,7 +1272,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Strategic support structure.",
-    "description": "Late-game strategic mobility structure. Switches off on low power."
+    "description": "Late-game strategic mobility structure. Switches off on low power.",
+    "capturable": true,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "harbor": {
     "id": "harbor",
@@ -750,7 +1306,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Water placement.",
-    "description": "Builds ships. Placed on water."
+    "description": "Builds ships. Placed on water.",
+    "capturable": true,
+    "survivors": 0,
+    "repairable": true,
+    "placementAdjacency": 8,
+    "extendsBase": false,
+    "waterPlacement": true,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "Its own placement range on water."
   },
   "sentry": {
     "id": "sentry",
@@ -773,7 +1342,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
       "sentry_autocannon"
     ],
     "notes": null,
-    "description": "Basic autocannon turret against infantry."
+    "description": "Basic autocannon turret against infantry.",
+    "capturable": false,
+    "survivors": 1,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "hidden_sentry": {
     "id": "hidden_sentry",
@@ -796,7 +1378,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
       "sentry_autocannon"
     ],
     "notes": "Camouflaged defensive variant.",
-    "description": "A camouflaged Sentry, hard for the enemy to spot."
+    "description": "A camouflaged Sentry, hard for the enemy to spot.",
+    "capturable": false,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "lance_battery": {
     "id": "lance_battery",
@@ -819,7 +1414,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
       "lance_cannon"
     ],
     "notes": null,
-    "description": "Cannon emplacement against vehicles and armour."
+    "description": "Cannon emplacement against vehicles and armour.",
+    "capturable": false,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": 253.1,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "flak_array": {
     "id": "flak_array",
@@ -843,7 +1451,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
       "aa_autocannon"
     ],
     "notes": "Stops functioning without adequate power.",
-    "description": "Twin anti-aircraft autocannons. Switches off on low power."
+    "description": "Twin anti-aircraft autocannons. Switches off on low power.",
+    "capturable": false,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": 316.4,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "veil_generator": {
     "id": "veil_generator",
@@ -864,7 +1485,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Stops functioning without adequate power.",
-    "description": "Hides the area around it from enemy radar and sight. Switches off on low power."
+    "description": "Hides the area around it from enemy radar and sight. Switches off on low power.",
+    "capturable": true,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "Hides the ground within 10 tiles from enemies (Engine Rules: veil_*); only at full power."
   },
   "sandbag_barrier": {
     "id": "sandbag_barrier",
@@ -883,7 +1517,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": null,
-    "description": "Very cheap light wall."
+    "description": "Very cheap light wall.",
+    "capturable": false,
+    "survivors": 0,
+    "repairable": false,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": 1,
+    "wallDamagePerLevel": 80,
+    "crushableWall": true,
+    "blocksLowShots": false,
+    "ruleNotes": "Sold for the usual refund share. Walls may chain off your other walls when placed."
   },
   "decoy_yard": {
     "id": "decoy_yard",
@@ -902,7 +1549,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Reuses Assembly Yard appearance.",
-    "description": "A cheap fake Assembly Yard that draws enemy attention."
+    "description": "A cheap fake Assembly Yard that draws enemy attention.",
+    "capturable": true,
+    "survivors": 0,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": false,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "An enemy Infiltrator sees it is a decoy."
   },
   "decoy_motor_works": {
     "id": "decoy_motor_works",
@@ -923,7 +1583,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Reuses Motor Works appearance.",
-    "description": "A cheap fake Motor Works that draws enemy attention."
+    "description": "A cheap fake Motor Works that draws enemy attention.",
+    "capturable": true,
+    "survivors": 0,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": false,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "An enemy Infiltrator sees it is a decoy."
   },
   "decoy_harbor": {
     "id": "decoy_harbor",
@@ -944,7 +1617,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Reuses Harbor appearance.",
-    "description": "A cheap fake Harbor that draws enemy attention."
+    "description": "A cheap fake Harbor that draws enemy attention.",
+    "capturable": true,
+    "survivors": 0,
+    "repairable": true,
+    "placementAdjacency": 8,
+    "extendsBase": false,
+    "waterPlacement": true,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "An enemy Infiltrator sees it is a decoy. Its own placement range on water."
   },
   "decoy_radar": {
     "id": "decoy_radar",
@@ -965,7 +1651,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Reuses Radar appearance.",
-    "description": "A cheap fake Radar that draws enemy attention."
+    "description": "A cheap fake Radar that draws enemy attention.",
+    "capturable": true,
+    "survivors": 0,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": false,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "An enemy Infiltrator sees it is a decoy."
   },
   "gravity_forge": {
     "id": "gravity_forge",
@@ -987,7 +1686,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Unlocks high-tier Sable systems.",
-    "description": "Advanced technology: unlocks the side's high-tier units and systems."
+    "description": "Advanced technology: unlocks the side's high-tier units and systems.",
+    "capturable": true,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "lock_field": {
     "id": "lock_field",
@@ -1008,7 +1720,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Strategic support structure.",
-    "description": "Late-game strategic protection structure. Switches off on low power."
+    "description": "Late-game strategic protection structure. Switches off on low power.",
+    "capturable": true,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "sub_dock": {
     "id": "sub_dock",
@@ -1029,7 +1754,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Water placement.",
-    "description": "Builds submarines and landers. Placed on water."
+    "description": "Builds submarines and landers. Placed on water.",
+    "capturable": true,
+    "survivors": 0,
+    "repairable": true,
+    "placementAdjacency": 8,
+    "extendsBase": false,
+    "waterPlacement": true,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "Its own placement range on water."
   },
   "incinerator": {
     "id": "incinerator",
@@ -1052,7 +1790,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
       "thermal_turret"
     ],
     "notes": null,
-    "description": "Thermal turret that burns infantry."
+    "description": "Thermal turret that burns infantry.",
+    "capturable": false,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "anchor": {
     "id": "anchor",
@@ -1075,7 +1826,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
       "gravity_discharge"
     ],
     "notes": "Stops functioning without adequate power.",
-    "description": "Heavy gravity-discharge weapon against ground forces. Switches off on low power."
+    "description": "Heavy gravity-discharge weapon against ground forces. Switches off on low power.",
+    "capturable": false,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": 3,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "Charges only at full power, whatever Requires Power says."
   },
   "sky_lance": {
     "id": "sky_lance",
@@ -1098,7 +1862,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
       "aa_missile"
     ],
     "notes": null,
-    "description": "Missile launcher against aircraft."
+    "description": "Missile launcher against aircraft.",
+    "capturable": false,
+    "survivors": 3,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": 632.8,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "Cannot fire while jammed by an enemy Watcher. Ignores landed aircraft."
   },
   "airfield": {
     "id": "airfield",
@@ -1119,7 +1896,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Provides aircraft and air-support abilities.",
-    "description": "Builds and supports fixed-wing aircraft, and gives air-support abilities."
+    "description": "Builds and supports fixed-wing aircraft, and gives air-support abilities.",
+    "capturable": true,
+    "survivors": 2,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   },
   "hound_kennel": {
     "id": "hound_kennel",
@@ -1140,7 +1930,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": null,
-    "description": "Produces Hounds."
+    "description": "Produces Hounds.",
+    "capturable": false,
+    "survivors": 0,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": "No survivors; a destroyed kennel never leaves any."
   },
   "wire_barrier": {
     "id": "wire_barrier",
@@ -1159,7 +1962,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": null,
-    "description": "Very cheap light wall."
+    "description": "Very cheap light wall.",
+    "capturable": false,
+    "survivors": 0,
+    "repairable": false,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": 2,
+    "wallDamagePerLevel": 40,
+    "crushableWall": true,
+    "blocksLowShots": false,
+    "ruleNotes": "Sold for the usual refund share. Walls may chain off your other walls when placed."
   },
   "strategic_silo": {
     "id": "strategic_silo",
@@ -1180,7 +1996,20 @@ export const BUILDINGS: Readonly<Record<string, BuildingDef>> = {
     "sensors": false,
     "weapons": [],
     "notes": "Strategic support structure.",
-    "description": "Late-game strategic missile: a long-range strike that can end a match."
+    "description": "Late-game strategic missile: a long-range strike that can end a match.",
+    "capturable": false,
+    "survivors": 5,
+    "repairable": true,
+    "placementAdjacency": 1,
+    "extendsBase": true,
+    "waterPlacement": false,
+    "turretTurnDegPerSec": null,
+    "ammo": null,
+    "wallDamageLevels": null,
+    "wallDamagePerLevel": null,
+    "crushableWall": null,
+    "blocksLowShots": null,
+    "ruleNotes": null
   }
 };
 
@@ -1208,7 +2037,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": null,
-    "description": "Cheap frontline infantry with a service rifle; best against other infantry."
+    "description": "Cheap frontline infantry with a service rifle; best against other infantry.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it."
   },
   "lancer": {
     "id": "lancer",
@@ -1234,7 +2076,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": null,
-    "description": "Missile infantry that hits both armour and aircraft."
+    "description": "Missile infantry that hits both armour and aircraft.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it."
   },
   "engineer": {
     "id": "engineer",
@@ -1257,7 +2112,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Can enter structures for capture/repair interactions.",
-    "description": "Unarmed; enters buildings to capture or repair them."
+    "description": "Unarmed; enters buildings to capture or repair them.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it."
   },
   "operator": {
     "id": "operator",
@@ -1288,7 +2156,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Can infiltrate and demolish structures.",
-    "description": "Elite specialist who can infiltrate and demolish structures."
+    "description": "Elite specialist who can infiltrate and demolish structures.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it."
   },
   "harvester": {
     "id": "harvester",
@@ -1315,7 +2196,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Refinery completion grants one. Economic behavior may later differ by faction without changing the core resource loop.",
-    "description": "Collects ore and brings it to a Refinery; the first comes free with each Refinery."
+    "description": "Collects ore and brings it to a Refinery; the first comes free with each Refinery.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": true,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": "Self-heals up to half health."
   },
   "assembler": {
     "id": "assembler",
@@ -1342,7 +2236,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Deploys into Assembly Yard.",
-    "description": "Drives out and deploys into a new Assembly Yard, to start another base."
+    "description": "Drives out and deploys into a new Assembly Yard, to start another base.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "seeder": {
     "id": "seeder",
@@ -1369,7 +2276,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": 5,
     "passengers": 0,
     "notes": "Carries 5 mines.",
-    "description": "Lays mines (carries 5)."
+    "description": "Lays mines (carries 5).",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": "Re-arms all mines free and at once at a Service Bay, before any repair."
   },
   "lander": {
     "id": "lander",
@@ -1393,7 +2313,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 5,
     "notes": "Carries 5 passengers.",
-    "description": "Amphibious transport for 5 passengers."
+    "description": "Amphibious transport for 5 passengers.",
+    "turnDegPerSec": 210.9,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": "Detects cloaked: default for ships."
   },
   "medic": {
     "id": "medic",
@@ -1418,7 +2351,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Heals infantry.",
-    "description": "Heals nearby infantry."
+    "description": "Heals nearby infantry.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it."
   },
   "infiltrator": {
     "id": "infiltrator",
@@ -1445,7 +2391,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Can infiltrate structures.",
-    "description": "Slips into enemy structures to gather intelligence."
+    "description": "Slips into enemy structures to gather intelligence.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it."
   },
   "raider": {
     "id": "raider",
@@ -1472,7 +2431,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Can infiltrate economic structures.",
-    "description": "Infiltrates enemy economic structures."
+    "description": "Infiltrates enemy economic structures.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it."
   },
   "hound": {
     "id": "hound",
@@ -1497,7 +2469,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Special anti-personnel targeting logic.",
-    "description": "Fast hunter that runs down infantry."
+    "description": "Fast hunter that runs down infantry.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": 7,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it. Moves at double speed while chasing a target."
   },
   "grenadier": {
     "id": "grenadier",
@@ -1522,7 +2507,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Explodes violently when killed.",
-    "description": "Throws fragmentation grenades at infantry and structures; explodes violently when killed."
+    "description": "Throws fragmentation grenades at infantry and structures; explodes violently when killed.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": true,
+    "deathExplosionDamage": 200,
+    "deathExplosionRadiusTiles": 1,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it. Death blast uses its primary weapon's damage class (frag_grenade)."
   },
   "breaker": {
     "id": "breaker",
@@ -1551,7 +2549,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Explodes violently when killed.",
-    "description": "Short-range thermal assault infantry; explodes violently when killed."
+    "description": "Short-range thermal assault infantry; explodes violently when killed.",
+    "turnDegPerSec": null,
+    "crushable": true,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": true,
+    "deathExplosionDamage": 160,
+    "deathExplosionRadiusTiles": 1,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Infantry: never fires while moving; detects cloaked units next to it. Death blast uses its primary weapon's damage class (thermal_projector)."
   },
   "skimmer": {
     "id": "skimmer",
@@ -1576,7 +2587,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": null,
-    "description": "Fast scout with a light autocannon, good against infantry."
+    "description": "Fast scout with a light autocannon, good against infantry.",
+    "turnDegPerSec": 210.9,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": "Does not crush."
   },
   "jackal": {
     "id": "jackal",
@@ -1601,7 +2625,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Tracked.",
-    "description": "Light tracked tank."
+    "description": "Light tracked tank.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "ram": {
     "id": "ram",
@@ -1626,7 +2663,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Tracked.",
-    "description": "Main battle tank."
+    "description": "Main battle tank.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "carrier": {
     "id": "carrier",
@@ -1655,7 +2705,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 5,
     "notes": "Carries 5 passengers. Tracked.",
-    "description": "Tracked transport for 5 infantry, with a light autocannon."
+    "description": "Tracked transport for 5 infantry, with a light autocannon.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": "Passengers get out when it is destroyed."
   },
   "spire": {
     "id": "spire",
@@ -1680,7 +2743,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Must stop to fire. Tracked.",
-    "description": "Long-range artillery; must stop to fire."
+    "description": "Long-range artillery; must stop to fire.",
+    "turnDegPerSec": 42.2,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": "Does not crush (tracked, but too light)."
   },
   "watcher": {
     "id": "watcher",
@@ -1707,7 +2783,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Electronic disruption support.",
-    "description": "Disrupts enemy radar around it."
+    "description": "Disrupts enemy radar around it.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "shroud": {
     "id": "shroud",
@@ -1734,7 +2823,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Mobile concealment support.",
-    "description": "Hides nearby units from enemy sight."
+    "description": "Hides nearby units from enemy sight.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "goliath": {
     "id": "goliath",
@@ -1760,7 +2862,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Tracked; twin-gun loadout.",
-    "description": "Heavy twin-gun tank."
+    "description": "Heavy twin-gun tank.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "anvil": {
     "id": "anvil",
@@ -1790,7 +2905,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Self-heals up to half health. Tracked.",
-    "description": "Late-game heavy assault tank that heals itself up to half health."
+    "description": "Late-game heavy assault tank that heals itself up to half health.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": true,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "salvo": {
     "id": "salvo",
@@ -1819,7 +2947,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": 1,
     "passengers": 0,
     "notes": "Carries one missile and must stop to fire. Tracked.",
-    "description": "Long-range missile artillery: one missile at a time, and it must stop to fire."
+    "description": "Long-range missile artillery: one missile at a time, and it must stop to fire.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": true,
+    "survivorChance": 0.5,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": true,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "drift": {
     "id": "drift",
@@ -1845,7 +2986,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": 6,
     "passengers": 0,
     "notes": "First one is bundled with the first Flight Pad.",
-    "description": "Attack helicopter with missiles; the first comes with the first Flight Pad."
+    "description": "Attack helicopter with missiles; the first comes with the first Flight Pad.",
+    "turnDegPerSec": 84.4,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0.9,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": 30,
+    "ruleNotes": "Aircraft crew parachute out."
   },
   "shrike": {
     "id": "shrike",
@@ -1871,7 +3025,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": 15,
     "passengers": 0,
     "notes": null,
-    "description": "Ground-attack aircraft with rotary cannons."
+    "description": "Ground-attack aircraft with rotary cannons.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0.9,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": 30,
+    "ruleNotes": "Aircraft crew parachute out."
   },
   "interceptor": {
     "id": "interceptor",
@@ -1897,7 +3064,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": 3,
     "passengers": 0,
     "notes": null,
-    "description": "Fast strike aircraft with missiles."
+    "description": "Fast strike aircraft with missiles.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": 30,
+    "ruleNotes": null
   },
   "lifter": {
     "id": "lifter",
@@ -1920,7 +3100,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 5,
     "notes": "Carries 5 passengers.",
-    "description": "Transport helicopter for 5 passengers."
+    "description": "Transport helicopter for 5 passengers.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": "Passengers die with it."
   },
   "hammer": {
     "id": "hammer",
@@ -1945,7 +3138,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": 12,
     "passengers": 0,
     "notes": "First one is bundled with the first Flight Pad.",
-    "description": "Heavy attack gunship; the first comes with the first Flight Pad."
+    "description": "Heavy attack gunship; the first comes with the first Flight Pad.",
+    "turnDegPerSec": 84.4,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0.9,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": false,
+    "cantFireMoving": false,
+    "guardRangeTiles": 30,
+    "ruleNotes": "Aircraft crew parachute out."
   },
   "cutter": {
     "id": "cutter",
@@ -1971,7 +3177,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Detects submerged units.",
-    "description": "Fast patrol boat that hunts submarines."
+    "description": "Fast patrol boat that hunts submarines.",
+    "turnDegPerSec": 147.7,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "warden": {
     "id": "warden",
@@ -1997,7 +3216,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Detects submerged units.",
-    "description": "Missile destroyer that also hunts submarines."
+    "description": "Missile destroyer that also hunts submarines.",
+    "turnDegPerSec": 147.7,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "bastion": {
     "id": "bastion",
@@ -2027,7 +3259,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Detects submerged units.",
-    "description": "Heavy long-range warship."
+    "description": "Heavy long-range warship.",
+    "turnDegPerSec": 105.5,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": false,
+    "detectsCloaked": true,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": null
   },
   "wraith": {
     "id": "wraith",
@@ -2052,7 +3297,20 @@ export const UNITS: Readonly<Record<string, UnitDef>> = {
     "ammo": null,
     "passengers": 0,
     "notes": "Submerged / cloaked behavior.",
-    "description": "Stealth submarine that strikes with torpedoes."
+    "description": "Stealth submarine that strikes with torpedoes.",
+    "turnDegPerSec": 147.7,
+    "crushable": false,
+    "crushes": false,
+    "survivorChance": 0,
+    "selfHeals": false,
+    "explodesOnDeath": false,
+    "deathExplosionDamage": null,
+    "deathExplosionRadiusTiles": null,
+    "cloaks": true,
+    "detectsCloaked": true,
+    "cantFireMoving": false,
+    "guardRangeTiles": null,
+    "ruleNotes": "Detects cloaked: default for ships."
   }
 };
 
@@ -2063,7 +3321,18 @@ export const ABILITIES: Readonly<Record<string, AbilityDef>> = {
     "faction": "ordan",
     "grantedBy": "phase_array",
     "rechargeSec": 420,
-    "notes": "Temporarily relocates a target unit."
+    "notes": "Temporarily relocates a target unit.",
+    "targets": "One of your vehicles or ships, then where to send it (not transports or an Assembler deploying).",
+    "damage": null,
+    "damageClass": null,
+    "radiusTiles": null,
+    "durationSec": 180,
+    "arrives": null,
+    "count": null,
+    "delaySec": null,
+    "warnsOpponent": false,
+    "pausesOnLowPower": true,
+    "ruleNotes": "Sends the unit to the chosen spot for 180 s, then back where it was. Cargo aboard is destroyed (on the way there and back). Infantry sent would die. Each use may set off a phase quake or a phase vortex (Engine Rules: phase_*). The charge is used once the destination is chosen."
   },
   "global_reveal": {
     "id": "global_reveal",
@@ -2071,7 +3340,18 @@ export const ABILITIES: Readonly<Record<string, AbilityDef>> = {
     "faction": "ordan",
     "grantedBy": "gravity_lab",
     "rechargeSec": 480,
-    "notes": "Reveals battlefield information globally."
+    "notes": "Reveals battlefield information globally.",
+    "targets": "None: fires itself as soon as it is charged.",
+    "damage": null,
+    "damageClass": null,
+    "radiusTiles": null,
+    "durationSec": null,
+    "arrives": null,
+    "count": null,
+    "delaySec": null,
+    "warnsOpponent": false,
+    "pausesOnLowPower": true,
+    "ruleNotes": "Reveals the whole map and keeps the minimap on without Radar or power, unjammable, for as long as the Gravity Lab stands; losing the lab hides the map again. Once per Gravity Lab. Radius: whole map; duration: while the lab stands. Proposed for our three-state fog: the map counts as explored; whether it also gives live sight is to be decided."
   },
   "lock_field": {
     "id": "lock_field",
@@ -2079,7 +3359,18 @@ export const ABILITIES: Readonly<Record<string, AbilityDef>> = {
     "faction": "sable",
     "grantedBy": "lock_field",
     "rechargeSec": 660,
-    "notes": "Temporary invulnerability effect; duration 45 seconds."
+    "notes": "Temporary invulnerability effect; duration 45 seconds.",
+    "targets": "One vehicle, building, ship or aircraft (not infantry).",
+    "damage": null,
+    "damageClass": null,
+    "radiusTiles": null,
+    "durationSec": 45,
+    "arrives": null,
+    "count": null,
+    "delaySec": null,
+    "warnsOpponent": false,
+    "pausesOnLowPower": true,
+    "ruleNotes": "The target takes no damage of any kind (healing is blocked too) but can still move, fire and be captured. Demolition charges cannot be planted on it."
   },
   "recon_flight": {
     "id": "recon_flight",
@@ -2087,7 +3378,18 @@ export const ABILITIES: Readonly<Record<string, AbilityDef>> = {
     "faction": "sable",
     "grantedBy": "airfield",
     "rechargeSec": 180,
-    "notes": "Temporary aerial reconnaissance pass."
+    "notes": "Temporary aerial reconnaissance pass.",
+    "targets": "A point on the map.",
+    "damage": null,
+    "damageClass": null,
+    "radiusTiles": 9,
+    "durationSec": null,
+    "arrives": "Recon plane",
+    "count": 1,
+    "delaySec": null,
+    "warnsOpponent": false,
+    "pausesOnLowPower": false,
+    "ruleNotes": "The plane flies in from the map edge (speed 40, 8000 HP, heavy armor; anti-air can shoot it down), sees nothing on the way, reveals a 9-tile circle once over the target, then leaves. Delay depends on the distance from the edge."
   },
   "drop_team": {
     "id": "drop_team",
@@ -2095,7 +3397,18 @@ export const ABILITIES: Readonly<Record<string, AbilityDef>> = {
     "faction": "sable",
     "grantedBy": "airfield",
     "rechargeSec": 420,
-    "notes": "Air-delivered infantry support."
+    "notes": "Air-delivered infantry support.",
+    "targets": "A point on the map.",
+    "damage": null,
+    "damageClass": null,
+    "radiusTiles": 4,
+    "durationSec": null,
+    "arrives": "Riflemen, dropped from one transport plane",
+    "count": 5,
+    "delaySec": null,
+    "warnsOpponent": null,
+    "pausesOnLowPower": false,
+    "ruleNotes": "Radius: the drop zone is revealed for 4 tiles around it. The plane: 240 HP, light armor, speed 16. Our roster has no infantry any more: what arrives is to be decided (proposed: the same count of light flying units). Warns opponent: no rule found."
   },
   "air_bombardment": {
     "id": "air_bombardment",
@@ -2103,7 +3416,18 @@ export const ABILITIES: Readonly<Record<string, AbilityDef>> = {
     "faction": "sable",
     "grantedBy": "airfield",
     "rechargeSec": 840,
-    "notes": "Air-delivered bombing support."
+    "notes": "Air-delivered bombing support.",
+    "targets": "A point on the map.",
+    "damage": 1200,
+    "damageClass": "high_explosive",
+    "radiusTiles": 1.5,
+    "durationSec": null,
+    "arrives": "Bomber",
+    "count": 5,
+    "delaySec": null,
+    "warnsOpponent": null,
+    "pausesOnLowPower": false,
+    "ruleNotes": "Damage per bomb; Count = bombs (one bomber, 240 HP). Bombs are dropped along its path near the target, arm after 1.6 s and splash normally (1.5 tiles). Units at the target may try to get out of the way. Proposed: these are single-player values (there are no multiplayer ones for this ability), used as they are for our 1v1. Warns opponent: no rule found."
   },
   "strategic_missile": {
     "id": "strategic_missile",
@@ -2111,7 +3435,1097 @@ export const ABILITIES: Readonly<Record<string, AbilityDef>> = {
     "faction": "sable",
     "grantedBy": "strategic_silo",
     "rechargeSec": 780,
-    "notes": "High-damage strategic strike."
+    "notes": "High-damage strategic strike.",
+    "targets": "A point on the map.",
+    "damage": 800,
+    "damageClass": "thermal",
+    "radiusTiles": 3,
+    "durationSec": null,
+    "arrives": null,
+    "count": null,
+    "delaySec": 11,
+    "warnsOpponent": true,
+    "pausesOnLowPower": true,
+    "ruleNotes": "Multiplayer values (this game is 1v1 multiplayer only); single-player: 4000 damage over 4 tiles. The impact point also takes an 800 strategic-class blast with normal splash. Every player hears the launch; there is no target marker. Delay: the missile comes down from about 64 tiles away (≈ 11 s; less for targets near the top edge), after about 1 s of the silo door opening. Area damage per tile: see Engine Rules: area_damage."
+  }
+};
+
+/** How the rules behave (formulas, rates, effects). Data only for now: the simulation does not read it yet. */
+export const ENGINE_RULES: Readonly<Record<string, EngineRuleDef>> = {
+  "build_seconds_per_credit": {
+    "id": "build_seconds_per_credit",
+    "topic": "Production",
+    "rule": "Build time per credit of cost",
+    "value": 0.032,
+    "unit": "seconds per credit",
+    "inGame": "In game",
+    "notes": "At full power with one producer. A 1,500-credit item takes 48 s. The Build Time columns on the Buildings and Units sheets follow it."
+  },
+  "production_steps": {
+    "id": "production_steps",
+    "topic": "Production",
+    "rule": "Steps per item in production",
+    "value": 54,
+    "unit": "steps",
+    "inGame": "Not in game yet",
+    "notes": "Each step costs 1/54 of the price. Without the money for a step, production waits (no debt)."
+  },
+  "production_rate_fixed_at_start": {
+    "id": "production_rate_fixed_at_start",
+    "topic": "Production",
+    "rule": "Build speed is fixed when an item starts",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "A change in power or in the number of producers only applies after the item is put on hold and resumed."
+  },
+  "producer_count_speedup": {
+    "id": "producer_count_speedup",
+    "topic": "Production",
+    "rule": "More producers of the same kind build faster",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Build time ÷ the number of producers of that kind you own (powered or not). No cap; an alternative caps the divisor at 2. Ours: one producer per lane."
+  },
+  "low_power_build_penalty": {
+    "id": "low_power_build_penalty",
+    "topic": "Production",
+    "rule": "Build time on low power",
+    "value": "time ÷ p1 ÷ p2",
+    "unit": "formula",
+    "inGame": "Ours differs (not changed)",
+    "notes": "p = power output ÷ drain. p1 = 0.75 at 75–99% power, p at 50–75%, 0.5 below 50%; p2 = p, at least 1/16. So 90% power ≈ ×1.48, 60% ≈ ×2.78, 25% ≈ ×8. A simpler alternative: ×1.5 below full, ×2.5 below half, ×4 at zero. Ours: a flat ×2 (ENGINE.lowPowerSlowdown)."
+  },
+  "cancel_refund": {
+    "id": "cancel_refund",
+    "topic": "Production",
+    "rule": "Refund when cancelling production",
+    "value": 1,
+    "unit": "fraction of money paid so far",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Ours: refund_percent (Economy sheet) applies to cancelling too."
+  },
+  "power_level": {
+    "id": "power_level",
+    "topic": "Power",
+    "rule": "Power level",
+    "value": "output ÷ drain",
+    "unit": "formula",
+    "inGame": "In game",
+    "notes": "1 (full) when output ≥ drain. Low power = below 1."
+  },
+  "power_output_scales_with_health": {
+    "id": "power_output_scales_with_health",
+    "topic": "Power",
+    "rule": "A power plant's output scales with its health",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "Output = Power Delta × current HP ÷ max HP. Drain is always full."
+  },
+  "low_power_damage": {
+    "id": "low_power_damage",
+    "topic": "Power",
+    "rule": "Low power: damage to power-drawing buildings",
+    "value": 4,
+    "unit": "HP (armor_piercing)",
+    "inGame": "Not in game yet",
+    "notes": "Every low_power_damage_interval, each of your buildings that draws power and is above half health takes this. Never takes one below half."
+  },
+  "low_power_damage_interval": {
+    "id": "low_power_damage_interval",
+    "topic": "Power",
+    "rule": "Low power: damage interval",
+    "value": 60,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "low_power_radar_off": {
+    "id": "low_power_radar_off",
+    "topic": "Power",
+    "rule": "Low power turns the minimap off",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "In game",
+    "notes": "On again when power returns. An active Global Reveal keeps it on."
+  },
+  "low_power_stops_powered_buildings": {
+    "id": "low_power_stops_powered_buildings",
+    "topic": "Power",
+    "rule": "Low power stops buildings that Require Power",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "In game",
+    "notes": "They can't fire or turn their turrets. The Anchor also charges only at full power."
+  },
+  "low_power_pauses_abilities": {
+    "id": "low_power_pauses_abilities",
+    "topic": "Power",
+    "rule": "Low power pauses some abilities",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "Abilities with Pauses on Low Power stop charging (no reset) and carry on when power returns. One that becomes available during low power starts paused."
+  },
+  "aircraft_reload_seconds": {
+    "id": "aircraft_reload_seconds",
+    "topic": "Power",
+    "rule": "Aircraft reload time per ammo, on their pad or airfield",
+    "value": 2.4,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": "On low power: ÷ p (p at least 0.5), so up to twice as slow."
+  },
+  "building_repair_step": {
+    "id": "building_repair_step",
+    "topic": "Repair",
+    "rule": "Building repair: HP per step",
+    "value": 28,
+    "unit": "HP",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Each step costs cost ÷ (max HP ÷ 28) × structure_full_repair_cost, so a full repair costs about structure_full_repair_cost × cost. Ours: full repair in ENGINE.repairSecondsForFull (30 s) whatever the size."
+  },
+  "building_repair_interval": {
+    "id": "building_repair_interval",
+    "topic": "Repair",
+    "rule": "Building repair: time per step",
+    "value": 0.933,
+    "unit": "seconds",
+    "inGame": "Ours differs (not changed)",
+    "notes": "About 30 HP a second for every building."
+  },
+  "repair_stops_without_money": {
+    "id": "repair_stops_without_money",
+    "topic": "Repair",
+    "rule": "Repair switches off when you cannot pay a step",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "It does not wait for money. Turning repair on or off is free."
+  },
+  "repair_ignores_power": {
+    "id": "repair_ignores_power",
+    "topic": "Repair",
+    "rule": "Repair speed ignores low power",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Building repair and the Service Bay. Ours: the Service Bay repairs half as fast on low power."
+  },
+  "unit_repair_step": {
+    "id": "unit_repair_step",
+    "topic": "Repair",
+    "rule": "Service Bay: HP per step",
+    "value": 40,
+    "unit": "HP",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Each step costs cost ÷ (max HP ÷ 40) × unit_full_repair_cost. Ours: ENGINE.repairSharePerSec (4% of health a second)."
+  },
+  "unit_repair_interval": {
+    "id": "unit_repair_interval",
+    "topic": "Repair",
+    "rule": "Service Bay: time per step",
+    "value": 0.933,
+    "unit": "seconds",
+    "inGame": "Ours differs (not changed)",
+    "notes": "About 43 HP a second whatever the unit."
+  },
+  "service_bay_rearms_seeder": {
+    "id": "service_bay_rearms_seeder",
+    "topic": "Repair",
+    "rule": "Service Bay re-arms a Seeder",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "All mines, free and at once, before any repair; it takes a Seeder in even at full health."
+  },
+  "self_heal_amount": {
+    "id": "self_heal_amount",
+    "topic": "Repair",
+    "rule": "Self-heal: HP per step",
+    "value": 4,
+    "unit": "HP",
+    "inGame": "Not in game yet",
+    "notes": "Units with Self-Heals (Units sheet). Free."
+  },
+  "self_heal_interval": {
+    "id": "self_heal_interval",
+    "topic": "Repair",
+    "rule": "Self-heal: time per step",
+    "value": 0.933,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "self_heal_cap": {
+    "id": "self_heal_cap",
+    "topic": "Repair",
+    "rule": "Self-heal stops at",
+    "value": 0.5,
+    "unit": "fraction of max HP",
+    "inGame": "Not in game yet",
+    "notes": "It only heals while at or below half health."
+  },
+  "sell_refund_ignores_health": {
+    "id": "sell_refund_ignores_health",
+    "topic": "Repair",
+    "rule": "Selling refunds the same whatever its health",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "refund_percent (Economy sheet) of its cost."
+  },
+  "sell_refund_excludes_free_unit": {
+    "id": "sell_refund_excludes_free_unit",
+    "topic": "Repair",
+    "rule": "Selling a building that came with a free unit refunds without that unit",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "A Refinery sells for (3,000 − 2,100) × 50% = 450. If the free unit could not be placed, its cost is refunded at once."
+  },
+  "survivor_fraction": {
+    "id": "survivor_fraction",
+    "topic": "Repair",
+    "rule": "Building crew share",
+    "value": 0.4,
+    "unit": "fraction of cost",
+    "inGame": "Not in game yet",
+    "notes": "Survivors = cost × 0.4 ÷ 150, 1 to 5 (Buildings sheet). All walk out when sold. When destroyed, each tile has a 1 in 3 chance (1 in 2 if it was attacking, 1 in 9 if it had been captured); none when destroyed by a demolition charge. Our roster has no humanoids: survivors would need a non-human stand-in."
+  },
+  "storage_cap": {
+    "id": "storage_cap",
+    "topic": "Economy",
+    "rule": "Resource storage cap",
+    "value": "none",
+    "unit": "credits",
+    "inGame": "Ours differs (kept)",
+    "notes": "Design Decisions: no storage cap; unloads become credits at once. The alternative stores ore money in refineries and silos, loses what does not fit, and loses the excess when a store is destroyed."
+  },
+  "harvest_seconds_per_unit": {
+    "id": "harvest_seconds_per_unit",
+    "topic": "Economy",
+    "rule": "Harvesting: time per resource unit",
+    "value": 0.6,
+    "unit": "seconds",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Ours: ENGINE.harvestMsPerUnit (0.25 s)."
+  },
+  "rare_units_per_pick": {
+    "id": "rare_units_per_pick",
+    "topic": "Economy",
+    "rule": "Rare deposits: units per harvesting step",
+    "value": 4,
+    "unit": "resource units",
+    "inGame": "Not in game yet",
+    "notes": "One step on a rare tile loads 4 units (if there is room) in the time of one."
+  },
+  "unload_seconds": {
+    "id": "unload_seconds",
+    "topic": "Economy",
+    "rule": "Unloading a full harvester",
+    "value": 1.467,
+    "unit": "seconds",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Credits are paid all at once at the end. The harvester first turns to face the dock. Ours: ENGINE.unloadMsPerUnit and dockMinMs."
+  },
+  "ore_search_near": {
+    "id": "ore_search_near",
+    "topic": "Economy",
+    "rule": "Harvester search radius after its tile runs out",
+    "value": 6,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "It takes the first ore tile found, ring by ring."
+  },
+  "ore_search_far": {
+    "id": "ore_search_far",
+    "topic": "Economy",
+    "rule": "Harvester search radius when looking for a field",
+    "value": 32,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "resource_growth_model": {
+    "id": "resource_growth_model",
+    "topic": "Economy",
+    "rule": "How fields grow",
+    "value": "Economy sheet",
+    "unit": "text",
+    "inGame": "Ours differs (kept)",
+    "notes": "Ours: the resource_* rows on the Economy sheet. The alternative: one pass over the map every 2 minutes, at most 64 tiles grow and 64 spread per pass, only tiles above half full spread, and rare deposits never grow."
+  },
+  "free_harvester_with_refinery": {
+    "id": "free_harvester_with_refinery",
+    "topic": "Economy",
+    "rule": "A finished Refinery comes with a Harvester",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "In game",
+    "notes": "Paid for inside the Refinery price."
+  },
+  "free_aircraft_with_flight_pad": {
+    "id": "free_aircraft_with_flight_pad",
+    "topic": "Economy",
+    "rule": "A Flight Pad comes with an aircraft",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "In game",
+    "notes": null
+  },
+  "splash_radius": {
+    "id": "splash_radius",
+    "topic": "Combat",
+    "rule": "Blast reach",
+    "value": 1.5,
+    "unit": "tiles",
+    "inGame": "Ours differs (not changed)",
+    "notes": "Everything within 1.5 tiles of the impact (and in its tile or the 8 around it) takes damage, reduced by distance (splash_falloff). The shooter is never hurt. Ours: direct hits only."
+  },
+  "splash_falloff": {
+    "id": "splash_falloff",
+    "topic": "Combat",
+    "rule": "Damage at a distance from the blast",
+    "value": "damage ÷ (distance ÷ step)",
+    "unit": "formula",
+    "inGame": "Not in game yet",
+    "notes": "step = Falloff Step on the Damage Matrix; at most ÷16. Within 4 steps a hit does at least min_damage. A building takes full damage when the blast lands on one of its tiles."
+  },
+  "min_damage": {
+    "id": "min_damage",
+    "topic": "Combat",
+    "rule": "Least damage of a hit close to the blast",
+    "value": 4,
+    "unit": "HP",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "max_damage": {
+    "id": "max_damage",
+    "topic": "Combat",
+    "rule": "Most damage of one hit",
+    "value": 4000,
+    "unit": "HP",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "heal_reach": {
+    "id": "heal_reach",
+    "topic": "Combat",
+    "rule": "Healing reach",
+    "value": 0.03,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "Negative damage heals only a target within this distance, and only unarmored ones."
+  },
+  "burst_gap": {
+    "id": "burst_gap",
+    "topic": "Combat",
+    "rule": "Gap between the shots of a burst",
+    "value": 0.2,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": "Burst 2 (or the same weapon in both slots): the second shot 0.2 s after the first, then the full fire interval. Bursts above 2 act as 2."
+  },
+  "weapon_choice": {
+    "id": "weapon_choice",
+    "topic": "Combat",
+    "rule": "Which weapon a unit uses",
+    "value": "better against the armor",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Score = damage-matrix multiplier, doubled if in range, zero if it cannot fire at the target. The secondary is used only if it scores strictly higher."
+  },
+  "scatter_moving_shooter": {
+    "id": "scatter_moving_shooter",
+    "topic": "Combat",
+    "rule": "Shots fired on the move scatter",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "Also scattering: weapons marked Inaccurate, and armor-piercing or fuelled-missile shots at infantry or the ground."
+  },
+  "scatter_arcing_max": {
+    "id": "scatter_arcing_max",
+    "topic": "Combat",
+    "rule": "Most scatter of an arcing shot",
+    "value": 2,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "Scatter = up to (distance ÷ 16 − 0.25 tiles), at most this. Lands anywhere around the target."
+  },
+  "scatter_direct_max": {
+    "id": "scatter_direct_max",
+    "topic": "Combat",
+    "rule": "Most scatter of a direct shot",
+    "value": 1,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "Overshoots along the line of fire."
+  },
+  "projectile_flight_time": {
+    "id": "projectile_flight_time",
+    "topic": "Combat",
+    "rule": "Projectile flight time",
+    "value": "distance ÷ speed + 0.27 s",
+    "unit": "formula",
+    "inGame": "Not in game yet",
+    "notes": "Projectile Speed on the Weapons sheet. Instant Hit weapons land at once. Homing projectiles start in the direction the shooter faces and re-aim every 0.13 s."
+  },
+  "fire_facing_tolerance": {
+    "id": "fire_facing_tolerance",
+    "topic": "Combat",
+    "rule": "Facing needed to fire",
+    "value": 11.25,
+    "unit": "degrees",
+    "inGame": "Not in game yet",
+    "notes": "Within this of the target; 45° for homing weapons. Units cannot fire while turning unless the weapon homes."
+  },
+  "faster_vs_aircraft_multiplier": {
+    "id": "faster_vs_aircraft_multiplier",
+    "topic": "Combat",
+    "rule": "Projectile speed against aircraft (Faster vs Aircraft)",
+    "value": 1.5,
+    "unit": "multiplier",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "anti_air_burst_reach": {
+    "id": "anti_air_burst_reach",
+    "topic": "Combat",
+    "rule": "Anti-air shots burst this close to an aircraft",
+    "value": 0.5,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "cloaked_untargetable": {
+    "id": "cloaked_untargetable",
+    "topic": "Combat",
+    "rule": "Cloaked units cannot be targeted",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "landed_aircraft_are_ground": {
+    "id": "landed_aircraft_are_ground",
+    "topic": "Combat",
+    "rule": "Landed aircraft count as ground targets",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "The Sky Lance ignores them."
+  },
+  "death_explosion_spread": {
+    "id": "death_explosion_spread",
+    "topic": "Combat",
+    "rule": "Death explosion radius per max HP",
+    "value": 0.3,
+    "unit": "tiles per 1,024 HP",
+    "inGame": "Not in game yet",
+    "notes": "Units with Explodes on Death. Rounded up to whole tiles. Damage = its max HP, in its primary weapon's damage class (high explosive if unarmed)."
+  },
+  "area_damage": {
+    "id": "area_damage",
+    "topic": "Combat",
+    "rule": "Area damage over several tiles",
+    "value": "per-tile blasts",
+    "unit": "text",
+    "inGame": "Proposed",
+    "notes": "Death explosions and the Strategic Missile: every tile within the radius gets its own blast (so things can be hit by several). The centre tile gets full damage and the others damage × their distance ÷ the radius, so tiles further out get more (up to ×1.5 at the corners). Proposed: damage falling off from the centre instead."
+  },
+  "harvester_explodes_with_ore": {
+    "id": "harvester_explodes_with_ore",
+    "topic": "Combat",
+    "rule": "A loaded harvester explodes when killed",
+    "value": false,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "If turned on: 1.5 tiles, damage = its load in credits + its max HP."
+  },
+  "prone_damage": {
+    "id": "prone_damage",
+    "topic": "Combat",
+    "rule": "Damage to infantry lying down",
+    "value": 0.5,
+    "unit": "fraction",
+    "inGame": "Not in game yet",
+    "notes": "Infantry lie down when shot at. Our roster has no humanoids."
+  },
+  "crush_reach": {
+    "id": "crush_reach",
+    "topic": "Combat",
+    "rule": "Crushing reach",
+    "value": 0.5,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "A unit that Crushes kills crushable enemies within this of the centre of a tile it drives onto; infantry in its way first try to scatter. Players crush only by driving over; a computer side drives over rather than shoots when the target is within 1.5 tiles (proposed for ours: same rule for both sides)."
+  },
+  "wall_damage": {
+    "id": "wall_damage",
+    "topic": "Combat",
+    "rule": "Wearing walls down",
+    "value": "per hit on the wall tile",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Only classes with Damages Walls. A hit ≥ Wall Damage per Level takes one level off; a smaller one has (damage ÷ per level) chance to. Removed after Wall Damage Levels. Armor does not apply."
+  },
+  "engineer_capture_health": {
+    "id": "engineer_capture_health",
+    "topic": "Infiltration",
+    "rule": "Engineer captures an enemy building at or below",
+    "value": 0.25,
+    "unit": "fraction of max HP",
+    "inGame": "Ours differs (not changed)",
+    "notes": "The Engineer is used up. Only buildings with Capturable. Ours: the Engineer repairs its own buildings from outside, for free."
+  },
+  "engineer_damage": {
+    "id": "engineer_damage",
+    "topic": "Infiltration",
+    "rule": "Engineer entering an enemy building above capture health",
+    "value": 0.333,
+    "unit": "fraction of max HP",
+    "inGame": "Not in game yet",
+    "notes": "Damage; it never destroys the building. The Engineer is used up."
+  },
+  "engineer_repair_friendly": {
+    "id": "engineer_repair_friendly",
+    "topic": "Infiltration",
+    "rule": "Engineer entering one of its own buildings",
+    "value": "repairs to full",
+    "unit": "text",
+    "inGame": "Ours differs (not changed)",
+    "notes": "At once; the Engineer is used up."
+  },
+  "infiltrator_radar": {
+    "id": "infiltrator_radar",
+    "topic": "Infiltration",
+    "rule": "Infiltrator in an enemy Radar",
+    "value": "see that side's minimap",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Until that Radar is destroyed or captured. Infiltrators are used up."
+  },
+  "infiltrator_producer": {
+    "id": "infiltrator_producer",
+    "topic": "Infiltration",
+    "rule": "Infiltrator in an enemy producer",
+    "value": "see what it is producing",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Barracks, Motor Works, Harbor, Sub Dock, Flight Pad, Airfield."
+  },
+  "infiltrator_refinery": {
+    "id": "infiltrator_refinery",
+    "topic": "Infiltration",
+    "rule": "Infiltrator in an enemy Refinery",
+    "value": "see that side's credits",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Any one Refinery is enough."
+  },
+  "infiltrator_power": {
+    "id": "infiltrator_power",
+    "topic": "Infiltration",
+    "rule": "Infiltrator in an enemy power plant",
+    "value": "see their power output and drain",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "infiltrator_sub_dock": {
+    "id": "infiltrator_sub_dock",
+    "topic": "Infiltration",
+    "rule": "Infiltrator in an enemy Sub Dock",
+    "value": "repeating sub ping",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Every 10 minutes while that Sub Dock stands, every submarine on the map is revealed for sub_ping_duration."
+  },
+  "infiltrator_any": {
+    "id": "infiltrator_any",
+    "topic": "Infiltration",
+    "rule": "Infiltrator in any enemy building",
+    "value": "see its health and contents",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Decoys show as decoys. Only Hounds attack Infiltrators on their own."
+  },
+  "infiltrator_airfield": {
+    "id": "infiltrator_airfield",
+    "topic": "Infiltration",
+    "rule": "Infiltrator in an enemy Airfield",
+    "value": "one free Air Bombardment",
+    "unit": "text",
+    "inGame": "Proposed",
+    "notes": "Only in an alternative rule set."
+  },
+  "raider_steal_fraction": {
+    "id": "raider_steal_fraction",
+    "topic": "Infiltration",
+    "rule": "Raider in an enemy Refinery steals",
+    "value": 0.5,
+    "unit": "fraction of that side's credits",
+    "inGame": "Not in game yet",
+    "notes": "Into your credits. The Raider is used up."
+  },
+  "demolition_delay": {
+    "id": "demolition_delay",
+    "topic": "Infiltration",
+    "rule": "Operator demolition charge fuse",
+    "value": 1.8,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": "Always destroys the building, with no survivors. Not on a building under Lock Field or being sold."
+  },
+  "hound_rules": {
+    "id": "hound_rules",
+    "topic": "Infiltration",
+    "rule": "Hound",
+    "value": "kills its target outright",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": "Targets infantry only (and is the only unit that attacks Infiltrators by itself); double speed while chasing; units cannot fire back at it."
+  },
+  "sub_ping_duration": {
+    "id": "sub_ping_duration",
+    "topic": "Infiltration",
+    "rule": "Sub ping: submarines revealed for",
+    "value": 15,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": "They cannot cloak again until it ends."
+  },
+  "mine_type_ordan": {
+    "id": "mine_type_ordan",
+    "topic": "Mines",
+    "rule": "Mines an Ordan Seeder lays",
+    "value": "anti-vehicle",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "mine_type_sable": {
+    "id": "mine_type_sable",
+    "topic": "Mines",
+    "rule": "Mines a Sable Seeder lays",
+    "value": "anti-personnel",
+    "unit": "text",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "mine_anti_vehicle_damage": {
+    "id": "mine_anti_vehicle_damage",
+    "topic": "Mines",
+    "rule": "Anti-vehicle mine damage",
+    "value": 4800,
+    "unit": "HP (high_explosive)",
+    "inGame": "Not in game yet",
+    "notes": "To the enemy vehicle that drives onto it only (no splash). Infantry neither trigger nor are blocked by it."
+  },
+  "mine_anti_personnel_damage": {
+    "id": "mine_anti_personnel_damage",
+    "topic": "Mines",
+    "rule": "Anti-personnel mine damage",
+    "value": 4000,
+    "unit": "HP (high_explosive)",
+    "inGame": "Not in game yet",
+    "notes": "To all infantry within mine_anti_personnel_radius, triggered by any infantry reaching it (no owner check). A vehicle driving over one takes 40."
+  },
+  "mine_anti_personnel_radius": {
+    "id": "mine_anti_personnel_radius",
+    "topic": "Mines",
+    "rule": "Anti-personnel mine reach",
+    "value": 0.75,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "mines_block_own_units": {
+    "id": "mines_block_own_units",
+    "topic": "Mines",
+    "rule": "Your own mines block your units",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "One mine per Seeder ammo; only on tiles without a building. A Seeder ignores its side's mines."
+  },
+  "fog_model": {
+    "id": "fog_model",
+    "topic": "Vision",
+    "rule": "Fog of war",
+    "value": "three-state",
+    "unit": "text",
+    "inGame": "Ours differs (kept)",
+    "notes": "Ours: unexplored / explored (dimmed) / in sight. The alternative: two states (explored ground stays fully visible), with explored ground going dark again every 4 minutes where nothing sees it."
+  },
+  "sight_cap": {
+    "id": "sight_cap",
+    "topic": "Vision",
+    "rule": "Greatest sight",
+    "value": 10,
+    "unit": "tiles",
+    "inGame": "In game",
+    "notes": "No Sight on the sheets is above it."
+  },
+  "veil_radius": {
+    "id": "veil_radius",
+    "topic": "Vision",
+    "rule": "Veil Generator: hidden radius",
+    "value": 10,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "Hidden from enemies (their own units still see around themselves). Only at full power; drops at once on low power or when destroyed."
+  },
+  "veil_refresh": {
+    "id": "veil_refresh",
+    "topic": "Vision",
+    "rule": "Veil Generator: re-hides every",
+    "value": 6,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": "Plus up to 1 s at random."
+  },
+  "shroud_pattern": {
+    "id": "shroud_pattern",
+    "topic": "Vision",
+    "rule": "Shroud: hidden area",
+    "value": "31 tiles",
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "Rows of 3, 5, 5, 5, 5, 5, 3 tiles around it (about 3 tiles out), refreshed every second while it is not moving. Needs no power."
+  },
+  "watcher_jam_radius": {
+    "id": "watcher_jam_radius",
+    "topic": "Vision",
+    "rule": "Watcher: jamming radius",
+    "value": 15,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "Checked every second: an enemy Radar or Sky Lance within this is jammed. A jammed Sky Lance cannot fire; a side whose Radars are all jammed sees static on the minimap."
+  },
+  "recloak_delay": {
+    "id": "recloak_delay",
+    "topic": "Vision",
+    "rule": "Time before a unit can cloak again",
+    "value": 1.2,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": "A cloaked unit shows itself when it takes damage, wants to fire, crushes something, is pinged, or ends a move next to an enemy that Detects Cloaked. At or below 25% health cloaking often fails."
+  },
+  "ability_charge_lost_with_building": {
+    "id": "ability_charge_lost_with_building",
+    "topic": "Abilities",
+    "rule": "Losing the building throws away the charge",
+    "value": true,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "Charging starts when the building is finished; using it restarts the full charge; a rebuilt building starts from zero."
+  },
+  "phase_quake_chance": {
+    "id": "phase_quake_chance",
+    "topic": "Abilities",
+    "rule": "Phase Shift: chance of a phase quake",
+    "value": 0.2,
+    "unit": "fraction per use",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "phase_quake_damage": {
+    "id": "phase_quake_damage",
+    "topic": "Abilities",
+    "rule": "Phase quake damage",
+    "value": 0.33,
+    "unit": "fraction of max HP",
+    "inGame": "Not in game yet",
+    "notes": "To every unit and building on the map, both sides; armor does not apply, Lock Field still protects."
+  },
+  "phase_vortex_chance": {
+    "id": "phase_vortex_chance",
+    "topic": "Abilities",
+    "rule": "Phase Shift: chance of a phase vortex",
+    "value": 0.2,
+    "unit": "fraction per use",
+    "inGame": "Not in game yet",
+    "notes": "A vortex appears somewhere on the map, wanders, and now and then zaps something within phase_vortex_range."
+  },
+  "phase_vortex_damage": {
+    "id": "phase_vortex_damage",
+    "topic": "Abilities",
+    "rule": "Phase vortex damage per zap",
+    "value": 800,
+    "unit": "HP",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "phase_vortex_range": {
+    "id": "phase_vortex_range",
+    "topic": "Abilities",
+    "rule": "Phase vortex reach",
+    "value": 10,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "placement_rule": {
+    "id": "placement_rule",
+    "topic": "Placement",
+    "rule": "Where a new building may go",
+    "value": "within a one-tile gap",
+    "unit": "text",
+    "inGame": "Ours differs (not changed)",
+    "notes": "A tile of it within 2 tiles of one of your buildings that Extends Base (Buildings sheet); walls may chain off walls; Placement Adjacency above 1 allows more. Ours: within ENGINE.buildRadius (6 tiles)."
+  },
+  "assembly_yard_undeploy": {
+    "id": "assembly_yard_undeploy",
+    "topic": "Placement",
+    "rule": "An Assembly Yard can pack up into an Assembler again",
+    "value": false,
+    "unit": "boolean",
+    "inGame": "Not in game yet",
+    "notes": "A deployed yard keeps the Assembler's health share."
+  },
+  "difficulty_handicaps": {
+    "id": "difficulty_handicaps",
+    "topic": "Placement",
+    "rule": "Difficulty handicaps",
+    "value": "none",
+    "unit": "text",
+    "inGame": "Ours differs (kept)",
+    "notes": "Ours: the computer plays by the same rules at every level; levels differ in mistakes (Design Decisions). The alternative gives each level damage, armor, speed, cost and build-time multipliers."
+  },
+  "crates_per_player": {
+    "id": "crates_per_player",
+    "topic": "Crates",
+    "rule": "Crates on the map at the start",
+    "value": 1,
+    "unit": "per player",
+    "inGame": "Not in game yet",
+    "notes": "At least one each. Picking one up places a new one at once."
+  },
+  "crate_lifetime_min": {
+    "id": "crate_lifetime_min",
+    "topic": "Crates",
+    "rule": "Crate lifetime: shortest",
+    "value": 90,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": "An unclaimed crate moves somewhere else after a random time between these."
+  },
+  "crate_lifetime_max": {
+    "id": "crate_lifetime_max",
+    "topic": "Crates",
+    "rule": "Crate lifetime: longest",
+    "value": 360,
+    "unit": "seconds",
+    "inGame": "Not in game yet",
+    "notes": null
+  },
+  "crate_water_chance": {
+    "id": "crate_water_chance",
+    "topic": "Crates",
+    "rule": "Chance a new crate is on water",
+    "value": 0.2,
+    "unit": "fraction",
+    "inGame": "Not in game yet",
+    "notes": "A water crate can only give money-type crates (Unit and Squad turn into Money)."
+  },
+  "crate_effect_radius": {
+    "id": "crate_effect_radius",
+    "topic": "Crates",
+    "rule": "Reach of area crates",
+    "value": 3,
+    "unit": "tiles",
+    "inGame": "Not in game yet",
+    "notes": "Cloak, Armor, Speed, Firepower and Lock Field crates affect everything within this, whoever owns it."
+  }
+};
+
+/** Crate pick-ups. Not in the game yet. */
+export const CRATES: Readonly<Record<string, CrateDef>> = {
+  "money": {
+    "id": "money",
+    "name": "Money",
+    "shares": 50,
+    "chance": 0.3311,
+    "effect": "Credits",
+    "value": 3000,
+    "unit": "credits (least)",
+    "notes": "A random amount from 3,000 to 4,350. A side with an Assembly Yard but no Refinery and less than a Refinery's cost gets exactly a Refinery's cost."
+  },
+  "unit": {
+    "id": "unit",
+    "name": "Unit",
+    "shares": 20,
+    "chance": 0.1325,
+    "effect": "A free unit",
+    "value": null,
+    "unit": null,
+    "notes": "An Assembler if the side has no buildings and no Assembler (and can afford a Refinery and a Power Plant); else a Harvester if it has a Refinery but none; else a random unit its faction can build. Money instead if it has more than 50 units."
+  },
+  "squad": {
+    "id": "squad",
+    "name": "Squad",
+    "shares": 20,
+    "chance": 0.1325,
+    "effect": "Five free infantry",
+    "value": 5,
+    "unit": "units",
+    "notes": "Our roster has no infantry: to be decided. Money instead with more than 100 infantry."
+  },
+  "air_bombardment": {
+    "id": "air_bombardment",
+    "name": "Air Bombardment",
+    "shares": 3,
+    "chance": 0.0199,
+    "effect": "One free Air Bombardment",
+    "value": 1,
+    "unit": "uses",
+    "notes": "Fully charged, used once."
+  },
+  "heal_base": {
+    "id": "heal_base",
+    "name": "Heal Base",
+    "shares": 1,
+    "chance": 0.0066,
+    "effect": "Everything you own back to full health",
+    "value": null,
+    "unit": null,
+    "notes": null
+  },
+  "cloak": {
+    "id": "cloak",
+    "name": "Cloak",
+    "shares": 0,
+    "chance": 0,
+    "effect": "Units and buildings nearby can cloak",
+    "value": null,
+    "unit": null,
+    "notes": "Within crate_effect_radius, any owner. Off (0 shares)."
+  },
+  "explosion": {
+    "id": "explosion",
+    "name": "Explosion",
+    "shares": 5,
+    "chance": 0.0331,
+    "effect": "Blows up under the unit",
+    "value": 2000,
+    "unit": "HP (high_explosive)",
+    "notes": "The unit takes it directly, then 5 blasts of the same land within 2 tiles."
+  },
+  "firestorm": {
+    "id": "firestorm",
+    "name": "Firestorm",
+    "shares": 5,
+    "chance": 0.0331,
+    "effect": "Fire blast",
+    "value": 2400,
+    "unit": "HP (thermal)",
+    "notes": "The unit takes it directly, plus a blast between it and the crate."
+  },
+  "blackout": {
+    "id": "blackout",
+    "name": "Blackout",
+    "shares": 1,
+    "chance": 0.0066,
+    "effect": "Hides the whole map again for that side",
+    "value": null,
+    "unit": null,
+    "notes": "Money instead while Global Reveal is active."
+  },
+  "reveal": {
+    "id": "reveal",
+    "name": "Reveal",
+    "shares": 1,
+    "chance": 0.0066,
+    "effect": "Reveals the whole map for that side",
+    "value": null,
+    "unit": null,
+    "notes": null
+  },
+  "sub_ping": {
+    "id": "sub_ping",
+    "name": "Sub Ping",
+    "shares": 3,
+    "chance": 0.0199,
+    "effect": "One free sub ping",
+    "value": 1,
+    "unit": "uses",
+    "notes": "Every submarine revealed for sub_ping_duration."
+  },
+  "armor": {
+    "id": "armor",
+    "name": "Armor",
+    "shares": 10,
+    "chance": 0.0662,
+    "effect": "Units nearby take less damage",
+    "value": 2,
+    "unit": "damage ÷",
+    "notes": "Ground units and buildings within crate_effect_radius, any owner; once per unit. Money if the unit already has it."
+  },
+  "speed": {
+    "id": "speed",
+    "name": "Speed",
+    "shares": 10,
+    "chance": 0.0662,
+    "effect": "Units nearby move faster",
+    "value": 1.7,
+    "unit": "speed ×",
+    "notes": "Ground units only, within crate_effect_radius."
+  },
+  "firepower": {
+    "id": "firepower",
+    "name": "Firepower",
+    "shares": 10,
+    "chance": 0.0662,
+    "effect": "Units nearby do more damage",
+    "value": 2,
+    "unit": "damage ×",
+    "notes": "Within crate_effect_radius; money for an unarmed unit."
+  },
+  "strategic_missile": {
+    "id": "strategic_missile",
+    "name": "Strategic Missile",
+    "shares": 1,
+    "chance": 0.0066,
+    "effect": "One free Strategic Missile",
+    "value": 1,
+    "unit": "uses",
+    "notes": "Comes down from 15 tiles away, no silo needed."
+  },
+  "phase_quake": {
+    "id": "phase_quake",
+    "name": "Phase Quake",
+    "shares": 3,
+    "chance": 0.0199,
+    "effect": "A phase quake hits the whole map",
+    "value": null,
+    "unit": null,
+    "notes": "See phase_quake_damage. Rare: only if a long-odds check passes (more likely later in the match and when every side is small); otherwise money."
+  },
+  "lock_field": {
+    "id": "lock_field",
+    "name": "Lock Field",
+    "shares": 3,
+    "chance": 0.0199,
+    "effect": "Units nearby are protected",
+    "value": 60,
+    "unit": "seconds",
+    "notes": "As the Lock Field ability, for everything within crate_effect_radius."
+  },
+  "phase_vortex": {
+    "id": "phase_vortex",
+    "name": "Phase Vortex",
+    "shares": 5,
+    "chance": 0.0331,
+    "effect": "A phase vortex appears, after the unit",
+    "value": null,
+    "unit": null,
+    "notes": "Share not set in the data: the default share of 5 is used."
   }
 };
 

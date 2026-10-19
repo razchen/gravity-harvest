@@ -22,12 +22,12 @@ test.describe('skirmish', () => {
     const hidden = await scene(page, (s) => ({
       enemyUnits: [...s.units.values()].filter((u: any) => u.team === 'enemy').length,
       enemyBuildings: [...s.buildings.values()].filter((b: any) => b.team === 'enemy').length,
-      enemyCorner: s.fog.at(60, 60),
+      enemyCorner: s.fog.at(84, 3), // the enemy's yard
       homeCorner: s.fog.at(7, 7),
     }));
     expect(hidden).toEqual({ enemyUnits: 0, enemyBuildings: 0, enemyCorner: 0, homeCorner: 2 });
 
-    await debug(page, { d: 'teleport', units: await myUnits(page, 'rifleman'), gx: 45, gy: 48 });
+    await debug(page, { d: 'teleport', units: await myUnits(page, 'rifleman'), gx: 77, gy: 12 });
     await expect.poll(() => scene(page, (s) => [...s.buildings.values()].filter((b: any) => b.team === 'enemy').length)).toBeGreaterThan(0);
     await expect.poll(() => scene(page, (s) => [...s.units.values()].filter((u: any) => u.team === 'enemy').length)).toBeGreaterThan(0);
   });
@@ -100,7 +100,7 @@ test.describe('shadows', () => {
 });
 
 test.describe('controls', () => {
-  test('zoom is on the keyboard (− held zooms out, + back in no further than the default, 0 resets), not the wheel', async ({ page }) => {
+  test('zoom is on the keyboard (− held zooms out, + back in no further than the default, Z resets), not the wheel', async ({ page }) => {
     await openGame(page);
     const zoom = () => scene(page, (s) => s.zoomLevel);
     const centre = await screenAt(page, 11, 9);
@@ -122,7 +122,7 @@ test.describe('controls', () => {
     await page.keyboard.up('Equal');
     expect(await zoom()).toBeGreaterThan(out);
     expect(await zoom()).toBeLessThanOrEqual(1);
-    await page.keyboard.press('Digit0');
+    await page.keyboard.press('KeyZ');
     expect(await zoom()).toBe(1);
   });
 
@@ -173,18 +173,18 @@ test.describe('controls', () => {
     await openGame(page);
     await debug(page, { d: 'reveal', on: true });
     const radar = await scene(page, (s) => {
-      const r = [...s.buildings.values()].find((b: any) => b.type === 'radar' && b.team === 'enemy');
+      const r = [...s.buildings.values()].find((b: any) => b.type === 'refinery' && b.team === 'enemy');
       return r && { tx: r.tx as number, ty: r.ty as number };
     });
     expect(radar).toBeTruthy();
-    // an enemy soldier just behind the radar, where the building's sprite is drawn over it
+    // an enemy soldier just behind the refinery, where the building's sprite is drawn over it
     const at = { gx: radar.tx + 1.5, gy: radar.ty - 0.4 };
     await debug(page, { d: 'spawn', unit: 'rifleman', team: 'enemy', ...at });
     const mine = await myUnits(page, 'rifleman');
-    await debug(page, { d: 'teleport', units: mine, gx: radar.tx - 12, gy: radar.ty - 12 });
+    await debug(page, { d: 'teleport', units: mine, gx: radar.tx - 12, gy: radar.ty });
     await expect.poll(() => scene(page, (s) => [...s.units.values()].filter((u: any) => u.team === 'enemy' && u.type === 'rifleman').length)).toBeGreaterThan(0);
     const enemy = await scene(page, (s) => {
-      const r = [...s.buildings.values()].find((b: any) => b.type === 'radar' && b.team === 'enemy');
+      const r = [...s.buildings.values()].find((b: any) => b.type === 'refinery' && b.team === 'enemy');
       const u = [...s.units.values()].filter((x: any) => x.team === 'enemy').sort((a: any, b: any) =>
         Math.hypot(a.gx - (r.tx + 1.5), a.gy - (r.ty - 0.4)) - Math.hypot(b.gx - (r.tx + 1.5), b.gy - (r.ty - 0.4)))[0];
       s.cameras.main.centerOn((u.gx - u.gy) * 64, (u.gx + u.gy) * 32);

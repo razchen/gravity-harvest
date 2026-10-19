@@ -8,7 +8,7 @@ import { footprint } from '@gravity-harvest/sim';
 export type FactionScope = 'both' | 'ordan' | 'sable';
 
 /** The side's emblem (docs/FACTIONS.md); shared buildings have none. */
-export const emblem = (f: FactionScope) => (f === 'both' ? '' : `<img class="emblem" src="/assets/ui/factions/${f}_small.png" alt="">`);
+export const emblem = (f: FactionScope) => (f === 'both' ? '' : `<img class="mr-1 inline size-[1.15em] object-contain align-[-0.22em]" src="/assets/ui/factions/${f}_small.png" alt="">`);
 
 export const FACTIONS: { id: FactionScope; name: string }[] = [
   { id: 'both', name: 'Shared' },
@@ -84,7 +84,7 @@ const tripo = (atlasId: string, parts: number, extra = '') => ({
 const TURNS = 'Its head turns to face what it shoots at.';
 
 /** Our art, by building id. */
-const ART: Record<string, Pick<DevBuilding, 'picture' | 'construction' | 'preview' | 'note' | 'turret' | 'idle' | 'video'>> = {
+const ART: Record<string, Pick<DevBuilding, 'picture' | 'construction' | 'preview' | 'note' | 'turret' | 'idle' | 'video' | 'model'>> = {
   assembly_yard: tripo('assembly', 130, 'Every base starts with one.'),
   power_plant: tripo('power_plant', 133),
   reactor_plant: { ...tripo('reactor_plant', 166), video: true },
@@ -94,7 +94,7 @@ const ART: Record<string, Pick<DevBuilding, 'picture' | 'construction' | 'previe
   },
   barracks: { ...tripo('barracks', 160), video: true },
   motor_works: { ...tripo('motor_works', 127, 'Harvesters come from here.'), video: true },
-  service_bay: tripo('service_bay', 96, 'Repairs vehicles parked next to it.'),
+  service_bay: { model: 'tripo/service_bay_v2.glb', ...tripo('service_bay', 193, 'Repairs vehicles next to it; right-click it with vehicles to send them onto its pad, where its roof arms (rigged in Blender) work on them.') },
   radar: tripo('radar', 148, 'Its dish needs to spin.'),
   gravity_lab: tripo('gravity_lab', 109, 'Its gyroscope turns and its core glows while it has power.'),
   gravity_forge: tripo('gravity_forge', 123),
@@ -128,7 +128,7 @@ export const DEV_BUILDINGS: DevBuilding[] = Object.values(BUILDINGS)
     milestone: MILESTONE_OF[b.id] ?? 4,
     footprint: footprint(b.id),
     ...(ART[b.id] ?? { note: 'No art yet.' }),
-    ...(ART[b.id]?.construction && { model: `tripo/${b.id}.glb`, idle: true }),
+    ...(ART[b.id]?.construction && { model: ART[b.id].model ?? `tripo/${b.id}.glb`, idle: true }),
   }))
   // by faction, then milestone; within those, buildings with stages first, then with a picture, then the rest
   .sort((a, b) => ORDER[a.faction] - ORDER[b.faction] || a.milestone - b.milestone || Number(!a.construction) - Number(!b.construction) || Number(!a.picture) - Number(!b.picture));

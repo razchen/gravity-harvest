@@ -1,3 +1,5 @@
+import type { PlayableFaction, TeamId } from '@gravity-harvest/shared';
+
 // How each enabled entity looks. Keyed by the rules ID (design/balance.xlsx). Gameplay numbers are not here:
 // the server owns them, and sends the browser only the roster's names, costs and prerequisites (MatchCatalog).
 
@@ -27,11 +29,36 @@ export interface UnitArt {
   sprite: string;
   card: string;
   /**
-   * The harvester has its own sheet (16 directions, wheel frames); vehicles are 16 directions (`v_<id>_<d>`,
-   * tools/blender/render_vehicle.py); infantry 16 directions with a run cycle, and their death in `<sprite>_death`
+   * Vehicles, the harvester too, are 16 directions (`v_<id>_<d>`, tools/blender/render_vehicle.py; the harvester's
+   * drums turn in its `v_harvester_harvest` clip); infantry 16 directions with a run cycle, and their death in `<sprite>_death`
    * (tools/blender/make_infantry.py).
    */
   kind: 'harvester' | 'vehicle' | 'infantry';
+  /**
+   * How its shots look and sound, over the rules' projectile (the Hound's rules say it leaps and bites; the hovering
+   * Hound fires a red energy ball from each side pod).
+   */
+  fire?: string;
+  /** Its working loop (a Medic's arms healing, an Engineer's arm repairing): the clip atlas `<sprite>_<clip>`. */
+  clip?: string;
+  /** A shared unit (the same rules for both sides) that each side builds to its own design: its atlas and card per side. */
+  sides?: Partial<Record<PlayableFaction, { sprite: string; card: string }>>;
+}
+
+/** How a unit of `type` looks on `faction`'s side: its own design where it has one per side. */
+export function unitArt(type: string, faction: PlayableFaction | null | undefined): UnitArt | undefined {
+  const a = UNIT_ART[type];
+  const side = faction ? a?.sides?.[faction] : undefined;
+  return side ? { ...a, ...side } : a;
+}
+
+/** Each side's energy colour: its hovering units' lights and their lasers, beams and energy balls. */
+export const SIDE_GLOW: Readonly<Record<PlayableFaction, number>> = { ordan: 0xa04cff, sable: 0xff2a1a };
+
+/** Which side a team plays: yours, and the computer the other. */
+export function factionOf(team: TeamId, yours: PlayableFaction | null | undefined): PlayableFaction {
+  const mine = yours ?? 'ordan';
+  return team === 'player' ? mine : mine === 'ordan' ? 'sable' : 'ordan';
 }
 
 export const BUILDING_ART: Readonly<Record<string, BuildingArt>> = {
@@ -53,21 +80,34 @@ export const BUILDING_ART: Readonly<Record<string, BuildingArt>> = {
 };
 
 export const UNIT_ART: Readonly<Record<string, UnitArt>> = {
-  harvester: { sprite: 'harvester', card: 'assets/ui/harvester.png', kind: 'harvester' },
-  skimmer: { sprite: 'v_skimmer', card: 'assets/ui/skimmer.png', kind: 'vehicle' },
-  jackal: { sprite: 'v_jackal', card: 'assets/ui/jackal.png', kind: 'vehicle' },
-  ram: { sprite: 'v_ram', card: 'assets/ui/ram.png', kind: 'vehicle' },
-  spire: { sprite: 'v_spire', card: 'assets/ui/spire.png', kind: 'vehicle' },
-  carrier: { sprite: 'v_carrier', card: 'assets/ui/carrier.png', kind: 'vehicle' },
+  harvester: { sprite: 'v_harvester', card: 'assets/ui/harvester.png', kind: 'harvester' },
+  skimmer: { sprite: 'v_skimmer', card: 'assets/ui/skimmer.png', kind: 'vehicle', fire: 'rapid autocannon' },
+  jackal: { sprite: 'v_jackal', card: 'assets/ui/jackal.png', kind: 'vehicle', fire: 'light shell' },
+  ram: { sprite: 'v_ram', card: 'assets/ui/ram.png', kind: 'vehicle', fire: 'battle shell' },
+  spire: { sprite: 'v_spire', card: 'assets/ui/spire.png', kind: 'vehicle', fire: 'artillery shell' },
+  carrier: { sprite: 'v_carrier', card: 'assets/ui/carrier.png', kind: 'vehicle', fire: 'heavy autocannon' },
   watcher: { sprite: 'v_watcher', card: 'assets/ui/watcher.png', kind: 'vehicle' },
   shroud: { sprite: 'v_shroud', card: 'assets/ui/shroud.png', kind: 'vehicle' },
   seeder: { sprite: 'v_seeder', card: 'assets/ui/seeder.png', kind: 'vehicle' },
   assembler: { sprite: 'v_assembler', card: 'assets/ui/assembler.png', kind: 'vehicle' },
+  hound: { sprite: 'v_hound', card: 'assets/ui/hound.png', kind: 'vehicle', fire: 'twin plasma' },
   rifleman: { sprite: 'rifleman', card: 'assets/ui/rifleman.png', kind: 'infantry' },
-  medic: { sprite: 'medic', card: 'assets/ui/medic.png', kind: 'infantry' },
-  raider: { sprite: 'raider', card: 'assets/ui/raider.png', kind: 'infantry' },
-  infiltrator: { sprite: 'infiltrator', card: 'assets/ui/infiltrator.png', kind: 'infantry' },
+  medic: { sprite: 'v_medic', card: 'assets/ui/medic.png', kind: 'vehicle', clip: 'heal' },
+  raider: { sprite: 'v_raider', card: 'assets/ui/raider.png', kind: 'vehicle' },
+  infiltrator: { sprite: 'v_infiltrator', card: 'assets/ui/infiltrator.png', kind: 'vehicle' },
+  grenadier: { sprite: 'v_grenadier', card: 'assets/ui/grenadier.png', kind: 'vehicle', fire: 'frag grenade' },
+  breaker: { sprite: 'v_breaker', card: 'assets/ui/breaker.png', kind: 'vehicle', fire: 'light column' },
+  lancer: {
+    sprite: 'v_lancer_ordan', card: 'assets/ui/lancer_ordan.png', kind: 'vehicle', fire: 'guided missile',
+    sides: { ordan: { sprite: 'v_lancer_ordan', card: 'assets/ui/lancer_ordan.png' }, sable: { sprite: 'v_lancer_sable', card: 'assets/ui/lancer_sable.png' } },
+  },
+  operator: {
+    sprite: 'v_operator_ordan', card: 'assets/ui/operator_ordan.png', kind: 'vehicle', fire: 'arc bolt',
+    sides: { ordan: { sprite: 'v_operator_ordan', card: 'assets/ui/operator_ordan.png' }, sable: { sprite: 'v_operator_sable', card: 'assets/ui/operator_sable.png' } },
+  },
+  engineer: {
+    sprite: 'v_engineer_ordan', card: 'assets/ui/engineer_ordan.png', kind: 'vehicle', clip: 'work',
+    sides: { ordan: { sprite: 'v_engineer_ordan', card: 'assets/ui/engineer_ordan.png' }, sable: { sprite: 'v_engineer_sable', card: 'assets/ui/engineer_sable.png' } },
+  },
 };
 
-/** Wheel circumference is ~0.6 tile, 8 frames per turn. */
-export const WHEEL_FRAMES_PER_TILE = 13;

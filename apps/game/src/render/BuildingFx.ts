@@ -50,6 +50,11 @@ export class BuildingFx {
   private powered = true;
   private working = false;
 
+  /** Draw the sparks at this depth (over a unit a building's arm works on). */
+  liftSparks(depth: number): void {
+    this.gfx.setDepth(depth);
+  }
+
   constructor(scene: Phaser.Scene, points: EffectPoint[], toWorld: (x: number, y: number) => { x: number; y: number }, depth: number) {
     ensureFxTextures(scene);
     this.gfx = scene.add.graphics().setDepth(depth + 0.02).setBlendMode(Phaser.BlendModes.ADD);

@@ -1,0 +1,7 @@
+{
+ "length_tiles": 1.0,
+ "model": "hover/breaker.glb",
+ "nose_deg": -90,
+ "hover": {"height": 0.28, "glow": [1.0, 0.08, 0.04]},
+ "muzzle": [[0.18, 0.0, 0.97]]
+}
