@@ -1,12 +1,21 @@
 // Support units: Medics heal their side's damaged soldiers, Engineers repair its damaged buildings, for free.
 import { BUILDINGS, weapon } from '@gravity-harvest/rules';
 import { facing } from '../geometry.js';
-import { ENGINE } from '../layout.js';
+import { ENGINE, FIXERS } from '../layout.js';
 import { distTo, pos, isInfantryType, healOf, type Fighter, type Entity } from '../entities.js';
 import type { SimState } from '../state.js';
 import { approachPoint } from './combat.js';
 import { toast, emitSeen } from './events.js';
 import { goTo, stepAlong } from './movement.js';
+
+/** A unit that mends rather than fights: no weapons that harm, and a heal (a Medic) or repairs (an Engineer). */
+export const isSupport = (u: Fighter): boolean => !u.weapons.length && !!(healOf(u.type) || FIXERS.has(u.type));
+
+/** Its part of every tick: its arms wind down, and a support unit sees to its side (true if it did, this tick). */
+export function tendSide(s: SimState, u: Fighter, dt: number): boolean {
+  if (u.work) u.work = Math.max(0, u.work - dt * 1000);
+  return isSupport(u) && updateSupport(s, u, dt);
+}
 
 /**
  * A Medic or an Engineer sees to its side: the damaged unit (a Medic: soldiers and hovering units, not vehicles) or
@@ -14,7 +23,7 @@ import { goTo, stepAlong } from './movement.js';
  * there and, in reach, heals it a volley at a time (its heal's damage, at its fire rate) or repairs it steadily, for
  * free. Returns whether it saw to something this tick (else it moves or stands as any unit).
  */
-export function updateSupport(s: SimState, u: Fighter, dt: number): boolean {
+function updateSupport(s: SimState, u: Fighter, dt: number): boolean {
   const heal = healOf(u.type);
   const needs = (e: Entity | undefined): e is Entity => !!e && e.alive && e.team === u.team && e.hp < e.maxHp
     && (heal ? e.cat === 'unit' && e.id !== u.id && isInfantryType(e.type) : e.cat === 'building' && e.built);

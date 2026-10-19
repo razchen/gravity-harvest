@@ -13,6 +13,19 @@ import { inSight } from './visibility.js';
 /** Defence heads and vehicle turrets aim in this many directions (their sprites have as many: render_construction.py `turret`, render_vehicle.py). */
 export const TURRET_DIRECTIONS = 32;
 
+/** Its reloads tick down: each weapon's, and a Medic's or Engineer's between heals or sparks. */
+export function reload(u: Fighter, ms: number): void {
+  u.cool -= ms;
+  for (let i = 0; i < u.cools.length; i++) u.cools[i] -= ms;
+}
+
+/** A turret that turns on its own points at what the unit is shooting at, or back along the hull. */
+export function aimTurret(u: Fighter, target: Entity | undefined): void {
+  if (!TURRET_UNITS.has(u.type)) return;
+  const at = target && u.weapons.length ? pos(target) : null;
+  u.aim = at ? facing(at.gx - u.gx, at.gy - u.gy, TURRET_DIRECTIONS) : -1;
+}
+
 /** How far it shoots: at this target, with the weapon it would use on it; otherwise its longest reach. */
 export function range(u: Fighter, target?: Entity): number {
   if (target) {

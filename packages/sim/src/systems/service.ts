@@ -7,7 +7,7 @@ import type { Building, Fighter } from '../entities.js';
 import type { SimState } from '../state.js';
 import { claimedTiles, freeTiles } from './collisions.js';
 import { toast } from './events.js';
-import { goTo, stepAlong, tileOf } from './movement.js';
+import { goTo, leadOut, stepAlong, tileOf } from './movement.js';
 import { slowdown } from './power.js';
 
 /** The vehicle parked on a Service Bay's pad being repaired (not still backing on, nor driving off), if any. */
@@ -65,6 +65,13 @@ export function leaveBay(s: SimState, u: Fighter, idle = false): void {
   }
   u.service = null;
   if (idle) Object.assign(u, { mode: 'idle', path: [], rest: null });
+}
+
+/** Given another order while at a Service Bay: the pad is free again, and it drives straight off it first if it's on it. */
+export function quitBay(s: SimState, u: Fighter): void {
+  leaveBay(s, u);
+  const lead = leadOut(s, u);
+  if (lead && !u.path.length) u.path = [lead];
 }
 
 export function updateService(s: SimState, u: Fighter, dt: number): void {

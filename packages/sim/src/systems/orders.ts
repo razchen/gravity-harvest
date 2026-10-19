@@ -1,8 +1,7 @@
 // Orders: a player's commands, checked for legality and handed to the systems that carry them out.
 import { BUILDINGS, UNITS, refundFor } from '@gravity-harvest/rules';
 import type { Command, GridPoint, TeamId } from '@gravity-harvest/shared';
-import { FIXERS } from '../layout.js';
-import { isVehicleType, isInfantryType, healOf, type Unit } from '../entities.js';
+import { isVehicleType, isInfantryType, type Unit } from '../entities.js';
 import type { SimState } from '../state.js';
 import { formation } from './collisions.js';
 import { deploy, place, train } from './construction.js';
@@ -11,6 +10,7 @@ import { cancelHarvester, harvest, returnHome } from './harvesting.js';
 import { destroyBuilding } from './lifecycle.js';
 import { moveUnit } from './movement.js';
 import { toBay, leaveBay } from './service.js';
+import { isSupport } from './support.js';
 import { canSee } from './visibility.js';
 
 /** Apply a player's order. Invalid orders are ignored (with a toast explaining why, where useful). */
@@ -133,7 +133,7 @@ export function command(s: SimState, team: TeamId, cmd: Command): void {
       if (!t?.alive || t.team !== team) return;
       for (const id of cmd.units) {
         const u = own(id);
-        if (u?.kind === 'fighter' && !u.weapons.length && (healOf(u.type) || FIXERS.has(u.type))) {
+        if (u?.kind === 'fighter' && isSupport(u)) {
           Object.assign(u, { target: t.id, mode: 'attack', repath: 0, rest: null, attackMove: null, path: [] });
         }
       }
