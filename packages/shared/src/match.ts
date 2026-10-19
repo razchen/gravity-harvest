@@ -1,6 +1,8 @@
 // Match protocol: the browser and the server talk over one WebSocket per match at MATCH_PATH.
 // The server runs the simulation; the browser sends orders and draws the TeamView it is sent.
 // A TeamView only ever contains what that team may know (its own state, plus what its fog reveals).
+// The socket URL carries the player's anonymous id (`?player=<id>`, see player.ts); saves the match loads and writes
+// are that player's.
 
 import type { SaveGameSummary, SaveKind } from './saves.js';
 

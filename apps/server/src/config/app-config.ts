@@ -11,7 +11,10 @@ export interface AppConfig {
   corsOrigins: string[];
   /** Max accepted JSON body size (body-parser syntax, e.g. "10mb"). */
   bodyLimit: string;
-  /** Whether TypeORM should auto-sync the schema (dev only; use migrations later). */
+  /**
+   * Whether TypeORM should also auto-sync the schema to the entities after the migrations ran (development and
+   * tests only, never production: migrations own the schema there).
+   */
   dbSynchronize: boolean;
   /** Whether TypeORM should log SQL. */
   dbLogging: boolean;
@@ -63,7 +66,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     databasePath: resolveDatabasePath(env.DATABASE_PATH),
     corsOrigins,
     bodyLimit: env.BODY_LIMIT?.trim() || DEFAULTS.bodyLimit,
-    dbSynchronize: parseBool(env.DB_SYNCHRONIZE, true),
+    dbSynchronize: parseBool(env.DB_SYNCHRONIZE, env.NODE_ENV !== 'production'),
     dbLogging: parseBool(env.DB_LOGGING, false),
     debugCommands: parseBool(env.DEBUG_COMMANDS, env.NODE_ENV !== 'production'),
   };
