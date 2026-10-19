@@ -164,7 +164,7 @@ describe('economy', () => {
   it('places a building: prerequisites, placement rules, cost and build time from the rules', () => {
     const sim = Sim.create('skirmish');
     sim.command('player', { c: 'place', building: 'power_plant', tx: 6, ty: 6 }); // on the refinery
-    expect(sim.view('player').events).toContainEqual({ e: 'toast', text: 'Blocked' });
+    expect(sim.view('player').events).toContainEqual({ e: 'toast', text: 'Blocked', code: 'cantPlace' });
 
     sim.command('player', { c: 'place', building: 'power_plant', tx: 1, ty: 10 });
     let v = sim.view('player');
@@ -258,7 +258,7 @@ describe('economy', () => {
   it('trains units through the queue, at the right building, and refunds cancels', () => {
     const sim = Sim.create('skirmish');
     sim.command('player', { c: 'train', unit: 'rifleman' });
-    expect(sim.view('player').events).toContainEqual({ e: 'toast', text: 'Build a Barracks first' });
+    expect(sim.view('player').events).toContainEqual({ e: 'toast', text: 'Build a Barracks first', code: 'needPrerequisite' });
 
     sim.command('player', { c: 'place', building: 'barracks', tx: 1, ty: 10 });
     sim.debug('player', { d: 'finishBuilds' });
@@ -943,7 +943,7 @@ describe('saves and determinism', () => {
     run(sim, 100);
     for (let i = 0; i < ENGINE.unitCap; i++) sim.debug('player', { d: 'spawn', unit: 'rifleman', team: 'player', gx: 2 + (i % 8), gy: 14 + Math.floor(i / 8) });
     sim.command('player', { c: 'train', unit: 'harvester' });
-    expect(sim.view('player').events).toContainEqual({ e: 'toast', text: 'Unit cap reached' });
+    expect(sim.view('player').events).toContainEqual({ e: 'toast', text: 'Unit cap reached', code: 'unitCap' });
   });
 });
 
@@ -996,7 +996,7 @@ describe('construction and production rules', () => {
     sim.command('player', { c: 'place', building: 'radar', tx: 1, ty: 14 });
     const types = () => [...sim.buildings.values()].filter((b) => b.team === 'player' && !b.built).map((b) => b.type);
     expect(types()).toEqual(['barracks']);
-    expect(events(sim.view('player'), 'toast').some((e) => e.e === 'toast' && e.text === 'Already building a Barracks')).toBe(true);
+    expect(events(sim.view('player'), 'toast').some((e) => e.e === 'toast' && e.text === 'Already building a Barracks' && e.code === 'alreadyBuilding')).toBe(true);
     sim.debug('player', { d: 'finishBuilds' });
     run(sim, 100);
     sim.command('player', { c: 'place', building: 'radar', tx: 1, ty: 14 });

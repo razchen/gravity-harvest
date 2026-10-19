@@ -2,6 +2,7 @@ import type { PowerView, QueueItemView, PlayableFaction } from '@gravity-harvest
 import type { EventBus, GameEvents } from '../core/EventBus';
 import type { Point } from '../core/geometry';
 import type { TeamId } from '../data/teams';
+import type { ToastCode } from '../data/toasts';
 import type { BuyResult } from '../systems/availability';
 
 /** What the minimap may draw: only what the human has explored / can see. */
@@ -51,8 +52,8 @@ export type DevInfoSection = 'sounds' | 'perf' | 'link' | 'match' | 'camera' | '
  */
 export interface HudBridge {
   readonly bus: EventBus<GameEvents>;
-  /** A message is shown: its sound, if it has one (a refusal's error, a warning's alarm). */
-  toastSound(text: string): void;
+  /** A message is shown: its code's sound, if it has one (a refusal's error; data/toasts.ts). */
+  toastSound(code: ToastCode | undefined): void;
   /** The side you play (each side builds the shared units to its own design). */
   readonly faction: PlayableFaction | null;
   credits(): number;
@@ -63,8 +64,8 @@ export interface HudBridge {
   /** Finished building types the human owns (prerequisites). */
   ownedTypes(): string[];
   placingType(): string | null;
-  /** Start placing a building; a string says why it can't be started now (see buildBlocker). */
-  startPlacement(type: string): 'ok' | 'poor' | string;
+  /** Start placing a building; a message says why it can't be started now (see buildBlocker). */
+  startPlacement(type: string): 'ok' | 'poor' | { text: string; code: ToastCode };
   buyUnit(type: string): BuyResult;
   /** Remove the last queued unit of a type (right-click on its card, or its ×). */
   cancelUnit(type: string): void;

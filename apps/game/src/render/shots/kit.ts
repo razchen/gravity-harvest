@@ -14,7 +14,7 @@ export interface Shot {
   guns: Point[];
   /** Where it's aimed: on the target (a little above the ground for a unit, a building's middle). */
   to: Point;
-  /** The ground under the target when it's a unit (or the spot itself), for scorch marks and dust; a building's centre for looks in STRIKES_GROUND. */
+  /** The ground under the target when it's a unit (or the spot itself), for scorch marks and dust; a building's centre for shots that strike the ground (data/shots.ts). */
   ground?: Point;
   /** A muzzle flash where it leaves (off for a Harvester's self-defence and the like). */
   flash: boolean;
@@ -36,10 +36,29 @@ export interface Kit {
   add(l: Live): void;
   /** The burst look shells use (render/Impact.ts `impact`). */
   impactStyle: ImpactStyle;
-  /** Say a round has landed, for its sound: 'bullet' for a small hit, 'shell' for a heavy one. */
-  landed(kind: 'bullet' | 'shell', at: Point): void;
-  /** The old look for projectile `p` (render/Effects.ts), for a look that isn't written yet. */
-  legacy(p: string, s: Shot): void;
+  /** Say a round has landed: it plays the shot's impact sound (data/shots.ts). */
+  landed: Land;
+  /** The classic looks' drawing (render/Effects.ts, which steps them itself), for shots/classic.ts. */
+  classic: ClassicFx;
+}
+
+/** A round has landed at `at` (its impact sound). */
+export type Land = (at: Point) => void;
+
+/**
+ * The classic looks: plain bullets, shells, energy balls, beams, columns, grenades, bolts and missiles, from one point.
+ * Which gun they leave from, and how many, is up to the look (shots/classic.ts).
+ */
+export interface ClassicFx {
+  bullets(from: Point, to: Point, ground: Point | undefined, flash: boolean, land: Land): void;
+  round(kind: 'shell' | 'fireball', from: Point, s: Shot, land: Land): void;
+  plasma(from: Point, s: Shot, land: Land): void;
+  weld(at: Point): void;
+  beam(from: Point, to: Point, heal: boolean, glow: number | undefined, land: Land): void;
+  column(from: Point, s: Shot, land: Land): void;
+  grenade(from: Point, s: Shot, land: Land): void;
+  discharge(from: Point, to: Point, glow: number | undefined, land: Land): void;
+  missile(from: Point, s: Shot, land: Land, delayMs: number): void;
 }
 
 /** A unit's shot look: draws `s`, adding whatever it needs to keep moving with kit.add. */

@@ -95,12 +95,12 @@ export class Placement {
     const pl = this.placing;
     if (!pl) return;
     const w = this.world;
-    if (pl.problem) return w.bus.emit('toast', pl.problem);
+    if (pl.problem) return w.bus.emit('toast', { text: pl.problem, code: 'cantPlace' });
     const needs = missingFor(pl.type, w.ownedTypes());
-    if (needs) return w.bus.emit('toast', `Build a ${needs} first`);
+    if (needs) return w.bus.emit('toast', { text: `Build a ${needs} first`, code: 'needPrerequisite' });
     const cost = getCatalog().buildings[pl.type].cost;
-    if (w.credits() < cost) return w.bus.emit('toast', `Need $${(cost - w.credits()).toLocaleString('en-US')} more`);
-    w.net.command({ c: 'place', building: pl.type, tx: pl.tx, ty: pl.ty });
+    if (w.credits() < cost) return w.bus.emit('toast', { text: `Need $${(cost - w.credits()).toLocaleString('en-US')} more`, code: 'needCredits' });
+    w.orders.send({ c: 'place', building: pl.type, tx: pl.tx, ty: pl.ty });
     this.cancel();
   }
 }

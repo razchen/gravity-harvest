@@ -5,7 +5,9 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { ATLASES, TERRAIN } from '../assets/manifest';
 import { MATCH_PUBLIC_CATALOG, FOOTPRINT, ROSTER, SCENERY_KINDS } from '@gravity-harvest/sim';
+import { WEAPONS } from '@gravity-harvest/rules';
 import { BUILDING_ART, UNIT_ART } from './art';
+import { SHOTS } from './shots';
 
 const PUBLIC = join(import.meta.dirname, '..', '..', 'public');
 const atlasKeys = new Set(ATLASES.map((a) => a.key));
@@ -117,5 +119,19 @@ describe('scenery', () => {
         expect(tiles, `${k.id} is ${tiles.toFixed(2)} tiles wide`).toBeLessThanOrEqual(hi);
       }
     }
+  });
+});
+
+describe('shots', () => {
+  // what a shot event's `p` can be: any weapon's projectile in the rules (not only the roster's: a unit added to the
+  // roster shouldn't quietly draw the wrong shot), the sim's own two, and the units' own looks
+  const projectiles = Object.values(WEAPONS).map((w) => w.projectile);
+  const fires = Object.values(UNIT_ART).map((a) => a.fire);
+  const shots = [...new Set([...projectiles, 'repair', 'beam', ...fires])].filter((p): p is string => !!p);
+
+  it.each(shots.map((p) => [p]))('"%s" has a look and a sound in data/shots.ts', (p) => {
+    const def = SHOTS[p];
+    expect(def, `add "${p}" to data/shots.ts`).toBeDefined();
+    expect(def.fire.length).toBeGreaterThan(0);
   });
 });

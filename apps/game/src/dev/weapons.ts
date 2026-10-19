@@ -7,6 +7,7 @@ import { ATLASES, TERRAIN, anchorOrigin, sprites, type SpriteMeta } from '../ass
 import { CAMERA, DEPTH, DPR, HOVER, TILE_W } from '../config/game';
 import { alongBarrel, facing, iso, type Point } from '../core/geometry';
 import { SIDE_GLOW, UNIT_ART, unitArt } from '../data/art';
+import { shotOf } from '../data/shots';
 import { TEAMS } from '../data/teams';
 import { Effects } from '../render/Effects';
 import { FX, loadFxSheets } from '../render/fxTextures';
@@ -241,7 +242,7 @@ export function mountWeaponView(host: HTMLElement, opts: WeaponViewOptions): voi
         end = alongBarrel(start, this.turretDir, tl.directions, end);
       }
       const p = UNIT_ART[state.unit]?.fire ?? weaponOf(state.unit)!.projectile ?? undefined;
-      const glow = p === 'beam' ? undefined : SIDE_GLOW[sideOf()];
+      const glow = shotOf(p).ownColour ? undefined : SIDE_GLOW[sideOf()];
       const hit = tank ? { depth: this.target.hull.depth, targets: [this.target.hull, ...(this.target.turret ? [this.target.turret] : [])] } : undefined;
       // as in a match: a unit's the target (the tank, or nothing on open ground), so the ground under it goes too
       const onGround = at;

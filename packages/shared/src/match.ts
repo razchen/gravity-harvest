@@ -230,7 +230,16 @@ export type MatchEvent =
   | { e: 'boarded'; unit: number; type: string; transport: number; gx: number; gy: number; side: 1 | -1 }
   /** A passenger came out of a transport through the door on `side`, down its ramp to where the view has him. */
   | { e: 'disembarked'; unit: number; transport: number; side: 1 | -1 }
-  | { e: 'toast'; text: string };
+  /** A message for the player: `text` to show (it may be reworded), `code` for what it means (the browser picks its sound by it). */
+  | { e: 'toast'; text: string; code: ToastCode };
+
+/** What a toast is about: stable, unlike its text. */
+export type ToastCode =
+  // refusals: an order the server won't carry out, and why
+  | 'needCredits' | 'needPrerequisite' | 'needAssemblyYard' | 'alreadyBuilding' | 'cantPlace' | 'cantDeploy'
+  | 'unitCap' | 'queueFull' | 'notDamaged' | 'repairNoCredits'
+  // news
+  | 'sold' | 'cancelled' | 'buildingReady' | 'unitReady' | 'repaired' | 'buildingDestroyed' | 'enemyBuildingDestroyed';
 
 /** Everything one team is allowed to know right now. */
 export interface TeamView {

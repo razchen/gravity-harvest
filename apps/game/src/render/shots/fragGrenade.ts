@@ -241,7 +241,7 @@ function burst(kit: Kit, s: Shot, land: Point, glow: number): void {
   const f = FRAG;
   const depth = s.hit?.depth !== undefined ? s.hit.depth + 0.01 : DEPTH.ui - 6;
   const c = { x: land.x, y: land.y - f.burstHeight };
-  kit.landed('shell', land);
+  kit.landed(land);
   hitFlash(scene, s.hit?.targets);
 
   // the flash: a hard white pop, a jagged flare, a wider orange glow, a quick ring with a hint of its side's colour,

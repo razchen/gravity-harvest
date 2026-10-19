@@ -121,7 +121,7 @@ export const lightColumn: Look = (kit, s) => {
   let age = 0;
 
   const strike = () => {
-    kit.landed('shell', at);
+    kit.landed(at);
     // the nose lets go: a flash, then out
     for (const n of nose) {
       n.setDisplaySize(c.nosePx * 1.4, c.nosePx * 1.4);
