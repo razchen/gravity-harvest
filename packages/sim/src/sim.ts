@@ -296,9 +296,12 @@ export class Sim {
     this.power = { player: powerBalance([]), enemy: powerBalance([]) };
   }
 
-  /** A new match. `faction`: the side the human plays (the computer takes the other); default the scenario's. */
-  static create(scenarioId: string, seed = 1, faction?: Faction, opts: CreateOptions = {}): Sim {
-    const sc = SCENARIOS[scenarioId];
+  /**
+   * A new match. `faction`: the side the human plays (the computer takes the other); default the scenario's. A scenario
+   * that isn't in SCENARIOS can be passed as it is (a dev page's own little map); such a match can't be restored.
+   */
+  static create(scenarioId: string | ScenarioDef, seed = 1, faction?: Faction, opts: CreateOptions = {}): Sim {
+    const sc = typeof scenarioId === 'string' ? SCENARIOS[scenarioId] : scenarioId;
     if (!sc) throw new Error(`Unknown scenario "${scenarioId}"`);
     const sim = new Sim(sc, seed);
     if (faction) {

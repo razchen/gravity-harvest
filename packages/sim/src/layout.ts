@@ -3,6 +3,9 @@
 // build-panel availability without receiving the full rules.
 import type { Catalog } from '@gravity-harvest/rules/deps';
 
+// the browser draws units facing the way the sim works it out (geometry.ts has no rules data either)
+export { facing } from './geometry.js';
+
 /** Simulation step. */
 export const TICK_MS = 50;
 /** A view is sent to each player every this many ticks. */

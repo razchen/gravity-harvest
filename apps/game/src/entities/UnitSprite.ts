@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import type { HarvesterActivity, TeamId, UnitView } from '@gravity-harvest/shared';
+import { facing } from '@gravity-harvest/sim/layout';
 import { anchorOrigin, meta } from '../assets/manifest';
 import { HARVESTER_DOCK_FACING, HARVESTER_UNLOAD_MS, HOVER, INFANTRY_TURN_MS_PER_STEP, RAMP_TILES_PER_SEC, RUN_CYCLE_TILES, TILE_W, TURRET_TURN_MS_PER_STEP } from '../config/game';
 import { alongBarrel, iso, type Point } from '../core/geometry';
@@ -182,7 +183,7 @@ export abstract class UnitSprite {
       if (dist > 1e-4) {
         this.gx += (dgx / dist) * moved;
         this.gy += (dgy / dist) * moved;
-        this.dir = facing16(dgx, dgy);
+        this.dir = facing(dgx, dgy, 16);
       }
     }
     this.refresh(moved);
@@ -371,11 +372,6 @@ export const WHEEL_TURN_TILES = 0.55;
 
 /** Frame `f` of a cycle of `n` (counting backwards too). */
 const cycle = (f: number, n: number) => ((Math.floor(f) % n) + n) % n;
-
-/** Sprite direction (of 16) for a grid-space vector, as the sim's facing() works it out. */
-function facing16(dgx: number, dgy: number): number {
-  return ((Math.round(Math.atan2(-dgy, dgx) / (Math.PI / 8)) % 16) + 16) % 16;
-}
 
 /** Moving (dgx, dgy) while facing `dir` (of 16) is reversing. */
 function backing(dgx: number, dgy: number, dir: number): boolean {
