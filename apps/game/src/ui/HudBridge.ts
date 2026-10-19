@@ -11,8 +11,12 @@ export interface MinimapSnapshot {
   height: number;
   radar: 'none' | 'offline' | 'online';
   buildings: { tx: number; ty: number; size: number; team: TeamId; built: boolean }[];
-  ore: { tx: number; ty: number; rocks: number }[];
-  scenery: { tx: number; ty: number; kind: string }[];
+  /** Ore and scenery in explored ground (worked out when read: the minimap only reads them when its map changes). */
+  readonly ore: { tx: number; ty: number; rocks: number }[];
+  readonly scenery: { tx: number; ty: number; kind: string }[];
+  /** These count up whenever the fog or the ore changes, so the minimap knows when to redraw its map. */
+  fogVersion: number;
+  oreVersion: number;
   units: { gx: number; gy: number; team: TeamId; selected: boolean; harvester: boolean }[];
   /** 0 unexplored, 1 explored, 2 visible. */
   fogAt(tx: number, ty: number): number;

@@ -17,11 +17,13 @@ import { Selection } from '../input/Selection';
 import { MatchClient } from '../net/MatchClient';
 import { Boarding } from '../render/Boarding';
 import { DebugOverlay } from '../render/DebugOverlay';
+import { useIncrementalDepthSort } from '../render/depthSort';
 import { Effects } from '../render/Effects';
 import { Overlays } from '../render/Overlays';
 import { buildBlocker, setCatalog, trainResult, type BuyResult } from '../systems/availability';
 import { Placement } from '../systems/Placement';
 import type { DevInfoSection, GroupView, HudBridge, MinimapSnapshot, SelectedUnit } from '../ui/HudBridge';
+import { StaticObjects } from '../world/StaticObjects';
 import { FogOfWar } from '../world/FogOfWar';
 import { GameMap } from '../world/GameMap';
 import { OreLayer } from '../world/OreLayer';
@@ -59,6 +61,8 @@ export class GameScene extends Phaser.Scene implements HudBridge {
   map!: GameMap;
   ore!: OreLayer;
   scenery!: SceneryLayer;
+  /** What never moves: left out of drawing off screen, the flat ground in a layer of its own. */
+  private statics: StaticObjects | null = null;
   shadows!: ShadowLayer;
   fog!: FogOfWar;
   buildings = new Map<number, BuildingSprite>();
@@ -117,6 +121,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
   create(data: SceneData): void {
     this.hello = null;
     this.view = null;
+    this.statics = null;
     this.over = false;
     this.revealed = false;
     this.buildings = new Map();
@@ -124,6 +129,7 @@ export class GameScene extends Phaser.Scene implements HudBridge {
     this.selection = new Selection();
     this.groups.clear();
     this.stats = emptyStats();
+    useIncrementalDepthSort(this);
     this.net = new MatchClient({
       hello: (h) => this.onHello(h),
       view: (v) => this.onView(v),
@@ -145,13 +151,14 @@ export class GameScene extends Phaser.Scene implements HudBridge {
     setCatalog(h.catalog);
     setSeats(h);
     this.map = new GameMap(h.map.width, h.map.height);
-    this.ore = new OreLayer(this, this.map);
+    const statics = (this.statics = new StaticObjects(this));
+    this.ore = new OreLayer(this, this.map, statics);
     this.ore.setTiles(h.ore.tiles);
-    drawTerrain(this, this.map, this.ore);
+    drawTerrain(this, this.map, this.ore, statics);
     for (const r of h.ore.rocks) this.ore.addRock(r);
     this.ore.scarEmptyTiles();
     this.shadows = new ShadowLayer(this, this.map);
-    this.scenery = new SceneryLayer(this, this.map, this.shadows);
+    this.scenery = new SceneryLayer(this, this.map, this.shadows, statics);
     this.scenery.add(h.scenery);
     this.fog = new FogOfWar(this, this.map);
     const scorch = this.add.graphics().setDepth(DEPTH.scorch);
@@ -532,13 +539,20 @@ export class GameScene extends Phaser.Scene implements HudBridge {
 
   minimap(): MinimapSnapshot {
     const v = this.cameras.main.worldView;
+    const { ore, scenery, fog } = this;
     return {
       width: this.map.width,
       height: this.map.height,
       radar: this.view?.radar ?? 'none',
       buildings: [...this.buildings.values()].map((b) => ({ tx: b.tx, ty: b.ty, size: b.size, team: b.team, built: b.built })),
-      ore: [...this.ore.tiles.values()].filter((t) => t.rocks.length && this.fog.at(t.tx, t.ty)).map((t) => ({ tx: t.tx, ty: t.ty, rocks: t.rocks.length })),
-      scenery: this.scenery.items.filter((t) => this.fog.at(t.tx, t.ty)).map((t) => ({ tx: t.tx, ty: t.ty, kind: t.kind })),
+      get ore() {
+        return [...ore.tiles.values()].filter((t) => t.rocks.length && fog.at(t.tx, t.ty)).map((t) => ({ tx: t.tx, ty: t.ty, rocks: t.rocks.length }));
+      },
+      get scenery() {
+        return scenery.items.filter((t) => fog.at(t.tx, t.ty)).map((t) => ({ tx: t.tx, ty: t.ty, kind: t.kind }));
+      },
+      fogVersion: fog.version,
+      oreVersion: ore.version,
       units: [...this.units.values()].map((u) => ({ gx: u.gx, gy: u.gy, team: u.team, selected: u.selected, harvester: u instanceof HarvesterSprite })),
       fogAt: (tx, ty) => this.fog.at(tx, ty),
       view: { x: v.x, y: v.y, width: v.width, height: v.height },
@@ -546,10 +560,16 @@ export class GameScene extends Phaser.Scene implements HudBridge {
     };
   }
 
+  /** Every game object in the scene, the ground layer's too (for the perf readouts). */
+  gameObjects(): Phaser.GameObjects.GameObject[] {
+    const ground = this.statics?.ground;
+    return ground?.scene ? [...this.children.list.filter((o) => !(o instanceof Phaser.GameObjects.Layer)), ...ground.list] : this.children.list;
+  }
+
   perfText(): string {
     const fps = this.game.loop.actualFps;
     const enemies = [...this.units.values()].filter((u) => !isMine(u.team)).length;
-    return `${fps.toFixed(0)} fps · tick ${this.view?.tick ?? 0} · ${this.children.length} objects · ${this.ore.totalRocks()} rocks · ${this.scenery.items.length} scenery · ` +
+    return `${fps.toFixed(0)} fps · tick ${this.view?.tick ?? 0} · ${this.gameObjects().length} objects · ${this.ore.totalRocks()} rocks · ${this.scenery.items.length} scenery · ` +
       `${this.population().units} units · ${enemies} enemies in sight · ${this.buildings.size} buildings`;
   }
 
