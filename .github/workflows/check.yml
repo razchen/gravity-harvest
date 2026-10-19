@@ -1,0 +1,40 @@
+# Typecheck, unit tests, build, then the e2e tests (server API + the game in Chromium), on every push and pull request.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # the content tests and the browser tests need the sprites (on S3, not in git)
+      - name: Cache assets
+        uses: actions/cache@v4
+        with:
+          path: apps/game/public/assets
+          key: assets-${{ hashFiles('apps/game/assets.json') }}
+      - run: npm run assets:pull
+      - run: npm run check
+      - run: npx playwright install --with-deps chromium
+        working-directory: apps/game
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: apps/game/test-results
+          retention-days: 7
