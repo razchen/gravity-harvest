@@ -1,7 +1,7 @@
 // Weapons by target: each shot uses the weapon that reaches the target (ground or air), never an anti-air one on the ground.
 import { UNITS, volleyDamage, weaponFor } from '@gravity-harvest/rules';
 import { describe, expect, it } from 'vitest';
-import { TICK_MS } from './layout.js';
+import { FOOTPRINT, TICK_MS } from './layout.js';
 import { Sim, type Fighter } from './sim.js';
 
 const run = (sim: Sim, ms: number) => {
@@ -55,10 +55,17 @@ describe('weapons', () => {
 
   it('an anti-air defence leaves ground units alone', () => {
     const { sim, spawn } = field();
-    (sim as unknown as { addBuilding: (t: string, team: string, tx: number, ty: number, built: boolean) => unknown }).addBuilding('flak_array', 'a', 30, 30, true);
-    const j = spawn('b', 'jackal', 34.5, 31.5);
-    j.weapons = [];
-    run(sim, 3000);
-    expect(j.hp).toBe(j.maxHp);
+    // no anti-air defence is in the roster yet, so this one has no footprint: lend it one for the test
+    const footprints = FOOTPRINT as Record<string, number>;
+    footprints.flak_array = 3;
+    try {
+      (sim as unknown as { addBuilding: (t: string, team: string, tx: number, ty: number, built: boolean) => unknown }).addBuilding('flak_array', 'a', 30, 30, true);
+      const j = spawn('b', 'jackal', 34.5, 31.5);
+      j.weapons = [];
+      run(sim, 3000);
+      expect(j.hp).toBe(j.maxHp);
+    } finally {
+      delete footprints.flak_array;
+    }
   });
 });

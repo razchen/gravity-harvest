@@ -1,6 +1,8 @@
 // The units the dev pages know about: every unit in the rules (design/balance.xlsx), with our art for the ones that
 // have it. Like buildings.ts, this reads the full rules, which is fine because the dev pages aren't in the game build.
 import { BUILDINGS, UNITS, WEAPONS, speedToTilesPerSec } from '@gravity-harvest/rules';
+import { HOVER_UNITS } from '@gravity-harvest/sim';
+import { UNIT_REGISTRY } from '../data/registry';
 import type { UnitAnims } from './anim';
 import type { ModelFile } from './model';
 import { DEV_BUILDINGS, type FactionScope, type Milestone } from './buildings';
@@ -115,30 +117,60 @@ const hoveringBySide = (id: string, note: string, clip?: VehicleClip): Pick<DevU
   anims: { directions: 16, start: 13, list: [...hoverAnims(`${id}_ordan`, ' (Ordan)', clip), ...hoverAnims(`${id}_sable`, ' (Sable)', clip)] },
   models: [{ name: `${id} (Ordan)`, file: `tripo/hover/${id}_ordan.glb` }, { name: `${id} (Sable)`, file: `tripo/hover/${id}_sable.glb` }],
 });
-const ART: Record<string, Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'>> = {
-  skimmer: vehicle('skimmer', 'Fights with its light autocannon.'),
-  jackal: vehicle('jackal', 'Fights with its light cannon, on the move too.', true),
-  ram: vehicle('ram', 'Fights with its battle cannon, on the move too; tracked (its tracks don\'t turn yet).', true),
-  spire: vehicle('spire', 'Fires heavy artillery shells on a long, flat path from its long barrel.', true),
-  carrier: (() => {
-    const v = vehicle('carrier', 'Fights with its autocannon and carries five soldiers (its doors, and a rifleman boarding, are shown here).');
-    // its side doors drop into ramps (the `v_carrier_door` clip): opening and shutting, and a rifleman running in
-    const doors = (d: number) => range(8).map((f) => `v_carrier_door_${d}_${f}`);
-    v.anims!.list.push(
-      { name: 'Doors', atlas: 'v_carrier_door', frames: doors, fps: 16, pingPong: true },
-      { name: 'Soldier boards', atlas: 'v_carrier_door', frames: doors, fps: 16, board: { atlas: 'rifleman', tilesPerSec: speedToTilesPerSec(UNITS.rifleman.speed) } },
-    );
-    return v;
-  })(),
-  watcher: vehicle('watcher', 'Drives; its radar disruption in matches comes later (its scan loop is rendered).', false, [
-    { clip: 'scan', name: 'Scan', frames: 24, fps: 6 },
-  ]),
-  shroud: vehicle('shroud', 'Drives; hiding nearby units comes later.'),
-  seeder: vehicle('seeder', 'Drives; laying mines in matches comes later (its lay-mine animation is rendered).', false, [
-    { clip: 'lay_mine', name: 'Lay mine', frames: 12, fps: 6, once: true },
-  ]),
-  hound: hovering('hound', 'hound', 'Fires a red energy ball from each side pod.'),
-  assembler: vehicle('assembler', 'Press E with it selected to deploy it into an Assembly Yard where it stands.'),
+/**
+ * What only the dev pages say about a unit with art (its look comes from data/registry.ts, and whether it hovers
+ * from the sim's HOVER_UNITS): a line about it, whether its art has a turret layer to show turning, its rig clips'
+ * frames and speed, and any more animations for its page.
+ */
+interface DevNote {
+  note: string;
+  turret?: boolean;
+  clips?: VehicleClip[];
+  anims?: UnitAnims['list'];
+}
+// the carrier's side doors drop into ramps (the `v_carrier_door` clip): opening and shutting, and a rifleman running in
+const carrierDoors = (d: number) => range(8).map((f) => `v_carrier_door_${d}_${f}`);
+const NOTES: Record<string, DevNote> = {
+  skimmer: { note: 'Fights with its light autocannon.' },
+  jackal: { note: 'Fights with its light cannon, on the move too.', turret: true },
+  ram: { note: 'Fights with its battle cannon, on the move too; tracked (its tracks don\'t turn yet).', turret: true },
+  spire: { note: 'Fires heavy artillery shells on a long, flat path from its long barrel.', turret: true },
+  carrier: {
+    note: 'Fights with its autocannon and carries five soldiers (its doors, and a rifleman boarding, are shown here).',
+    anims: [
+      { name: 'Doors', atlas: 'v_carrier_door', frames: carrierDoors, fps: 16, pingPong: true },
+      { name: 'Soldier boards', atlas: 'v_carrier_door', frames: carrierDoors, fps: 16, board: { atlas: 'rifleman', tilesPerSec: speedToTilesPerSec(UNITS.rifleman.speed) } },
+    ],
+  },
+  watcher: { note: 'Drives; its radar disruption in matches comes later (its scan loop is rendered).', clips: [{ clip: 'scan', name: 'Scan', frames: 24, fps: 6 }] },
+  shroud: { note: 'Drives; hiding nearby units comes later.' },
+  seeder: {
+    note: 'Drives; laying mines in matches comes later (its lay-mine animation is rendered).',
+    clips: [{ clip: 'lay_mine', name: 'Lay mine', frames: 12, fps: 6, once: true }],
+  },
+  hound: { note: 'Fires a red energy ball from each side pod.' },
+  assembler: { note: 'Press E with it selected to deploy it into an Assembly Yard where it stands.' },
+  medic: { note: 'Unarmed; its two arms work in its heal loop while it heals a damaged unit.', clips: [{ clip: 'heal', name: 'Heal', frames: 12, fps: 10 }] },
+  raider: { note: 'Unarmed; infiltrating economic buildings comes later.' },
+  infiltrator: { note: 'Unarmed; infiltrating buildings comes later.' },
+  grenadier: { note: 'Lobs fragmentation grenades from the launcher on its top.' },
+  breaker: { note: 'Charges up, then a column of light strikes its target.' },
+  lancer: { note: 'Fires a homing missile from each pod, its exhaust in its side\'s colour.' },
+  operator: { note: 'Fires a crackling energy bolt in its side\'s colour from its nose gun.' },
+  engineer: { note: 'Unarmed; its arm works in its repair loop while it repairs a damaged building.', clips: [{ clip: 'work', name: 'Work', frames: 12, fps: 10 }] },
+  harvester: {
+    note: 'Its front drums turn while it scoops ore; at a refinery\'s dock it tips its load out (a generated video\'s frames, facing the dock only), and it drives off empty.',
+    clips: [{ clip: 'harvest', name: 'Harvest', frames: 12, fps: 22 }],
+    anims: [
+      { name: 'Drive empty', atlas: 'v_harvester_empty', frames: (d) => [`v_harvester_empty_${d}`], overlay: (d) => range(6).map((f) => `v_harvester_empty_w${d}_${f}`), fps: 12 },
+      // 96 frames over the 3 s it plays in matches (HARVESTER_UNLOAD_MS), facing the dock whichever way it's turned
+      { name: 'Unload (docked)', atlas: 'v_harvester_unload', frames: () => range(96).map((f) => `v_harvester_unload_${f}`), fps: 32, once: true },
+    ],
+  },
+};
+
+/** Soldiers are drawn their own way (and are on their way out), so their pages are by hand. */
+const INFANTRY: Record<string, Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'>> = {
   rifleman: {
     picture: { file: 'rifleman', frame: 'inf_2_idle' },
     models: [clip('Running', 'Running'), clip('Aim', 'Rifle_Aim_Turn_Right'), clip('Death', 'Shot_and_Blown_Back'), clip('Run and shoot', 'Run_and_Shoot'), clip('Walking', 'Walking')],
@@ -154,26 +186,23 @@ const ART: Record<string, Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims'
       ],
     },
   },
-  medic: hovering('medic', 'medic', 'Unarmed; its two arms work in its heal loop while it heals a damaged unit.', { clip: 'heal', name: 'Heal', frames: 12, fps: 10 }),
-  raider: hovering('raider', 'raider', 'Unarmed; infiltrating economic buildings comes later.'),
-  infiltrator: hovering('infiltrator', 'infiltrator', 'Unarmed; infiltrating buildings comes later.'),
-  grenadier: hovering('grenadier', 'grenadier', 'Lobs fragmentation grenades from the launcher on its top.'),
-  breaker: hovering('breaker', 'breaker', 'Charges up, then a column of light strikes its target.'),
-  lancer: hoveringBySide('lancer', 'Fires a homing missile from each pod, its exhaust in its side\'s colour.'),
-  operator: hoveringBySide('operator', 'Fires a crackling energy bolt in its side\'s colour from its nose gun.'),
-  engineer: hoveringBySide('engineer', 'Unarmed; its arm works in its repair loop while it repairs a damaged building.', { clip: 'work', name: 'Work', frames: 12, fps: 10 }),
-  harvester: (() => {
-    const v = vehicle('harvester', 'Its front drums turn while it scoops ore; at a refinery\'s dock it tips its load out (a generated video\'s frames, facing the dock only), and it drives off empty.', false, [
-      { clip: 'harvest', name: 'Harvest', frames: 12, fps: 22 },
-    ]);
-    v.anims!.list.push(
-      { name: 'Drive empty', atlas: 'v_harvester_empty', frames: (d) => [`v_harvester_empty_${d}`], overlay: (d) => range(6).map((f) => `v_harvester_empty_w${d}_${f}`), fps: 12 },
-      // 96 frames over the 3 s it plays in matches (HARVESTER_UNLOAD_MS), facing the dock whichever way it's turned
-      { name: 'Unload (docked)', atlas: 'v_harvester_unload', frames: () => range(96).map((f) => `v_harvester_unload_${f}`), fps: 32, once: true },
-    );
-    return v;
-  })(),
 };
+
+/** A unit's art on the dev pages, from its registry entry: a vehicle, a hovering unit (one design or one per side), or a soldier. */
+function devArt(id: string): Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'> {
+  const e = UNIT_REGISTRY[id];
+  if (e.kind === 'infantry') return INFANTRY[id] ?? { note: 'In matches.' };
+  const n = NOTES[id] ?? { note: '' };
+  const art = !HOVER_UNITS.has(id) ? vehicle(id, n.note, n.turret, n.clips)
+    : e.sides ? hoveringBySide(id, n.note, n.clips?.[0]) : hovering(id, id, n.note, n.clips?.[0]);
+  if (n.anims) art.anims!.list.push(...n.anims);
+  return art;
+}
+
+/** Our art, by unit id: every unit in the registry. */
+const ART: Record<string, Pick<DevUnit, 'picture' | 'preview' | 'note' | 'anims' | 'models'>> = Object.fromEntries(
+  Object.keys(UNIT_REGISTRY).map((id) => [id, devArt(id)]),
+);
 
 const sameSide = (a: FactionScope, b: FactionScope) => a === 'both' || b === 'both' || a === b;
 const milestoneOf = new Map(DEV_BUILDINGS.map((b) => [b.id, b.milestone]));
