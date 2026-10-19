@@ -39,3 +39,7 @@ apps/game/public/assets
 # Claude Code: agent worktrees and personal settings
 .claude/worktrees
 .claude/settings.local.json
+
+# Python bytecode
+__pycache__
+*.pyc
