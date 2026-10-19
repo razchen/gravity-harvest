@@ -1,8 +1,14 @@
-import { TEAMS, type Difficulty, type TeamId } from '@gravity-harvest/shared';
+import { TEAMS, perTeam, type Difficulty, type TeamId } from '@gravity-harvest/shared';
 import type { Faction } from '@gravity-harvest/rules';
-import { Sim } from '@gravity-harvest/sim';
+import { CommandQueue, Sim, TeamFeed, recordMatch, replay, startMatch, type MatchRecord } from '@gravity-harvest/sim';
 import { describe, expect, it } from 'vitest';
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer } from './computer.js';
+
+/** The next view for a side's one viewer: what it sees now, with the events since its last look. */
+function look(sim: Sim, feed: TeamFeed) {
+  feed.push(sim.takeEvents(feed.team));
+  return feed.view(sim);
+}
 
 /** FNV-1a over a string (32 bits, as hex): enough to tell one command stream from another. */
 function fnv(s: string, h = 0x811c9dc5): number {
@@ -21,13 +27,14 @@ interface Fixture {
 function fingerprint(f: Fixture): string {
   const sim = Sim.create('skirmish', f.seed, f.factions[0], { otherFaction: f.factions[1], computerOnly: true });
   const ais = TEAMS.map((t, i) => new ComputerPlayer({ hello: sim.hello(t), difficulty: f.difficulties[i], seed: f.seed * 7919 + i + 1 }));
+  const feeds = perTeam((t) => new TeamFeed(t));
   let hash = 0x811c9dc5;
   let orders = 0;
   while (sim.timeMs < f.minutes * 60_000 && !sim.winner) {
     sim.step();
     if (sim.tick % AI_VIEW_EVERY_TICKS) continue;
     for (const ai of ais) {
-      for (const c of ai.update(sim.view(ai.team))) {
+      for (const c of ai.update(look(sim, feeds[ai.team]))) {
         hash = fnv(`${sim.tick} ${ai.team} ${JSON.stringify(c)}\n`, hash);
         orders++;
         sim.command(ai.team, c);
@@ -55,6 +62,7 @@ describe('the computer saved and restored', () => {
     const sim = Sim.create('skirmish', 6, 'ordan', { otherFaction: 'sable', computerOnly: true });
     const opts = TEAMS.map((t, i) => ({ hello: sim.hello(t), difficulty: 'hard' as const, seed: 100 + i }));
     const ais = opts.map((o) => new ComputerPlayer(o));
+    const feeds = perTeam((t) => new TeamFeed(t));
     let copies: ComputerPlayer[] = [];
     let compared = 0;
     // saved twice: once mid-match, once later between thinks with orders still on their way
@@ -68,7 +76,7 @@ describe('the computer saved and restored', () => {
         expect(copies.map((c) => c.getState())).toEqual(ais.map((a) => a.getState()));
       }
       ais.forEach((ai, i) => {
-        const v = sim.view(ai.team);
+        const v = look(sim, feeds[ai.team]);
         const orders = ai.update(v);
         if (copies.length) {
           expect(copies[i].update(v)).toEqual(orders);
@@ -79,5 +87,28 @@ describe('the computer saved and restored', () => {
     }
     expect(compared).toBeGreaterThan(100);
     expect(copies.map((c) => c.report)).toEqual(ais.map((a) => a.report));
+  });
+});
+
+describe('a computer-only match replayed', () => {
+  it('from its start and command log ends exactly as it was played', () => {
+    const start = { scenario: 'skirmish', seed: 12, faction: 'ordan' as const, options: { otherFaction: 'sable' as const, computerOnly: true } };
+    const sim = startMatch(start);
+    const queue = new CommandQueue();
+    const feeds = perTeam((t) => new TeamFeed(t));
+    const ais = TEAMS.map((t, i) => new ComputerPlayer({ hello: sim.hello(t), difficulty: 'hard', seed: 300 + i }));
+    // the way the server runs a match: orders queued for the next step, events handed out after every step
+    while (sim.timeMs < 8 * 60_000 && !sim.winner) {
+      queue.step(sim);
+      for (const t of TEAMS) feeds[t].push(sim.takeEvents(t));
+      if (sim.tick % AI_VIEW_EVERY_TICKS) continue;
+      for (const ai of ais) for (const c of ai.update(feeds[ai.team].view(sim))) queue.push(sim, ai.team, c);
+    }
+    const record = JSON.parse(JSON.stringify(recordMatch(start, queue.log, sim.tick))) as MatchRecord;
+    expect(record.log.length).toBeGreaterThan(200);
+    const again = replay(record);
+    expect(again.tick).toBe(sim.tick);
+    expect(JSON.stringify(again.snapshot())).toBe(JSON.stringify(sim.snapshot()));
+    for (const t of TEAMS) expect(again.view(t)).toEqual(sim.view(t));
   });
 });

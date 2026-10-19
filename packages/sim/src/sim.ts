@@ -1,8 +1,8 @@
 // The match: authoritative state and a fixed-step update. No rendering, no timers, no Math.random, so
-// the same inputs give the same match (needed for saves now, and for replays and lockstep later).
+// the same inputs give the same match (needed for saves and replays, replay.ts).
 import {
   BUILDINGS, CATALOG, ECONOMY, UNITS, canBuild, creditsFor, missingRequirements, powerBalance, refundFor,
-  speedToTilesPerSec, volleyDamage, weapon, weaponFor, layerOf, canHit, type Armor, type Faction, type PowerBalance,
+  speedToTilesPerSec, volleyDamage, weapon, weaponFor, layerOf, canHit, RULES_HASH, type Armor, type Faction, type PowerBalance,
 } from '@gravity-harvest/rules';
 import {
   DEFAULT_DIFFICULTY, TEAMS, emptyStats, opponentOf, perTeam, type BuildingView, type Difficulty, type Command, type DebugCommand, type GridPoint, type HarvesterActivity, type MatchEvent, type ToastCode,
@@ -271,8 +271,8 @@ export class Sim {
   rng: Rng;
   /** Set when the match ends. */
   winner: TeamId | null = null;
+  /** Events each side has been told of since the last `takeEvents`. */
   private readonly pending: Record<TeamId, MatchEvent[]> = perTeam(() => []);
-  private readonly lastFog: Record<TeamId, string> = perTeam(() => '');
   /**
    * Each side's picture of the enemy buildings it has discovered, as they were when last in its sight. Out of sight it
    * is sent this instead of the real thing, and one destroyed or sold out of sight stays until the spot is seen again.
@@ -444,6 +444,7 @@ export class Sim {
       vents: this.ore.vents.map((v) => ({ ...v })),
       scenery: this.scenery.map((t) => ({ ...t })),
       explored: perTeam((t) => this.fog[t].serializeExplored()),
+      rulesHash: RULES_HASH,
     };
   }
 
@@ -2222,7 +2223,11 @@ export class Sim {
     };
   }
 
-  /** What `team` may know right now; drains its pending events. */
+  /**
+   * What `team` may know right now, with the whole fog. Pure: looking never changes the match, whoever looks and in
+   * whatever order. Its `events` are empty: events leave the sim only through `takeEvents`, and a TeamFeed (feed.ts)
+   * puts them into the views it sends, along with the fog only when it changed.
+   */
   view(team: TeamId, paused = false): TeamView {
     const p = this.players[team];
     const fog = this.fog[team];
@@ -2252,11 +2257,6 @@ export class Sim {
       const b = this.buildings.get(id);
       if (!b || !this.inSight(team, b)) buildings.push({ ...g });
     }
-    const fogStr = fog.encode();
-    const fogChanged = fogStr !== this.lastFog[team];
-    this.lastFog[team] = fogStr;
-    const events = this.pending[team];
-    this.pending[team] = [];
     const power = this.power[team];
     return {
       tick: this.tick,
@@ -2269,8 +2269,8 @@ export class Sim {
       buildings,
       queue: p.queue.map((q) => ({ unit: q.unit, progress: q.progress })),
       unitCap: ENGINE.unitCap,
-      ...(fogChanged && { fog: fogStr }),
-      events,
+      fog: fog.encode(),
+      events: [],
       stats: { ...p.stats, creditsEarned: Math.floor(p.stats.creditsEarned) },
     };
   }
@@ -2284,9 +2284,14 @@ export class Sim {
     };
   }
 
-  /** Make the next view resend the whole fog (a client just (re)connected). */
-  resendFog(team: TeamId): void {
-    this.lastFog[team] = '';
+  /**
+   * Hand over the events `team` has been told of since the last call, and forget them. The one call that empties
+   * them: whoever runs the match calls it at a fixed point (after each step), never as a side effect of looking.
+   */
+  takeEvents(team: TeamId): MatchEvent[] {
+    const events = this.pending[team];
+    this.pending[team] = [];
+    return events;
   }
 
   // --- Debug ----------------------------------------------------------------------------------------------------------

@@ -4533,3 +4533,6 @@ export const FACTION_NAMES = [
   "Ordan",
   "Sable"
 ] as const;
+
+/** sha256 of the data above (everything in this file before this line): which rules a save or replay was made with. */
+export const RULES_HASH = '692aeebc7294616efc40367bb1cc6e59f95bb71b0694b8f80a2e9bca4da966ad';

@@ -224,6 +224,32 @@ describe('Match socket (e2e)', () => {
     expect((await saves().get('/api/saves').query({ kind: 'auto' })).body).toEqual([]);
   });
 
+  it('a dropped connection can rejoin its match: same match, a fresh hello and the whole fog', async () => {
+    const c = await Client.open(url);
+    c.send({ t: 'start', scenario: 'skirmish', autosaveOnLeave: false });
+    await c.next(is('hello'));
+    c.send({ t: 'debug', cmd: { d: 'credits', amount: 2468 } });
+    const before = await c.view();
+    await c.close();
+
+    // someone else has nothing to rejoin
+    const other = await Client.open(as(OTHER));
+    other.send({ t: 'rejoin' });
+    expect((await other.next(is('error'))).message).toBe('No match to rejoin');
+    await other.close();
+
+    const back = await Client.open(url);
+    back.send({ t: 'rejoin' });
+    expect(await back.next(is('hello'))).toMatchObject({ scenario: 'skirmish', you: 'a' });
+    const first = await back.view();
+    expect(first.fog).toHaveLength(88 * 48);
+    expect(first.credits).toBe(2468);
+    expect(first.tick).toBeGreaterThanOrEqual(before.tick);
+    expect((await back.view()).tick).toBeGreaterThan(first.tick); // and it runs again
+    back.send({ t: 'end' });
+    await back.close();
+  });
+
   it('ends the match: victory, and the autosave of a finished match is cleared', async () => {
     const c = await Client.open(url);
     c.send({ t: 'start', scenario: 'skirmish', autosaveOnLeave: false });

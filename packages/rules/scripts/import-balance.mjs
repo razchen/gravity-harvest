@@ -1,5 +1,5 @@
 // Imports design/balance.xlsx (the source of truth for rules and economy) into:
-//   src/generated/balance.ts   full typed data (server / simulation only)
+//   src/generated/balance.ts   full typed data (server / simulation only) and RULES_HASH, its sha256
 //   src/generated/public.ts    the subset the browser may see (names, costs, power, build times, prerequisites)
 //   docs/rules/*.md            human-readable reference, generated from the same data
 // Run: npm run import --workspace @gravity-harvest/rules   (re-run whenever the spreadsheet changes)
@@ -7,6 +7,7 @@
 // Only raw inputs are imported; derived values (full loads, DPS) are computed in src/calc.ts.
 
 import { readWorkbook } from './xlsx-reader.mjs';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -322,7 +323,7 @@ mkdirSync(GEN, { recursive: true });
 const HEADER = '// GENERATED from design/balance.xlsx by scripts/import-balance.mjs. Do not edit; edit the spreadsheet and re-run `npm run import`.\n';
 const json = (v) => JSON.stringify(v, null, 2);
 
-emit(join(GEN, 'balance.ts'), `${HEADER}/* eslint-disable */
+const balance = `${HEADER}/* eslint-disable */
 import type { AbilityDef, BuildingDef, CrateDef, DamageClassDef, EconomyRules, EngineRuleDef, UnitDef, WeaponDef } from '../types.js';
 
 export const ECONOMY: EconomyRules = ${json(economy)};
@@ -346,6 +347,12 @@ export const ENGINE_RULES: Readonly<Record<string, EngineRuleDef>> = ${json(engi
 export const CRATES: Readonly<Record<string, CrateDef>> = ${json(crates)};
 
 export const FACTION_NAMES = ${json(factionNames)} as const;
+`;
+// A fingerprint of the rules above: saves and replays carry it, so a game made under other rules can be told apart.
+const rulesHash = createHash('sha256').update(balance).digest('hex');
+emit(join(GEN, 'balance.ts'), `${balance}
+/** sha256 of the data above (everything in this file before this line): which rules a save or replay was made with. */
+export const RULES_HASH = '${rulesHash}';
 `);
 
 // Public subset: what a player can see in the UI anyway. No HP, armor, weapons, damage, sight or AI values.

@@ -1,6 +1,6 @@
 import { BUILDINGS } from '@gravity-harvest/rules';
 import { TEAMS, perTeam, type Command, type Difficulty, type TeamId, type TeamView } from '@gravity-harvest/shared';
-import { Sim, type Harvester } from '@gravity-harvest/sim';
+import { Sim, TeamFeed, type Harvester } from '@gravity-harvest/sim';
 import { describe, expect, it } from 'vitest';
 import { AI_VIEW_EVERY_TICKS, ComputerPlayer } from './computer.js';
 import { PROFILES } from './profiles.js';
@@ -11,11 +11,13 @@ import { PROFILES } from './profiles.js';
  */
 function play(sim: Sim, ais: ComputerPlayer[], ms: number, seen?: (team: TeamId, c: Command, view: TeamView) => void, looked?: (team: TeamId, view: TeamView) => void): void {
   const end = sim.timeMs + ms;
+  const feeds = perTeam((t) => new TeamFeed(t));
   while (sim.timeMs < end && !sim.winner) {
     sim.step();
     if (sim.tick % AI_VIEW_EVERY_TICKS) continue;
     for (const ai of ais) {
-      const v = sim.view(ai.team);
+      feeds[ai.team].push(sim.takeEvents(ai.team));
+      const v = feeds[ai.team].view(sim);
       looked?.(ai.team, v);
       for (const c of ai.update(v)) {
         seen?.(ai.team, c, v);

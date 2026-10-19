@@ -85,6 +85,7 @@ export function parseClientMessage(raw: string): ClientMessage | null {
       return m as ClientMessage;
     case 'cmd':
       return isCommand(m.cmd) ? (m as ClientMessage) : null;
+    case 'rejoin':
     case 'pause':
     case 'resume':
     case 'end':

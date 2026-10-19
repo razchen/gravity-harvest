@@ -8,10 +8,11 @@ import type { Scenery } from './scenery.js';
  * Assembly Yard was assumed (loading gives each side the scenario's one, where it fits); version 6 added transports'
  * passengers; version 7 added the computer's difficulty (older saves play Normal); version 8 added gravity vents
  * (older saves have none, and play on as they were); version 9 named the sides by seat (`a`, `b`) instead of
- * `player` and `enemy`, and records which seat the human plays (`human`). Older saves are migrated on load
- * (`migrateSnapshot`).
+ * `player` and `enemy`, and records which seat the human plays (`human`); version 10 added the rules it was made
+ * with (`rulesHash`) and the computer players' seeds and memory (`computers`; older saves start a fresh computer).
+ * Older saves are migrated on load (`migrateSnapshot`).
  */
-export const SNAPSHOT_VERSION = 9;
+export const SNAPSHOT_VERSION = 10;
 export const OLDEST_LOADABLE_VERSION = 2;
 
 /**
@@ -45,6 +46,19 @@ export interface SimSnapshot {
   trees?: Scenery[];
   /** Per team, one char per tile: 1 = explored. */
   explored: Record<TeamId, string>;
+  /** RULES_HASH of the rules the match was played under (since version 10). Loading under other rules still works. */
+  rulesHash?: string;
+  /**
+   * Each computer side's seed and memory (since version 10). The sim doesn't run the computer players, so it neither
+   * writes nor reads this: whoever runs them (the server's match room) adds it to the snapshot and restores from it.
+   */
+  computers?: Partial<Record<TeamId, SavedComputer>>;
+}
+
+/** A computer player as saved: its seed and its `getState()` (plain JSON, opaque to the sim). */
+export interface SavedComputer {
+  seed: number;
+  state: unknown;
 }
 
 /**

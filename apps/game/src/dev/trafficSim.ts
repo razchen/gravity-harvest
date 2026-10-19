@@ -149,7 +149,7 @@ export class TripRun {
   /** One tick of the match; what the player's side sees after it (the building's state and the events). */
   step(): TeamView {
     this.sim.step();
-    const view = this.sim.view('a');
+    const view = { ...this.sim.view('a'), events: this.sim.takeEvents('a') };
     if (this.unit === null) {
       const out = view.events.find((e) => e.e === 'unitOut' && e.building === this.building);
       if (out?.e === 'unitOut') this.unit = out.unit;
