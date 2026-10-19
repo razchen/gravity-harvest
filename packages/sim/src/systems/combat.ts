@@ -111,7 +111,7 @@ export function nearestBuilding(s: SimState, gx: number, gy: number, team: TeamI
 
 export function fire(s: SimState, u: Fighter, target: Entity): void {
   const at = pos(target);
-  // a turret aims on its own (updateFighter); otherwise the whole vehicle turns to fire
+  // a turret aims on its own (aimTurret); otherwise the whole vehicle turns to fire
   if (!capabilitiesOf(u.type).turret && weaponAt(u.weapons, target)) u.dir = facing(at.gx - u.gx, at.gy - u.gy, 16);
   volley(s, u, u.weapons, u.cools, target);
 }
