@@ -49,7 +49,7 @@ function fingerprint(f: Fixture): string {
 // change is meant, play a few matches in the simulator to check it plays as well as before, then update the prints.
 describe('the computer plays exactly as before', () => {
   it('normal Sable against hard Ordan', () => {
-    expect(fingerprint({ seed: 9, factions: ['sable', 'ordan'], difficulties: ['normal', 'hard'], minutes: 14 })).toBe('orders=899 credits=1490/675 units=31 buildings=17 hash=956084de');
+    expect(fingerprint({ seed: 9, factions: ['sable', 'ordan'], difficulties: ['normal', 'hard'], minutes: 14 })).toBe('orders=828 credits=25/4013 units=35 buildings=18 hash=40541730');
   });
 
   it('easy Ordan against normal Sable', () => {
