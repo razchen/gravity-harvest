@@ -10,6 +10,7 @@ test.describe('menus, saving and match end', () => {
   test('title screen: Continue is disabled with no saves; New Game starts a match', async ({ page }) => {
     const errors = trackErrors(page);
     await page.reload();
+    await expect(page.locator('.title-screen')).toBeVisible({ timeout: 20_000 }); // the assets load again first
     await expect(page.getByRole('button', { name: 'Continue' })).toBeDisabled();
     await expect(page.locator('.menu-sub')).toHaveText('No saved games yet');
     await page.getByRole('button', { name: 'New Game' }).click();
@@ -129,9 +130,9 @@ test.describe('menus, saving and match end', () => {
   test('victory leads to the end screen with stats; Play Again starts a fresh match', async ({ page }) => {
     await openGame(page);
     await page.evaluate(() => (window as any).flow.autosave()); // the finished match's autosave gets cleared
-    await debug(page, { d: 'destroyTeam', team: 'b', units: false, buildings: true });
+    await debug(page, { d: 'destroyTeam', team: 'b', units: true, buildings: true }); // a side is out with nothing left
     await expect(page.locator('.gameover-title')).toHaveText('VICTORY', { timeout: 10_000 });
-    await expect(page.locator('.stat').filter({ hasText: 'Structures destroyed' }).locator('.stat-value')).toHaveText('5');
+    await expect(page.locator('.stat').filter({ hasText: 'Structures destroyed' }).locator('.stat-value')).toHaveText('3'); // its yard, power plant and refinery
     expect(await listSaves(page, '?kind=auto')).toHaveLength(0);
     await page.getByRole('button', { name: 'Play Again' }).click();
     await waitForMatch(page);
