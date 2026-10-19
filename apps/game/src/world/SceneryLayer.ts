@@ -4,6 +4,7 @@ import { sceneryKind } from '@gravity-harvest/sim/layout';
 import { meta } from '../assets/manifest';
 import { DEPTH } from '../config/game';
 import { iso } from '../core/geometry';
+import type { StaticObjects } from './StaticObjects';
 import type { GameMap } from './GameMap';
 import { CONTACT_ALPHA, ShadowLayer, type ShadowStamp } from './ShadowLayer';
 
@@ -52,7 +53,7 @@ export class SceneryLayer {
   private readonly stamped: Stamped[] = [];
   private readonly contact: ShadowLayer;
 
-  constructor(private readonly scene: Phaser.Scene, private readonly map: GameMap, private readonly shadows: ShadowLayer) {
+  constructor(private readonly scene: Phaser.Scene, private readonly map: GameMap, private readonly shadows: ShadowLayer, private readonly statics?: StaticObjects) {
     this.contact = new ShadowLayer(scene, map, { alpha: CONTACT_ALPHA, depth: DEPTH.scorch + 2 });
   }
 
@@ -79,6 +80,7 @@ export class SceneryLayer {
         .setScale(s.scale)
         // decoration sorts just under things standing on the same spot
         .setDepth(this.map.depthAt(s.gx, s.gy) + (kind.blocks ? 0.3 : -0.5));
+      this.statics?.add(img);
       const sa = anchors[`${s.kind}_shadow`];
       if (sa) stamps.push({ key: 'scenery', frame: `${s.kind}_shadow`, x: p.x, y: p.y, scale: s.scale, anchor: sa });
       const ca = anchors[`${s.kind}_contact`];
@@ -90,6 +92,7 @@ export class SceneryLayer {
         const bf = this.scene.textures.getFrame('scenery', `${s.kind}_base`);
         base = this.scene.add.image(p.x, p.y, 'scenery', `${s.kind}_base`)
           .setOrigin(ba.x / bf.width, ba.y / bf.height).setScale(s.scale).setDepth(DEPTH.groundDecal);
+        this.statics?.addGround(base);
       }
       if (kind.blocks) for (let x = s.tx; x < s.tx + kind.size; x++) for (let y = s.ty; y < s.ty + kind.size; y++) this.map.blockTile(x, y);
       this.placed.push({ view: s, img, base, blocks: kind.blocks });
@@ -113,8 +116,10 @@ export class SceneryLayer {
     const f = this.scene.textures.getFrame('scenery', frame);
     // (mirroring flips the texture inside the frame, so the anchor moves to the other side)
     const ox = flip ? 1 - a.x / f.width : a.x / f.width;
-    return this.scene.add.image(x, y, 'scenery', frame).setOrigin(ox, a.y / f.height).setScale(scale).setFlipX(flip)
+    const img = this.scene.add.image(x, y, 'scenery', frame).setOrigin(ox, a.y / f.height).setScale(scale).setFlipX(flip)
       .setDepth(DEPTH.groundDecal + FLAT_LAYER_STEP * (layer - 2));
+    this.statics?.addGround(img);
+    return img;
   }
 
   /**

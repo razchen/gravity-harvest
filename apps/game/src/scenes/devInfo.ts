@@ -132,7 +132,7 @@ export class DevInfoCollector {
   private perf(now: number): string[] {
     const s = this.s;
     const f = s.frames.lastSecond(now);
-    const list = s.children.list;
+    const list = s.gameObjects();
     let visible = 0;
     let emitters = 0;
     let particles = 0;

@@ -3,6 +3,7 @@ import type { OreTileView, RockView } from '@gravity-harvest/shared';
 import { meta } from '../assets/manifest';
 import { DEPTH } from '../config/game';
 import { iso, toGrid, type Tile } from '../core/geometry';
+import type { StaticObjects } from './StaticObjects';
 import type { GameMap } from './GameMap';
 import { hashId } from './SceneryLayer';
 
@@ -20,6 +21,8 @@ const LOOKS: Record<number, string[]> = {
 /** Ore lies flat on the ground, over the other ground decals: units and buildings always draw over it. */
 const ORE_DEPTH = DEPTH.groundDecal + 0.05;
 const FADE_MS = 220;
+/** Rocks added or removed so far (for OreLayer.version). */
+let changes = 0;
 /** Mined-out scars are softer than the ore, so an exhausted field reads as dug ground, not a pattern. */
 const SCAR_ALPHA = 0.7;
 
@@ -45,8 +48,10 @@ export class OreLayer {
   readonly tiles = new Map<number, OreTileSprite>();
   private readonly rocks = new Map<number, OreTileSprite>();
   private readonly decals = new Map<number, { img: Phaser.GameObjects.Image; step: number }>();
+  /** Moves on as rocks come and go, never the same twice, in any match (the minimap redraws its ore only then). */
+  version = 0;
 
-  constructor(private readonly scene: Phaser.Scene, private readonly map: GameMap) {}
+  constructor(private readonly scene: Phaser.Scene, private readonly map: GameMap, private readonly statics?: StaticObjects) {}
 
   /** Tiles first (call drawTerrain after this), then rocks. */
   setTiles(tiles: OreTileView[]): void {
@@ -68,6 +73,7 @@ export class OreLayer {
     const tile = this.addTile({ tx: r.tx, ty: r.ty, richness: 0.3 });
     tile.rocks.push({ id: r.id, gx: r.gx, gy: r.gy });
     this.rocks.set(r.id, tile);
+    this.version = ++changes;
     this.show(tile);
   }
 
@@ -76,6 +82,7 @@ export class OreLayer {
     const tile = this.rocks.get(id);
     if (!tile) return;
     this.rocks.delete(id);
+    this.version = ++changes;
     tile.rocks = tile.rocks.filter((r) => r.id !== id);
     this.show(tile);
   }
@@ -108,6 +115,7 @@ export class OreLayer {
       const img = this.scene.add.image(p.x, p.y, 'scenery', frame)
         .setOrigin(flip ? 1 - a.x / f.width : a.x / f.width, a.y / f.height).setFlipX(flip).setScale(scale)
         .setDepth(ORE_DEPTH + (step ? 0.001 * step + 0.0001 * j(23) : -0.01)).setAlpha(alpha);
+      this.statics?.addGround(img);
       if (old) {
         img.setAlpha(0);
         this.scene.tweens.add({ targets: img, alpha, duration: FADE_MS });

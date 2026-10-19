@@ -126,7 +126,7 @@ export abstract class UnitSprite {
     const p = iso(this.gx, this.gy);
     for (const s of this.parts()) {
       s.setPosition(r.from.x + (p.x - r.from.x) * k, r.from.y + (p.y - r.from.y) * k).setAlpha(k);
-      if (k < 1) s.setDepth(r.depth);
+      if (k < 1) depthTo(s, r.depth);
     }
     if (k < 1) return;
     this.ramp = null;
@@ -278,7 +278,7 @@ export class HarvesterSprite extends UnitSprite {
     }
     const p = iso(this.gx, this.gy);
     const depth = this.world.map.depthAt(this.gx, this.gy) + 0.5;
-    this.sprite.setPosition(p.x, p.y).setDepth(depth);
+    depthTo(this.sprite.setPosition(p.x, p.y), depth);
     // at the dock, facing out: its bed tips its load out, then stays empty until it drives off
     const unload = `${this.key}_unload`;
     if (this.activity === 'unload' && this.shown === HARVESTER_DOCK_FACING && this.world.textures.exists(unload)) {
@@ -305,7 +305,7 @@ export class HarvesterSprite extends UnitSprite {
     this.sprite.setTexture(body, `${body}_${this.shown}`);
     const frames = m.wheel_frames ?? 6;
     this.wheelPhase += (moved / WHEEL_TURN_TILES) * frames; // backwards while it reverses
-    this.wheels.setPosition(p.x, p.y).setDepth(depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
+    depthTo(this.wheels.setPosition(p.x, p.y), depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
     this.wheels.setFrame(`${this.key}_w${this.shown}_${cycle(this.wheelPhase, frames)}`);
   }
 }
@@ -354,7 +354,7 @@ export class InfantrySprite extends UnitSprite {
       this.turnAt = now + INFANTRY_TURN_MS_PER_STEP;
     }
     const p = iso(this.gx, this.gy);
-    this.sprite.setPosition(p.x, p.y).setDepth(this.world.map.depthAt(this.gx, this.gy) + 0.4);
+    depthTo(this.sprite.setPosition(p.x, p.y), this.world.map.depthAt(this.gx, this.gy) + 0.4);
     this.sprite.setFrame(`inf_${this.shown}_${this.running ? Math.floor(this.runPhase) % frames : 'idle'}`);
   }
 
@@ -369,6 +369,9 @@ export class InfantrySprite extends UnitSprite {
 
 /** A vehicle's wheels make a whole turn every this many tiles driven (their sheets have a turn's frames). */
 export const WHEEL_TURN_TILES = 0.55;
+
+/** Set a sprite's depth only when it changes: every change has the scene re-sort its display list before drawing. */
+const depthTo = (s: Phaser.GameObjects.Sprite, depth: number) => (s.depth === depth ? s : s.setDepth(depth));
 
 /** Frame `f` of a cycle of `n` (counting backwards too). */
 const cycle = (f: number, n: number) => ((Math.floor(f) % n) + n) % n;
@@ -516,13 +519,13 @@ export class VehicleSprite extends UnitSprite {
     }
     const p = iso(this.gx, this.gy);
     const depth = this.world.map.depthAt(this.gx, this.gy) + 0.5;
-    this.sprite.setPosition(p.x, p.y).setDepth(depth);
+    depthTo(this.sprite.setPosition(p.x, p.y), depth);
     if (this.shadow && this.glow) {
       // hovering: it bobs over its shadow, and its lights pulse on the ground under it, brightest when it's lowest
       const s = Math.sin(((now + this.bobAt) / HOVER.periodMs) * Math.PI * 2);
       this.sprite.y -= (s + 1) * 0.5 * HOVER.bob;
-      this.shadow.setPosition(p.x, p.y).setDepth(depth - 0.002).setFrame(`${this.key}_s${this.shown}`);
-      this.glow.setPosition(p.x, p.y).setDepth(depth - 0.001).setAlpha(HOVER.glowMin + (HOVER.glowMax - HOVER.glowMin) * (1 - s) * 0.5);
+      depthTo(this.shadow.setPosition(p.x, p.y), depth - 0.002).setFrame(`${this.key}_s${this.shown}`);
+      depthTo(this.glow.setPosition(p.x, p.y), depth - 0.001).setAlpha(HOVER.glowMin + (HOVER.glowMax - HOVER.glowMin) * (1 - s) * 0.5);
     }
     const dk = this.doorKey;
     if (dk) {
@@ -542,7 +545,7 @@ export class VehicleSprite extends UnitSprite {
     if (this.wheels) {
       const frames = meta(this.key).wheel_frames ?? 6;
       this.wheelPhase += (moved / WHEEL_TURN_TILES) * frames; // backwards while it reverses
-      this.wheels.setPosition(p.x, p.y).setDepth(depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
+      depthTo(this.wheels.setPosition(p.x, p.y), depth + 0.001).setVisible(Math.abs(moved) > 1e-4);
       this.wheels.setFrame(`${this.key}_w${this.shown}_${cycle(this.wheelPhase, frames)}`);
     }
     const tl = meta(this.key).turret_layer;
@@ -554,7 +557,7 @@ export class VehicleSprite extends UnitSprite {
         this.turretTurnAt = now + TURRET_TURN_MS_PER_STEP;
       }
       const at = this.turretAt();
-      this.turret.setPosition(at.x, at.y).setDepth(depth + 0.002).setFrame(`${this.key}_t${this.turretShown}`);
+      depthTo(this.turret.setPosition(at.x, at.y), depth + 0.002).setFrame(`${this.key}_t${this.turretShown}`);
     }
   }
 

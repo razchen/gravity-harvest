@@ -8,6 +8,9 @@ import { TERRAIN_COPY_PX } from './Terrain';
 /** Outside the field, the fade into the dark is drawn in this many bands (the blur smooths them into a gradient). */
 const OUTSIDE_BANDS = 10;
 
+/** Fog changes so far (for FogOfWar.version). */
+let changes = 0;
+
 export const FogState = { Unexplored: 0, Explored: 1, Visible: 2 } as const;
 export type FogState = (typeof FogState)[keyof typeof FogState];
 
@@ -24,6 +27,8 @@ export class FogOfWar {
   private readonly tex: Phaser.Textures.CanvasTexture;
   private readonly originX: number;
   private readonly originY: number;
+  /** Moves on with every change of the fog, never the same twice, in any match (the minimap redraws its fog only then). */
+  version = 0;
 
   constructor(scene: Phaser.Scene, private readonly map: GameMap) {
     this.state = new Uint8Array(map.width * map.height);
@@ -59,6 +64,7 @@ export class FogOfWar {
   apply(fog: string): void {
     const n = Math.min(fog.length, this.state.length);
     for (let i = 0; i < n; i++) this.state[i] = fog.charCodeAt(i) - 48;
+    this.version = ++changes;
     this.render();
   }
 
