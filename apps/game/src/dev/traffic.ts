@@ -1,11 +1,9 @@
 // Dev building page, Animation tab: units coming out of the building and coming to it, so its door and the units
-// can be judged together. They're moved the way the match moves them (packages/sim/src/sim.ts: where they appear,
-// their paths, backing onto the refinery's ramp) and drawn the way the game draws them (entities/UnitSprite.ts, and
-// render/DoorExit.ts for coming out of a door).
+// can be judged together. Each trip runs in a real match (trafficSim.ts: the sim moves them, as in matches) and is
+// drawn the way the game draws it (entities/UnitSprite.ts, and render/DoorExit.ts for coming out of a door).
 import Phaser from 'phaser';
-import { ECONOMY, UNITS, speedToTilesPerSec } from '@gravity-harvest/rules';
-import { DOCK_FACING, ENGINE, Grid, MATCH_CATALOG, facing, findPath, refineryDock, serviceBayPad } from '@gravity-harvest/sim';
-import type { GridPoint } from '@gravity-harvest/shared';
+import { TICK_MS, facing } from '@gravity-harvest/sim';
+import type { GridPoint, TeamView } from '@gravity-harvest/shared';
 import { anchorOrigin, meta } from '../assets/manifest';
 import { HARVESTER_DOCK_FACING, HARVESTER_UNLOAD_MS, INFANTRY_TURN_MS_PER_STEP, RUN_CYCLE_TILES } from '../config/game';
 import { iso } from '../core/geometry';
@@ -15,37 +13,15 @@ import { DOOR_OPEN_MS, inFrontOf } from '../entities/BuildingSprite';
 import { WHEEL_TURN_TILES, turnToward } from '../entities/UnitSprite';
 import type { ConstructionView } from '../render/Construction';
 import { DoorExit } from '../render/DoorExit';
+import { TripRun, type Site, type Trip } from './trafficSim';
 
-/** Out of the building (it produces the unit), docking at it (a refinery) or on its pad to be repaired (a Service Bay). */
-export type TripKind = 'out' | 'dock' | 'service';
-
-export interface Trip {
-  unit: string;
-  kind: TripKind;
-}
+export { tripsFor, type Trip } from './trafficSim';
 
 /** A unit stands where it stopped this long, then fades away (ms). */
 const HOLD_MS = 1500;
 const FADE_MS = 400;
-/** A unit coming to the building starts this far out in front of it (tiles), and leaves to the front-right. */
-const FROM_TILES = 4;
-/** Service Bay: the vehicle comes in at this share of its health and is repaired to full, as the sim repairs. */
-const ARRIVE_HEALTH = 0.8;
-
-/** Every unit with art, in UNIT_ART's order. */
-const WITH_ART = Object.keys(UNIT_ART).filter((u) => MATCH_CATALOG.units[u]);
-
-/** What comes out of a building (the units it produces) and what comes to it. */
-export function tripsFor(building: string): Trip[] {
-  const out: Trip[] = WITH_ART.filter((u) => MATCH_CATALOG.units[u].producedAt.includes(building)).map((unit) => ({ unit, kind: 'out' }));
-  if (building === 'refinery') out.push({ unit: 'harvester', kind: 'dock' });
-  if (building === 'service_bay') {
-    // the vehicles that use its pad in matches (not the harvester); the Jackal first, so it's the one shown
-    const vehicles = WITH_ART.filter((u) => UNIT_ART[u].kind === 'vehicle').sort((a, b) => +(b === 'jackal') - +(a === 'jackal'));
-    for (const u of vehicles) out.push({ unit: u, kind: 'service' });
-  }
-  return out;
-}
+/** Out of a door, it catches up with where the sim has it this much faster than it drives (as UnitSprite's CATCH_UP). */
+const CATCH_UP = 1.5;
 
 /** The atlases a building's traffic draws from. */
 export const tripAtlases = (trips: Trip[]): string[] => [...new Set(trips.flatMap((t) => {
@@ -163,54 +139,42 @@ class UnitLook {
   }
 }
 
-/** A point on a path, as the sim's: `back`, it reverses there (still facing the way it faced). */
-interface Waypoint extends GridPoint {
-  back?: boolean;
-}
-
-/**
- * One step of a unit's trip: something happens as it starts, then it drives a path, or comes out of the door, or
- * waits, or fades away.
- */
-interface Leg {
-  start?: () => void;
-  go?: () => Waypoint[];
-  door?: DoorExit;
-  ms?: number;
-  fade?: boolean;
-}
-
-interface Mover {
+/** The unit on its trip, as drawn. */
+interface Visitor {
   look: UnitLook;
+  /** Where it's drawn, and the sim's position before and after the latest tick (drawn between the two). */
   gx: number;
   gy: number;
+  prev: GridPoint;
+  next: GridPoint;
+  /** The way the sim has it facing, and how fast it drives (tiles/s). */
   dir: number;
   speed: number;
-  harvester: boolean;
-  path: Waypoint[];
-  legs: Leg[];
-  leg: number;
-  /** Time left on a waiting leg, and since the unit appeared (for fading in), in ms. */
-  wait: number;
+  /** Coming out through the building's door (drawn there until it has caught up with the sim). */
+  exit: DoorExit | null;
+  /** Since it appeared, and standing once its trip is over (ms); how far it has faded out (0..1). */
   age: number;
-  fadeIn: boolean;
+  held: number;
   fading: number;
+  fadeIn: boolean;
 }
 
 /**
  * A building's traffic: one unit at a time coming out of it or coming to it, opening its door and setting it working
- * the way a match does. The page reads `doorOpen` and `working` each frame (over its own checkboxes).
+ * as the match does. The page reads `doorOpen` and `working` each frame (over its own checkboxes).
  */
 export class Traffic {
   doorOpen = false;
   working = false;
   /** How long nothing has been going on (ms), for the page's Repeat. */
   idleMs = 0;
-  private mover: Mover | null = null;
+  private run: TripRun | null = null;
+  private visitor: Visitor | null = null;
+  /** Page time not yet stepped through the sim (ms). */
+  private pending = 0;
   private clock = 0;
   private doorOpenedAt = 0;
   private doorCloseAt = -1;
-  private readonly grid: Grid;
 
   /**
    * `b` is the building on the page's stand-in map (its footprint corner and size, in tiles), `view` the building
@@ -219,90 +183,33 @@ export class Traffic {
    */
   constructor(
     private readonly scene: Phaser.Scene,
-    private readonly b: { type: string; tx: number; ty: number; size: number },
+    private readonly b: Site,
     private readonly view: ConstructionView,
-    mapSize: number,
-  ) {
-    this.grid = new Grid(mapSize, mapSize);
-    this.grid.setFootprint(b.tx, b.ty, b.size, true);
-  }
+    private readonly mapSize: number,
+  ) {}
 
   get busy(): boolean {
-    return !!this.mover;
+    return !!this.run;
   }
 
   /** Send a unit (the one before it, if any, is let go). */
   send(trip: Trip): void {
     this.clear();
-    const { tx, ty, size } = this.b;
-    const speed = speedToTilesPerSec(UNITS[trip.unit].speed);
-    const harvester = UNIT_ART[trip.unit].kind === 'harvester';
-    let legs: Leg[];
-    let from: GridPoint;
-    // as the sim's addUnit faces them: a harvester out of a dock, anything else towards the lower left
-    let dir = harvester ? DOCK_FACING : 14;
-    const away = this.free(tx + size + FROM_TILES, ty + size + 1);
-    const fadeAway: Leg = { ms: FADE_MS, fade: true };
-    if (trip.kind === 'out') {
-      // sim.ts spawnFighter: on the free tile nearest the middle of the lower-left face, a tile straight on, then a
-      // step or two further out
-      const at = this.grid.nearestFree(Math.floor(tx + size / 2), ty + size) ?? { tx, ty: ty + size };
-      const straight = { gx: at.tx + 0.5, gy: at.ty + 1.5 };
-      // (in matches a harvester drives off to the nearest ore instead)
-      const onward = () => this.goTo(at.tx + 0.5 + Phaser.Math.FloatBetween(-1, 1), at.ty + 1.5 + Math.random());
-      const door = DoorExit.create(this.scene, this.view, BUILDING_ART[this.b.type]?.door, { ...this.b, depth: 0 });
-      from = door ? { gx: door.gx, gy: door.gy } : { gx: at.tx + 0.5, gy: at.ty + 0.5 };
-      if (door) dir = door.dir;
-      legs = [
-        // drawn coming out through the door (render/DoorExit.ts), or appearing outside it with no door
-        door ? { start: () => this.unitOut(), door } : { start: () => this.unitOut(), go: () => [straight] },
-        { start: () => this.doorClear(), go: onward },
-        { ms: HOLD_MS },
-        fadeAway,
-      ];
-    } else if (trip.kind === 'dock') {
-      // sim.ts returnHome, arrive and updateHarvester: to in front of the ramp, backs straight up it onto the dock,
-      // door opens, a full load unloads, door closes, then forward straight off the ramp and away
-      const d = refineryDock(tx, ty);
-      from = this.free(tx + size / 2 - 1, ty + size + FROM_TILES);
-      legs = [
-        { go: () => this.goTo(d.dock.gx, d.dock.gy, d.front) },
-        { start: () => { this.mover!.dir = DOCK_FACING; this.doorOpen = true; this.mover!.look.unload(this.clock); }, ms: ENGINE.doorMs },
-        { ms: ECONOMY.harvesterCapacity * ENGINE.unloadMsPerUnit },
-        // sim.ts: the door closes, but it stays docked until its bed has tipped out (ENGINE.dockMinMs)
-        { start: () => { this.doorOpen = false; }, ms: Math.max(ENGINE.doorMs, ENGINE.dockMinMs - ENGINE.doorMs - ECONOMY.harvesterCapacity * ENGINE.unloadMsPerUnit) },
-        { start: () => this.mover!.look.unloaded(), go: () => this.goTo(away.gx, away.gy) },
-        fadeAway,
-      ];
-    } else {
-      // sim.ts toBay and updateService: to just out in front of the bay, backs straight onto its pad (nose out, as at a
-      // refinery), is repaired to full, then drives straight off and away
-      const { pad: spot, front } = serviceBayPad(tx, ty);
-      from = this.free(tx + size / 2 - 1, ty + size + FROM_TILES);
-      legs = [
-        { go: () => [...this.goTo(front.gx, front.gy), { ...spot, back: true }] },
-        { start: () => { this.working = true; }, ms: ((1 - ARRIVE_HEALTH) / ENGINE.repairSharePerSec) * 1000 },
-        { start: () => { this.working = false; }, go: () => [front, ...this.goTo(away.gx, away.gy, null, front)] },
-        fadeAway,
-      ];
-    }
-    const look = new UnitLook(this.scene, trip.unit, dir);
-    this.mover = {
-      look, gx: from.gx, gy: from.gy, dir, speed, harvester,
-      path: [], legs, leg: -1, wait: 0, age: 0, fadeIn: trip.kind !== 'out', fading: 0,
-    };
-    this.nextLeg();
-    this.draw(0);
+    this.run = new TripRun(trip, this.b, this.mapSize);
+    // one coming to the building is there from the start; one coming out appears when the sim produces it
+    if (this.run.unit !== null) this.meet(this.run, true);
   }
 
   /** Take the unit away and leave the building as it was. */
   clear(): void {
-    const u = this.mover;
-    if (u) {
-      u.legs[u.leg]?.door?.release(u.look.parts);
-      u.look.destroy();
+    const v = this.visitor;
+    if (v) {
+      v.exit?.release(v.look.parts);
+      v.look.destroy();
     }
-    this.mover = null;
+    this.visitor = null;
+    this.run = null;
+    this.pending = 0;
     this.doorOpen = false;
     this.working = false;
     this.doorCloseAt = -1;
@@ -317,37 +224,120 @@ export class Traffic {
       this.doorOpen = false;
       this.doorCloseAt = -1;
     }
-    const u = this.mover;
-    if (!u) {
+    const run = this.run;
+    if (!run) {
       this.idleMs += deltaMs;
       return;
     }
-    u.age += deltaMs;
-    const leg = u.legs[u.leg];
-    let moved = 0;
-    if (leg.door) {
-      moved = leg.door.update(deltaMs, u.speed);
-      u.gx = leg.door.gx;
-      u.gy = leg.door.gy;
-      if (leg.door.done) {
-        this.draw(moved);
-        leg.door.release(u.look.parts);
-        this.nextLeg();
-        return;
-      }
-    } else if (leg.go) {
-      moved = this.stepAlong(u, deltaMs / 1000);
-      if (!u.path.length) this.nextLeg();
-    } else {
-      u.wait -= deltaMs;
-      if (leg.fade) u.fading = 1 - Math.max(0, u.wait) / FADE_MS;
-      if (u.wait <= 0) this.nextLeg();
+    // the sim steps at its fixed tick; once the unit is done it's left standing (nothing else happens on this map)
+    this.pending += deltaMs;
+    while (this.pending >= TICK_MS && run.stage !== 'done') {
+      this.pending -= TICK_MS;
+      this.tick(run);
     }
-    if (this.mover) this.draw(moved);
+    const v = this.visitor;
+    if (v) this.drawVisitor(run, v, deltaMs);
   }
 
-  /** A unit came out: the door opens (BuildingSprite.unitOut). */
+  /** One sim tick, and what the page takes from it: the door, the building working, the unit's new position. */
+  private tick(run: TripRun): void {
+    if (this.visitor) this.visitor.prev = { ...this.visitor.next };
+    const view: TeamView = run.step();
+    this.working = !!view.buildings.find((x) => x.id === run.building)?.working;
+    for (const e of view.events) {
+      if (e.e === 'unitOut' && e.building === run.building) {
+        this.unitOut();
+        this.meet(run, false);
+      } else if (e.e === 'door' && e.refinery === run.building) {
+        this.doorOpen = e.open;
+        if (e.open) this.visitor?.look.unload(this.clock);
+      }
+    }
+    const u = run.unit !== null ? run.sim.units.get(run.unit) : undefined;
+    const v = this.visitor;
+    if (!u || !v) return;
+    v.next = { gx: u.gx, gy: u.gy };
+    v.dir = u.dir;
+    // the harvester drives off its refinery's dock empty
+    if (run.trip.kind === 'dock' && run.stage !== 'visit') v.look.unloaded();
+  }
+
+  /** The unit is there: drawn from now on, coming out through the door if it's just been produced and there is one. */
+  private meet(run: TripRun, fadeIn: boolean): void {
+    const u = run.sim.units.get(run.unit!);
+    if (!u || this.visitor) return;
+    const exit = fadeIn ? null : DoorExit.create(this.scene, this.view, BUILDING_ART[this.b.type]?.door, { ...this.b, depth: 0 });
+    const at = { gx: u.gx, gy: u.gy };
+    this.visitor = {
+      look: new UnitLook(this.scene, u.type, exit?.dir ?? u.dir), gx: exit?.gx ?? at.gx, gy: exit?.gy ?? at.gy, prev: at, next: at,
+      dir: u.dir, speed: u.speed, exit, age: 0, held: 0, fading: 0, fadeIn,
+    };
+    if (!fadeIn && !exit) this.doorClear();
+    this.drawVisitor(run, this.visitor, 0);
+  }
+
+  /**
+   * Where the unit is drawn this frame: between the sim's last two positions, or (out of a door) straight out of the
+   * doorway and then after where the sim has it, as UnitSprite.tickExit does. Then, its trip over, it stands a while
+   * (one that came out) and fades away.
+   */
+  private drawVisitor(run: TripRun, v: Visitor, deltaMs: number): void {
+    v.age += deltaMs;
+    const k = run.stage === 'done' ? 1 : this.pending / TICK_MS;
+    const sim = { gx: v.prev.gx + (v.next.gx - v.prev.gx) * k, gy: v.prev.gy + (v.next.gy - v.prev.gy) * k };
+    let moved: number;
+    let dir = v.dir;
+    const exit = v.exit;
+    if (exit?.inside) {
+      moved = exit.update(deltaMs, v.speed);
+      v.gx = exit.gx;
+      v.gy = exit.gy;
+      dir = exit.dir;
+    } else if (exit) {
+      const dgx = sim.gx - v.gx;
+      const dgy = sim.gy - v.gy;
+      const dist = Math.hypot(dgx, dgy);
+      moved = Math.min(dist, (v.speed * CATCH_UP * deltaMs) / 1000);
+      if (dist > 1e-4) {
+        v.gx += (dgx / dist) * moved;
+        v.gy += (dgy / dist) * moved;
+        dir = facing(dgx, dgy, 16);
+      }
+    } else {
+      const dgx = sim.gx - v.gx;
+      const dgy = sim.gy - v.gy;
+      // reversing (backing onto a ramp or a pad) when it moves against the way it faces: its wheels turn backwards
+      const a = (v.dir * Math.PI) / 8;
+      moved = Math.hypot(dgx, dgy) * (dgx * Math.cos(a) - dgy * Math.sin(a) < -1e-9 ? -1 : 1);
+      v.gx = sim.gx;
+      v.gy = sim.gy;
+    }
+    if (run.stage === 'done' && !v.exit) {
+      if (run.trip.kind === 'out' && v.held < HOLD_MS) v.held += deltaMs;
+      else v.fading = Math.min(1, v.fading + deltaMs / FADE_MS);
+    }
+    const alpha = Math.min(v.fadeIn ? v.age / FADE_MS : 1, 1 - v.fading);
+    v.look.draw(v.gx, v.gy, dir, moved, this.clock, this.depthAt(v.gx, v.gy), alpha);
+    if (exit) {
+      if (!exit.inside && Math.hypot(sim.gx - v.gx, sim.gy - v.gy) < 1e-3) {
+        // caught up: as normal from here, and the door closes behind it
+        exit.release(v.look.parts);
+        v.exit = null;
+        this.doorClear();
+      } else exit.dress(v.look.parts);
+    }
+    if (v.fading >= 1) {
+      v.look.destroy();
+      this.visitor = null;
+      this.run = null;
+      this.working = false;
+      this.idleMs = 0;
+    }
+  }
+
+  /** A unit came out: the door opens, if it has one (BuildingSprite.unitOut). */
   private unitOut(): void {
+    if (!this.view.hasDoor) return;
     this.doorOpen = true;
     this.doorOpenedAt = this.clock;
     this.doorCloseAt = -1;
@@ -355,29 +345,7 @@ export class Traffic {
 
   /** It's out of the doorway: the door closes, once it's been open DOOR_OPEN_MS. */
   private doorClear(): void {
-    this.doorCloseAt = Math.max(this.clock, this.doorOpenedAt + DOOR_OPEN_MS);
-  }
-
-  private nextLeg(): void {
-    const u = this.mover!;
-    const leg = u.legs[++u.leg];
-    if (!leg) {
-      u.look.destroy();
-      this.mover = null;
-      this.idleMs = 0;
-      return;
-    }
-    leg.start?.();
-    if (leg.go) u.path = leg.go();
-    if (leg.door) u.look.snap(leg.door.dir);
-    u.wait = leg.ms ?? 0;
-  }
-
-  private draw(moved: number): void {
-    const u = this.mover!;
-    const alpha = Math.min(u.fadeIn ? u.age / FADE_MS : 1, 1 - u.fading);
-    u.look.draw(u.gx, u.gy, u.dir, moved, this.clock, this.depthAt(u.gx, u.gy), alpha);
-    u.legs[u.leg]?.door?.dress(u.look.parts);
+    if (this.doorOpen) this.doorCloseAt = Math.max(this.clock, this.doorOpenedAt + DOOR_OPEN_MS);
   }
 
   /**
@@ -390,68 +358,5 @@ export class Traffic {
     const near = gx >= tx - 3 && gx < tx + size + 3 && gy >= ty - 3 && gy < ty + size + 3;
     if (!near) return d;
     return inFrontOf(this.b, gx, gy) ? Math.max(d, 1) : Math.min(d, -1);
-  }
-
-  /** The middle of the free tile nearest (gx, gy). */
-  private free(gx: number, gy: number): GridPoint {
-    const t = this.grid.nearestFree(Math.floor(gx), Math.floor(gy)) ?? { tx: Math.floor(gx), ty: Math.floor(gy) };
-    return { gx: t.tx + 0.5, gy: t.ty + 0.5 };
-  }
-
-  /** sim.ts leadOut: a harvester on the refinery's ramp drives straight off it to in front of it first. */
-  private leadOut(at: GridPoint): GridPoint | null {
-    const u = this.mover!;
-    if (!u.harvester || this.b.type !== 'refinery') return null;
-    const d = refineryDock(this.b.tx, this.b.ty);
-    return Math.hypot(at.gx - d.dock.gx, at.gy - d.dock.gy) < 0.5 ? d.front : null;
-  }
-
-  /**
-   * sim.ts goTo: the path to (gx, gy) from where the unit is (or `from`); by way of `via` when the end is inside a
-   * blocked tile, backing the last stretch from there (onto the refinery's ramp).
-   */
-  private goTo(gx: number, gy: number, via: GridPoint | null = null, from?: GridPoint): Waypoint[] {
-    const u = this.mover!;
-    const at = from ?? { gx: u.gx, gy: u.gy };
-    let goal = via ? { tx: Math.floor(via.gx), ty: Math.floor(via.gy) } : { tx: Math.floor(gx), ty: Math.floor(gy) };
-    if (!via && this.grid.isBlocked(goal.tx, goal.ty)) {
-      goal = this.grid.nearestFree(goal.tx, goal.ty) ?? goal;
-      gx = goal.tx + 0.5;
-      gy = goal.ty + 0.5;
-    }
-    const lead = this.leadOut(at);
-    let start = lead ? { tx: Math.floor(lead.gx), ty: Math.floor(lead.gy) } : { tx: Math.floor(at.gx), ty: Math.floor(at.gy) };
-    if (this.grid.isBlocked(start.tx, start.ty)) start = this.grid.nearestFree(start.tx, start.ty) ?? start;
-    const tiles = findPath(this.grid, start, goal) ?? [];
-    const path: Waypoint[] = tiles.map((t) => ({ gx: t.tx + 0.5, gy: t.ty + 0.5 }));
-    const end = via ?? { gx, gy };
-    if (path.length) path[path.length - 1] = end;
-    else path.push(end);
-    if (via) path.push({ gx, gy, back: true });
-    if (lead) path.unshift(lead);
-    return path;
-  }
-
-  /**
-   * sim.ts stepAlong: along the path at its speed, facing where it's heading (16 directions), or away from it while it
-   * reverses. Returns how far it moved, negative reversing.
-   */
-  private stepAlong(u: Mover, dt: number): number {
-    let step = u.speed * dt;
-    let moved = 0;
-    while (step > 0 && u.path.length) {
-      const target = u.path[0];
-      const dgx = target.gx - u.gx;
-      const dgy = target.gy - u.gy;
-      const dist = Math.hypot(dgx, dgy);
-      if (dist > 1e-4) u.dir = target.back ? facing(-dgx, -dgy, 16) : facing(dgx, dgy, 16);
-      const move = Math.min(step, dist);
-      u.gx += (dgx / (dist || 1)) * move;
-      u.gy += (dgy / (dist || 1)) * move;
-      moved += target.back ? -move : move;
-      step -= move;
-      if (move >= dist) u.path.shift();
-    }
-    return moved;
   }
 }

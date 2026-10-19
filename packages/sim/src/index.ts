@@ -6,5 +6,4 @@ export { Sim, type CreateOptions, MATCH_CATALOG, MATCH_PUBLIC_CATALOG, catalogFo
 export { Ore, ROCK_SHAPES } from './ore.js';
 export { Grid } from './grid.js';
 export { findPath } from './pathfinder.js';
-export { facing } from './geometry.js';
 export { growScenery, type Scenery } from './scenery.js';
