@@ -32,7 +32,10 @@ write into `apps/game/public/assets`; after changing anything there, run `npm ru
 `AWS_PROFILE`, default `gravity`) and commit `assets.json`. The dev server uses the local folder (or S3 if it's missing);
 a build always loads the recorded version from S3, so `dist/` holds only the code.
 
-Run a single package with `npx turbo run <task> --filter=@gravity-harvest/game` (or `server`, `sim`, `rules`, `shared`).
+Run a single package with `npx turbo run <task> --filter=@gravity-harvest/game` (or `server`, `sim`, `ai`, `rules`,
+`shared`, `simulator`).
+
+CI (`.github/workflows/check.yml`) runs `npm run check` and the e2e tests on every pull request and push to `main`.
 
 ## Controls
 
@@ -61,8 +64,8 @@ Goal of the skirmish: find the enemy base in the far corner (hidden by fog of wa
 ```
 apps/
   game/               @gravity-harvest/game: Phaser 3 + Vite browser game
-    src/              config, core, data, assets, scenes, scenarios, world, entities, players,
-                      systems, ai, input, render, save, ui (see docs/ARCHITECTURE.md)
+    src/              app, assets, audio, config, core, data, entities, input, net, render, save,
+                      scenes, systems, ui, world; dev/ for the dev pages (see docs/ARCHITECTURE.md)
     public/assets/    sprites, terrain, card art, sounds, music (gitignored: on S3, npm run assets:pull)
     assets.json       which asset version on S3 a build uses
     e2e/              Playwright browser tests
@@ -70,9 +73,12 @@ apps/
 packages/
   shared/             @gravity-harvest/shared: contracts used by both: save API and the match protocol
   rules/              @gravity-harvest/rules: rules and economy generated from design/balance.xlsx, plus calculations
-                      and dependencies (server side; the browser may import only /deps, code without data)
-  sim/                @gravity-harvest/sim: the match simulation (fixed tick, deterministic), scenarios, the roster
-                      (server side; the browser may import only /layout)
+                      dependencies and capabilities (server side; the browser may import only /deps and /public)
+  sim/                @gravity-harvest/sim: the match simulation (fixed tick, deterministic), scenarios, the roster,
+                      saves and their migrations, replays (server side; the browser may import only /layout)
+  ai/                 @gravity-harvest/ai: the computer opponent (plays from its side's view, by giving orders)
+tools/simulator/      @gravity-harvest/simulator: headless AI-against-AI matches and their report (npm run simulate)
+tools/assets/         assets.mjs: npm run assets:push / pull / status
 design/               balance.xlsx, the source of truth for rules and economy
 art/                  original art: 3D models, concept sheets, source textures (not in git, see art/README.md)
 tools/blender/        the scripts that render sprites from 3D models (buildings, units, ore)
@@ -99,14 +105,18 @@ backup. See [art/README.md](art/README.md) for what each file is and which sprit
 - **rules**: the import is up to date with the spreadsheet, every reference is valid, and the calculations and
   dependency helpers give the spreadsheet's numbers.
 - **sim**: the economy loop, placement, production queues, power, combat with the damage matrix, fog filtering
-  (what each player is told), victory / defeat, save round trips, determinism, pathfinding, legal maps.
+  (what each player is told), victory / defeat, save round trips, old-save fixtures and migrations, determinism,
+  replays, spatial lookups, pathfinding, legal maps.
+- **ai**: the computer's decisions, an order-stream fingerprint of whole matches (`regression.test.ts`), and a saved
+  and restored match playing on exactly (`continuation.test.ts`).
 - **game** (Vitest): geometry, event bus, depth sorting, and content checks (everything in the roster has art).
   `npm run build` also checks that no rules data reached the browser bundle.
-- **game** (Playwright): the real game against a throwaway game server: start position, fog of war, harvesting,
-  building placement, prerequisites and the production queue, combat, the menus, saving, loading, autosave and
-  Continue, victory and defeat.
+- **game** (Playwright): a smoke test of the dev pages, and the real game against a throwaway game server: start
+  position, fog of war, harvesting, building placement, prerequisites and the production queue, combat, the menus,
+  saving, loading, autosave and Continue, victory and defeat.
 - **server** (Vitest + supertest + ws): saves API, and matches played over the socket (orders, malformed messages,
-  pause, save and resume, autosave on disconnect, game over, origin checks, debug commands off).
+  pause, save and resume, autosave on disconnect, rejoining, playing either seat, saves per player id, game over,
+  origin checks, debug commands off) and the schema migrations.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the pieces fit, [docs/ADDING_CONTENT.md](docs/ADDING_CONTENT.md)
 for adding units, buildings and maps, and [docs/DECISIONS.md](docs/DECISIONS.md) for why things are the way they are.

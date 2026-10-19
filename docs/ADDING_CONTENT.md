@@ -51,7 +51,9 @@ footprint and the roster (plus, if you like, a line for its dev page).
 5. *Optional:* its model's part count and a line about it in `NOTES` in `apps/game/src/dev/buildings.ts` (the dev
    page works without). Its release is already in `MILESTONE_OF` there, as is every building in the spreadsheet.
 6. **Behaviour:** anything that isn't data yet goes in the sim (defences shoot by their rules weapons on their own;
-   the Service Bay's repairs are in `Sim.repair`). Remove any `STAND_INS` entry it replaces.
+   the Service Bay's repairs are in `packages/sim/src/systems/service.ts`). If it does what an existing building does
+   (a refinery, a yard, a radar...), give it that capability in `packages/rules/src/capabilities.ts` instead of code.
+   Remove any `STAND_INS` entry it replaces.
 7. `npm run check`, then `npm run assets:push` and commit `apps/game/assets.json` (the new art goes to S3, not git).
    The content tests fail until the roster, the registry, the footprints and the stage configs all list the same
    buildings, its footprint agrees with its stage config, and its atlases and card are on disk; the scenario tests
@@ -62,8 +64,8 @@ card (locked until its prerequisites are built).
 
 ## Checklist: a new unit
 
-Example: the Lancer (`lancer`). Three edits: its render config, its registry entry and the roster (plus a set in the
-sim if it hovers, aims a turret or repairs, a shot look if it fires something new, and a line for its dev page).
+Example: the Lancer (`lancer`). Three edits: its render config, its registry entry and the roster (plus its capabilities
+if it hovers, aims a turret or repairs, a shot look if it fires something new, and a line for its dev page).
 
 1. **Model and render** with a script in `tools/blender` (`render_vehicle.py` for vehicles, from their entry in
    `vehicles.json`: 16 directions × wheel frames; then `python3 tools/sprites/pack_vehicles.py`, which also makes its
@@ -151,5 +153,14 @@ damage class points at something that doesn't exist.
 
 ## A save-format change
 
-Bump `SNAPSHOT_VERSION` in `packages/sim/src/snapshot.ts`. `Sim.restore` refuses other versions with a clear message;
-add a migration there if old saves need to keep loading.
+Bump `SNAPSHOT_VERSION` in `packages/sim/src/snapshot.ts` (and say what changed in its comment), and add the step
+from the version before to `MIGRATIONS` in `packages/sim/src/migrations.ts`: `MIGRATIONS[n]` turns a version-`n` save
+into a version-`n + 1` one, knowing only those two formats. Add a fixture for the new version to
+`packages/sim/test/fixtures` (a save made by the new code); the fixture tests check that every stored version still
+loads and plays on. A save newer than the code, or older than `OLDEST_LOADABLE_VERSION`, is refused with a clear
+message.
+
+A change to the computer player's saved memory (`AiState`, `packages/ai/src/state.ts`) bumps its `version`: a memory
+of another version is dropped and that computer starts afresh.
+
+A change to the server's database tables needs a TypeORM migration (`apps/server/README.md`, Storage notes).
