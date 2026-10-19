@@ -1,3 +1,4 @@
+import { assetUrl } from '../assets/url';
 import { factionOf, unitArt } from '../data/art';
 import { getCatalog } from '../systems/availability';
 import { $ } from './dom';
@@ -107,7 +108,7 @@ export class SelectionPanel {
   private tileHtml(t: TypeTile): string {
     const img = unitArt(t.type, factionOf(t.enemy ? 'enemy' : 'player', this.game.faction))?.card;
     return `<button class="sel-tile${t.enemy ? ' enemy' : ''}" data-type="${esc(t.type)}">` +
-      (img ? `<img src="${img}" alt="">` : `<span class="sel-noimg">${esc(this.name(t.type).slice(0, 3))}</span>`) +
+      (img ? `<img src="${assetUrl(img)}" alt="">` : `<span class="sel-noimg">${esc(this.name(t.type).slice(0, 3))}</span>`) +
       '<span class="sel-count"></span><span class="sel-hp"><i></i></span></button>';
   }
 
@@ -128,7 +129,7 @@ export class SelectionPanel {
     const d = getCatalog().units[u.type];
     const img = unitArt(u.type, factionOf(u.team, this.game.faction))?.card;
     const row = (k: string) => `<div class="sel-row"><span>${k}</span><b class="sel-${k.toLowerCase()}"></b></div>`;
-    return (img ? `<img src="${img}" alt="">` : '') +
+    return (img ? `<img src="${assetUrl(img)}" alt="">` : '') +
       `<div class="sel-info"><div class="sel-name">${esc(this.name(u.type))}${u.team !== 'player' ? ' <em>Enemy</em>' : ''}</div>` +
       (d?.role ? `<div class="sel-role">${esc(d.role)}</div>` : '') +
       '<div class="sel-row"><span>Health</span><b class="sel-health"></b></div><span class="sel-hp big"><i></i></span>' +

@@ -24,14 +24,14 @@
 </head>
 <body>
   <!-- Loading screen: while the game's art loads (BootScene fills the bar) -->
-  <div id="loading"><img src="assets/ui/wordmark.webp" alt="Gravity Harvest"><div class="bar"><div id="loading-bar"></div></div></div>
+  <div id="loading"><img src="%VITE_ASSET_BASE%assets/ui/wordmark.webp" alt="Gravity Harvest"><div class="bar"><div id="loading-bar"></div></div></div>
 
   <!-- Menus (title, new game, load, save, pause, settings, victory / defeat) -->
   <div id="screens" class="screen-root" hidden></div>
 
   <!-- In-match HUD -->
   <div id="hud" hidden>
-  <img id="hud-wordmark" src="assets/ui/wordmark.webp" alt="Gravity Harvest">
+  <img id="hud-wordmark" src="%VITE_ASSET_BASE%assets/ui/wordmark.webp" alt="Gravity Harvest">
   <!-- Resource bar -->
   <div id="topbar" class="panel">
     <div class="res" title="Credits">

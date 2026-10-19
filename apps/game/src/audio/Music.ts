@@ -5,6 +5,8 @@
  * each, nothing loaded up front) and crossfade into each other; the Music volume and Mute (Settings) apply at once.
  * Browsers keep a page quiet until it's been used, so it starts on the first click or key if it couldn't before.
  */
+import { assetUrl } from '../assets/url';
+
 type Use = 'menu' | 'match' | 'victory' | 'defeat';
 type Side = 'ordan' | 'sable';
 /** The sets played once, straight in (no fade-in), and then silence. */
@@ -19,7 +21,7 @@ interface Track {
   seconds: number;
 }
 
-const DIR = 'assets/music/';
+const DIR = assetUrl('assets/music/');
 /** How long one track fades into the next, or into the other set (menu / match), in ms. */
 const FADE_MS = 3000;
 /** How often the fades step, in ms. */

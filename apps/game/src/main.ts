@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { ASSET_BASE } from './assets/url';
 import { DPR } from './config/game';
 import { GameFlow } from './app/GameFlow';
 import { BootScene } from './scenes/BootScene';
@@ -13,6 +14,8 @@ const game = new Phaser.Game({
   backgroundColor: '#000000', // matches the fog the land fades into past the field
   // Canvas at full device resolution, shown at CSS size (sharp on Retina)
   scale: { mode: Phaser.Scale.NONE, width: window.innerWidth * DPR, height: window.innerHeight * DPR, zoom: 1 / DPR },
+  // assets come from S3 in a build (assets/url.ts); textures from another origin need CORS
+  loader: { baseURL: ASSET_BASE, crossOrigin: 'anonymous' },
   render: { mipmapFilter: 'LINEAR_MIPMAP_LINEAR', roundPixels: true },
   scene: [BootScene, MenuScene, GameScene],
 });

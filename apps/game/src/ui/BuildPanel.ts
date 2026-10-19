@@ -1,3 +1,4 @@
+import { assetUrl } from '../assets/url';
 import { BUILDING_ART, UNIT_ART, unitArt } from '../data/art';
 import { inGame } from '../input/InputController';
 import { getCatalog, missingFor } from '../systems/availability';
@@ -110,7 +111,7 @@ export class BuildPanel {
       el.dataset.id = c.id;
       const hotkey = cardHotkey(this.cards.indexOf(c));
       if (hotkey) el.dataset.hotkey = hotkey;
-      el.innerHTML = `<img src="${c.img}" alt=""><div class="name">${c.name}</div>` +
+      el.innerHTML = `<img src="${assetUrl(c.img)}" alt=""><div class="name">${c.name}</div>` +
         (hotkey ? `<span class="hotkey" aria-hidden="true">${hotkey}</span>` : '') +
         `<div class="price">$${c.price.toLocaleString()}</div><div class="sub">${c.sub}</div>` +
         '<div class="queue-count"></div><div class="queue-bar"></div>' +

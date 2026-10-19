@@ -46,7 +46,8 @@ Example: the Motor Works (`motor_works` in the spreadsheet).
 5. **Turn it on:** add `motor_works` to `ROSTER.buildings` in the same file.
 6. **Behaviour:** anything that isn't data yet goes in the sim (defences shoot by their rules weapons on their own;
    the Service Bay's repairs are in `Sim.repair`). Remove any `STAND_INS` entry it replaces.
-7. `npm run check`. The content tests fail until every roster entry has art, a card and a footprint; the scenario
+7. `npm run check`, then `npm run assets:push` and commit `apps/game/assets.json` (the new art goes to S3, not git).
+   The content tests fail until every roster entry has art, a card and a footprint; the scenario
    tests check every map still fits.
 
 Costs, HP, power, build time and prerequisites come from the spreadsheet automatically, and the build panel shows the
@@ -66,7 +67,7 @@ Example: the Lancer (`lancer`).
 3. **Describe its look** in `UNIT_ART` (`data/art.ts`): atlas, card, `kind: 'infantry' | 'vehicle'`.
 4. **Turn it on:** add `lancer` to `ROSTER.units`.
 5. If it needs a behaviour the sim doesn't have yet (see below), add it in `packages/sim/src/sim.ts` with tests.
-6. `npm run check`.
+6. `npm run check`, then `npm run assets:push` and commit `apps/game/assets.json`.
 
 What already works for any unit from the sheet: movement (speed), sight, HP and armor, its weapons (damage, burst,
 fire interval, range, damage class against the target's armor), production at the right building with its

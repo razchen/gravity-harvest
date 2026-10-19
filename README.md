@@ -10,6 +10,7 @@ A monorepo: npm workspaces + [Turborepo](https://turborepo.com).
 
 ```bash
 npm install          # everything, once
+npm run assets:pull  # the game's sprites, sounds and music (~200 MB, from S3), once and after asset updates
 npm run dev          # game on http://localhost:5173 + game server on http://localhost:4310/api
 ```
 
@@ -21,6 +22,15 @@ npm run dev          # game on http://localhost:5173 + game server on http://loc
 | `npm test` | Unit tests in every package |
 | `npm run test:e2e` | Server API e2e tests + game browser tests (Playwright, needs `npx playwright install chromium` once) |
 | `npm run check` | typecheck + test + build |
+| `npm run assets:pull` | Downloads the asset version in `apps/game/assets.json` into `apps/game/public/assets` (no AWS account needed) |
+| `npm run assets:push` | Uploads a changed `public/assets` to S3 as a new version and records it in `assets.json`: commit that file |
+| `npm run assets:status` | Says whether the local assets match `assets.json` |
+
+**Assets aren't in git.** Sprites, previews, terrain, fx, UI art, sounds and music live in the public S3 bucket
+`gravity-harvest-assets`, one folder per version (a hash of the files, so they can be cached forever). The tools still
+write into `apps/game/public/assets`; after changing anything there, run `npm run assets:push` (needs AWS access:
+`AWS_PROFILE`, default `gravity`) and commit `assets.json`. The dev server uses the local folder (or S3 if it's missing);
+a build always loads the recorded version from S3, so `dist/` holds only the code.
 
 Run a single package with `npx turbo run <task> --filter=@gravity-harvest/game` (or `server`, `sim`, `rules`, `shared`).
 
@@ -53,7 +63,8 @@ apps/
   game/               @gravity-harvest/game: Phaser 3 + Vite browser game
     src/              config, core, data, assets, scenes, scenarios, world, entities, players,
                       systems, ai, input, render, save, ui (see docs/ARCHITECTURE.md)
-    public/assets/    sprites, terrain, card art
+    public/assets/    sprites, terrain, card art, sounds, music (gitignored: on S3, npm run assets:pull)
+    assets.json       which asset version on S3 a build uses
     e2e/              Playwright browser tests
   server/             @gravity-harvest/server: NestJS game server: runs matches (WebSocket), saves (see apps/server/README.md)
 packages/

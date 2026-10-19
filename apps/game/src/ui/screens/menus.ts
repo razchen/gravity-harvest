@@ -1,5 +1,6 @@
 import { DEFAULT_DIFFICULTY, DIFFICULTIES, type Difficulty, type PlayableFaction } from '@gravity-harvest/shared';
 import { AUTOSAVE_CHOICES } from '../../app/settings';
+import { assetUrl } from '../../assets/url';
 import { button, el, fmtDate, fmtTime, screenPanel } from './kit';
 import type { Screens } from './Screens';
 
@@ -9,7 +10,7 @@ export function mainMenu(s: Screens): HTMLElement {
   const cont = button('Continue', () => a.continueGame(), 'menu-btn', true);
   const contSub = el('div', { className: 'menu-sub', textContent: 'Checking saves…' });
   const wrap = el('div', { className: 'title-screen' },
-    el('img', { className: 'logo', src: 'assets/ui/logo.webp', alt: 'Gravity Harvest', draggable: false }),
+    el('img', { className: 'logo', src: assetUrl('assets/ui/logo.webp'), alt: 'Gravity Harvest', draggable: false }),
     el('div', { className: 'menu-col panel' },
       button('New Game', () => s.show('newGame'), 'menu-btn primary'),
       el('div', { className: 'menu-pair' }, cont, contSub),
@@ -55,7 +56,7 @@ export function newGameScreen(s: Screens): HTMLElement {
     const draw = () => {
       sides.replaceChildren(...first.factions.map((f) => {
         const b = el('button', { className: `faction-card ${f.id}${f.id === picked ? ' on' : ''}` },
-          el('img', { src: `assets/ui/factions/${f.id}_small.png`, alt: '' }),
+          el('img', { src: assetUrl(`assets/ui/factions/${f.id}_small.png`), alt: '' }),
           el('div', { className: 'faction-text' },
             el('div', { className: 'faction-name', textContent: f.name }),
             el('div', { className: 'faction-tagline', textContent: f.tagline })));

@@ -11,7 +11,10 @@
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
     "check": "turbo run typecheck test build",
-    "simulate": "turbo run build --filter=@gravity-harvest/simulator --output-logs=errors-only && node tools/simulator/dist/cli.js"
+    "simulate": "turbo run build --filter=@gravity-harvest/simulator --output-logs=errors-only && node tools/simulator/dist/cli.js",
+    "assets:push": "node tools/assets/assets.mjs push",
+    "assets:pull": "node tools/assets/assets.mjs pull",
+    "assets:status": "node tools/assets/assets.mjs status"
   },
   "devDependencies": {
     "turbo": "^2.5.0",
