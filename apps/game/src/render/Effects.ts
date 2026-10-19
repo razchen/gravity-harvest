@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
 import { DEPTH } from '../config/game';
 import { diamond, iso, type Point } from '../core/geometry';
+import { shotOf, type ShotDef } from '../data/shots';
 import { impact, type Flashable, type ImpactStyle } from './Impact';
 import { FX, FX_SHEETS, ensureFxTextures } from './fxTextures';
 import { LOOKS } from './shots';
-import type { Kit, Live } from './shots/kit';
+import type { ClassicFx, Kit, Land, Live, Shot } from './shots/kit';
 
 /** How rifle fire looks (world px and ms). The server decides hits and damage; this is only the look. */
 export const BULLETS = {
@@ -81,6 +82,7 @@ interface Beam {
   /** Its width against a laser's, and whether it's a heal (it mends: no sparks, a soft glow round what it hits). */
   width: number;
   heal: boolean;
+  land?: Land;
 }
 
 interface Column {
@@ -91,6 +93,7 @@ interface Column {
   glow: number;
   hit?: ShotHit;
   struck: boolean;
+  land?: Land;
 }
 
 interface Bolt {
@@ -119,6 +122,8 @@ interface Round {
   body?: Phaser.GameObjects.Image;
   flame?: Phaser.GameObjects.Image[];
   trailAt?: Point;
+  /** Called as it lands (unless it misses): its impact sound. */
+  land?: Land;
 }
 
 /** What a shell or fireball hits: its sprites flash, and the burst is drawn just in front of them. */
@@ -139,7 +144,7 @@ interface Spark {
 const between = ([a, b]: [number, number]) => a + Math.random() * (b - a);
 
 /** Short-lived visuals: bullets, muzzle flashes, explosions, floating text, order markers. */
-export class Effects {
+export class Effects implements ClassicFx {
   private readonly gfx: Phaser.GameObjects.Graphics;
   private readonly marker: Phaser.GameObjects.Graphics;
   private rounds: Round[] = [];
@@ -149,34 +154,48 @@ export class Effects {
   private columns: Column[] = [];
   /** Missiles' smoke trails and exhaust embers: one emitter each for every missile, made on the first. */
   private trail: Phaser.GameObjects.Particles.ParticleEmitter | null = null;
-  /** The units' own looks (render/shots) still on screen, and what they draw with. */
+  /** What the looks in render/shots have still on screen (kit.add). */
   private live: Live[] = [];
-  private readonly kit: Kit;
   private embers: Phaser.GameObjects.Particles.ParticleEmitter | null = null;
   /** How shells and fireballs burst (render/Impact.ts). */
   impactStyle: ImpactStyle = 'shockwave';
-  /** Called as a round lands (its sound): bullets that hit, a shell's or fireball's burst, a discharge's strike. */
-  onImpact: ((kind: RoundKind | 'discharge' | 'laser' | 'column', at: Point) => void) | null = null;
+  /** Called as a round lands, with its shot's impact sound (data/shots.ts): bullets that hit, a shell's burst, a discharge's strike. */
+  onImpact: ((sound: string, at: Point) => void) | null = null;
 
   constructor(private readonly scene: Phaser.Scene) {
     ensureFxTextures(scene);
     this.gfx = scene.add.graphics().setDepth(DEPTH.ui - 5).setBlendMode(Phaser.BlendModes.ADD);
     this.marker = scene.add.graphics().setDepth(DEPTH.ui - 1);
+  }
+
+  /**
+   * A unit's or building's shot as the game draws it (`p`: its UNIT_ART `fire`, else the rules' projectile): its look
+   * and impact sound are its entry in data/shots.ts, drawn by that look in render/shots.
+   */
+  fire(p: string | undefined, from: Point, guns: Point[], to: Point, ground?: Point, flash = true, hit?: ShotHit, glow?: number): void {
+    const def = shotOf(p);
+    LOOKS[def.look](this.kitFor(def), { from, guns, to, ground, flash, hit, glow });
+  }
+
+  /** What one shot's look draws with: its landing plays the shot's impact sound. */
+  private kitFor(def: ShotDef): Kit {
     const fx = this;
-    this.kit = {
-      scene,
+    return {
+      scene: this.scene,
       add: (l) => this.live.push(l),
       get impactStyle() { return fx.impactStyle; },
-      landed: (kind, at) => this.onImpact?.(kind, at),
-      legacy: (p, s) => this.legacyFire(p, s.from, s.guns, s.to, s.ground, s.flash, s.hit, s.glow),
+      landed: (at) => { if (def.impact) this.onImpact?.(def.impact, at); },
+      classic: this,
     };
   }
+
+  // --- The classic looks (shots/classic.ts): drawn and stepped here --------------------------------------------------
 
   /**
    * A burst of rifle fire from the muzzle at `to`: tracer rounds that fly there, each with a muzzle flash; most hit
    * with a few sparks, some miss and kick up dust on the ground (`ground`, under the target) beyond it.
    */
-  bullets(from: Point, to: Point, ground: Point = to, flash = true): void {
+  bullets(from: Point, to: Point, ground: Point = to, flash = true, land?: Land): void {
     for (let i = 0; i < BULLETS.rounds; i++) {
       const j = () => (Math.random() * 2 - 1) * BULLETS.spread;
       const miss = Math.random() < BULLETS.missShare;
@@ -189,88 +208,77 @@ export class Effects {
       }
       const flight = (Math.hypot(x2 - from.x, y2 - from.y) / BULLETS.speed) * 1000;
       const delay = i * BULLETS.gapMs;
-      this.rounds.push({ kind: 'bullet', x1: from.x, y1: from.y, x2, y2, age: -delay, flight, miss });
+      this.rounds.push({ kind: 'bullet', x1: from.x, y1: from.y, x2, y2, age: -delay, flight, miss, land });
       if (flash) this.scene.time.delayedCall(delay, () => this.muzzleFlash(from));
     }
   }
 
-  /**
-   * A shot of the given projectile (the rules' weapon `projectile`): bullets, a shell, a fireball, or an instant
-   * discharge. Anything else is drawn as bullets.
-   */
-  shot(projectile: string | undefined, from: Point, to: Point, ground?: Point, flash = true, hit?: ShotHit, glow?: number, delayMs = 0): void {
-    if (projectile === 'ballistic shell') projectile = 'shell'; // artillery: a shell for now (no arc yet)
-    if (projectile === 'guided missile') return this.missile(from, to, ground, hit, glow, delayMs);
-    if (projectile === 'shell' || projectile === 'fireball') {
-      const speed = HEAVY[projectile].speed;
-      const flight = (Math.hypot(to.x - from.x, to.y - from.y) / speed) * 1000;
-      this.rounds.push({ kind: projectile, x1: from.x, y1: from.y, x2: to.x, y2: to.y, age: 0, flight, miss: false, hit, ground });
-      if (flash) this.muzzleFlash(from, projectile === 'fireball' ? 0xffb050 : 0xfff0a0, 1.6);
-    } else if (projectile === 'plasma') {
-      const p = HEAVY.plasma;
-      const flight = (Math.hypot(to.x - from.x, to.y - from.y) / p.speed) * 1000;
-      this.rounds.push({ kind: 'plasma', x1: from.x, y1: from.y, x2: to.x, y2: to.y, age: 0, flight, miss: false, hit, ground, glow });
-      if (flash) this.muzzleFlash(from, glow ?? p.glow, 1.1);
-    } else if (projectile === 'repair') {
-      // welding at the building: a flash and a spray of sparks
-      const w = HEAVY.weld;
-      this.muzzleFlash(to, w.core, 1.2);
-      for (let i = 0; i < w.sparks; i++) {
-        const a = -Math.PI * (0.15 + Math.random() * 0.7);
-        const v = between(BULLETS.sparkSpeed);
-        this.sparks.push({ x: to.x, y: to.y, vx: Math.cos(a) * v * (Math.random() < 0.5 ? -1 : 1), vy: Math.sin(a) * v, age: 0, color: w.glow });
-      }
-    } else if (projectile === 'beam' || projectile === 'laser') {
-      const l = HEAVY.laser;
-      const heal = projectile === 'beam';
-      const c = glow ?? (heal ? HEAVY.heal.glow : l.glow);
-      const core = Phaser.Display.Color.Interpolate.ColorWithColor(Phaser.Display.Color.ValueToColor(c), Phaser.Display.Color.ValueToColor(0xffffff), 1, l.whiten);
-      const coreColor = Phaser.Display.Color.GetColor(core.r, core.g, core.b);
-      const angle = Math.atan2(to.y - from.y, to.x - from.x);
-      const band = (tint: number) => this.scene.add.image(from.x, from.y, FX.beam).setOrigin(0, 0.5).setRotation(angle)
-        .setTint(tint).setBlendMode(Phaser.BlendModes.ADD).setDepth(DEPTH.ui - 5).setDisplaySize(1, 1);
-      const flare = (at: Point, tint: number) => this.scene.add.image(at.x, at.y, FX.dot).setTint(tint)
-        .setBlendMode(Phaser.BlendModes.ADD).setDepth(DEPTH.ui - 5).setDisplaySize(l.flare, l.flare);
-      this.beams.push({
-        from, to, age: 0, glow: c, outer: band(c), core: band(coreColor), muzzle: flare(from, coreColor), spot: flare(to, c).setAlpha(0), hit: false,
-        width: heal ? HEAVY.heal.width : 1, heal,
-      });
-    } else if (projectile === 'column') {
-      // `from` (the unit) charges first; the column strikes the ground under the target (`ground`, or the target)
-      const at = ground ?? to;
-      this.columns.push({ x: at.x, y: at.y, age: 0, glow: glow ?? HEAVY.column.glow, hit, struck: false });
-      const c = this.scene.add.circle(from.x, from.y, 9, glow ?? HEAVY.column.glow, 0.9).setDepth(DEPTH.ui - 5).setBlendMode(Phaser.BlendModes.ADD).setScale(0.3);
-      this.scene.tweens.add({ targets: c, scale: 1.4, duration: HEAVY.column.chargeMs, yoyo: true, onComplete: () => c.destroy() });
-    } else if (projectile === 'lobbed grenade') {
-      const gr = HEAVY.grenade;
-      const at = ground ?? to;
-      const flight = (Math.hypot(at.x - from.x, at.y - from.y) / gr.speed) * 1000 + 250;
-      this.rounds.push({ kind: 'grenade', x1: from.x, y1: from.y, x2: at.x, y2: at.y, age: 0, flight, miss: false, hit, ground, glow });
-      if (flash) this.muzzleFlash(from, glow ?? gr.glow, 1.2);
-    } else if (projectile === 'instant discharge') {
-      this.discharge(from, to, glow);
-    } else this.bullets(from, to, ground, flash);
+  /** A shell or a fireball from `from`, straight to `s.to`, bursting there. */
+  round(kind: 'shell' | 'fireball', from: Point, s: Shot, land: Land): void {
+    const { to } = s;
+    const flight = (Math.hypot(to.x - from.x, to.y - from.y) / HEAVY[kind].speed) * 1000;
+    this.rounds.push({ kind, x1: from.x, y1: from.y, x2: to.x, y2: to.y, age: 0, flight, miss: false, hit: s.hit, ground: s.ground, land });
+    if (s.flash) this.muzzleFlash(from, kind === 'fireball' ? 0xffb050 : 0xfff0a0, 1.6);
   }
 
-  /**
-   * A unit's or building's shot as the game draws it (`p`: its UNIT_ART `fire`, else the rules' projectile): energy
-   * balls and lasers from all its `guns` at once, a missile from each gun in turn, anything else from `from`.
-   */
-  fire(p: string | undefined, from: Point, guns: Point[], to: Point, ground?: Point, flash = true, hit?: ShotHit, glow?: number): void {
-    const look = p ? LOOKS[p] : undefined;
-    if (look) look(this.kit, { from, guns, to, ground, flash, hit, glow });
-    else this.legacyFire(p, from, guns, to, ground, flash, hit, glow);
+  /** A ball of energy from `from` to `s.to`, in its side's colour. */
+  plasma(from: Point, s: Shot, land: Land): void {
+    const p = HEAVY.plasma;
+    const { to, glow } = s;
+    const flight = (Math.hypot(to.x - from.x, to.y - from.y) / p.speed) * 1000;
+    this.rounds.push({ kind: 'plasma', x1: from.x, y1: from.y, x2: to.x, y2: to.y, age: 0, flight, miss: false, hit: s.hit, ground: s.ground, glow, land });
+    if (s.flash) this.muzzleFlash(from, glow ?? p.glow, 1.1);
   }
 
-  /** The older looks, by the rules' projectile. */
-  private legacyFire(p: string | undefined, from: Point, guns: Point[], to: Point, ground?: Point, flash = true, hit?: ShotHit, glow?: number): void {
-    if ((p === 'plasma' || p === 'laser') && guns.length) for (const g of guns) this.shot(p, g, to, ground, flash, hit, glow);
-    else if (p === 'guided missile' && guns.length > 1) guns.forEach((g, i) => this.shot(p, g, to, ground, flash, hit, glow, i * HEAVY.missile.gapMs));
-    else this.shot(p, from, to, ground, flash, hit, glow);
+  /** Welding at the building (`at`): a flash and a spray of sparks. */
+  weld(at: Point): void {
+    const w = HEAVY.weld;
+    this.muzzleFlash(at, w.core, 1.2);
+    for (let i = 0; i < w.sparks; i++) {
+      const a = -Math.PI * (0.15 + Math.random() * 0.7);
+      const v = between(BULLETS.sparkSpeed);
+      this.sparks.push({ x: at.x, y: at.y, vx: Math.cos(a) * v * (Math.random() < 0.5 ? -1 : 1), vy: Math.sin(a) * v, age: 0, color: w.glow });
+    }
   }
 
-  /** A missile from `from` to `to`, leaving after `delayMs`: its way there is set now, it's drawn as it flies. */
-  private missile(from: Point, to: Point, ground?: Point, hit?: ShotHit, glow?: number, delayMs = 0): void {
+  /** A laser from `from` to `to` (in `glow`, else purple), or a heal's softer beam (in `glow`, else green). */
+  beam(from: Point, to: Point, heal: boolean, glow: number | undefined, land: Land): void {
+    const l = HEAVY.laser;
+    const c = glow ?? (heal ? HEAVY.heal.glow : l.glow);
+    const core = Phaser.Display.Color.Interpolate.ColorWithColor(Phaser.Display.Color.ValueToColor(c), Phaser.Display.Color.ValueToColor(0xffffff), 1, l.whiten);
+    const coreColor = Phaser.Display.Color.GetColor(core.r, core.g, core.b);
+    const angle = Math.atan2(to.y - from.y, to.x - from.x);
+    const band = (tint: number) => this.scene.add.image(from.x, from.y, FX.beam).setOrigin(0, 0.5).setRotation(angle)
+      .setTint(tint).setBlendMode(Phaser.BlendModes.ADD).setDepth(DEPTH.ui - 5).setDisplaySize(1, 1);
+    const flare = (at: Point, tint: number) => this.scene.add.image(at.x, at.y, FX.dot).setTint(tint)
+      .setBlendMode(Phaser.BlendModes.ADD).setDepth(DEPTH.ui - 5).setDisplaySize(l.flare, l.flare);
+    this.beams.push({
+      from, to, age: 0, glow: c, outer: band(c), core: band(coreColor), muzzle: flare(from, coreColor), spot: flare(to, c).setAlpha(0), hit: false,
+      width: heal ? HEAVY.heal.width : 1, heal, land,
+    });
+  }
+
+  /** A column of light: `from` (the unit) charges first; the column strikes the ground under the target (`s.ground`, or the target). */
+  column(from: Point, s: Shot, land: Land): void {
+    const at = s.ground ?? s.to;
+    const glow = s.glow ?? HEAVY.column.glow;
+    this.columns.push({ x: at.x, y: at.y, age: 0, glow, hit: s.hit, struck: false, land });
+    const c = this.scene.add.circle(from.x, from.y, 9, glow, 0.9).setDepth(DEPTH.ui - 5).setBlendMode(Phaser.BlendModes.ADD).setScale(0.3);
+    this.scene.tweens.add({ targets: c, scale: 1.4, duration: HEAVY.column.chargeMs, yoyo: true, onComplete: () => c.destroy() });
+  }
+
+  /** A grenade lobbed from `from` onto the ground under the target (`s.ground`, or the target). */
+  grenade(from: Point, s: Shot, land: Land): void {
+    const gr = HEAVY.grenade;
+    const at = s.ground ?? s.to;
+    const flight = (Math.hypot(at.x - from.x, at.y - from.y) / gr.speed) * 1000 + 250;
+    this.rounds.push({ kind: 'grenade', x1: from.x, y1: from.y, x2: at.x, y2: at.y, age: 0, flight, miss: false, hit: s.hit, ground: s.ground, glow: s.glow, land });
+    if (s.flash) this.muzzleFlash(from, s.glow ?? gr.glow, 1.2);
+  }
+
+  /** A missile from `from` to `s.to`, leaving after `delayMs`: its way there is set now, it's drawn as it flies. */
+  missile(from: Point, s: Shot, land: Land, delayMs = 0): void {
+    const { to } = s;
     const m = HEAVY.missile;
     const dx = to.x - from.x, dy = to.y - from.y;
     const len = Math.hypot(dx, dy) || 1;
@@ -286,7 +294,7 @@ export class Effects {
       v(to.x, to.y),
     );
     const flight = (path.getLength() / m.speed) * 1000 * (1 + m.accel * 0.5);
-    this.rounds.push({ kind: 'missile', x1: from.x, y1: from.y, x2: to.x, y2: to.y, age: -delayMs, flight, miss: false, hit, ground, glow, path });
+    this.rounds.push({ kind: 'missile', x1: from.x, y1: from.y, x2: to.x, y2: to.y, age: -delayMs, flight, miss: false, hit: s.hit, ground: s.ground, glow: s.glow, path, land });
   }
 
   /** The missiles' trail and ember emitters, made once. */
@@ -360,7 +368,7 @@ export class Effects {
   }
 
   /** A jagged bolt from `from` to `to`, there for a moment, with flashes at both ends. */
-  private discharge(from: Point, to: Point, glow = HEAVY.discharge.glow): void {
+  discharge(from: Point, to: Point, glow = HEAVY.discharge.glow, land?: Land): void {
     const d = HEAVY.discharge;
     const nx = -(to.y - from.y), ny = to.x - from.x;
     const n = Math.hypot(nx, ny) || 1;
@@ -370,7 +378,7 @@ export class Effects {
       return { x: from.x + (to.x - from.x) * k + (nx / n) * off, y: from.y + (to.y - from.y) * k + (ny / n) * off };
     });
     this.bolts.push({ points, age: 0, glow });
-    this.onImpact?.('discharge', to);
+    land?.(to);
     this.muzzleFlash(from, glow, 2);
     this.muzzleFlash(to, glow, 2.4);
   }
@@ -433,7 +441,7 @@ export class Effects {
   }
 
   private impact(r: Round): void {
-    if (!r.miss) this.onImpact?.(r.kind, { x: r.x2, y: r.y2 });
+    if (!r.miss) r.land?.({ x: r.x2, y: r.y2 });
     if (r.kind === 'plasma') {
       // a small burst in its colour: a flash and a few hot specks
       this.burst({ x: r.x2, y: r.y2 }, r.glow ?? HEAVY.plasma.glow, 1.8);
@@ -515,7 +523,7 @@ export class Effects {
       if (reach >= 1 && !b.hit) {
         b.hit = true;
         if (!b.heal) {
-          this.onImpact?.('laser', b.to);
+          b.land?.(b.to);
           this.burst(b.to, b.glow, 1.4);
         }
       }
@@ -530,7 +538,7 @@ export class Effects {
       if (t < 0) continue;
       if (!col.struck) {
         col.struck = true;
-        this.onImpact?.('column', { x: col.x, y: col.y });
+        col.land?.({ x: col.x, y: col.y });
         impact(this.scene, this.impactStyle, { x: col.x, y: col.y, size: c.blast / HEAVY.shell.blast, depth: col.hit?.depth !== undefined ? col.hit.depth + 0.01 : undefined, targets: col.hit?.targets });
         this.scorch(col.x, col.y);
       }

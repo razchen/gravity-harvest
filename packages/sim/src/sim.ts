@@ -5,7 +5,7 @@ import {
   speedToTilesPerSec, volleyDamage, weapon, weaponFor, layerOf, canHit, type Armor, type Faction, type PowerBalance,
 } from '@gravity-harvest/rules';
 import {
-  DEFAULT_DIFFICULTY, emptyStats, type BuildingView, type Difficulty, type Command, type DebugCommand, type GridPoint, type HarvesterActivity, type MatchEvent,
+  DEFAULT_DIFFICULTY, emptyStats, type BuildingView, type Difficulty, type Command, type DebugCommand, type GridPoint, type HarvesterActivity, type MatchEvent, type ToastCode,
   type MatchCatalog, type MatchHello, type MatchStats, type TeamId, type TeamView, type UnitView,
 } from '@gravity-harvest/shared';
 import { Fog, type Viewer } from './fog.js';
@@ -532,8 +532,8 @@ export class Sim {
     this.pending[team].push(ev);
   }
 
-  private toast(team: TeamId, text: string): void {
-    if (this.players[team].human) this.emit(team, { e: 'toast', text });
+  private toast(team: TeamId, code: ToastCode, text: string): void {
+    if (this.players[team].human) this.emit(team, { e: 'toast', text, code });
   }
 
   /** Send an event to the owner and to every team that can see the spot. */
@@ -666,7 +666,7 @@ export class Sim {
         const b = this.buildings.get(cmd.building);
         if (!b || b.team !== team || !b.built) return;
         this.players[team].credits += refundFor(BUILDINGS[b.type].cost);
-        this.toast(team, `${BUILDINGS[b.type].name} sold`);
+        this.toast(team, 'sold', `${BUILDINGS[b.type].name} sold`);
         this.destroyBuilding(b, true);
         return;
       }
@@ -677,7 +677,7 @@ export class Sim {
         if (!b || b.team !== team || b.built) return;
         this.players[team].credits += refundFor(BUILDINGS[b.type].cost);
         this.players[team].stats.buildingsBuilt = Math.max(0, this.players[team].stats.buildingsBuilt - 1);
-        this.toast(team, `${BUILDINGS[b.type].name} cancelled`);
+        this.toast(team, 'cancelled', `${BUILDINGS[b.type].name} cancelled`);
         this.destroyBuilding(b, true);
         return;
       }
@@ -696,7 +696,7 @@ export class Sim {
       case 'repair': {
         const b = this.buildings.get(cmd.building);
         if (!b || b.team !== team || !b.built) return;
-        if (cmd.on && b.hp >= b.maxHp) return this.toast(team, `${BUILDINGS[b.type].name} isn't damaged`);
+        if (cmd.on && b.hp >= b.maxHp) return this.toast(team, 'notDamaged', `${BUILDINGS[b.type].name} isn't damaged`);
         b.repairing = cmd.on;
         return;
       }
@@ -730,7 +730,7 @@ export class Sim {
     const world = this.placementWorld(team);
     // it doesn't need to be near the base (that's the point), and it isn't in its own way
     const check = checkPlacement('assembly_yard', tx, ty, { ...world, unitOn: (x, y) => [...this.units.values()].some((o) => o.id !== u.id && Math.floor(o.gx) === x && Math.floor(o.gy) === y), ownBuildings: [{ tx, ty, size: n }] });
-    if (check.problem) return this.toast(team, `Can't deploy here: ${check.problem.toLowerCase()}`);
+    if (check.problem) return this.toast(team, 'cantDeploy', `Can't deploy here: ${check.problem.toLowerCase()}`);
     u.alive = false;
     this.units.delete(u.id);
     const b = this.addBuilding('assembly_yard', team, tx, ty, false);
@@ -751,15 +751,15 @@ export class Sim {
     const p = this.players[team];
     if (!def || !(ROSTER.buildings as readonly string[]).includes(type)) return;
     if (!canBuild(MATCH_CATALOG, type, p.faction, this.ownedTypes(team), { assumeOwned: ASSUME_OWNED })) {
-      return this.toast(team, `Build a ${this.missing(team, type) ?? 'prerequisite'} first`);
+      return this.toast(team, 'needPrerequisite', `Build a ${this.missing(team, type) ?? 'prerequisite'} first`);
     }
     // buildings go up from an Assembly Yard, one at a time (and one defence at a time beside it)
-    if (!ASSUME_OWNED.has('assembly_yard') && !this.teamBuildings(team).some((b) => b.type === 'assembly_yard')) return this.toast(team, 'Needs an Assembly Yard');
+    if (!ASSUME_OWNED.has('assembly_yard') && !this.teamBuildings(team).some((b) => b.type === 'assembly_yard')) return this.toast(team, 'needAssemblyYard', 'Needs an Assembly Yard');
     const busy = this.underConstruction(team, isDefence(type));
-    if (busy) return this.toast(team, `Already building a ${BUILDINGS[busy.type].name}`);
+    if (busy) return this.toast(team, 'alreadyBuilding', `Already building a ${BUILDINGS[busy.type].name}`);
     const check = checkPlacement(type, tx, ty, this.placementWorld(team));
-    if (check.problem) return this.toast(team, check.problem);
-    if (p.credits < def.cost) return this.toast(team, `Need $${Math.ceil(def.cost - p.credits).toLocaleString('en-US')} more`);
+    if (check.problem) return this.toast(team, 'cantPlace', check.problem);
+    if (p.credits < def.cost) return this.toast(team, 'needCredits', `Need $${Math.ceil(def.cost - p.credits).toLocaleString('en-US')} more`);
     p.credits -= def.cost;
     this.addBuilding(type, team, tx, ty, false);
     p.stats.buildingsBuilt++;
@@ -788,12 +788,12 @@ export class Sim {
     const p = this.players[team];
     if (!def || !(ROSTER.units as readonly string[]).includes(unit)) return;
     if (!canBuild(MATCH_CATALOG, unit, p.faction, this.ownedTypes(team), { assumeOwned: ASSUME_OWNED })) {
-      return this.toast(team, `Build a ${this.missing(team, unit) ?? 'prerequisite'} first`);
+      return this.toast(team, 'needPrerequisite', `Build a ${this.missing(team, unit) ?? 'prerequisite'} first`);
     }
-    if (this.armySize(team) + p.queue.length >= ENGINE.unitCap) return this.toast(team, 'Unit cap reached');
+    if (this.armySize(team) + p.queue.length >= ENGINE.unitCap) return this.toast(team, 'unitCap', 'Unit cap reached');
     const lane = laneOf(unit);
-    if (p.queue.filter((q) => laneOf(q.unit) === lane).length >= ENGINE.queueMax) return this.toast(team, 'Production queue is full');
-    if (p.credits < def.cost) return this.toast(team, `Need $${Math.ceil(def.cost - p.credits).toLocaleString('en-US')} more`);
+    if (p.queue.filter((q) => laneOf(q.unit) === lane).length >= ENGINE.queueMax) return this.toast(team, 'queueFull', 'Production queue is full');
+    if (p.credits < def.cost) return this.toast(team, 'needCredits', `Need $${Math.ceil(def.cost - p.credits).toLocaleString('en-US')} more`);
     p.credits -= def.cost;
     p.queue.push({ unit, progress: 0, near });
   }
@@ -840,7 +840,7 @@ export class Sim {
       if (b.progress < 1) continue;
       b.built = true;
       this.emit(b.team, { e: 'buildingDone', id: b.id });
-      this.toast(b.team, `${BUILDINGS[b.type].name} ready`);
+      this.toast(b.team, 'buildingReady', `${BUILDINGS[b.type].name} ready`);
       if (b.type === 'refinery' && b.constructed) this.spawnHarvester(b); // refinery completion grants one
     }
   }
@@ -875,7 +875,7 @@ export class Sim {
     const u = isHarvesterType(item.unit) && from.type === 'refinery' ? this.spawnHarvester(from) : this.spawnFighter(item.unit, from);
     this.emitSeen({ e: 'unitOut', building: from.id, unit: u.id }, centre(from), from.team);
     this.emit(t, { e: 'unitReady', id: u.id, type: u.type });
-    this.toast(t, `${UNITS[u.type].name} ready`);
+    this.toast(t, 'unitReady', `${UNITS[u.type].name} ready`);
   }
 
   private spawnHarvester(ref: Building): Harvester {
@@ -1761,7 +1761,7 @@ export class Sim {
     let t: Entity | undefined = was;
     if (!needs(t)) {
       // a building it was mending is whole again
-      if (was?.cat === 'building' && was.alive && was.team === u.team && !heal) this.toast(u.team, `${BUILDINGS[was.type].name} repaired`);
+      if (was?.cat === 'building' && was.alive && was.team === u.team && !heal) this.toast(u.team, 'repaired', `${BUILDINGS[was.type].name} repaired`);
       t = undefined;
       u.target = null;
       if (u.mode === 'attack') u.mode = 'idle';
@@ -2095,14 +2095,14 @@ export class Sim {
       const cost = (hp / b.maxHp) * BUILDINGS[b.type].cost * ECONOMY.structureFullRepairFraction;
       if (p.credits < cost) {
         b.repairing = false;
-        this.toast(b.team, `Not enough money to repair the ${BUILDINGS[b.type].name}`);
+        this.toast(b.team, 'repairNoCredits', `Not enough money to repair the ${BUILDINGS[b.type].name}`);
         continue;
       }
       p.credits -= cost;
       b.hp += hp;
       if (b.hp >= b.maxHp) {
         b.repairing = false;
-        this.toast(b.team, `${BUILDINGS[b.type].name} repaired`);
+        this.toast(b.team, 'repaired', `${BUILDINGS[b.type].name} repaired`);
       }
     }
     for (const bay of this.buildings.values()) {
@@ -2192,7 +2192,7 @@ export class Sim {
       if (t !== b.team && !this.inSight(t, b)) continue;
       this.ghosts[t].delete(b.id);
       this.emit(t, { e: 'buildingDestroyed', id: b.id, tx: b.tx, ty: b.ty, size: b.size, type: b.type, team: b.team, sold });
-      if (!sold) this.toast(t, t === b.team ? `${name} destroyed` : `Enemy ${name} destroyed`);
+      if (!sold) this.toast(t, t === b.team ? 'buildingDestroyed' : 'enemyBuildingDestroyed', t === b.team ? `${name} destroyed` : `Enemy ${name} destroyed`);
     }
     for (const u of this.units.values()) if (u.kind === 'harvester' && u.home === b.id) this.onHomeLost(u);
     this.refresh();

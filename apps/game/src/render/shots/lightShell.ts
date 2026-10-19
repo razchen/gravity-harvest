@@ -236,7 +236,7 @@ export const lightShell: Look = (kit, s) => {
         g.fillStyle(c.core, 1).fillCircle(head.x, head.y, c.coreWidth);
         if (k >= 1) {
           landed = true;
-          kit.landed('shell', to);
+          kit.landed(to);
           pop(scene, to, depth, s.hit?.targets, s.ground);
         }
       }

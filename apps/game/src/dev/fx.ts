@@ -279,11 +279,11 @@ export default function mount(): void {
             // falls short: straight from the barrel, dipping onto the ground under its line
             const p = alongBarrel(muzzle, aim, n, { x, y: y + rand(0.2, 0.4) * size * TILE_H });
             const g = { x: p.x, y: p.y + height };
-            fx.shot('shell', muzzle, { x: g.x, y: g.y - 4 }, g, true, { depth: 0.3 });
+            fx.fire('shell', muzzle, [], { x: g.x, y: g.y - 4 }, g, true, { depth: 0.3 });
           } else {
             // straight along the barrel, landing where that line crosses the building (nearer or deeper each time)
             const to = alongBarrel(muzzle, aim, n, { x, y: y - 40 * size + rand(-18, 18) });
-            fx.shot('shell', muzzle, to, undefined, true, { depth: v.base.depth, targets: [v.base] });
+            fx.fire('shell', muzzle, [], to, undefined, true, { depth: v.base.depth, targets: [v.base] });
           }
         };
         this.time.addEvent({ delay: SHELL_EVERY, startAt: i * 180, loop: true, callback: shoot });

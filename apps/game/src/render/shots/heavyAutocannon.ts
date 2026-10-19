@@ -203,7 +203,7 @@ export const heavyAutocannon: Look = (kit, s) => {
 
   /** A round hits: a white-hot glow, a little painted flash of fire, sparks, and the target glows. */
   const pop = (at: Point) => {
-    kit.landed('bullet', at);
+    kit.landed(at);
     fade({ im: glowImage(at, HEAVY_AC.popColour, popDepth + 2e-4), age: 0, ms: HEAVY_AC.popMs * 0.8, holdMs: 0, from: HEAVY_AC.popGlow, to: HEAVY_AC.popGlow * 1.4, squash: 1, alpha: 0.95 });
     fade({ im: glowImage(at, 0xff9a30, popDepth), age: 0, ms: HEAVY_AC.popMs * 1.6, holdMs: 0, from: HEAVY_AC.popGlow * 1.2, to: HEAVY_AC.popGlow * 1.8, squash: 1, alpha: 0.5 });
     const fl = FX_SHEETS.impactFlash;
